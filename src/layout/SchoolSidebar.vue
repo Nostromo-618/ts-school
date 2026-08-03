@@ -85,7 +85,7 @@ const expanded = ref(false);
         :key="tier"
         type="button"
         class="vd-btn vd-btn-sm"
-        :class="activeTier === tier ? 'vd-btn-primary' : 'vd-btn-secondary'"
+        :class="activeTier === tier ? 'vd-btn-primary' : 'vd-btn-outline'"
         :aria-pressed="activeTier === tier"
         @click="store.pinTier(tier)"
       >

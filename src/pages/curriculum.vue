@@ -68,7 +68,7 @@ const visibleTracks = computed(() =>
         :key="option.value"
         type="button"
         class="vd-btn vd-btn-sm"
-        :class="filter === option.value ? 'vd-btn-primary' : 'vd-btn-secondary'"
+        :class="filter === option.value ? 'vd-btn-primary' : 'vd-btn-outline'"
         :aria-pressed="filter === option.value"
         @click="filter = option.value"
       >

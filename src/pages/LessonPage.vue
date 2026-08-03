@@ -46,8 +46,11 @@ const isUnwritten = computed(
   <article v-if="lesson" class="ts-page vd-stack" data-gap="fib-21">
     <header class="vd-stack" data-gap="fib-8">
       <!-- Slot form rather than the `items` prop so the crumbs are RouterLinks
-           and stay client-side navigations. -->
-      <VdBreadcrumb separator="chevron">
+           and stay client-side navigations. The separator is left at its
+           default: the package's `vd-breadcrumb-separator-*` classes put their
+           glyph on the list element rather than between items, so asking for
+           one renders a stray leading character. -->
+      <VdBreadcrumb>
         <li class="vd-breadcrumb-item">
           <RouterLink to="/curriculum" class="vd-breadcrumb-link">
             Curriculum

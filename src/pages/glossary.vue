@@ -74,7 +74,7 @@ const lessonsFor = (ids: readonly string[]) =>
           :key="option.value"
           type="button"
           class="vd-btn vd-btn-sm"
-          :class="tier === option.value ? 'vd-btn-primary' : 'vd-btn-secondary'"
+          :class="tier === option.value ? 'vd-btn-primary' : 'vd-btn-outline'"
           :aria-pressed="tier === option.value"
           @click="tier = option.value"
         >
