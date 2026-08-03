@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# All @vanduo-oss/* dependencies install from npm (the @vanduo-oss/* scope is
+# excluded from the .npmrc minimum-release-age delay), so this is single-repo.
+
+# Least-privilege default token: this workflow only reads the repo.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: 11.18.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.17.0
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run lint
+      - run: pnpm run stylelint
+      - run: pnpm run format:check
+      - run: pnpm run typecheck
+
+      - run: pnpm test
+
+      - run: pnpm run build
+
+      # No deploy job: ts-school is local-only — no GitHub Pages, no CNAME.
+      # The Playwright suites are not run here; they download browsers on every
+      # run and are executed locally with `pnpm run test:e2e`.

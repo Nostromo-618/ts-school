@@ -1,0 +1,52 @@
+schema: spec-driven
+
+context: |
+  Package: ts-school (private, never published). "TypeScript School" — a static
+  teaching site whose every lesson is a PAIR: idiomatic-but-fragile JavaScript on
+  the left, the TypeScript that fixes it on the right, with the TS pane live
+  against a real compiler running in a Web Worker.
+  Stack mirrors vd3-docs: Vue 3 + vite + vite-ssg (prerenders every route) +
+  vue-router 5 + pinia 3 + @unhead/vue. Dogfoods the PUBLISHED packages
+  "@vanduo-oss/vd3": "^1.2.1" and "@vanduo-oss/vd3-cbun": "^1.3.1" — consumed
+  from the registry, never via link:, so vite only needs resolve.dedupe ['vue']
+  + ssr.noExternal for both. main.ts imports @vanduo-oss/vd3/css plus only the
+  cbun CSS actually used (charts, code-editor, flowchart).
+  TypeScript is PINNED to exactly 6.0.3 and MUST NOT be upgraded. TypeScript 7 is
+  a Go native binary with no programmatic API and cannot type-check in a browser;
+  6.0.3 is the last JS/Strada-API compiler, and it serves vue-tsc, eslint, the
+  in-browser worker, and the CI compiler-truth suite from one version. Do not add
+  @typescript/native-preview.
+  Curriculum is the single source of truth: src/curriculum/ holds typed Lesson
+  modules, and nav + the search index are DERIVED from it (unlike vd3-docs, whose
+  nav.ts is hand-written). router.ts exposes buildRoutes(); one LessonPage.vue
+  renders any lesson. Lesson code is plain text rendered into <textarea>/<pre>.
+  Security posture: typescript is imported only inside the worker; the compiler
+  host is first-party; lib .d.ts files are served same-origin from public/ts-lib/,
+  never a CDN; no eval, no new Function, no code execution, no runtime network;
+  index.html carries a strict CSP.
+  Toolchain pinned via mise.toml (node 24.17.0, pnpm 11.18.0); .npmrc is hardened
+  (ignore-scripts, minimum-release-age, trust-policy, save-exact).
+  Tests: vitest units (curriculum integrity, compiler host, progress store),
+  the compiler-truth suite over every lesson, Playwright e2e + visual baselines +
+  @axe-core/playwright a11y smoke.
+  Local-only: no deploy workflow, no GitHub Pages, no CNAME, no git remote.
+  The vd3 line repos (vd3, vd3-cbun, vd3-docs) are READ-ONLY reference material —
+  never edit them.
+
+rules:
+  proposal:
+    - State which routes/lessons are added, changed, or removed
+    - Always include a "Non-goals" section
+  specs:
+    - Use Given/When/Then scenario format under each requirement
+    - Use SHALL/MUST for normative requirements
+  design:
+    - Pages render real vd3/vd3-cbun components (dogfooding) — no invented APIs; verify against package source
+    - No `v-html` anywhere in the lesson pipeline; lesson code is plain text in `<textarea>`/`<pre>`
+    - Keep `typescript` pinned to 6.0.3 — TS 7 ships no programmatic API and cannot run in a browser
+    - app.css stays shell/layout-only; component styling belongs to the vd3 package
+  tasks:
+    - Include the compiler-truth suite when lesson content changes — no lesson may claim a diagnostic the real compiler does not produce
+    - Include vite-ssg build (all routes prerender clean) when routes or lessons change
+    - Include a Playwright visual-baseline update step when page markup changes
+    - Include derived nav/search-index verification when lessons are added, renamed, or removed

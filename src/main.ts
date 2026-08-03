@@ -1,0 +1,52 @@
+import { ViteSSG } from "vite-ssg";
+import { createPinia } from "pinia";
+import { VanduoVue } from "@vanduo-oss/vd3";
+import App from "./App.vue";
+import { buildRoutes } from "./router";
+import "@vanduo-oss/vd3/css";
+// Only the cbun bundles ts-school actually renders: charts on the adoption
+// pages, the code editor in both lesson panes, flowcharts for narrowing and
+// compiler-pipeline diagrams. Draw and music-player stay out of the bundle.
+import "@vanduo-oss/vd3-cbun/charts/css";
+import "@vanduo-oss/vd3-cbun/code-editor/css";
+import "@vanduo-oss/vd3-cbun/flowchart/css";
+import "./styles/app.css";
+
+const routes = buildRoutes();
+
+export const createApp = ViteSSG(
+  App,
+  {
+    // vite-ssg feeds this to the vue-router history base
+    // (createWebHistory(routerOptions.base)); without it the router defaults to
+    // "/" even when the site is built under a sub-path, which makes every
+    // RouterLink render unprefixed and the root URL hydrate to NotFound.
+    // import.meta.env.BASE_URL is "/" unless VITE_BASE says otherwise.
+    base: import.meta.env.BASE_URL,
+    routes,
+    scrollBehavior(to, _from, savedPosition) {
+      // Preserve position on browser back/forward
+      if (savedPosition) return savedPosition;
+      // Honor deep-link anchors (offset for the fixed navbar)
+      if (to.hash) return { el: to.hash, top: 80, behavior: "instant" };
+      // Default: jump to top of the new page (instant, since html has
+      // scroll-behavior: smooth which would otherwise animate the jump)
+      return { top: 0, behavior: "instant" };
+    },
+  },
+  ({ app }) => {
+    app.use(createPinia());
+    // TypeScript blue as the light-mode primary, sky in dark where the deeper
+    // blue loses contrast. vd3 ships amber/black as its generic baseline.
+    app.use(VanduoVue, {
+      themeDefaults: { PRIMARY_LIGHT: "blue", PRIMARY_DARK: "sky" },
+    });
+
+    // Deliberately no `initialState`: vite-ssg serializes any non-empty state
+    // into an INLINE <script>, which `script-src 'self'` blocks. Nothing here
+    // needs SSR-hydrated state — learner progress lives in localStorage and is
+    // read on the client — so leaving it empty keeps the CSP clean. Anything
+    // that later wants prerendered data should pass it as route meta or a
+    // same-origin JSON fetch, not through the initial-state script.
+  },
+);

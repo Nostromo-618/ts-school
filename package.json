@@ -1,0 +1,62 @@
+{
+  "name": "ts-school",
+  "version": "0.1.0",
+  "description": "TypeScript School — a static Vue 3 + vite-ssg site whose lessons pair fragile JavaScript with the TypeScript that fixes it, checked live by a real compiler",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite-ssg build",
+    "preview": "vite preview --port 8787 --host",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "stylelint": "stylelint \"src/**/*.css\"",
+    "format": "prettier --write \"src/**/*.{ts,vue,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,vue,css}\"",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test --project='Chromium Desktop'",
+    "test:e2e:full": "playwright test"
+  },
+  "dependencies": {
+    "@unhead/vue": "2.1.15",
+    "@vanduo-oss/vd3": "1.2.1",
+    "@vanduo-oss/vd3-cbun": "1.3.1",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.40",
+    "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+    "@typescript-eslint/parser": "8.62.0",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vitest/coverage-v8": "^4.1.10",
+    "@vue/test-utils": "^2.4.11",
+    "@vue/tsconfig": "^0.9.1",
+    "axe-core": "4.12.1",
+    "eslint": "^10.8.0",
+    "eslint-plugin-vue": "^10.10.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.9.6",
+    "stylelint": "^17.14.1",
+    "stylelint-config-standard": "^40.0.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.62.0",
+    "vite": "^8.2.0",
+    "vite-ssg": "^28.3.0",
+    "vitest": "^4.1.10",
+    "vue-eslint-parser": "10.4.1",
+    "vue-tsc": "^3.3.8"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11"
+  },
+  "packageManager": "pnpm@11.18.0"
+}

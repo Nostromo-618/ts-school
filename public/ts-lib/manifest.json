@@ -1,0 +1,328 @@
+{
+  "typescriptVersion": "6.0.3",
+  "defaultLib": "lib.es2022.d.ts",
+  "entryLibs": [
+    "es2022",
+    "dom",
+    "dom.iterable"
+  ],
+  "closures": {
+    "es2022": [
+      "lib.decorators.d.ts",
+      "lib.decorators.legacy.d.ts",
+      "lib.es5.d.ts",
+      "lib.es2015.core.d.ts",
+      "lib.es2015.collection.d.ts",
+      "lib.es2015.symbol.d.ts",
+      "lib.es2015.iterable.d.ts",
+      "lib.es2015.generator.d.ts",
+      "lib.es2015.promise.d.ts",
+      "lib.es2015.proxy.d.ts",
+      "lib.es2015.reflect.d.ts",
+      "lib.es2015.symbol.wellknown.d.ts",
+      "lib.es2015.d.ts",
+      "lib.es2016.array.include.d.ts",
+      "lib.es2016.intl.d.ts",
+      "lib.es2016.d.ts",
+      "lib.es2017.arraybuffer.d.ts",
+      "lib.es2017.date.d.ts",
+      "lib.es2017.intl.d.ts",
+      "lib.es2017.object.d.ts",
+      "lib.es2017.sharedmemory.d.ts",
+      "lib.es2017.string.d.ts",
+      "lib.es2017.typedarrays.d.ts",
+      "lib.es2017.d.ts",
+      "lib.es2018.asynciterable.d.ts",
+      "lib.es2018.asyncgenerator.d.ts",
+      "lib.es2018.promise.d.ts",
+      "lib.es2018.regexp.d.ts",
+      "lib.es2018.intl.d.ts",
+      "lib.es2018.d.ts",
+      "lib.es2019.array.d.ts",
+      "lib.es2019.object.d.ts",
+      "lib.es2019.string.d.ts",
+      "lib.es2019.symbol.d.ts",
+      "lib.es2019.intl.d.ts",
+      "lib.es2019.d.ts",
+      "lib.es2020.intl.d.ts",
+      "lib.es2020.bigint.d.ts",
+      "lib.es2020.date.d.ts",
+      "lib.es2020.number.d.ts",
+      "lib.es2020.promise.d.ts",
+      "lib.es2020.sharedmemory.d.ts",
+      "lib.es2020.symbol.wellknown.d.ts",
+      "lib.es2020.string.d.ts",
+      "lib.es2020.d.ts",
+      "lib.es2021.promise.d.ts",
+      "lib.es2021.string.d.ts",
+      "lib.es2021.weakref.d.ts",
+      "lib.es2021.intl.d.ts",
+      "lib.es2021.d.ts",
+      "lib.es2022.array.d.ts",
+      "lib.es2022.error.d.ts",
+      "lib.es2022.intl.d.ts",
+      "lib.es2022.object.d.ts",
+      "lib.es2022.regexp.d.ts",
+      "lib.es2022.string.d.ts",
+      "lib.es2022.d.ts"
+    ],
+    "dom": [
+      "lib.decorators.d.ts",
+      "lib.decorators.legacy.d.ts",
+      "lib.es5.d.ts",
+      "lib.es2015.core.d.ts",
+      "lib.es2015.collection.d.ts",
+      "lib.es2015.symbol.d.ts",
+      "lib.es2015.iterable.d.ts",
+      "lib.es2015.generator.d.ts",
+      "lib.es2015.promise.d.ts",
+      "lib.es2015.proxy.d.ts",
+      "lib.es2015.reflect.d.ts",
+      "lib.es2015.symbol.wellknown.d.ts",
+      "lib.es2015.d.ts",
+      "lib.es2018.asynciterable.d.ts",
+      "lib.dom.d.ts"
+    ],
+    "dom.iterable": [
+      "lib.dom.iterable.d.ts"
+    ]
+  },
+  "files": {
+    "lib.decorators.d.ts": {
+      "bytes": 13153,
+      "integrity": "sha384-r51hF1cZZVgVih8hiszDW4dhTQquNkw1+886v6IClUosLuWs1EJZe2AmQMW9Y1NG"
+    },
+    "lib.decorators.legacy.d.ts": {
+      "bytes": 1287,
+      "integrity": "sha384-0bkLe7z08tBMJp8OTyu3NrurgoD5XlwCPcO3RqqFOcR8yF61bgFn3ucIumUqzuro"
+    },
+    "lib.dom.d.ts": {
+      "bytes": 2349483,
+      "integrity": "sha384-GaVFkB7k6M5GZmr7MecPnwpivFzv8QbafcTbgfde1MG1C0PeQ3LcShlQtKLNN2ph"
+    },
+    "lib.dom.iterable.d.ts": {
+      "bytes": 933,
+      "integrity": "sha384-kbttVNMIMoejLIazs8mgj/IAyTZdFEWPEcC8897FPUTu3JQSzKe5wjxGdFwae4cJ"
+    },
+    "lib.es2015.collection.d.ts": {
+      "bytes": 5305,
+      "integrity": "sha384-eNB7O8PRWaPaXZZrCaMDiyXjtyzY7ieNI8XLzsipULjeiJFV5pCDRFZuJPDkCzOw"
+    },
+    "lib.es2015.core.d.ts": {
+      "bytes": 22824,
+      "integrity": "sha384-YlACJQdyUxtjJ/hvDkZxX+4ABOseie6BhvGS3KztPvIy0m5etnv2WstSKyOILyzT"
+    },
+    "lib.es2015.d.ts": {
+      "bytes": 1202,
+      "integrity": "sha384-lUyJZiMaC2bJjOwjl5tzSDQXfIM0zza+k+HXZuash7IEmMrvT+C6lfYUOHU/Xi2y"
+    },
+    "lib.es2015.generator.d.ts": {
+      "bytes": 2518,
+      "integrity": "sha384-dyPDyTFqrWilrIzpY4CY8uhQftxN4R5xHVi+LUn5UTx3ybdVIxlxLsJqPTbu2Fbg"
+    },
+    "lib.es2015.iterable.d.ts": {
+      "bytes": 18185,
+      "integrity": "sha384-XqHU0pVESXAFB5HYjk8Yb9C2cwsGSa0iYuB51wkkk1hFsMh5SIUO5+aK8YwjhvUn"
+    },
+    "lib.es2015.promise.d.ts": {
+      "bytes": 3161,
+      "integrity": "sha384-Zc7JRWNI5cmvqHWDlEIQaCD562r++IeZRxIHBmJDfrXx0C/8IvVj4KlpXPkQLlCk"
+    },
+    "lib.es2015.proxy.d.ts": {
+      "bytes": 5212,
+      "integrity": "sha384-g5cqJ2H01KLpNgyOLKG7aIC2N0rQSFOs5axLijpkZd5l1wjnKY5P+34PRk+9wCWC"
+    },
+    "lib.es2015.reflect.d.ts": {
+      "bytes": 6454,
+      "integrity": "sha384-9ekWPF5sloUMg6A8O2RExLkEoANiPZZofQ+iB51N0vA5mA/Gyf8fj7ewU9IQtwbm"
+    },
+    "lib.es2015.symbol.d.ts": {
+      "bytes": 1610,
+      "integrity": "sha384-dI9PNAxe1HIUPMftNPwdQUgoGjmChZu3yAa0i8WqbD/OcWoV2AMZot/Y3fOEdFtJ"
+    },
+    "lib.es2015.symbol.wellknown.d.ts": {
+      "bytes": 10971,
+      "integrity": "sha384-sTDqdpAejrGs/AJdvRcEVoxrKgnYax9Y10kyhkpxLbF93zUuy1gamNtMvmSfF/RD"
+    },
+    "lib.es2016.array.include.d.ts": {
+      "bytes": 5165,
+      "integrity": "sha384-k/qcx79kkJ/pAATfNQw5BoFw3GpKjLWMENkST6+Kofr41WpzXmSOuxDIRWR0esn+"
+    },
+    "lib.es2016.d.ts": {
+      "bytes": 926,
+      "integrity": "sha384-oujlx/be9xP+A3atOthBYQ9VyP7CGp81FlWRwoCYBfY3dRjQeETSEv+n2zdqo+oH"
+    },
+    "lib.es2016.intl.d.ts": {
+      "bytes": 1445,
+      "integrity": "sha384-29gTVcI29FDW5YkN4bS6/TVBsJoHEf/vtK2UvLQqmEKL50UEKaWRq3bPYpRlazX9"
+    },
+    "lib.es2017.arraybuffer.d.ts": {
+      "bytes": 876,
+      "integrity": "sha384-Uak6JaXqiOUSLWNb48n8EakAy9EzCtcILa/sJ8BS2UT+LZJVD30Fs2ISl9R6cag5"
+    },
+    "lib.es2017.d.ts": {
+      "bytes": 1123,
+      "integrity": "sha384-4PvxzJAEyOE6Cpj2sQHYU3tMITIDKYaK9mQoRmpNAouomB6VnZmJA9s9HUQd4B1i"
+    },
+    "lib.es2017.date.d.ts": {
+      "bytes": 1877,
+      "integrity": "sha384-oYC4EQgRFaBsSEjulrDtmLb6mIh8Ea94kRYs6osYcwEh55GQwfK0XEOpzOd6bvc/"
+    },
+    "lib.es2017.intl.d.ts": {
+      "bytes": 1410,
+      "integrity": "sha384-1RrZo3Kcs1F7PG8LtZqseLLXBOwGPePNxSWB8ap5sEyK88RtCj+yjO6mMs8dN0m4"
+    },
+    "lib.es2017.object.d.ts": {
+      "bytes": 2434,
+      "integrity": "sha384-e06Mvko3co/V10J9GkYfJHXE0lJ9FRy0sYrhErDtxrlCT9eL4wkIdzu/oXI47Lp9"
+    },
+    "lib.es2017.sharedmemory.d.ts": {
+      "bytes": 7170,
+      "integrity": "sha384-mqVuVKPQFmPA83cO3xpAzyh25B70hpgBNLtXuJS64MycAJdAP7y30f1rY+52yaRB"
+    },
+    "lib.es2017.string.d.ts": {
+      "bytes": 2339,
+      "integrity": "sha384-8v035fTUhR9vzWFzgSyXPv+iZfaQajbWmBO4RiMDEph4NpYbHWLa5S+L2772Di1D"
+    },
+    "lib.es2017.typedarrays.d.ts": {
+      "bytes": 1503,
+      "integrity": "sha384-JhY48XPExjMCNweX9LU7vKYdxT3IjlWXLjcQVG3SvYUky4dIsoQcNLA5rrMwmlOf"
+    },
+    "lib.es2018.asyncgenerator.d.ts": {
+      "bytes": 2653,
+      "integrity": "sha384-DAo4mdNuxtegswygojrFbs13/5XBWUpnszM8FGRad4oM0qzB58JQv+Jzpv/Y9Ztp"
+    },
+    "lib.es2018.asynciterable.d.ts": {
+      "bytes": 2218,
+      "integrity": "sha384-vr45oYIzBIEdFdvKGaqEm3DgPJyjYVXLLPkw58FtrJ8abro4+rVFpY5ws5O6NesY"
+    },
+    "lib.es2018.d.ts": {
+      "bytes": 1049,
+      "integrity": "sha384-8pGJgB33RNaxIEybVFLnlzk5URDnnWumEa8TvYeHQT7UkwciFWr8lVH8al3lkCOo"
+    },
+    "lib.es2018.intl.d.ts": {
+      "bytes": 2982,
+      "integrity": "sha384-WGNQs6I29kYD3iFfsLYf11Zvb8dczdedvcvRmhZWNqOkZrWiks29KgA+h/gf02Wy"
+    },
+    "lib.es2018.promise.d.ts": {
+      "bytes": 1314,
+      "integrity": "sha384-1Mi72ad9qUoBXsA3nNNHCA9ssYcdkcpBDqQ8XTuN505mStN4aEwdb5hy61t00V4e"
+    },
+    "lib.es2018.regexp.d.ts": {
+      "bytes": 1193,
+      "integrity": "sha384-VrShTzeJnzmdcB+yzDkMMnrSnP23KSZvOafjQirj/N93GTSWy+xaqSZ1urG0UE6l"
+    },
+    "lib.es2019.array.d.ts": {
+      "bytes": 3124,
+      "integrity": "sha384-xv18V9Q2/KEHxxaAEu80YcpGrG1jLZujR9rYvGqbKIq09cScAW8Oz1Ijw54t8jJY"
+    },
+    "lib.es2019.d.ts": {
+      "bytes": 1032,
+      "integrity": "sha384-feY5ftlWa8PgM+L+AjoC3+U9QGYvnOLRjeWhh0zh5yRG2FH2eyvklzIb631alwNU"
+    },
+    "lib.es2019.intl.d.ts": {
+      "bytes": 919,
+      "integrity": "sha384-nv5+TDpU03+eiW/iO5V4jHLGU1AwASJcDKn6qBCZfuSgEBRKvKHm1pPLN4Awi2ss"
+    },
+    "lib.es2019.object.d.ts": {
+      "bytes": 1434,
+      "integrity": "sha384-iFKxUuwfnKLQUixPyn6hybe84r9kN+A++E3WUscaICvc9gDgdDnBCWssURNm67yR"
+    },
+    "lib.es2019.string.d.ts": {
+      "bytes": 1489,
+      "integrity": "sha384-FFqhBkNT781F+zytdMMluWGyV6pGL86pLnEGna3dCuxfUj9FoSnbINoL97GPdbAa"
+    },
+    "lib.es2019.symbol.d.ts": {
+      "bytes": 967,
+      "integrity": "sha384-DDDUGoZtXHfBxtmsbYmn6sZkpEmvuOvUQHtHGtdQ0MfeJRnOkJyMHPLLUZVotly+"
+    },
+    "lib.es2020.bigint.d.ts": {
+      "bytes": 38258,
+      "integrity": "sha384-WVws5JPdi24E2yTgRDDaOSvoNWG+zfxD7cgT5Apen5YFZkYlFNNaaFfGmTjGgj9z"
+    },
+    "lib.es2020.d.ts": {
+      "bytes": 1162,
+      "integrity": "sha384-oKdRkDjGI2Z6AOBogS3DhWwS9I/QrE5jdGEfdJBaybFn7oMU3U6f2CVni5bKoj3p"
+    },
+    "lib.es2020.date.d.ts": {
+      "bytes": 2917,
+      "integrity": "sha384-sDvbs+n3g9lRJG+ZmnP6kJWjQiR3mldLba+t7ZR0AIEBvUWdNzkk7J2CbnpSYzNP"
+    },
+    "lib.es2020.intl.d.ts": {
+      "bytes": 22399,
+      "integrity": "sha384-Pxnbxwu8OhFBBpBO00LaONYF3rr+HkzNlfQr3rfA3IULYjV5eeVcCCiKmF3jN5Z7"
+    },
+    "lib.es2020.number.d.ts": {
+      "bytes": 1548,
+      "integrity": "sha384-CJ41zbfGqYNsZ/P9t9KvK1llrKZXI5H/+6FkHEBKUaIxhpDA8yTNCW9pTDE+izVN"
+    },
+    "lib.es2020.promise.d.ts": {
+      "bytes": 1764,
+      "integrity": "sha384-GQbIMjyIUxHeCiY+6warCI89RoaudgspF/D5ehsrw4U6R3ehsy86O48uv8Gh9bbH"
+    },
+    "lib.es2020.sharedmemory.d.ts": {
+      "bytes": 5089,
+      "integrity": "sha384-PglmyaWi8PdF+RUB40VnYOFl26FXYtu81rxjN9utEAohOj1kDbCDIO+8mfrVgIcJ"
+    },
+    "lib.es2020.string.d.ts": {
+      "bytes": 2451,
+      "integrity": "sha384-9YItOS7Pzj3zd0h5VF2nKhUtgh8wzc/qQImrQeZDP+dbpuKQiMzseqL7c2lsGOsv"
+    },
+    "lib.es2020.symbol.wellknown.d.ts": {
+      "bytes": 1566,
+      "integrity": "sha384-jaRsh3wKNaqQMilx1fHsspPWcuh6snPRKDlk3z/0KaTnxnLYezshwz1XOfQtdQle"
+    },
+    "lib.es2021.d.ts": {
+      "bytes": 997,
+      "integrity": "sha384-OUSuOfwxazVAuxj7BCJ6UpW4GYXFoPBgKWMApZYswgZDAlwOVivWIlPS2XFIJvrG"
+    },
+    "lib.es2021.intl.d.ts": {
+      "bytes": 8206,
+      "integrity": "sha384-wizz4r7pQlEDiq+KLeEUrVxAOe4afbUVJ2ASThD6CN6fTw6QU/v4Ob1BCrVKeCXt"
+    },
+    "lib.es2021.promise.d.ts": {
+      "bytes": 2223,
+      "integrity": "sha384-57uEVPMIFiczkwH7JdmnzkMUvr+W73Zi2Gn2xFfEdcWuwxvMyFA0bFTo8jpYgxsP"
+    },
+    "lib.es2021.string.d.ts": {
+      "bytes": 1553,
+      "integrity": "sha384-LeFShoEGE3oSkd6O1Pv2bXVJWwqIcCQj5nxGq+5Ha5DywD+mQ0auP/4eyvGd8Yd2"
+    },
+    "lib.es2021.weakref.d.ts": {
+      "bytes": 3132,
+      "integrity": "sha384-ZBK8lPSTAb4J4T6kQJVNPyLKJ7TXa7hUlEX6KTMdcaMTrTifWFlkMNMEWTLdQbmy"
+    },
+    "lib.es2022.array.d.ts": {
+      "bytes": 4637,
+      "integrity": "sha384-cNTWq7IcIJN5HoZpMZmFlu7FlB9hpmkPKoKh7+f28ZGMN6OqR7znbz9RcNICJEP9"
+    },
+    "lib.es2022.d.ts": {
+      "bytes": 1069,
+      "integrity": "sha384-xLvtlaVYoB80UBDpvn+Hdi6mmg+mrpxj9wbv+0ssCP7EqhfhbFZJS/lXtppWwuqg"
+    },
+    "lib.es2022.error.d.ts": {
+      "bytes": 2340,
+      "integrity": "sha384-6iTNsqqxyTCNzuN3PBJ+8qCYVxFYJKyNd0q9Nb3mLAVEc4IG6h+YRDYY4PQEE3GT"
+    },
+    "lib.es2022.intl.d.ts": {
+      "bytes": 7653,
+      "integrity": "sha384-A2QwK18LkYlQW9EzQFrnr76CBb/Bzk70M4i5LK+NfOO0JioBq1j56DifqUOb2eIY"
+    },
+    "lib.es2022.object.d.ts": {
+      "bytes": 1046,
+      "integrity": "sha384-hcxUfvXWAXSGKzNKqApefYP2Y+kQ87Fx9Iu+xmV0allB/pq2YgnbULYHTmHg3WRZ"
+    },
+    "lib.es2022.regexp.d.ts": {
+      "bytes": 1304,
+      "integrity": "sha384-8Egb6biivxJdim4SiCogrpRA2VxVzt7dluSO4jdQm7DJ2R7aOxn5FgHgAZohivV+"
+    },
+    "lib.es2022.string.d.ts": {
+      "bytes": 1116,
+      "integrity": "sha384-SEeouw0soMHuT8VrPMHT8P5LH8gg7j2QILN+DtTBuKAtsop0thBugRAujl+08fEa"
+    },
+    "lib.es5.d.ts": {
+      "bytes": 218972,
+      "integrity": "sha384-Y+RltrPMG8qhco5KfLfECPNlXhyCJ1HK9Fit0++T/rGNJFIlBMd86soSmdh/1dl6"
+    }
+  }
+}

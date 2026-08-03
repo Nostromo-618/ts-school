@@ -1,0 +1,20 @@
+packages: []
+
+# `.npmrc` sets ignore-scripts=true and nothing in the tree needs an exception:
+# vite 8 bundles rolldown (prebuilt platform bindings, no install script) and
+# Playwright fetches browsers on demand via `playwright install`, not from a
+# postinstall. If a dependency ever does need one, allowlist it by name here
+# under `onlyBuiltDependencies` rather than relaxing the global setting.
+
+patchedDependencies:
+  # Two-line fix ported from vd3-docs: vite-ssg's router guard still calls the
+  # next() callback, which vue-router 5 deprecates (VUE_ROUTER_R0025) and warns
+  # about on every prerendered page. Upstream: antfu-collective/vite-ssg#467.
+  vite-ssg@28.3.0: patches/vite-ssg@28.3.0.patch
+
+peerDependencyRules:
+  allowedVersions:
+    # vite-ssg 28 declares its unhead peer across the 2/3 split; we ship
+    # @unhead/vue 2.1.15 (the line vd3-docs runs), so accept both majors rather
+    # than relaxing strict-peer-dependencies globally.
+    unhead: 2 || 3

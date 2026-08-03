@@ -1,0 +1,68 @@
+/* ts-school shell layout — the only stylesheet allowed to define selectors
+   outside the @vanduo-oss/vd3 bundle. Component styling lives in the package;
+   this file owns page scaffolding, the skip link, and nothing else. Anything
+   that looks like a component belongs in vd3 or in a scoped SFC block. */
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+#main-content {
+  min-height: 100vh;
+}
+
+/* Keyboard-only escape hatch past the (forthcoming) navbar and sidebar.
+   Off-screen until focused, then pinned to the top-left. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  padding: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  background: var(--vd-color-primary);
+  color: var(--vd-color-white, #fff);
+  border-radius: 0 0 var(--vd-radius-md, 0.5rem) 0;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  left: 0;
+}
+
+/* Page frame: a readable measure, centred, with the gutter the docs shell
+   will later share. */
+.ts-page {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--vd-space-fib-34, 3.4375rem) var(--vd-space-fib-21, 2.125rem);
+}
+
+.ts-page-centered {
+  min-height: 60vh;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.ts-lead {
+  font-size: clamp(1rem, 0.5vw + 0.9rem, 1.3125rem);
+  line-height: 1.5;
+  color: var(--vd-text-secondary, var(--vd-text-primary));
+  margin: 0;
+  max-width: 46rem;
+}
+
+.ts-error-code {
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  color: var(--vd-text-muted, var(--vd-text-secondary));
+}

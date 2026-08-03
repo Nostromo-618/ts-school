@@ -1,0 +1,7 @@
+# Toolchain pins for ts-school. The plain shell resolves an older node from
+# ~/.hermes, so every install/build/test command must run through mise
+# (`mise exec -- pnpm …`) or an activated mise shell to get 24.x.
+
+[tools]
+node = "24.17.0"
+pnpm = "11.18.0"
