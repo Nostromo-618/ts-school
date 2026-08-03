@@ -14,7 +14,7 @@
  */
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
-import { VdBadge, VdBreadcrumb, VdIcon } from "@vanduo-oss/vd3";
+import { VdBadge, VdIcon } from "@vanduo-oss/vd3";
 import {
   TIER_BADGE_VARIANTS,
   TIER_LABELS,
@@ -45,24 +45,30 @@ const isUnwritten = computed(
 <template>
   <article v-if="lesson" class="ts-page vd-stack" data-gap="fib-21">
     <header class="vd-stack" data-gap="fib-8">
-      <!-- Slot form rather than the `items` prop so the crumbs are RouterLinks
-           and stay client-side navigations. The separator is left at its
-           default: the package's `vd-breadcrumb-separator-*` classes put their
-           glyph on the list element rather than between items, so asking for
-           one renders a stray leading character. -->
-      <VdBreadcrumb>
-        <li class="vd-breadcrumb-item">
-          <RouterLink to="/curriculum" class="vd-breadcrumb-link">
-            Curriculum
-          </RouterLink>
-        </li>
-        <li
-          class="vd-breadcrumb-item vd-breadcrumb-current"
-          aria-current="page"
-        >
-          {{ track?.title ?? lesson.track }}
-        </li>
-      </VdBreadcrumb>
+      <!--
+        The package's `vd-breadcrumbs`/`vd-breadcrumb` markup written out rather
+        than routed through its `VdBreadcrumb` component, for two reasons: the
+        crumbs need to be `RouterLink`s so they navigate client-side, and every
+        separator variant the component can pass renders its glyph on the list
+        element via `::before` rather than between the items, which produces a
+        stray leading character. The list's own `--vd-breadcrumb-separator`
+        already handles it, so this uses the classes and skips the modifier.
+      -->
+      <nav class="vd-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="vd-breadcrumb">
+          <li class="vd-breadcrumb-item">
+            <RouterLink to="/curriculum" class="vd-breadcrumb-link">
+              Curriculum
+            </RouterLink>
+          </li>
+          <li
+            class="vd-breadcrumb-item vd-breadcrumb-current"
+            aria-current="page"
+          >
+            {{ track?.title ?? lesson.track }}
+          </li>
+        </ol>
+      </nav>
 
       <h1>{{ lesson.title }}</h1>
 

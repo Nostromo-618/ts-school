@@ -26,9 +26,14 @@ const search = useSearchStore();
 const router = useRouter();
 const inputRef = ref<HTMLInputElement | null>(null);
 
-const openModal = (): void => {
+const openModal = async (): Promise<void> => {
   search.open();
-  void nextTick(() => inputRef.value?.focus());
+  // Two ticks, not one: `VdModal` awaits a tick of its own before activating
+  // its focus trap and focusing the panel, so a single tick would put the
+  // caret in the input and the modal would immediately take it back.
+  await nextTick();
+  await nextTick();
+  inputRef.value?.focus();
 };
 
 const onSelect = (route: string): void => {
@@ -58,7 +63,7 @@ const onKeydown = (event: KeyboardEvent): void => {
     // `/` is a normal character inside a field; only the bare page gets it.
     if (event.key === "/" && isEditable(event.target)) return;
     event.preventDefault();
-    openModal();
+    void openModal();
     return;
   }
   if (!search.isOpen) return;
@@ -82,12 +87,16 @@ watch(
 
 const hasQuery = computed(() => search.query.trim().length >= 2);
 
+const onOpenRequest = (): void => {
+  void openModal();
+};
+
 onMounted(() => {
-  window.addEventListener("ts:open-search", openModal);
+  window.addEventListener("ts:open-search", onOpenRequest);
   window.addEventListener("keydown", onKeydown);
 });
 onUnmounted(() => {
-  window.removeEventListener("ts:open-search", openModal);
+  window.removeEventListener("ts:open-search", onOpenRequest);
   window.removeEventListener("keydown", onKeydown);
 });
 </script>
