@@ -92,8 +92,11 @@ function closureOf(entryLib, cache) {
     const bytes = readFileSync(path);
     cache.set(fileName, bytes);
 
-    for (const reference of ts.preProcessFile(bytes.toString("utf8"), false, false)
-      .libReferenceDirectives) {
+    for (const reference of ts.preProcessFile(
+      bytes.toString("utf8"),
+      false,
+      false,
+    ).libReferenceDirectives) {
       visit(reference.fileName);
     }
     ordered.push(fileName);
@@ -115,7 +118,10 @@ function buildPayload() {
   const files = {};
   for (const fileName of [...contents.keys()].sort()) {
     const bytes = contents.get(fileName);
-    files[fileName] = { bytes: bytes.byteLength, integrity: integrityOf(bytes) };
+    files[fileName] = {
+      bytes: bytes.byteLength,
+      integrity: integrityOf(bytes),
+    };
   }
 
   return {
@@ -153,7 +159,8 @@ function write({ contents, manifest }) {
   // that no manifest vouches for should not stay in the served payload.
   const expected = new Set([...contents.keys(), "manifest.json"]);
   for (const entry of readdirSync(outputDir)) {
-    if (!expected.has(entry)) rmSync(join(outputDir, entry), { recursive: true });
+    if (!expected.has(entry))
+      rmSync(join(outputDir, entry), { recursive: true });
   }
 
   for (const [fileName, bytes] of contents) {

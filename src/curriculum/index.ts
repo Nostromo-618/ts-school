@@ -19,10 +19,20 @@ import {
 } from "./types";
 import { TRACKS, trackOrder } from "./tracks";
 import { foundationsLessons } from "./lessons/foundations";
+import { typesLessons } from "./lessons/types";
+import { functionsLessons } from "./lessons/functions";
+import { structuresLessons } from "./lessons/structures";
+import { typeLevelLessons } from "./lessons/type-level";
+import { runtimeBoundaryLessons } from "./lessons/runtime-boundary";
+import { asyncLessons } from "./lessons/async";
+import { nodeMigrationLessons } from "./lessons/node-migration";
+import { toolingLessons } from "./lessons/tooling";
+import { testingLessons } from "./lessons/testing";
 
 export * from "./types";
 export * from "./tracks";
 export * from "./presentation";
+export * from "./glossary";
 export { isPlaceholder, PLACEHOLDER_MARKER } from "./placeholder";
 
 /** Position of a tier in the ladder, used as the secondary sort key. */
@@ -38,7 +48,18 @@ export const tierOrder = (tier: Tier): number =>
  * a track that is not listed here does not exist as far as the site is
  * concerned, which is the behaviour we want from a source of truth.
  */
-const REGISTERED: readonly Lesson[] = [...foundationsLessons];
+const REGISTERED: readonly Lesson[] = [
+  ...foundationsLessons,
+  ...typesLessons,
+  ...functionsLessons,
+  ...structuresLessons,
+  ...typeLevelLessons,
+  ...runtimeBoundaryLessons,
+  ...asyncLessons,
+  ...nodeMigrationLessons,
+  ...toolingLessons,
+  ...testingLessons,
+];
 
 /**
  * Every lesson, in curriculum order: track, then tier, then the lesson's own

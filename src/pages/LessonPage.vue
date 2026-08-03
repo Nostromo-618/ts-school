@@ -14,7 +14,7 @@
  */
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
-import { VdBadge, VdIcon } from "@vanduo-oss/vd3";
+import { VdBadge, VdBreadcrumb, VdIcon } from "@vanduo-oss/vd3";
 import {
   TIER_BADGE_VARIANTS,
   TIER_LABELS,
@@ -45,18 +45,21 @@ const isUnwritten = computed(
 <template>
   <article v-if="lesson" class="ts-page vd-stack" data-gap="fib-21">
     <header class="vd-stack" data-gap="fib-8">
-      <nav class="vd-breadcrumb" aria-label="Breadcrumb">
-        <ol class="vd-breadcrumb-list">
-          <li class="vd-breadcrumb-item">
-            <RouterLink to="/curriculum" class="vd-breadcrumb-link">
-              Curriculum
-            </RouterLink>
-          </li>
-          <li class="vd-breadcrumb-item">
-            <span aria-current="page">{{ track?.title ?? lesson.track }}</span>
-          </li>
-        </ol>
-      </nav>
+      <!-- Slot form rather than the `items` prop so the crumbs are RouterLinks
+           and stay client-side navigations. -->
+      <VdBreadcrumb separator="chevron">
+        <li class="vd-breadcrumb-item">
+          <RouterLink to="/curriculum" class="vd-breadcrumb-link">
+            Curriculum
+          </RouterLink>
+        </li>
+        <li
+          class="vd-breadcrumb-item vd-breadcrumb-current"
+          aria-current="page"
+        >
+          {{ track?.title ?? lesson.track }}
+        </li>
+      </VdBreadcrumb>
 
       <h1>{{ lesson.title }}</h1>
 

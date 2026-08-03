@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import { useHead } from "@unhead/vue";
+import { VdToastContainer } from "@vanduo-oss/vd3";
+import SchoolNavbar from "@/layout/SchoolNavbar.vue";
+import SchoolFooter from "@/layout/SchoolFooter.vue";
+import SchoolLayout from "@/layout/SchoolLayout.vue";
+import GlobalSearchModal from "@/overlays/GlobalSearchModal.vue";
+import { useThemeStore } from "@/stores/theme";
 
 const route = useRoute();
+const theme = useThemeStore();
 
 // ── Per-route SEO (baked into the prerendered HTML via @unhead) ──────
 const BRAND_TITLE = "TypeScript School";
@@ -29,14 +36,32 @@ useHead({
     { property: "og:description", content: pageDescription },
   ],
 });
+
+/** Lesson routes get the sidebar; everything else is full width. */
+const isLesson = computed(() => route.meta?.layout === "lesson");
+
+onMounted(() => {
+  // Client only: the theme is hydrated from localStorage rather than
+  // serialised into the page, because `script-src 'self'` blocks the inline
+  // script vite-ssg would use for initial state.
+  theme.init();
+});
 </script>
 
 <template>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- The docs shell (navbar, sidebar, footer, overlays) wraps this outlet in
-       the port-docs-shell change; until then the router renders bare. -->
+  <SchoolNavbar />
+
   <main id="main-content">
-    <RouterView />
+    <SchoolLayout v-if="isLesson">
+      <RouterView />
+    </SchoolLayout>
+    <RouterView v-else />
   </main>
+
+  <SchoolFooter />
+
+  <GlobalSearchModal />
+  <VdToastContainer />
 </template>

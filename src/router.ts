@@ -2,6 +2,8 @@ import type { RouteRecordRaw } from "vue-router";
 import HomePage from "@/pages/home.vue";
 import NotFoundPage from "@/pages/not-found.vue";
 import LessonPage from "@/pages/LessonPage.vue";
+import CurriculumPage from "@/pages/curriculum.vue";
+import GlossaryPage from "@/pages/glossary.vue";
 import { allLessons, lessonRoute, trackById } from "@/curriculum";
 
 /**
@@ -27,6 +29,9 @@ const lessonRoutes = (): RouteRecordRaw[] =>
       tier: lesson.tier,
       track: lesson.track,
       trackTitle: trackById(lesson.track)?.title,
+      // Selects the sidebar frame in App.vue. The curriculum map is already an
+      // index of every lesson, so it deliberately does not carry this.
+      layout: "lesson",
     },
   }));
 
@@ -50,6 +55,30 @@ export const buildRoutes = (): RouteRecordRaw[] => {
       description:
         "Learn TypeScript by fixing real JavaScript, with every diagnostic checked by the real compiler.",
       keywords: ["typescript", "javascript", "types", "learn"],
+    },
+  });
+
+  routes.push({
+    path: "/curriculum",
+    name: "curriculum",
+    component: CurriculumPage,
+    meta: {
+      title: "Curriculum",
+      description:
+        "The full TypeScript School map: every lesson, by track and tier, from why types at all to the compiler's own internals.",
+      keywords: ["curriculum", "syllabus", "lessons", "tracks", "tiers", "map"],
+    },
+  });
+
+  routes.push({
+    path: "/glossary",
+    name: "glossary",
+    component: GlossaryPage,
+    meta: {
+      title: "Glossary",
+      description:
+        "Every TypeScript term this site uses, tagged with the tier it starts mattering at and linked to the lessons that teach it.",
+      keywords: ["glossary", "terms", "definitions", "vocabulary", "jargon"],
     },
   });
 

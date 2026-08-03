@@ -236,3 +236,10 @@ build at all.
   a compiler upgrade would fail verification. The failure is explicit and names
   the file, which is better than feeding a mismatched library to the compiler
   and producing wrong diagnostics.
+- **`.d.ts` is served as `video/mp2t`** → the `.ts` extension is registered to
+  MPEG transport streams, and `vite preview` duly labels the library that way.
+  Nothing breaks, because the worker reads the response as bytes and decodes it
+  itself rather than trusting the type. It matters only for compression: many
+  static hosts gzip by MIME type and would leave 459 KB uncompressed where
+  81 KB would do. Any host fronting this build should map `.d.ts` to
+  `text/plain` and compress it.

@@ -117,12 +117,26 @@ export default [
     },
   },
   {
+    // `eslint .` walks only .js/.mjs/.cjs plus whatever extensions a config
+    // block names, so without this the TypeScript sources are never linted at
+    // all — and the security rules above (no eval, no Function constructor, no
+    // javascript: URL, no innerHTML) would never run on the code that actually
+    // compiles learner input. Rules and parser come from the general block.
+    files: ['**/*.ts', '**/*.mts', '**/*.cts'],
+  },
+  {
     ignores: [
       'dist/**',
       'node_modules/**',
       'playwright-report/**',
       'test-results/**',
       'coverage/**',
+      // Build output of the type-check harness (scripts/harness/), and the
+      // copy of the TypeScript standard library that scripts/sync-ts-libs.mjs
+      // drops into public/. Both are generated, and the second is 2.8 MB of
+      // .d.ts that no lint rule has an opinion about.
+      '.harness-dist/**',
+      'public/ts-lib/**',
       // Throwaway local screenshot/debug scripts (not application code).
       '__*.mjs',
     ],

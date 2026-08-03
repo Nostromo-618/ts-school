@@ -36,12 +36,17 @@ body {
   left: 0;
 }
 
-/* Page frame: a readable measure, centred, with the gutter the docs shell
-   will later share. */
+/* Page frame: a readable measure, centred, with the gutter the shell shares. */
 .ts-page {
   max-width: 72rem;
   margin: 0 auto;
   padding: var(--vd-space-fib-34, 3.4375rem) var(--vd-space-fib-21, 2.125rem);
+}
+
+/* Inside the lesson frame the sidebar already supplies the outer gutter. */
+.ts-lesson-frame .ts-page {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .ts-page-centered {
@@ -65,4 +70,292 @@ body {
   line-height: 1;
   margin: 0;
   color: var(--vd-text-muted, var(--vd-text-secondary));
+}
+
+/* ── Page layout primitives ──────────────────────────────────────────
+   Flow and spacing only, on vd3 tokens. Anything that looks like a
+   component — a badge, a button, a card, a breadcrumb — is rendered with
+   the package's own classes and is deliberately absent from this file. */
+
+.ts-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-filter-bar > [role="group"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vd-space-fib-3, 0.3125rem);
+}
+
+.ts-filter-search {
+  display: flex;
+  flex: 1 1 18rem;
+  align-items: center;
+  gap: var(--vd-space-fib-3, 0.3125rem);
+}
+
+.ts-filter-search .vd-input {
+  flex: 1;
+}
+
+.ts-tier-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vd-space-fib-21, 2.125rem);
+  margin: 0;
+}
+
+.ts-tier-summary dt {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-2, 0.1875rem);
+  font-weight: 600;
+}
+
+.ts-tier-summary dd {
+  margin: 0;
+  color: var(--vd-text-muted, var(--vd-text-secondary));
+}
+
+.ts-track-title {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-5, 0.5rem);
+  margin: 0;
+}
+
+.ts-track-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+  margin: 0;
+  padding: var(--vd-space-fib-13, 1.3125rem);
+  list-style: none;
+}
+
+.ts-track-lesson {
+  display: flex;
+  align-items: baseline;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-track-lesson-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ts-track-lesson-body p {
+  margin: var(--vd-space-fib-2, 0.1875rem) 0 0;
+}
+
+.ts-track-lesson-title {
+  font-weight: 600;
+}
+
+.ts-glossary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-fib-21, 2.125rem);
+  margin: 0;
+}
+
+.ts-glossary-term {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vd-space-fib-5, 0.5rem);
+}
+
+.ts-glossary-name {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.ts-glossary-definition {
+  margin: var(--vd-space-fib-3, 0.3125rem) 0 0;
+}
+
+.ts-glossary-definition p {
+  margin: 0 0 var(--vd-space-fib-3, 0.3125rem);
+}
+
+.ts-glossary-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vd-space-fib-13, 1.3125rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+/* Previous on the left, next on the right, even when one of them is absent. */
+.ts-lesson-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--vd-space-fib-13, 1.3125rem);
+}
+
+.ts-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-tier-cards,
+.ts-track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: var(--vd-space-fib-13, 1.3125rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ts-tier-card-title,
+.ts-track-grid-title {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-5, 0.5rem);
+  margin: 0;
+  font-weight: 600;
+}
+
+.ts-track-grid-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-track-grid-item p {
+  margin: 0;
+}
+
+/* ── Shell ───────────────────────────────────────────────────────────
+   Frame geometry only. The navbar, sidebar list, footer, modal, badges,
+   and buttons are all styled by @vanduo-oss/vd3; what is here is where
+   those pieces sit relative to one another. */
+
+.ts-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vd-space-fib-5, 0.5rem);
+  color: inherit;
+  text-decoration: none;
+}
+
+.ts-brand-mark {
+  display: block;
+  flex: none;
+  color: var(--vd-color-primary);
+}
+
+.ts-brand-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  line-height: 1;
+}
+
+.ts-brand-name {
+  font-weight: 700;
+}
+
+.ts-brand-word {
+  font-weight: 400;
+  color: var(--vd-text-secondary, var(--vd-text-muted));
+}
+
+/* Below the breakpoint the collapsible menu is a fixed drawer and leaves the
+   flow, so the actions need to claim the space between brand and burger. */
+.ts-navbar-actions {
+  margin-left: auto;
+}
+
+.ts-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+  margin-bottom: var(--vd-space-fib-8, 0.8125rem);
+  font-size: 1.125rem;
+}
+
+.ts-lesson-frame {
+  padding-top: var(--vd-space-fib-34, 3.4375rem);
+  padding-bottom: var(--vd-space-fib-34, 3.4375rem);
+}
+
+.ts-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-sidebar-tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vd-space-fib-2, 0.1875rem);
+}
+
+.ts-sidebar-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-3, 0.3125rem);
+}
+
+.ts-sidebar-filter .vd-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.ts-sidebar-nav {
+  display: none;
+}
+
+.ts-sidebar-nav.is-open {
+  display: block;
+}
+
+.ts-sidebar-nav .vd-sidenav-nav {
+  margin: 0;
+}
+
+/* Above the large breakpoint the sidebar is a sticky column that scrolls with
+   its own overflow, so a 30-lesson tier never pushes the footer down. */
+@media (width >= 992px) {
+  .ts-sidebar {
+    position: sticky;
+    top: calc(var(--vd-navbar-height, 3.4375rem) + 1rem);
+    max-height: calc(100vh - var(--vd-navbar-height, 3.4375rem) - 2rem);
+  }
+
+  .ts-sidebar-toggle {
+    display: none;
+  }
+
+  .ts-sidebar-nav {
+    display: block;
+    overflow-y: auto;
+  }
+}
+
+/* The package styles .vd-doc-search-results as an absolutely positioned
+   dropdown beneath an in-page input. Inside the palette it is the body of the
+   dialog, so it sits in the flow instead. */
+.ts-search-modal .vd-doc-search {
+  margin-bottom: 0;
+}
+
+.ts-search-modal .vd-doc-search-results {
+  position: static;
+  margin-top: var(--vd-space-fib-8, 0.8125rem);
+  max-height: min(50vh, 26rem);
+}
+
+.ts-search-modal .ts-search-group {
+  padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-13, 1.3125rem) 0;
+  font-weight: 600;
 }
