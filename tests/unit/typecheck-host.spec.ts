@@ -127,10 +127,10 @@ describe('typecheck session', () => {
   });
 
   it('reports an unresolved import rather than reaching for a package', () => {
-    const [diagnostic] = check('import { readFile } from "node:fs";');
+    const [diagnostic] = check('import { parse } from "some-package";');
 
     expect(diagnostic.code).toBe(2307);
-    expect(diagnostic.message).toContain('node:fs');
+    expect(diagnostic.message).toContain('some-package');
   });
 
   it('never executes the source it checks', () => {
