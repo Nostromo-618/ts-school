@@ -106,7 +106,8 @@ const TRACK_ORDER = new Map<TrackId, number>(
   TRACKS.map((track) => [track.id, track.order]),
 );
 
-export const trackById = (id: TrackId): Track | undefined => TRACK_BY_ID.get(id);
+export const trackById = (id: TrackId): Track | undefined =>
+  TRACK_BY_ID.get(id);
 
 /**
  * Sort weight for a track. Falls back past the last real track so an id that

@@ -10,7 +10,13 @@
  * stop agreeing.
  */
 
-import { TIERS, type Lesson, type LessonId, type Tier, type TrackId } from "./types";
+import {
+  TIERS,
+  type Lesson,
+  type LessonId,
+  type Tier,
+  type TrackId,
+} from "./types";
 import { TRACKS, trackOrder } from "./tracks";
 import { foundationsLessons } from "./lessons/foundations";
 
@@ -24,7 +30,8 @@ const TIER_ORDER = new Map<Tier, number>(
   TIERS.map((tier, index) => [tier, index]),
 );
 
-export const tierOrder = (tier: Tier): number => TIER_ORDER.get(tier) ?? TIERS.length;
+export const tierOrder = (tier: Tier): number =>
+  TIER_ORDER.get(tier) ?? TIERS.length;
 
 /**
  * Every registered track's lessons, concatenated. Registration is explicit:

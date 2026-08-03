@@ -146,7 +146,10 @@ export const navSections = (tree: NavTree = nav): NavSection[] =>
   );
 
 /** The tier tab a lesson route belongs to, for keeping the sidebar in step. */
-export const tierForRoute = (route: string, tree: NavTree = nav): Tier | null => {
+export const tierForRoute = (
+  route: string,
+  tree: NavTree = nav,
+): Tier | null => {
   for (const tab of tree.tabs) {
     for (const category of tab.categories) {
       if (category.sections.some((section) => section.route === route)) {

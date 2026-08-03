@@ -9,10 +9,7 @@
  */
 
 export type TsDiagnosticCategory =
-  | "error"
-  | "warning"
-  | "suggestion"
-  | "message";
+  "error" | "warning" | "suggestion" | "message";
 
 /** A diagnostic as reported by the compiler, normalized for display. */
 export interface TsDiagnostic {

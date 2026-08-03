@@ -174,7 +174,8 @@ export function createVirtualCompilerHost(
       return parsed;
     },
 
-    getDefaultLibFileName: () => `${VIRTUAL_ROOT}${libFileNameFor(BASELINE_LIB)}`,
+    getDefaultLibFileName: () =>
+      `${VIRTUAL_ROOT}${libFileNameFor(BASELINE_LIB)}`,
     getDefaultLibLocation: () => VIRTUAL_ROOT,
 
     writeFile() {
@@ -334,8 +335,7 @@ export function createTypecheckSession(
       ]
         .map((diagnostic) => toTsDiagnostic(ts, diagnostic))
         .sort(
-          (a, b) =>
-            a.line - b.line || a.column - b.column || a.code - b.code,
+          (a, b) => a.line - b.line || a.column - b.column || a.code - b.code,
         );
 
       return { diagnostics, durationMs: now() - startedAt };
