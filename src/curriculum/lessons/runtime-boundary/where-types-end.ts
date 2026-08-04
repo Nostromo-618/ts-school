@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "where-types-end",
@@ -8,12 +7,112 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 1,
   summary:
-    "Every request body, environment variable, CLI argument, file, and database row enters your program as a promise nobody checked. Mapping that perimeter is the first step to defending it.",
-  prerequisites: ["types-are-erased"],
-  keywords: ["boundary", "untrusted input", "io", "perimeter", "trust"],
+    "Types describe your program, not the network — the boundary between trusted and untrusted values is where TypeScript's guarantees end.",
+  prerequisites: ["types-are-erased", "unknown-vs-any"],
+  keywords: ["boundary", "untrusted input", "IO", "validation"],
   problem:
-    "Types are erased before the program runs, so every annotation on incoming data is a claim rather than a check.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+    "A request handler types req.body as a rich interface and then trusts every field without checking.",
+  js: {
+    code: `function createUser(body) {
+  return { id: body.id, admin: body.admin === true };
+}
+
+createUser(JSON.parse('{"id":"1","admin":"true"}'));
+`,
+    highlights: [{ start: 5, end: 5 }],
+    caption: 'String "true" is not boolean true — authz bug.',
+  },
+  ts: {
+    code: `type CreateUser = { id: string; admin: boolean };
+
+function createUser(body: CreateUser): CreateUser {
+  return { id: body.id, admin: body.admin };
+}
+
+// Looks typed. The bytes still came from outside the program.
+const body = JSON.parse('{"id":"1","admin":"true"}') as CreateUser;
+createUser(body);
+`,
+    highlights: [{ start: 8, end: 8 }],
+    caption: "The type ends at the assertion — runtime still lies.",
+    expectedDiagnostics: [],
+  },
+  insight: [
+    "Everything that crosses IO (HTTP, disk, env, queues) starts as untrusted.",
+    "Types inside your process are only as true as the validations at the edge.",
+    "Treat as Model and any as 'I stopped checking' — prefer unknown + parse.",
+  ],
+  security: {
+    title: "Typed handlers are not validated handlers",
+    body: "Attackers send JSON that satisfies your hopes, not your types. Never authorize from fields that were only asserted.",
+    severity: "critical",
+  },
+  quiz: [
+    {
+      id: "q1",
+      prompt: "Where do static types stop protecting you?",
+      choices: [
+        { id: "a", text: "At process boundaries / untrusted input" },
+        { id: "b", text: "Inside pure functions" },
+        { id: "c", text: "When using const" },
+        { id: "d", text: "Never" },
+      ],
+      answerId: "a",
+      explanation: "External data is not produced by the type checker.",
+    },
+  ],
+  exercise: {
+    prompt: "Accept unknown and narrow before createUser.",
+    starter: `type CreateUser = { id: string; admin: boolean };
+
+function createUser(body: CreateUser): CreateUser {
+  return { id: body.id, admin: body.admin };
+}
+
+function parseCreateUser(input: unknown): CreateUser | null {
+  if (
+    typeof input === "object" &&
+    input !== null &&
+    "id" in input &&
+    "admin" in input &&
+    typeof (input as CreateUser).id === "string" &&
+    typeof (input as CreateUser).admin === "boolean"
+  ) {
+    return input as CreateUser;
+  }
+  return null;
+}
+
+const body = JSON.parse('{"id":"1","admin":true}') as CreateUser;
+createUser(body);
+`,
+    assertion: "no-errors",
+    hints: [
+      "const parsed = parseCreateUser(...); if (parsed) createUser(parsed);",
+    ],
+    solution: `type CreateUser = { id: string; admin: boolean };
+
+function createUser(body: CreateUser): CreateUser {
+  return { id: body.id, admin: body.admin };
+}
+
+function parseCreateUser(input: unknown): CreateUser | null {
+  if (
+    typeof input === "object" &&
+    input !== null &&
+    "id" in input &&
+    "admin" in input &&
+    typeof (input as CreateUser).id === "string" &&
+    typeof (input as CreateUser).admin === "boolean"
+  ) {
+    return input as CreateUser;
+  }
+  return null;
+}
+
+const body: unknown = JSON.parse('{"id":"1","admin":true}');
+const parsed = parseCreateUser(body);
+if (parsed) createUser(parsed);
+`,
+  },
 };

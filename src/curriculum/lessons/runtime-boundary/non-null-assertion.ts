@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "non-null-assertion",
@@ -8,18 +7,74 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 5,
   summary:
-    "! silences one specific complaint. The handful of cases where the programmer really does know better, and the far larger set where they do not.",
-  prerequisites: ["type-assertions-are-claims", "null-and-undefined"],
-  keywords: [
-    "non-null assertion",
-    "bang",
-    "undefined",
-    "strictNullChecks",
-    "escape hatch",
-  ],
+    "value! tells TypeScript a value is not null or undefined — another claim that can lie at runtime.",
+  prerequisites: ["null-and-undefined", "type-assertions-are-claims"],
+  keywords: ["non-null assertion", "!", "definite assignment"],
   problem:
-    "A bang at the end of an expression is the shortest way to turn a compile error into a production stack trace.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+    "map.get(key)! crashes when the key is missing — the bang only silenced the checker.",
+  js: {
+    code: `const users = new Map();
+users.set("1", { name: "Ada" });
+users.get("missing").name;
+`,
+    highlights: [{ start: 3, end: 3 }],
+    caption: "Map.get returns undefined when absent.",
+  },
+  ts: {
+    code: `type User = { name: string };
+const users = new Map<string, User>();
+users.set("1", { name: "Ada" });
+
+// ! removes | undefined from the type — not from reality.
+users.get("missing")!.name;
+`,
+    highlights: [{ start: 6, end: 6 }],
+    caption: "Prefer an explicit check or a throw with context.",
+    expectedDiagnostics: [],
+  },
+  insight: [
+    "x! is shorthand for 'I promise x is not nullish' — same family as as.",
+    "Use if (!x) throw new Error(...) when absence is a bug you want to see.",
+    "Ban ! in lint for app code if your team keeps foot-gunning with it.",
+  ],
+  security: {
+    title: "Non-null assertions hide missing auth context",
+    body: "req.user! in middleware stacks is a classic crash and a confused-deputy risk when the middleware order changes. Check and return 401 instead.",
+    severity: "caution",
+  },
+  quiz: [
+    {
+      id: "q1",
+      prompt: "What does expr! change at runtime?",
+      choices: [
+        { id: "a", text: "Throws if null" },
+        { id: "b", text: "Nothing — it is erased" },
+        { id: "c", text: "Converts null to undefined" },
+        { id: "d", text: "Freezes the object" },
+      ],
+      answerId: "b",
+      explanation: "It only affects the type.",
+    },
+  ],
+  exercise: {
+    prompt: "Handle a missing map entry without !.",
+    starter: `type User = { name: string };
+const users = new Map<string, User>();
+users.set("1", { name: "Ada" });
+
+users.get("missing")!.name;
+`,
+    assertion: "no-errors",
+    hints: ["const u = users.get(...); if (!u) throw ...; u.name"],
+    solution: `type User = { name: string };
+const users = new Map<string, User>();
+users.set("1", { name: "Ada" });
+
+const user = users.get("missing");
+if (!user) {
+  throw new Error("user not found");
+}
+user.name;
+`,
+  },
 };

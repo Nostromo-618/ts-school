@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "tsconfig-essentials",
@@ -13,7 +12,87 @@ export const lesson: Lesson = {
   keywords: ["tsconfig", "target", "module", "lib", "outDir", "configuration"],
   problem:
     "Copying a tsconfig from a blog post produces errors that make no sense, because half its options were written for a different runtime.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `// package.json "type": "module" but code still uses require —
+// config and runtime disagree long before types enter the picture.
+const fs = require("fs");
+module.exports = { read: (p) => fs.readFileSync(p, "utf8") };
+`,
+    highlights: [{ start: 3, end: 4 }],
+    caption:
+      "Module format is a runtime/config concern; types inherit the mess.",
+  },
+  ts: {
+    code: `// This site's checker uses ESNext modules. CommonJS require is not defined.
+const fs = require("fs");
+
+export function read(path: string): string {
+  return fs.readFileSync(path, "utf8");
+}
+`,
+    highlights: [{ start: 2, end: 2 }],
+    caption:
+      "Wrong module assumptions surface as 'Cannot find name require' — fix config, don't cast.",
+    expectedDiagnostics: [
+      {
+        code: 2591,
+        line: 2,
+        messageIncludes: "require",
+      },
+    ],
+  },
+  insight: [
+    "For Node today: module/moduleResolution bundler or nodenext, target es2022+, strict true.",
+    "lib should match your runtime — do not pull dom into a pure Node service.",
+    "skipLibCheck speeds builds by skipping .d.ts checking; it does not fix your code.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: 'Why avoid "lib": ["dom"] in a Node API service?',
+      choices: [
+        {
+          id: "a",
+          text: "DOM types make the compiler slower and invent browser globals",
+        },
+        { id: "b", text: "Node cannot run JavaScript" },
+        { id: "c", text: "strict mode requires it" },
+        { id: "d", text: "It disables noEmit" },
+      ],
+      answerId: "a",
+      explanation:
+        "dom adds window/document and related types that hide mistakes in server code.",
+    },
+  ],
+  exercise: {
+    prompt:
+      "Replace require with a local typed stub so the file type-checks under ESM.",
+    starter: `const fs = require("fs");
+
+export function read(path: string): string {
+  return fs.readFileSync(path, "utf8");
+}
+`,
+    assertion: "no-errors",
+    hints: [
+      "Declare a minimal fs object: const fs = { readFileSync(path: string, enc: string): string { return path + enc; } };",
+    ],
+    solution: `const fs = {
+  readFileSync(path: string, _enc: string): string {
+    return path;
+  },
+};
+
+export function read(path: string): string {
+  return fs.readFileSync(path, "utf8");
+}
+`,
+  },
+  references: [
+    {
+      title: "TSConfig Reference",
+      href: "https://www.typescriptlang.org/tsconfig/",
+      note: "Authoritative option list.",
+    },
+  ],
 };

@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "esm-imports-and-exports",
@@ -8,12 +7,66 @@ export const lesson: Lesson = {
   track: "structures",
   order: 9,
   summary:
-    "Named and default exports, import type, and why a type import that looks like a value import can change what ends up in your bundle.",
-  prerequisites: ["types-are-erased"],
-  keywords: ["esm", "import", "export", "import type", "side effect"],
+    "export/import in TypeScript modules, and import type so type-only dependencies stay erasable under isolatedModules.",
+  prerequisites: ["classes-intro", "tsconfig-essentials"],
+  keywords: ["esm", "import type", "export", "modules"],
   problem:
-    "Importing a type from a module that has side effects keeps the module in the output even though nothing uses it.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+    "A value import of a type-only symbol breaks emit under isolatedModules / verbatimModuleSyntax.",
+  js: {
+    code: `// CJS leaking into an ESM package — runtime ERR_REQUIRE_ESM.
+const { User } = require("./user");
+module.exports.make = () => new User();
+`,
+    highlights: [{ start: 2, end: 3 }],
+    caption: "Module format mismatches fail at runtime, not design time.",
+  },
+  ts: {
+    code: `// In this single-file sandbox there is no "./user" module.
+import { User } from "./user";
+
+export function label(u: User): string {
+  return u.name;
+}
+`,
+    highlights: [{ start: 2, end: 2 }],
+    caption: "Real projects resolve this via relative ESM paths + types.",
+    expectedDiagnostics: [{ code: 2307, line: 2, messageIncludes: "./user" }],
+  },
+  insight: [
+    "Prefer named ESM exports over default for tree-shaking clarity.",
+    "import type { User } makes the import type-only — erased, safe with isolatedModules.",
+    "Keep runtime values and types distinguished when verbatimModuleSyntax is on.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "When should you write import type?",
+      choices: [
+        { id: "a", text: "For every import" },
+        { id: "b", text: "When the symbol is used only in type positions" },
+        { id: "c", text: "Only for default exports" },
+        { id: "d", text: "Never — TypeScript always erases imports" },
+      ],
+      answerId: "b",
+      explanation:
+        "Value imports must remain for runtime; type-only imports should not.",
+    },
+  ],
+  exercise: {
+    prompt: "Inline a User type so the file has no external import.",
+    starter: `import { User } from "./user";
+
+export function label(u: User): string {
+  return u.name;
+}
+`,
+    assertion: "no-errors",
+    hints: ["type User = { name: string }"],
+    solution: `type User = { name: string };
+
+export function label(u: User): string {
+  return u.name;
+}
+`,
+  },
 };

@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "union-types",
@@ -10,10 +9,79 @@ export const lesson: Lesson = {
   summary:
     "A | B means one of these, not both. What you may do with a union before you have narrowed it, and why that restriction is the point.",
   prerequisites: ["object-type-literals"],
-  keywords: ["union", "or", "sum type", "alternatives", "assignability"],
+  keywords: ["union", "|", "narrowing", "nullable"],
   problem:
     "A function that returns a user or null is documented in a comment, and every caller decides for itself whether to check.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function findUser(id) {
+  if (id === "missing") return null;
+  return { id, name: "Ada" };
+}
+
+const user = findUser("missing");
+user.name.toUpperCase();
+`,
+    highlights: [{ start: 7, end: 7 }],
+    caption: "null is a valid return; calling .name is not.",
+  },
+  ts: {
+    code: `type User = { id: string; name: string };
+
+function findUser(id: string): User | null {
+  if (id === "missing") return null;
+  return { id, name: "Ada" };
+}
+
+const user = findUser("missing");
+user.name.toUpperCase();
+`,
+    highlights: [{ start: 9, end: 9 }],
+    caption: "You must narrow User | null before reading name.",
+    expectedDiagnostics: [{ code: 18047, line: 9, messageIncludes: "null" }],
+  },
+  insight: [
+    "A union is a value that could be any of the members — only common operations are allowed until you narrow.",
+    "User | null is the honest return type for 'maybe found'.",
+    "Narrow with equality checks, typeof, or predicates — do not assert the danger away.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "Before narrowing, what can you safely do with User | null?",
+      choices: [
+        { id: "a", text: "Read .name" },
+        { id: "b", text: "Compare to null / use optional chaining" },
+        { id: "c", text: "Call any User method" },
+        { id: "d", text: "Index it like an array" },
+      ],
+      answerId: "b",
+      explanation: "Operations must be valid for every member of the union.",
+    },
+  ],
+  exercise: {
+    prompt: "Narrow before reading name.",
+    starter: `type User = { id: string; name: string };
+
+function findUser(id: string): User | null {
+  if (id === "missing") return null;
+  return { id, name: "Ada" };
+}
+
+const user = findUser("missing");
+user.name.toUpperCase();
+`,
+    assertion: "no-errors",
+    hints: ["if (user) { ... } or user?.name"],
+    solution: `type User = { id: string; name: string };
+
+function findUser(id: string): User | null {
+  if (id === "missing") return null;
+  return { id, name: "Ada" };
+}
+
+const user = findUser("missing");
+const label = user ? user.name.toUpperCase() : "missing";
+void label;
+`,
+  },
 };

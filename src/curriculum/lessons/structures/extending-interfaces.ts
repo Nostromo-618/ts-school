@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "extending-interfaces",
@@ -8,18 +7,93 @@ export const lesson: Lesson = {
   track: "structures",
   order: 6,
   summary:
-    "extends adds to a shape and checks that the addition is compatible — which is the difference from an intersection that silently produces never.",
-  prerequisites: ["interface-vs-type-alias"],
-  keywords: [
-    "extends",
-    "inheritance",
-    "interface",
-    "compatibility",
-    "conflict",
-  ],
+    "interface Child extends Parent adds fields while keeping assignability to the parent type.",
+  prerequisites: ["interfaces-intro"],
+  keywords: ["extends", "inheritance", "interface"],
   problem:
-    "Two shapes with the same property at different types can be intersected, and the result is a type nothing can satisfy.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+    "Admin users need a role field; copying the whole User interface guarantees the next User change is forgotten on Admin.",
+  js: {
+    code: `function audit(actor) {
+  return actor.id + ":" + actor.role;
+}
+
+audit({ id: "1", name: "Ada" });
+`,
+    highlights: [{ start: 5, end: 5 }],
+    caption: "role is assumed; missing means undefined in the log line.",
+  },
+  ts: {
+    code: `interface User {
+  id: string;
+  name: string;
+}
+
+interface Admin extends User {
+  role: "admin";
+}
+
+function audit(actor: Admin): string {
+  return actor.id + ":" + actor.role;
+}
+
+audit({ id: "1", name: "Ada" });
+`,
+    highlights: [{ start: 14, end: 14 }],
+    caption: "Extends pulls in User fields and still requires role.",
+    expectedDiagnostics: [{ code: 2345, line: 14, messageIncludes: "role" }],
+  },
+  insight: [
+    "Child is assignable to Parent when it only adds fields (structural).",
+    "Multiple extends is allowed: interface C extends A, B.",
+    "Prefer extends over copy-paste when modeling specialization.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "Is Admin assignable to User?",
+      choices: [
+        { id: "a", text: "Usually yes — it has at least User's fields" },
+        { id: "b", text: "Never" },
+        { id: "c", text: "Only with as User" },
+        { id: "d", text: "Only at runtime" },
+      ],
+      answerId: "a",
+      explanation: "Structural typing: extra fields are fine for variables.",
+    },
+  ],
+  exercise: {
+    prompt: 'Include role: "admin" in the call.',
+    starter: `interface User {
+  id: string;
+  name: string;
+}
+
+interface Admin extends User {
+  role: "admin";
+}
+
+function audit(actor: Admin): string {
+  return actor.id + ":" + actor.role;
+}
+
+audit({ id: "1", name: "Ada" });
+`,
+    assertion: "no-errors",
+    hints: ['Add role: "admin"'],
+    solution: `interface User {
+  id: string;
+  name: string;
+}
+
+interface Admin extends User {
+  role: "admin";
+}
+
+function audit(actor: Admin): string {
+  return actor.id + ":" + actor.role;
+}
+
+audit({ id: "1", name: "Ada", role: "admin" });
+`,
+  },
 };
