@@ -234,6 +234,25 @@ body {
   margin: 0;
 }
 
+/* History page: two charts side by side when width allows. */
+.ts-history-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--vd-space-fib-21, 2.125rem);
+  margin: 0;
+}
+
+.ts-history-chart {
+  margin: 0;
+  min-width: 0;
+}
+
+.ts-history-chart-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
 /* ── Shell ───────────────────────────────────────────────────────────
    Frame geometry only. The navbar, sidebar list, footer, modal, badges,
    and buttons are all styled by @vanduo-oss/vd3; what is here is where

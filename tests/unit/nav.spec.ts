@@ -1,16 +1,16 @@
-import { describe, expect, it } from 'vitest';
-import { createRouter, createMemoryHistory } from 'vue-router';
-import { allLessons, lessonRoute, TIERS, TRACKS } from '@/curriculum';
-import { nav, navSections, tierForRoute } from '@/nav';
-import { buildRoutes } from '@/router';
+import { describe, expect, it } from "vitest";
+import { createRouter, createMemoryHistory } from "vue-router";
+import { allLessons, lessonRoute, TIERS, TRACKS } from "@/curriculum";
+import { nav, navSections, tierForRoute } from "@/nav";
+import { buildRoutes } from "@/router";
 
 // vd3-docs hand-maintains its nav tree alongside its route table, so a page can
 // exist in one and not the other and nothing notices. These tests are what
 // replaces that review burden: nav, routes, and the registry are three views of
 // one list, and any disagreement between them is a failure.
 
-describe('derived navigation tree', () => {
-  it('reaches every registered lesson exactly once', () => {
+describe("derived navigation tree", () => {
+  it("reaches every registered lesson exactly once", () => {
     const sectionRoutes = navSections().map((section) => section.route);
     const lessonRoutes = allLessons.map(lessonRoute);
 
@@ -18,7 +18,7 @@ describe('derived navigation tree', () => {
     expect(new Set(sectionRoutes).size).toBe(sectionRoutes.length);
   });
 
-  it('names tabs after tiers and categories after tracks', () => {
+  it("names tabs after tiers and categories after tracks", () => {
     const tierIds = new Set<string>(TIERS);
     const trackIds = new Set<string>(TRACKS.map((track) => track.id));
 
@@ -30,7 +30,7 @@ describe('derived navigation tree', () => {
     }
   });
 
-  it('orders tabs down the tier ladder and categories by track order', () => {
+  it("orders tabs down the tier ladder and categories by track order", () => {
     const tabOrder = nav.tabs.map((tab) => tab.id);
     expect(tabOrder).toEqual(TIERS.filter((tier) => tabOrder.includes(tier)));
 
@@ -43,7 +43,7 @@ describe('derived navigation tree', () => {
     }
   });
 
-  it('emits no empty tab or category', () => {
+  it("emits no empty tab or category", () => {
     for (const tab of nav.tabs) {
       expect(tab.categories.length).toBeGreaterThan(0);
       for (const category of tab.categories) {
@@ -52,7 +52,7 @@ describe('derived navigation tree', () => {
     }
   });
 
-  it('keeps every section filterable and searchable', () => {
+  it("keeps every section filterable and searchable", () => {
     for (const section of navSections()) {
       expect(section.title.length).toBeGreaterThan(0);
       expect(section.icon).toBeDefined();
@@ -60,24 +60,26 @@ describe('derived navigation tree', () => {
     }
   });
 
-  it('lists the standalone pages that are not lessons', () => {
+  it("lists the standalone pages that are not lessons", () => {
     const routes = nav.pages.map((page) => page.route);
 
-    expect(routes).toContain('/');
-    expect(routes).toContain('/curriculum');
-    expect(routes).toContain('/glossary');
+    expect(routes).toContain("/");
+    expect(routes).toContain("/curriculum");
+    expect(routes).toContain("/glossary");
+    expect(routes).toContain("/history");
+    expect(routes).toContain("/about");
   });
 
-  it('maps a lesson route back to its tier tab', () => {
+  it("maps a lesson route back to its tier tab", () => {
     const lesson = allLessons[0];
 
     expect(tierForRoute(lessonRoute(lesson))).toBe(lesson.tier);
-    expect(tierForRoute('/not-a-lesson')).toBeNull();
+    expect(tierForRoute("/not-a-lesson")).toBeNull();
   });
 });
 
-describe('derived route table', () => {
-  it('adds one route per lesson', () => {
+describe("derived route table", () => {
+  it("adds one route per lesson", () => {
     const routes = buildRoutes();
     const paths = new Set(routes.map((route) => route.path));
 
@@ -86,13 +88,13 @@ describe('derived route table', () => {
     }
   });
 
-  it('keeps the catch-all last so no lesson route is swallowed', () => {
+  it("keeps the catch-all last so no lesson route is swallowed", () => {
     const routes = buildRoutes();
 
-    expect(routes[routes.length - 1].path).toBe('/:pathMatch(.*)*');
+    expect(routes[routes.length - 1].path).toBe("/:pathMatch(.*)*");
   });
 
-  it('resolves every lesson route to its own record, not the catch-all', async () => {
+  it("resolves every lesson route to its own record, not the catch-all", async () => {
     const router = createRouter({
       history: createMemoryHistory(),
       routes: buildRoutes(),
@@ -111,14 +113,14 @@ describe('derived route table', () => {
     }
   });
 
-  it('still resolves an unknown path to not-found', () => {
+  it("still resolves an unknown path to not-found", () => {
     const router = createRouter({
       history: createMemoryHistory(),
       routes: buildRoutes(),
     });
 
-    expect(router.resolve('/lessons/foundations/not-a-lesson').name).toBe(
-      'not-found',
+    expect(router.resolve("/lessons/foundations/not-a-lesson").name).toBe(
+      "not-found",
     );
   });
 });

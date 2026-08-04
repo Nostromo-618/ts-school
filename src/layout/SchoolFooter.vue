@@ -25,6 +25,8 @@ const startHere = computed(() =>
 const siteLinks = [
   { label: "Curriculum", to: "/curriculum" },
   { label: "Glossary", to: "/glossary" },
+  { label: "History", to: "/history" },
+  { label: "About", to: "/about" },
 ];
 </script>
 

@@ -87,6 +87,28 @@ const PAGES: NavPage[] = [
     icon: "book-bookmark",
     keywords: ["glossary", "terms", "definitions", "vocabulary", "jargon"],
   },
+  {
+    id: "history",
+    title: "History",
+    route: "/history",
+    icon: "clock-countdown",
+    keywords: [
+      "history",
+      "timeline",
+      "javascript",
+      "nodejs",
+      "typescript",
+      "adoption",
+      "es5",
+    ],
+  },
+  {
+    id: "about",
+    title: "About",
+    route: "/about",
+    icon: "info",
+    keywords: ["about", "typescript school", "mission", "compiler", "why"],
+  },
 ];
 
 const toSection = (lesson: Lesson): NavSection => ({

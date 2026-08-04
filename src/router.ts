@@ -4,6 +4,8 @@ import NotFoundPage from "@/pages/not-found.vue";
 import LessonPage from "@/pages/LessonPage.vue";
 import CurriculumPage from "@/pages/curriculum.vue";
 import GlossaryPage from "@/pages/glossary.vue";
+import HistoryPage from "@/pages/history.vue";
+import AboutPage from "@/pages/about.vue";
 import { allLessons, lessonRoute, trackById } from "@/curriculum";
 
 /**
@@ -79,6 +81,37 @@ export const buildRoutes = (): RouteRecordRaw[] => {
       description:
         "Every TypeScript term this site uses, tagged with the tier it starts mattering at and linked to the lessons that teach it.",
       keywords: ["glossary", "terms", "definitions", "vocabulary", "jargon"],
+    },
+  });
+
+  routes.push({
+    path: "/history",
+    name: "history",
+    component: HistoryPage,
+    meta: {
+      title: "History",
+      description:
+        "JavaScript, Node.js, and TypeScript milestones from ES5 through the TypeScript 7 Go port — and why this school type-checks with 6.0.3.",
+      keywords: [
+        "history",
+        "timeline",
+        "javascript",
+        "nodejs",
+        "typescript",
+        "adoption",
+      ],
+    },
+  });
+
+  routes.push({
+    path: "/about",
+    name: "about",
+    component: AboutPage,
+    meta: {
+      title: "About",
+      description:
+        "What TypeScript School is, who it is for, and why the in-browser checker pins TypeScript 6.0.3 instead of 7.",
+      keywords: ["about", "typescript school", "mission", "compiler"],
     },
   });
 
