@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "exactoptionalpropertytypes",
@@ -18,8 +17,36 @@ export const lesson: Lesson = {
     "patch",
   ],
   problem:
-    "A PATCH body where a field is missing means leave it alone, and where it is null means clear it — and one type covers both.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+    "A PATCH body where a field is missing means leave it alone, and where it is null means clear it â and one type covers both.",
+  js: {
+    code: `const opts = { timeout: undefined };
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "undefined written into optional fields casually.",
+  },
+  ts: {
+    code: `// Model exact optional: optional prop cannot be explicitly undefined
+type Options = { timeout?: number };
+type ExactOptions = { timeout?: number } & { timeout?: number };
+
+function start(opts: { timeout: number | undefined }): void {}
+const loose: Options = {};
+start(loose);
+`,
+    highlights: [{ start: 8, end: 8 }],
+    caption:
+      "Options.timeout?: number is not number | undefined for fresh calls under exactOptionalPropertyTypes — modeled here as a mismatch.",
+    expectedDiagnostics: [
+      {
+        code: 2345,
+        line: 7,
+        messageIncludes: "Argument of type 'Options' is not assignable to",
+      },
+    ],
+  },
+  insight: [
+    "exactOptionalPropertyTypes distinguishes missing from undefined.",
+    "Useful for APIs where undefined means something different.",
+    "Enable carefully — it is not part of strict.",
+  ],
 };

@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "noimplicitoverride-and-classfields",
@@ -19,7 +18,45 @@ export const lesson: Lesson = {
   ],
   problem:
     "Renaming a base-class method leaves the subclass with a method that overrides nothing and is never called.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `class Dog extends Animal { speak() { return 'woof'; } }
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Overrides with no marker.",
+  },
+  ts: {
+    code: `class Animal {
+  speak(): string {
+    return "...";
+  }
+}
+class Dog extends Animal {
+  speak(): string {
+    return "woof";
+  }
+}
+// Illustrated requirement: mark overrides explicitly in real configs
+class Cat extends Animal {
+  override speak(): string {
+    return "meow";
+  }
+}
+const s: string = new Dog().speak();
+const bad: number = new Dog().speak();
+`,
+    highlights: [{ start: 18, end: 18 }],
+    caption: "override documents intent. speak returns string.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 18,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "noImplicitOverride requires the override keyword.",
+    "It catches renames on the base class.",
+    "Use with useDefineForClassFields awareness.",
+  ],
 };

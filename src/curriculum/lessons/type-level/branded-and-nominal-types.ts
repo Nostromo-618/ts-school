@@ -48,7 +48,10 @@ const userId = asUserId("user_1");
 const orderId = asOrderId("order_9");
 refund(userId, orderId);
 `,
-    highlights: [{ start: 1, end: 5 }, { start: 22, end: 22 }],
+    highlights: [
+      { start: 1, end: 5 },
+      { start: 22, end: 22 },
+    ],
     caption: "Brands make swapped ids a type error.",
     expectedDiagnostics: [
       {
@@ -71,7 +74,8 @@ refund(userId, orderId);
   quiz: [
     {
       id: "brand-struct",
-      prompt: "Are UserId and OrderId assignable to each other if both are string & { __brand: … } with different brand strings?",
+      prompt:
+        "Are UserId and OrderId assignable to each other if both are string & { __brand: … } with different brand strings?",
       choices: [
         { id: "a", text: "Yes — both are strings" },
         { id: "b", text: "No — the brand properties differ" },
@@ -95,7 +99,9 @@ function send(to: Email) {
 send("not-branded@example.com");
 `,
     assertion: "no-errors",
-    hints: ["Intersect with a phantom object type; mint with `as Email` in a helper."],
+    hints: [
+      "Intersect with a phantom object type; mint with `as Email` in a helper.",
+    ],
     solution: `type Email = string & { readonly __email: void };
 
 function asEmail(s: string): Email {

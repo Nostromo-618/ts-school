@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "noimplicitany",
@@ -13,7 +12,35 @@ export const lesson: Lesson = {
   keywords: ["noImplicitAny", "implicit any", "parameters", "strict", "flag"],
   problem:
     "Without it, every unannotated parameter is any, and a file can be fully typed on paper and unchecked in practice.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function add(a, b) { return a + b; }
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Parameters silently become any.",
+  },
+  ts: {
+    code: `function add(a, b) {
+  return a + b;
+}
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "noImplicitAny (via strict) errors on untyped parameters.",
+    expectedDiagnostics: [
+      {
+        code: 7006,
+        line: 1,
+        messageIncludes: "Parameter 'a' implicitly has an 'any' type.",
+      },
+      {
+        code: 7006,
+        line: 1,
+        messageIncludes: "Parameter 'b' implicitly has an 'any' type.",
+      },
+    ],
+  },
+  insight: [
+    "Untyped parameters become implicit any without the flag.",
+    "Annotate or use contextual typing from callers.",
+    "Turn this on early in a migration.",
+  ],
 };

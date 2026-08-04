@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "custom-error-classes",
@@ -13,7 +12,45 @@ export const lesson: Lesson = {
   keywords: ["Error", "extends", "instanceof", "setPrototypeOf", "stack"],
   problem:
     "Subclassing Error and compiling down to ES5 quietly breaks instanceof, so the catch block that handles your error never runs.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `throw { code: 404, message: 'missing' };
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Throwing plain objects.",
+  },
+  ts: {
+    code: `class AppError extends Error {
+  constructor(
+    readonly code: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = "AppError";
+  }
+}
+
+function handle(err: unknown): number {
+  if (err instanceof AppError) return err.code;
+  return 500;
+}
+
+const n: number = handle(new AppError(404, "missing"));
+const bad: string = handle(new AppError(404, "missing"));
+`,
+    highlights: [{ start: 17, end: 17 }],
+    caption:
+      "Custom Error subclasses carry typed fields. handle returns number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 17,
+        messageIncludes: "Type 'number' is not assignable to type 'string'",
+      },
+    ],
+  },
+  insight: [
+    "Extend Error and set name for debuggability.",
+    "instanceof works within the same realm.",
+    "Include cause when wrapping lower-level failures.",
+  ],
 };

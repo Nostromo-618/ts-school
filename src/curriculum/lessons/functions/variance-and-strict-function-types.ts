@@ -30,7 +30,8 @@ on((e) => {
 });
 `,
     highlights: [{ start: 6, end: 9 }],
-    caption: "JS will call whatever you register; wrong assumptions crash later.",
+    caption:
+      "JS will call whatever you register; wrong assumptions crash later.",
   },
   ts: {
     code: `type Animal = { tag: "animal" };
@@ -54,7 +55,8 @@ animalHandler = dogHandler;
 animalHandler({ tag: "animal" });
 `,
     highlights: [{ start: 14, end: 16 }],
-    caption: "Assigning a narrower-parameter handler is rejected under strictFunctionTypes.",
+    caption:
+      "Assigning a narrower-parameter handler is rejected under strictFunctionTypes.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -71,7 +73,8 @@ animalHandler({ tag: "animal" });
   quiz: [
     {
       id: "variance-q1",
-      prompt: "With strictFunctionTypes, may Handler<Dog> be assigned to Handler<Animal>?",
+      prompt:
+        "With strictFunctionTypes, may Handler<Dog> be assigned to Handler<Animal>?",
       choices: [
         { id: "a", text: "Yes — Dog is an Animal" },
         { id: "b", text: "No — the handler might call Dog-only members" },

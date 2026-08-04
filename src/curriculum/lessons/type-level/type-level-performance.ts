@@ -51,7 +51,10 @@ type Keys = DeepKeys<Huge>;
 // Accidental blow-up: assigning a wrong key still type-checks the whole tree.
 const k: Keys = "a.b.x";
 `,
-    highlights: [{ start: 2, end: 8 }, { start: 14, end: 14 }],
+    highlights: [
+      { start: 2, end: 8 },
+      { start: 14, end: 14 },
+    ],
     caption: "Deep key unions grow fast; bad keys still cost expansion.",
     expectedDiagnostics: [
       {
@@ -69,7 +72,8 @@ const k: Keys = "a.b.x";
   quiz: [
     {
       id: "perf-shared",
-      prompt: "Why is a heavy type in a shared package worse than the same type in an app-local file?",
+      prompt:
+        "Why is a heavy type in a shared package worse than the same type in an app-local file?",
       choices: [
         { id: "a", text: "Shared packages cannot use generics" },
         { id: "b", text: "Every importer pays the instantiation cost" },

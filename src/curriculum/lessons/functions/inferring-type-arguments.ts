@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "inferring-type-arguments",
@@ -13,7 +12,35 @@ export const lesson: Lesson = {
   keywords: ["inference", "type argument", "explicit", "candidate", "widening"],
   problem:
     'The inferred T is string when you needed "GET" | "POST", and nothing in the error mentions inference at all.',
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function pair(a, b) { return [a, b]; }
+const p = pair(1, 'x');
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "Tuple contents forget their types.",
+  },
+  ts: {
+    code: `function pair<A, B>(a: A, b: B): [A, B] {
+  return [a, b];
+}
+const p = pair(1, "x");
+const a: number = p[0];
+const b: string = p[1];
+const bad: number = p[1];
+`,
+    highlights: [{ start: 7, end: 7 }],
+    caption: "Inferred [number, string]. Second element is not number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 7,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "TypeScript infers type arguments from call-site values.",
+    "Multiple parameters can carry different type args.",
+    "Hover in the editor to confirm inference before annotating.",
+  ],
 };

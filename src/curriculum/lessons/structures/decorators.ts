@@ -30,7 +30,8 @@ function logged(value, context) {
 }
 `,
     highlights: [{ start: 2, end: 10 }],
-    caption: "Decorators are ordinary functions; typing context.kind matters in TS.",
+    caption:
+      "Decorators are ordinary functions; typing context.kind matters in TS.",
   },
   ts: {
     code: `// Standard decorator = a function wrapping another function (simplified).

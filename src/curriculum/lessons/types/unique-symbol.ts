@@ -20,7 +20,8 @@ const bag = { [a]: 1 };
 console.log(bag[b]); // undefined — different symbols
 `,
     highlights: [{ start: 2, end: 5 }],
-    caption: "Runtime symbols are unique; TypeScript can reflect that in types.",
+    caption:
+      "Runtime symbols are unique; TypeScript can reflect that in types.",
   },
   ts: {
     code: `declare const A: unique symbol;
@@ -50,10 +51,14 @@ const y: TaggedB = x;
   quiz: [
     {
       id: "unique-sym",
-      prompt: "Why prefer unique symbol over a string brand key like \"__brand\"?",
+      prompt:
+        'Why prefer unique symbol over a string brand key like "__brand"?',
       choices: [
         { id: "a", text: "Strings are illegal in intersections" },
-        { id: "b", text: "unique symbol types cannot collide across declarations" },
+        {
+          id: "b",
+          text: "unique symbol types cannot collide across declarations",
+        },
         { id: "c", text: "Symbols serialize to JSON better" },
         { id: "d", text: "unique symbol is required by Node" },
       ],
@@ -69,7 +74,9 @@ const y: TaggedB = x;
 type Branded = { readonly [Brand]: true };
 `,
     assertion: "no-errors",
-    hints: ["Use declare const Brand: unique symbol; then a value with [Brand]: true."],
+    hints: [
+      "Use declare const Brand: unique symbol; then a value with [Brand]: true.",
+    ],
     solution: `declare const Brand: unique symbol;
 type Branded = { readonly [Brand]: true };
 

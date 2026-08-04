@@ -44,7 +44,8 @@ load(u, (name) => {
 });
 `,
     highlights: [{ start: 16, end: 16 }],
-    caption: "Capture a local const after the null check to keep a stable narrow.",
+    caption:
+      "Capture a local const after the null check to keep a stable narrow.",
     expectedDiagnostics: [
       {
         code: 2322,

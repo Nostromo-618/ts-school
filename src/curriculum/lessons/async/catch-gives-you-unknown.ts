@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "catch-gives-you-unknown",
@@ -19,7 +18,43 @@ export const lesson: Lesson = {
   ],
   problem:
     "err.message on a caught value crashes with a different error whenever something threw a string.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `try { await run(); } catch (e) { log(e.message); }
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Assuming catch binding is Error.",
+  },
+  ts: {
+    code: `declare function run(): Promise<void>;
+declare function log(msg: string): void;
+
+export async function main(): Promise<void> {
+  try {
+    await run();
+  } catch (e) {
+    log(e.message);
+  }
+}
+`,
+    highlights: [{ start: 8, end: 8 }],
+    caption:
+      "Under useUnknownInCatchVariables / strict, e is unknown — no .message.",
+    expectedDiagnostics: [
+      {
+        code: 18046,
+        line: 8,
+        messageIncludes: "'e' is of type 'unknown'.",
+      },
+    ],
+  },
+  insight: [
+    "catch bindings are unknown in modern TS configs.",
+    "Narrow with instanceof Error before reading message.",
+    "Never type catch as any to silence this.",
+  ],
+  security: {
+    title: "Error messages can leak internals",
+    body: "Log carefully; do not return raw exception strings to clients.",
+    severity: "info",
+  },
 };

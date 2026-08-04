@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "satisfies-operator",
@@ -8,12 +7,43 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 6,
   summary:
-    "Check a value against a type without widening it to that type — the operator that finally made typed config objects pleasant.",
-  prerequisites: ["type-widening-and-freshness", "const-assertions"],
-  keywords: ["satisfies", "widening", "config", "as const", "checking"],
+    "Check a value against a type without widening to that type — keep the literals you care about.",
+  prerequisites: ["typeof-type-queries", "const-assertions"],
+  keywords: ["satisfies", "validation", "inference", "literals", "config"],
   problem:
-    "Annotating a config object checks it and throws away everything specific about it; leaving it unannotated keeps the detail and checks nothing.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+    "Annotating a config as a wide Record loses the literal keys you wanted for autocomplete.",
+  js: {
+    code: `const palette = { primary: "#0af", danger: "red" };
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Palette validated only by convention.",
+  },
+  ts: {
+    code: `type Hex = \`#\${string}\`;
+type Palette = Record<string, Hex | "red" | "blue">;
+
+const palette = {
+  primary: "#0af",
+  danger: "red",
+} satisfies Palette;
+
+const p: Hex | "red" | "blue" = palette.primary;
+const bad: number = palette.danger;
+`,
+    highlights: [{ start: 11, end: 11 }],
+    caption:
+      "satisfies checks the value while preserving literals. danger is not number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 10,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "satisfies checks against a type without widening to it.",
+    "Preserves literal inference for keys/values.",
+    "Prefer it over as when you want both check and inference.",
+  ],
 };

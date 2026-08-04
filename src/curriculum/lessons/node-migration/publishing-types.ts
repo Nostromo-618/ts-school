@@ -44,7 +44,8 @@ const u = cached("1");
 const n: number = u;
 `,
     highlights: [{ start: 15, end: 15 }],
-    caption: "Public returns should be explicit; optional Map values are | undefined.",
+    caption:
+      "Public returns should be explicit; optional Map values are | undefined.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -69,7 +70,10 @@ const n: number = u;
       prompt: "Why annotate exported return types explicitly?",
       choices: [
         { id: "a", text: "Runtime speed" },
-        { id: "b", text: "Declaration emit may fail if inferred types cannot be named" },
+        {
+          id: "b",
+          text: "Declaration emit may fail if inferred types cannot be named",
+        },
         { id: "c", text: "ESLint requires it always" },
         { id: "d", text: "Node ignores .d.ts otherwise" },
       ],

@@ -63,7 +63,10 @@ const n: number = u.email;
       prompt: "What does OpenAPI→TS codegen guarantee by itself?",
       choices: [
         { id: "a", text: "Runtime response validation" },
-        { id: "b", text: "Types matching the last generated contract snapshot" },
+        {
+          id: "b",
+          text: "Types matching the last generated contract snapshot",
+        },
         { id: "c", text: "That production matches staging" },
         { id: "d", text: "That fetch cannot fail" },
       ],

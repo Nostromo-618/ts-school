@@ -61,7 +61,10 @@ const bad: First = "settings";
       prompt: "What does `<const T>` change about inference?",
       choices: [
         { id: "a", text: "It freezes the runtime value" },
-        { id: "b", text: "It infers the argument as a const-like literal type" },
+        {
+          id: "b",
+          text: "It infers the argument as a const-like literal type",
+        },
         { id: "c", text: "It requires T to be a class" },
         { id: "d", text: "It disables generics" },
       ],
@@ -80,7 +83,9 @@ const bad: First = "settings";
 const k = keys({ a: 1 });
 `,
     assertion: "no-errors",
-    hints: ["Use <const T extends Record<string, unknown>> and return (keyof T)[]."],
+    hints: [
+      "Use <const T extends Record<string, unknown>> and return (keyof T)[].",
+    ],
     solution: `function keys<const T extends Record<string, unknown>>(
   obj: T,
 ): (keyof T)[] {

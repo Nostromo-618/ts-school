@@ -93,7 +93,9 @@ const bad: number = user.id;
 }
 `,
     assertion: "no-errors",
-    hints: ["Generic A extends unknown[], R; return async (...args: A) => fn(...args)."],
+    hints: [
+      "Generic A extends unknown[], R; return async (...args: A) => fn(...args).",
+    ],
     solution: `function withLog<A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,
 ): (...args: A) => Promise<R> {

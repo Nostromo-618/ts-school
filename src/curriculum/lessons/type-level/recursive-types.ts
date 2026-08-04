@@ -38,7 +38,10 @@ const ok: Json = { db: { host: "localhost", port: 5432 } };
 const bad: Json = { db: { host: () => "nope" } };
 // functions are not JSON
 `,
-    highlights: [{ start: 1, end: 7 }, { start: 11, end: 12 }],
+    highlights: [
+      { start: 1, end: 7 },
+      { start: 11, end: 12 },
+    ],
     caption: "A recursive alias names the real JSON grammar.",
     expectedDiagnostics: [
       {
@@ -56,7 +59,8 @@ const bad: Json = { db: { host: () => "nope" } };
   quiz: [
     {
       id: "rec-lazy",
-      prompt: "Why does `type Json = … | Json[] | …` compile instead of looping forever?",
+      prompt:
+        "Why does `type Json = … | Json[] | …` compile instead of looping forever?",
       choices: [
         { id: "a", text: "TypeScript forbids nested arrays" },
         { id: "b", text: "Expansion is lazy and demand-driven" },

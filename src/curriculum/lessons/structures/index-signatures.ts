@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "index-signatures",
@@ -13,7 +12,32 @@ export const lesson: Lesson = {
   keywords: ["index signature", "Record", "dictionary", "open shape", "key"],
   problem:
     "An index signature says every key exists, so a typo'd lookup type-checks and returns undefined.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `const bag = {};
+bag[key] = value;
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "Open string key bag with mixed values.",
+  },
+  ts: {
+    code: `type Bag = { [key: string]: number };
+const bag: Bag = {};
+bag["score"] = 1;
+bag["label"] = "x";
+`,
+    highlights: [{ start: 4, end: 4 }],
+    caption: "Index signature number forbids string values.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 4,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "Index signatures describe open-ended key sets.",
+    "They weaken specific known keys — use carefully.",
+    "Prefer Record<K,V> or maps for many dynamic keys.",
+  ],
 };

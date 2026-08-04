@@ -85,8 +85,7 @@ bad.withEmail("x");
     },
   ],
   exercise: {
-    prompt:
-      "Add setX(x: number): this to a class Point and chain setX(1).",
+    prompt: "Add setX(x: number): this to a class Point and chain setX(1).",
     starter: `class Point {
   x = 0;
   setX(x: number) {

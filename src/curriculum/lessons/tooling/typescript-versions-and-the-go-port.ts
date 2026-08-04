@@ -71,7 +71,10 @@ void ts6;
       prompt: "Why does ts-school pin typescript@6.0.3?",
       choices: [
         { id: "a", text: "6 is faster than 7 in every benchmark" },
-        { id: "b", text: "6 still provides a JS programmatic API for the worker" },
+        {
+          id: "b",
+          text: "6 still provides a JS programmatic API for the worker",
+        },
         { id: "c", text: "7 cannot run on macOS" },
         { id: "d", text: "pnpm forbids 7" },
       ],

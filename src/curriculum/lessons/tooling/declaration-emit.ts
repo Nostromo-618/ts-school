@@ -65,7 +65,10 @@ const x: string = makePublic();
       prompt: "Typical cause of “inferred type cannot be named”?",
       choices: [
         { id: "a", text: "Using string" },
-        { id: "b", text: "Exporting a value whose inferred type references a non-exported type" },
+        {
+          id: "b",
+          text: "Exporting a value whose inferred type references a non-exported type",
+        },
         { id: "c", text: "Missing node_modules" },
         { id: "d", text: "Using async" },
       ],

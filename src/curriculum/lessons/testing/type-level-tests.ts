@@ -39,7 +39,8 @@ type _ret = Expect<Equal<ReturnType<typeof add>, number>>;
 type _fail = Expect<Equal<ReturnType<typeof add>, string>>;
 `,
     highlights: [{ start: 14, end: 14 }],
-    caption: "Type-level Expect<Equal<…>> fails the build when signatures drift.",
+    caption:
+      "Type-level Expect<Equal<…>> fails the build when signatures drift.",
     expectedDiagnostics: [
       {
         code: 2344,

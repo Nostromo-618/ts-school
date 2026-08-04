@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "accessors-and-computed-members",
@@ -13,7 +12,38 @@ export const lesson: Lesson = {
   keywords: ["getter", "setter", "accessor", "computed property", "readonly"],
   problem:
     "A setter that accepts a string and a getter that returns a Date is a useful API and an awkward one to type.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `const key = 'id';
+obj[key] = 1;
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "Computed key access without relating key to value.",
+  },
+  ts: {
+    code: `type User = { id: string; name: string };
+const key = "id" as const;
+
+function read(u: User, k: typeof key): string {
+  return u[k];
+}
+
+const u: User = { id: "1", name: "Ada" };
+const id: string = read(u, "id");
+const bad: number = read(u, "id");
+`,
+    highlights: [{ start: 10, end: 10 }],
+    caption: "typeof key ties the read to string. Not number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 10,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "Computed keys work with literal types and keyof.",
+    "Getters/setters can enforce invariants at the boundary.",
+    "Prefer methods when side effects are involved.",
+  ],
 };

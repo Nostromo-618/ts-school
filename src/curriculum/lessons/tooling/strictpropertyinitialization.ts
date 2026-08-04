@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "strictpropertyinitialization",
@@ -19,7 +18,31 @@ export const lesson: Lesson = {
   ],
   problem:
     "A field initialised in an async init method is undefined for every call that arrives before it, and the type says otherwise.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `class User { name; constructor() {} }
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Fields used before assigned.",
+  },
+  ts: {
+    code: `class User {
+  name: string;
+  constructor() {}
+}
+`,
+    highlights: [{ start: 2, end: 2 }],
+    caption: "Strict property initialization requires assigning name.",
+    expectedDiagnostics: [
+      {
+        code: 2564,
+        line: 2,
+        messageIncludes: "Property 'name' has no initializer and is not de",
+      },
+    ],
+  },
+  insight: [
+    "Definite assignment analysis catches uninitialised fields.",
+    "Use definite assignment assertions sparingly (!).",
+    "Constructor parameter properties satisfy the check.",
+  ],
 };

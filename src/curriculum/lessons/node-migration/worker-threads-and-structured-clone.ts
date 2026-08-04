@@ -77,13 +77,12 @@ void onMessage;
         { id: "d", text: "Workers cannot use interfaces" },
       ],
       answerId: "b",
-      explanation:
-        "A shared union documents and checks every message kind.",
+      explanation: "A shared union documents and checks every message kind.",
     },
   ],
   exercise: {
     prompt:
-      "Define Msg = { type: \"ping\" } | { type: \"pong\" } and a function that handles both.",
+      'Define Msg = { type: "ping" } | { type: "pong" } and a function that handles both.',
     starter: `type Msg = { type: "ping" } | { type: "pong" };
 function handle(m: Msg) {
   void m;

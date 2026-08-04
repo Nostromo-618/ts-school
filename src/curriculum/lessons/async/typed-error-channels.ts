@@ -56,7 +56,8 @@ if (!r.ok) {
 }
 `,
     highlights: [{ start: 16, end: 16 }],
-    caption: "Result puts errors in the return type — success fields stay narrow.",
+    caption:
+      "Result puts errors in the return type — success fields stay narrow.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -76,7 +77,10 @@ if (!r.ok) {
       prompt: "Main benefit of Result<T, E> over throw?",
       choices: [
         { id: "a", text: "Faster runtime" },
-        { id: "b", text: "The error type appears in the signature for callers" },
+        {
+          id: "b",
+          text: "The error type appears in the signature for callers",
+        },
         { id: "c", text: "It disables try/catch" },
         { id: "d", text: "It removes async" },
       ],

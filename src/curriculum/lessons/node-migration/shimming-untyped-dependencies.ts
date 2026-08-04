@@ -41,7 +41,7 @@ void s;
   },
   insight: [
     "Start with a narrow shim of the functions you call — not a full fictional API.",
-    "In real projects that shim is `declare module \"pkg\" { … }` in a .d.ts.",
+    'In real projects that shim is `declare module "pkg" { … }` in a .d.ts.',
     "Prefer @types from DefinitelyTyped when available; contribute improvements upstream.",
   ],
   security: {
@@ -54,8 +54,11 @@ void s;
       id: "shim-q",
       prompt: "Best first shim for a single function dependency?",
       choices: [
-        { id: "a", text: "declare module \"pkg\" { const x: any; export = x }" },
-        { id: "b", text: "declare module \"pkg\" { export function fn(/* real args */): /* real return */ }" },
+        { id: "a", text: 'declare module "pkg" { const x: any; export = x }' },
+        {
+          id: "b",
+          text: 'declare module "pkg" { export function fn(/* real args */): /* real return */ }',
+        },
         { id: "c", text: "Delete the dependency" },
         { id: "d", text: "Use eval to load it" },
       ],

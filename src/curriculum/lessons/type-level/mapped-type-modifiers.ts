@@ -28,7 +28,8 @@ function requireConfig(partial) {
 }
 `,
     highlights: [{ start: 2, end: 5 }],
-    caption: "Re-requiring fields is a pile of null checks with no shared type.",
+    caption:
+      "Re-requiring fields is a pile of null checks with no shared type.",
   },
   ts: {
     code: `type Partialish<T> = { [K in keyof T]?: T[K] };
@@ -42,7 +43,10 @@ type Editable = Mutable<Config>;
 const ready: Ready = { host: "localhost" };
 // port is required again after Requiredish
 `,
-    highlights: [{ start: 2, end: 2 }, { start: 9, end: 10 }],
+    highlights: [
+      { start: 2, end: 2 },
+      { start: 9, end: 10 },
+    ],
     caption: "-? strips optionality; -readonly strips readonly.",
     expectedDiagnostics: [
       {

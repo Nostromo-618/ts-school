@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "generics-intro",
@@ -13,7 +12,35 @@ export const lesson: Lesson = {
   keywords: ["generic", "type parameter", "identity", "reuse", "inference"],
   problem:
     "A helper typed with any hands back any, so one utility function erases types across the entire codebase that uses it.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function identity(x) { return x; }
+const n = identity(1);
+const s = identity('a');
+`,
+    highlights: [{ start: 1, end: 3 }],
+    caption: "One function, many shapes — no relationship preserved.",
+  },
+  ts: {
+    code: `function identity<T>(x: T): T {
+  return x;
+}
+const n: number = identity(1);
+const s: string = identity("a");
+const bad: number = identity("a");
+`,
+    highlights: [{ start: 6, end: 6 }],
+    caption: "Generic T ties input to output. string is not number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 6,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "Generics preserve relationships between inputs and outputs.",
+    "Let inference work — annotate when the relationship matters.",
+    "Start with one type parameter before adding constraints.",
+  ],
 };

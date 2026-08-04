@@ -64,8 +64,7 @@ void ok;
     },
   ],
   exercise: {
-    prompt:
-      "Write passes(errors: number, max: number): boolean.",
+    prompt: "Write passes(errors: number, max: number): boolean.",
     starter: `function passes(errors: number, max: number) {
   return errors <= max;
 }

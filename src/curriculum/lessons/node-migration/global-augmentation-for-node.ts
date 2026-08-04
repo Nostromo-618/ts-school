@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "global-augmentation-for-node",
@@ -19,7 +18,37 @@ export const lesson: Lesson = {
   ],
   problem:
     "A declaration file with a single import stops being ambient, and every global augmentation in it silently stops applying.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `global.cache = new Map();
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Stashing state on global without declaring it.",
+  },
+  ts: {
+    code: `export {};
+
+declare global {
+  // eslint-disable-next-line no-var
+  var appCache: Map<string, string> | undefined;
+}
+
+appCache = new Map();
+const hit: string | undefined = appCache.get("k");
+const wrong: number = appCache;
+`,
+    highlights: [{ start: 10, end: 10 }],
+    caption: "declare global adds appCache. A Map is not a number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 10,
+        messageIncludes: "Type 'Map<string, string>' is not assignable to",
+      },
+    ],
+  },
+  insight: [
+    "Augment globals from a module file (export {} if needed).",
+    "Prefer explicit imports over ambient globals for app state.",
+    "Keep augmentations minimal — they apply everywhere.",
+  ],
 };

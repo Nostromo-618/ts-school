@@ -80,7 +80,7 @@ function handleAll(msg: MsgAll): string {
   ],
   exercise: {
     prompt:
-      "Define Event = { type: \"ping\" } | { type: \"pong\"; n: number } and handle with exhaustiveness.",
+      'Define Event = { type: "ping" } | { type: "pong"; n: number } and handle with exhaustiveness.',
     starter: `type Event = { type: "ping" } | { type: "pong"; n: number };
 function handle(e: Event): string {
   return e.type;

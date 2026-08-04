@@ -42,7 +42,10 @@ const g: UserGetters = {
   // getName missing
 };
 `,
-    highlights: [{ start: 1, end: 3 }, { start: 15, end: 18 }],
+    highlights: [
+      { start: 1, end: 3 },
+      { start: 15, end: 18 },
+    ],
     caption: "as renames keys; mapping to never drops them.",
     expectedDiagnostics: [
       {
@@ -65,7 +68,7 @@ const g: UserGetters = {
         { id: "a", text: "The property becomes optional" },
         { id: "b", text: "The property is omitted from the result type" },
         { id: "c", text: "A compile error is always raised" },
-        { id: "d", text: "The key becomes the string \"never\"" },
+        { id: "d", text: 'The key becomes the string "never"' },
       ],
       answerId: "b",
       explanation:
@@ -74,7 +77,7 @@ const g: UserGetters = {
   ],
   exercise: {
     prompt:
-      "Implement Prefixed<T, P extends string> that prefixes every key with P (e.g. Prefixed<{ id: number }, \"user_\"> has user_id).",
+      'Implement Prefixed<T, P extends string> that prefixes every key with P (e.g. Prefixed<{ id: number }, "user_"> has user_id).',
     starter: `type Prefixed<T, P extends string> = T; // TODO
 
 type Out = Prefixed<{ id: number }, "user_">;

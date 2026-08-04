@@ -62,7 +62,10 @@ const y: string = x;
       prompt: "Why are method parameters bivariant by default?",
       choices: [
         { id: "a", text: "It is required by ECMAScript" },
-        { id: "b", text: "DOM/framework patterns broke under full contravariance" },
+        {
+          id: "b",
+          text: "DOM/framework patterns broke under full contravariance",
+        },
         { id: "c", text: "Methods cannot have parameters" },
         { id: "d", text: "Bivariance only applies to private fields" },
       ],

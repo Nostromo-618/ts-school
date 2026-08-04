@@ -69,13 +69,11 @@ void ok;
         { id: "d", text: "Only for .d.ts" },
       ],
       answerId: "b",
-      explanation:
-        "Bundlers optimize for emit speed; tsc remains the checker.",
+      explanation: "Bundlers optimize for emit speed; tsc remains the checker.",
     },
   ],
   exercise: {
-    prompt:
-      "Type Gate = \"typecheck\" | \"lint\" and require both in a CI list.",
+    prompt: 'Type Gate = "typecheck" | "lint" and require both in a CI list.',
     starter: `type Gate = "typecheck" | "lint";
 const ci: Gate[] = ["typecheck", "lint"];
 `,

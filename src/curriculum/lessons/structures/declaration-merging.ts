@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "declaration-merging",
@@ -19,7 +18,35 @@ export const lesson: Lesson = {
   ],
   problem:
     "An interface you did not write gained a property because a dependency declared one with the same name.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `// two interfaces with same name in JS just overwrite
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Redeclarations silently fight each other.",
+  },
+  ts: {
+    code: `interface User {
+  id: string;
+}
+interface User {
+  name: string;
+}
+const u: User = { id: "1", name: "Ada" };
+const bad: User = { id: "1" };
+`,
+    highlights: [{ start: 8, end: 8 }],
+    caption: "Merged interface requires both fields.",
+    expectedDiagnostics: [
+      {
+        code: 2741,
+        line: 8,
+        messageIncludes: "Property 'name' is missing in type '{ id: string",
+      },
+    ],
+  },
+  insight: [
+    "Interfaces merge; type aliases do not.",
+    "Merging is useful for augmentation — dangerous for app models.",
+    "Prefer one declaration unless you are extending a library.",
+  ],
 };

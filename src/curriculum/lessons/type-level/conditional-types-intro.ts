@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "conditional-types-intro",
@@ -13,7 +12,33 @@ export const lesson: Lesson = {
   keywords: ["conditional type", "extends", "branch", "ternary", "generic"],
   problem:
     "A function whose return type depends on an argument's type needs either three overloads or one conditional type.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function unwrap(x) { return x; }
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Runtime typeof checks only.",
+  },
+  ts: {
+    code: `type IsString<T> = T extends string ? true : false;
+type A = IsString<"hi">;
+type B = IsString<number>;
+const ok: A = true;
+const bad: B = true;
+`,
+    highlights: [{ start: 5, end: 5 }],
+    caption:
+      "Conditional type yields false for number — true is not assignable.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 5,
+        messageIncludes: "Type 'true' is not assignable to type 'false'.",
+      },
+    ],
+  },
+  insight: [
+    "T extends U ? X : Y branches in the type system.",
+    "They power many library utilities.",
+    "Distribute over naked type parameters — learn that next.",
+  ],
 };

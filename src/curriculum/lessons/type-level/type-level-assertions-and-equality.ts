@@ -35,7 +35,10 @@ type _ok = Expect<Equal<{ a: 1 }, { a: 1 }>>;
 // Equal rejects any === number; Expect fails when the answer is false.
 type _fail = Expect<Equal<any, number>>;
 `,
-    highlights: [{ start: 1, end: 4 }, { start: 10, end: 10 }],
+    highlights: [
+      { start: 1, end: 4 },
+      { start: 10, end: 10 },
+    ],
     caption: "The identity trick rejects any/never false friends.",
     expectedDiagnostics: [
       {
@@ -53,10 +56,14 @@ type _fail = Expect<Equal<any, number>>;
   quiz: [
     {
       id: "eq-any",
-      prompt: "Why is `any extends number ? (number extends any ? true : false) : false` true?",
+      prompt:
+        "Why is `any extends number ? (number extends any ? true : false) : false` true?",
       choices: [
         { id: "a", text: "any is identical to number" },
-        { id: "b", text: "any is both a top-ish and bottom-ish participant in extends" },
+        {
+          id: "b",
+          text: "any is both a top-ish and bottom-ish participant in extends",
+        },
         { id: "c", text: "number is any under strict mode" },
         { id: "d", text: "The conditional is invalid" },
       ],

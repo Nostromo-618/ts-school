@@ -48,7 +48,10 @@ type Frozen = DeepReadonly<Config>;
 const cfg: Frozen = { db: { host: "x" } };
 cfg.db.host = "y";
 `,
-    highlights: [{ start: 1, end: 5 }, { start: 11, end: 11 }],
+    highlights: [
+      { start: 1, end: 5 },
+      { start: 11, end: 11 },
+    ],
     caption: "DeepReadonly recurses; assignment to a nested field fails.",
     expectedDiagnostics: [
       {
@@ -69,7 +72,10 @@ cfg.db.host = "y";
       prompt: "What typically causes “Type instantiation is excessively deep”?",
       choices: [
         { id: "a", text: "Using any" },
-        { id: "b", text: "A recursive type that expands without a decreasing measure" },
+        {
+          id: "b",
+          text: "A recursive type that expands without a decreasing measure",
+        },
         { id: "c", text: "Missing strictNullChecks" },
         { id: "d", text: "Too many imports" },
       ],

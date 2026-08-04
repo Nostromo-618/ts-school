@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "suppressions",
@@ -13,7 +12,36 @@ export const lesson: Lesson = {
   keywords: ["ts-expect-error", "ts-ignore", "suppression", "debt", "review"],
   problem:
     "@ts-ignore stays silent forever, including after the underlying problem is fixed and the suppression is hiding a new one.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `// @ts-ignore
+const n = null.length;
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "@ts-ignore hiding a landmine.",
+  },
+  ts: {
+    code: `const maybe: string | null = null;
+// Prefer @ts-expect-error with a reason — still a last resort:
+// @ts-expect-error demo — null has no length
+const n: number = maybe.length;
+
+const ok: string = "x";
+const bad: number = ok;
+`,
+    highlights: [{ start: 8, end: 8 }],
+    caption:
+      "Suppressions are last resort. Final line shows a real error still caught.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 7,
+        messageIncludes: "Type 'string' is not assignable to type 'number'",
+      },
+    ],
+  },
+  insight: [
+    "Prefer @ts-expect-error over @ts-ignore — it fails when the error disappears.",
+    "Leave a comment explaining why.",
+    "Fix the type instead when you can.",
+  ],
 };

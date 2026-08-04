@@ -34,7 +34,8 @@ const fromB: TokenB = { value: "x", [copyB]: undefined as void };
 acceptA(fromB);
 `,
     highlights: [{ start: 12, end: 12 }],
-    caption: "Branded copies are not interchangeable — like dual package instances.",
+    caption:
+      "Branded copies are not interchangeable — like dual package instances.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -64,8 +65,7 @@ acceptA(fromB);
         { id: "d", text: "pnpm cannot install" },
       ],
       answerId: "b",
-      explanation:
-        "Two evaluations mean two constructor identities.",
+      explanation: "Two evaluations mean two constructor identities.",
     },
   ],
   exercise: {

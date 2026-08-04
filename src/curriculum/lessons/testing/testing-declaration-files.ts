@@ -28,7 +28,8 @@ export declare function api(): number;
 const n: string = api();
 `,
     highlights: [{ start: 4, end: 4 }],
-    caption: "Tests against the public declare surface catch return-type drift.",
+    caption:
+      "Tests against the public declare surface catch return-type drift.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -53,7 +54,10 @@ const n: string = api();
       prompt: "What should consumer type tests import?",
       choices: [
         { id: "a", text: "Internal src/**/*.ts always" },
-        { id: "b", text: "The package’s published entry / emitted declarations" },
+        {
+          id: "b",
+          text: "The package’s published entry / emitted declarations",
+        },
         { id: "c", text: "node:fs" },
         { id: "d", text: "Any ambient global" },
       ],

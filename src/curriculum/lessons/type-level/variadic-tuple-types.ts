@@ -45,7 +45,10 @@ const g: GreetWithExclaim = (name, loud) =>
 const bad: GreetWithExclaim = (name: string, loud: string) =>
   greet(name) + loud;
 `,
-    highlights: [{ start: 1, end: 4 }, { start: 15, end: 16 }],
+    highlights: [
+      { start: 1, end: 4 },
+      { start: 15, end: 16 },
+    ],
     caption: "Variadic [...P, A] extends the parameter tuple.",
     expectedDiagnostics: [
       {

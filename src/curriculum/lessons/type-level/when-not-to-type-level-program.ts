@@ -25,7 +25,8 @@ function pick(obj, keys) {
 }
 `,
     highlights: [{ start: 2, end: 4 }],
-    caption: "Simple runtime helpers stay readable; types should not obscure them.",
+    caption:
+      "Simple runtime helpers stay readable; types should not obscure them.",
   },
   ts: {
     code: `// Sometimes the “clever” Pick is worse than a plain interface.
@@ -60,7 +61,8 @@ type Oops = MegaPick<{ id: string }, "named">;
   quiz: [
     {
       id: "when-not",
-      prompt: "Which is the best reason to avoid a deep type-level abstraction?",
+      prompt:
+        "Which is the best reason to avoid a deep type-level abstraction?",
       choices: [
         { id: "a", text: "TypeScript forbids conditional types in libraries" },
         {

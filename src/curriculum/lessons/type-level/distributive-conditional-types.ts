@@ -46,9 +46,11 @@ type Combined = ToArrayNondist<string | number>;
 const oops: Distributed = [1, "a"];
 // not assignable to string[] | number[]
 `,
-    highlights: [{ start: 2, end: 2 }, { start: 12, end: 13 }],
-    caption:
-      "Naked parameters distribute; wrapping in a tuple disables it.",
+    highlights: [
+      { start: 2, end: 2 },
+      { start: 12, end: 13 },
+    ],
+    caption: "Naked parameters distribute; wrapping in a tuple disables it.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -65,10 +67,14 @@ const oops: Distributed = [1, "a"];
   quiz: [
     {
       id: "dist-naked",
-      prompt: "How do you stop a conditional type from distributing over a union?",
+      prompt:
+        "How do you stop a conditional type from distributing over a union?",
       choices: [
         { id: "a", text: "Add infer in the extends clause" },
-        { id: "b", text: "Wrap the type parameter in a tuple: [T] extends […]" },
+        {
+          id: "b",
+          text: "Wrap the type parameter in a tuple: [T] extends […]",
+        },
         { id: "c", text: "Use a mapped type instead" },
         { id: "d", text: "Enable strictNullChecks" },
       ],

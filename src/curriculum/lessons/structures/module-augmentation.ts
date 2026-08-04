@@ -57,7 +57,7 @@ handle(req);
     ],
   },
   insight: [
-    "In real packages, augmentation uses `declare module \"pkg\"` in a .d.ts that is itself a module.",
+    'In real packages, augmentation uses `declare module "pkg"` in a .d.ts that is itself a module.',
     "Match the dependency’s module name exactly; path mapping typos silently create a new ambient module.",
     "Prefer documenting required app-owned fields as required only when middleware always sets them.",
   ],
@@ -72,7 +72,10 @@ handle(req);
       prompt: "Where should Express Request augmentation usually live?",
       choices: [
         { id: "a", text: "Inside node_modules/express" },
-        { id: "b", text: "In an app .d.ts that declare module 'express-serve-static-core' (or the correct target)" },
+        {
+          id: "b",
+          text: "In an app .d.ts that declare module 'express-serve-static-core' (or the correct target)",
+        },
         { id: "c", text: "In tsconfig paths only" },
         { id: "d", text: "It is impossible" },
       ],

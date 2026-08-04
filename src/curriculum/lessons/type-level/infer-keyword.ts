@@ -49,7 +49,10 @@ type User = MyReturnType<typeof getUser>;
 const wrong: User = { id: 1 };
 // missing name — the inferred shape is enforceable
 `,
-    highlights: [{ start: 1, end: 3 }, { start: 11, end: 12 }],
+    highlights: [
+      { start: 1, end: 3 },
+      { start: 11, end: 12 },
+    ],
     caption:
       "infer R binds the return type inside the match; wrong assignments fail.",
     expectedDiagnostics: [

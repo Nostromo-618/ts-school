@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "void-and-never",
@@ -13,7 +12,49 @@ export const lesson: Lesson = {
   keywords: ["void", "never", "bottom type", "return type", "throw"],
   problem:
     "A function typed void can still return something, and a function that always throws is not typed never unless you say so.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function fail(msg) {
+  throw new Error(msg);
+}
+function log(msg) {
+  console.log(msg);
+}
+`,
+    highlights: [{ start: 1, end: 6 }],
+    caption: "Throw vs log look the same without return types.",
+  },
+  ts: {
+    code: `function fail(msg: string): never {
+  throw new Error(msg);
+}
+
+function log(msg: string): void {
+  // side effect only
+}
+
+declare function handle(x: string | number): string;
+
+function demo(x: string | number): string {
+  if (typeof x === "string") return x;
+  if (typeof x === "number") return String(x);
+  return fail("unreachable");
+}
+
+const v: string = log("x");
+`,
+    highlights: [{ start: 18, end: 18 }],
+    caption: "log returns void — not a string.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 17,
+        messageIncludes: "Type 'void' is not assignable to type 'string'.",
+      },
+    ],
+  },
+  insight: [
+    "never means the function does not return normally.",
+    "void means it returns no useful value — callers should not read it.",
+    "Use never for exhaustive checks and fail-fast helpers.",
+  ],
 };

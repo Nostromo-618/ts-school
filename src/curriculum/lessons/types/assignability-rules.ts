@@ -76,14 +76,13 @@ void n;
     },
   ],
   exercise: {
-    prompt:
-      "Accept unknown and return a string by narrowing with typeof.",
+    prompt: "Accept unknown and return a string by narrowing with typeof.",
     starter: `function asString(x: unknown): string {
   return x as string;
 }
 `,
     assertion: "no-errors",
-    hints: ["if (typeof x === \"string\") return x; else return \"\";"],
+    hints: ['if (typeof x === "string") return x; else return "";'],
     solution: `function asString(x: unknown): string {
   if (typeof x === "string") return x;
   return "";

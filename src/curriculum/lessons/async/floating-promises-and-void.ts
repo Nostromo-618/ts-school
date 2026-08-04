@@ -45,7 +45,8 @@ const p: Promise<void> = main();
 const wrong: string = p;
 `,
     highlights: [{ start: 15, end: 15 }],
-    caption: "Promise<void> is not a string — and floating calls need discipline.",
+    caption:
+      "Promise<void> is not a string — and floating calls need discipline.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -70,7 +71,10 @@ const wrong: string = p;
       prompt: "What is the void operator used for with promises?",
       choices: [
         { id: "a", text: "Cancel the promise" },
-        { id: "b", text: "Mark intentional ignore for floating-promise lint rules" },
+        {
+          id: "b",
+          text: "Mark intentional ignore for floating-promise lint rules",
+        },
         { id: "c", text: "Convert Promise to void at runtime" },
         { id: "d", text: "Force await" },
       ],

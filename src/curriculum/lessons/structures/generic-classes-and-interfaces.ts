@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "generic-classes-and-interfaces",
@@ -19,7 +18,33 @@ export const lesson: Lesson = {
   ],
   problem:
     "A cache typed with any is a cache that returns any, and every read site loses its type.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `class Box { constructor(value) { this.value = value; } }
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Box erases the wrapped type.",
+  },
+  ts: {
+    code: `class Box<T> {
+  constructor(public value: T) {}
+}
+const b = new Box(1);
+const n: number = b.value;
+const bad: string = b.value;
+`,
+    highlights: [{ start: 6, end: 6 }],
+    caption: "Box<number>.value is number, not string.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 6,
+        messageIncludes: "Type 'number' is not assignable to type 'string'",
+      },
+    ],
+  },
+  insight: [
+    "Generic classes keep element types on the instance.",
+    "Interfaces can be generic the same way.",
+    "Infer T from the constructor argument when possible.",
+  ],
 };

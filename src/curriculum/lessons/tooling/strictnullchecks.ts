@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "strictnullchecks",
@@ -13,7 +12,32 @@ export const lesson: Lesson = {
   keywords: ["strictNullChecks", "null", "undefined", "flag", "migration"],
   problem:
     "Cannot read properties of undefined is the most common runtime error in Node, and this is the flag that finds it.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function len(s) { return s.length; }
+len(null);
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "null slides into string APIs.",
+  },
+  ts: {
+    code: `function len(s: string): number {
+  return s.length;
+}
+len(null);
+`,
+    highlights: [{ start: 4, end: 4 }],
+    caption: "With strictNullChecks, null is not string.",
+    expectedDiagnostics: [
+      {
+        code: 2345,
+        line: 4,
+        messageIncludes: "Argument of type 'null' is not assignable to par",
+      },
+    ],
+  },
+  insight: [
+    "strictNullChecks makes null/undefined illicit for ordinary types.",
+    "It is included in strict: true — keep it on.",
+    "Use unions explicitly when absence is allowed.",
+  ],
 };

@@ -59,7 +59,8 @@ void emailDomainSafe;
   quiz: [
     {
       id: "db-q",
-      prompt: "After a column becomes nullable, what should happen to TypeScript?",
+      prompt:
+        "After a column becomes nullable, what should happen to TypeScript?",
       choices: [
         { id: "a", text: "Nothing — null is fine as string" },
         { id: "b", text: "Row types and call sites must account for null" },
@@ -73,14 +74,14 @@ void emailDomainSafe;
   ],
   exercise: {
     prompt:
-      "Type Row = { name: string | null } and write label(row) returning name or \"anonymous\".",
+      'Type Row = { name: string | null } and write label(row) returning name or "anonymous".',
     starter: `type Row = { name: string | null };
 function label(row: Row): string {
   return row.name;
 }
 `,
     assertion: "no-errors",
-    hints: ["row.name ?? \"anonymous\""],
+    hints: ['row.name ?? "anonymous"'],
     solution: `type Row = { name: string | null };
 function label(row: Row): string {
   return row.name ?? "anonymous";

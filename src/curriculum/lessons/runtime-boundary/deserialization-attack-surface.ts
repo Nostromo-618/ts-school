@@ -59,7 +59,8 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
 }
 `,
     highlights: [{ start: 24, end: 24 }],
-    caption: "Allowlists + skipped proto keys; name is still string | undefined.",
+    caption:
+      "Allowlists + skipped proto keys; name is still string | undefined.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -84,7 +85,10 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
       prompt: "Safest approach when accepting JSON objects?",
       choices: [
         { id: "a", text: "Deep-merge onto a shared defaults object" },
-        { id: "b", text: "Allowlist known keys and ignore prototype-sensitive names" },
+        {
+          id: "b",
+          text: "Allowlist known keys and ignore prototype-sensitive names",
+        },
         { id: "c", text: "JSON.parse and cast to any" },
         { id: "d", text: "Use eval" },
       ],
@@ -101,7 +105,7 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
 }
 `,
     assertion: "no-errors",
-    hints: ["typeof x === \"object\" && x !== null && !Array.isArray(x)"],
+    hints: ['typeof x === "object" && x !== null && !Array.isArray(x)'],
     solution: `function isPlainObject(x: unknown): x is Record<string, unknown> {
   return typeof x === "object" && x !== null && !Array.isArray(x);
 }

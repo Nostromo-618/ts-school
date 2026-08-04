@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "package-json-exports-and-types",
@@ -19,7 +18,40 @@ export const lesson: Lesson = {
   ],
   problem:
     "A package with an exports map and a stale top-level types field resolves fine for the author and to any for everyone else.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `const exportsMap = { ".": "./dist/index.js" };
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "exports with a runtime path only.",
+  },
+  ts: {
+    code: `type ExportEntry = { types?: string; import?: string; require?: string };
+
+const exportsMap: Record<string, ExportEntry> = {
+  ".": {
+    types: "./dist/index.d.ts",
+    import: "./dist/index.js",
+    require: "./dist/index.cjs",
+  },
+};
+
+const main = exportsMap["."];
+const typesPath: string | undefined = main.types;
+const missing: number = main.types;
+`,
+    highlights: [{ start: 12, end: 12 }],
+    caption: "Author a types condition. Optional types is not a number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 13,
+        messageIncludes: "Type 'string | undefined' is not assignable to t",
+      },
+    ],
+  },
+  insight: [
+    "Put a types condition in exports so TypeScript resolves declarations reliably.",
+    "Dual packages need both import and require entry points.",
+    "Prefer exports.types over legacy typesVersions when you can.",
+  ],
 };

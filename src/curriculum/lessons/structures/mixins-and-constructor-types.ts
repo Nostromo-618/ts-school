@@ -31,7 +31,8 @@ class Entity {}
 const TEntity = Timestamped(Entity);
 `,
     highlights: [{ start: 2, end: 8 }],
-    caption: "JS mixins work; typing the constructor parameter is the hard part.",
+    caption:
+      "JS mixins work; typing the constructor parameter is the hard part.",
   },
   ts: {
     code: `type Constructor<T = {}> = new (...args: any[]) => T;
@@ -84,7 +85,7 @@ void created;
   ],
   exercise: {
     prompt:
-      "Write Tagged<TBase extends Constructor>(Base: TBase) adding tag = \"x\", and construct one from class A {}.",
+      'Write Tagged<TBase extends Constructor>(Base: TBase) adding tag = "x", and construct one from class A {}.',
     starter: `type Constructor<T = {}> = new (...args: any[]) => T;
 
 function Tagged(Base: Constructor) {

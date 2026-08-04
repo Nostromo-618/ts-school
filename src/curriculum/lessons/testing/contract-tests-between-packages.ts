@@ -51,7 +51,10 @@ void g;
       prompt: "Why run contract tests in CI for a library?",
       choices: [
         { id: "a", text: "To replace unit tests entirely" },
-        { id: "b", text: "To fail the build when the public type surface breaks callers" },
+        {
+          id: "b",
+          text: "To fail the build when the public type surface breaks callers",
+        },
         { id: "c", text: "To speed up npm publish" },
         { id: "d", text: "To disable semver" },
       ],
@@ -61,12 +64,11 @@ void g;
     },
   ],
   exercise: {
-    prompt:
-      "Define type Api = { ping(): \"pong\" } and a const api: Api.",
+    prompt: 'Define type Api = { ping(): "pong" } and a const api: Api.',
     starter: `type Api = { ping(): "pong" };
 `,
     assertion: "no-errors",
-    hints: ["const api: Api = { ping: () => \"pong\" }"],
+    hints: ['const api: Api = { ping: () => "pong" }'],
     solution: `type Api = { ping(): "pong" };
 const api: Api = {
   ping: () => "pong",

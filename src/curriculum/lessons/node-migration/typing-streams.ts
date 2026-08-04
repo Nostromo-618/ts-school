@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "typing-streams",
@@ -20,7 +19,46 @@ export const lesson: Lesson = {
   ],
   problem:
     "Streams predate generics in Node's types, so object-mode chunks are typed as any unless you say otherwise.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `readable.on("data", (chunk) => {
+  sink.write(chunk.toUpperCase());
+});
+`,
+    highlights: [{ start: 1, end: 3 }],
+    caption: "Calling string methods on a Buffer chunk.",
+  },
+  ts: {
+    code: `type BufferLike = { toString(enc?: string): string };
+interface Readable {
+  on(event: "data", listener: (chunk: BufferLike) => void): void;
+}
+interface Writable {
+  write(chunk: string | BufferLike): boolean;
+}
+declare const readable: Readable;
+declare const sink: Writable;
+
+readable.on("data", (chunk) => {
+  sink.write(chunk.toString("utf8").toUpperCase());
+});
+
+readable.on("data", (chunk) => {
+  const upper: string = chunk.toUpperCase();
+});
+`,
+    highlights: [{ start: 15, end: 16 }],
+    caption: "Decode explicitly. BufferLike has no toUpperCase.",
+    expectedDiagnostics: [
+      {
+        code: 2339,
+        line: 16,
+        messageIncludes: "Property 'toUpperCase' does not exist on type 'B",
+      },
+    ],
+  },
+  insight: [
+    "Object-mode vs byte streams change chunk types — model that in wrappers.",
+    "Always handle stream error events.",
+    "Prefer pipeline() for cleanup over hand-rolled listeners.",
+  ],
 };

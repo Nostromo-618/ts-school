@@ -30,7 +30,8 @@ function len(x) {
 }
 `,
     highlights: [{ start: 3, end: 4 }],
-    caption: "Control flow in JS does not refine declared types — there are none.",
+    caption:
+      "Control flow in JS does not refine declared types — there are none.",
   },
   ts: {
     code: `function label(x: string | number) {
@@ -52,7 +53,8 @@ function broken(x: string | number) {
 const n: number = label("hi");
 `,
     highlights: [{ start: 17, end: 17 }],
-    caption: "CFA narrows in branches; wrong assignments still fail outside them.",
+    caption:
+      "CFA narrows in branches; wrong assignments still fail outside them.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -72,7 +74,10 @@ const n: number = label("hi");
       prompt: "What does control-flow analysis compute?",
       choices: [
         { id: "a", text: "Runtime performance of each branch" },
-        { id: "b", text: "A type for each expression based on reachable paths" },
+        {
+          id: "b",
+          text: "A type for each expression based on reachable paths",
+        },
         { id: "c", text: "The bundle size of the module" },
         { id: "d", text: "Whether a function is pure" },
       ],
@@ -83,7 +88,7 @@ const n: number = label("hi");
   ],
   exercise: {
     prompt:
-      "Write narrow(x: unknown): string that returns x if typeof x === \"string\", else \"\".",
+      'Write narrow(x: unknown): string that returns x if typeof x === "string", else "".',
     starter: `function narrow(x: unknown) {
   return "";
 }

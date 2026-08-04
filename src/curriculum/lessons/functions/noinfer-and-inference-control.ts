@@ -20,7 +20,8 @@ function createRoute(path, fallback = "/") {
 createRoute("/home", 0); // weird fallback, no complaint
 `,
     highlights: [{ start: 4, end: 4 }],
-    caption: "Defaults participate in the same untyped soup as other arguments.",
+    caption:
+      "Defaults participate in the same untyped soup as other arguments.",
   },
   ts: {
     code: `// Without NoInfer, the fallback argument also infers T and widens it.
@@ -35,7 +36,8 @@ const a = pick("left", "left");
 const b = pick("left", "right");
 `,
     highlights: [{ start: 9, end: 9 }],
-    caption: "NoInfer blocks candidates from fallback; mismatched literals error.",
+    caption:
+      "NoInfer blocks candidates from fallback; mismatched literals error.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -55,7 +57,10 @@ const b = pick("left", "right");
       prompt: "What does NoInfer<T> do at an inference site?",
       choices: [
         { id: "a", text: "Erases T to unknown" },
-        { id: "b", text: "Prevents that position from contributing candidates for T" },
+        {
+          id: "b",
+          text: "Prevents that position from contributing candidates for T",
+        },
         { id: "c", text: "Forces T to be never" },
         { id: "d", text: "Disables strictNullChecks for T" },
       ],

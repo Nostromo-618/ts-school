@@ -23,7 +23,8 @@ function add(a, b) {
 }
 `,
     highlights: [{ start: 1, end: 2 }],
-    caption: "Transpile-only pipelines skip the checker TypeScript spends time in.",
+    caption:
+      "Transpile-only pipelines skip the checker TypeScript spends time in.",
   },
   ts: {
     code: `// Mental model of stages (illustrative — not the real API surface):
@@ -76,14 +77,14 @@ const wrong: "emit" = workerStages[0];
   ],
   exercise: {
     prompt:
-      "Define type Phase = \"parse\" | \"check\" and a function that accepts only \"check\".",
+      'Define type Phase = "parse" | "check" and a function that accepts only "check".',
     starter: `type Phase = "parse" | "check";
 function runCheck(p: Phase) {
   void p;
 }
 `,
     assertion: "no-errors",
-    hints: ["Narrow the parameter to the \"check\" literal."],
+    hints: ['Narrow the parameter to the "check" literal.'],
     solution: `type Phase = "parse" | "check";
 function runCheck(p: "check") {
   void p;

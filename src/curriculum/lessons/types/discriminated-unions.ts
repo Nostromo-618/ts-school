@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "discriminated-unions",
@@ -19,7 +18,41 @@ export const lesson: Lesson = {
   ],
   problem:
     "A result object with optional data and optional error lets you construct the impossible state where both are present.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function handle(res) {
+  if (res.error) return res.error;
+  return res.data.name;
+}
+handle({ data: { name: "a" }, error: "oops" });
+`,
+    highlights: [{ start: 1, end: 3 }],
+    caption: "Optional fields allow both data and error at once.",
+  },
+  ts: {
+    code: `type Ok = { kind: "ok"; data: { name: string } };
+type Err = { kind: "err"; error: string };
+type Result = Ok | Err;
+
+function handle(res: Result): string {
+  if (res.kind === "err") return res.error;
+  return res.data.name;
+}
+
+const bad: Result = { kind: "ok", error: "nope" };
+`,
+    highlights: [{ start: 11, end: 11 }],
+    caption: "Tagged Result forbids mixing ok with error.",
+    expectedDiagnostics: [
+      {
+        code: 2353,
+        line: 10,
+        messageIncludes: "Object literal may only specify known properties",
+      },
+    ],
+  },
+  insight: [
+    "Give every variant a literal tag so the checker can discriminate.",
+    "Optional data+error models allow impossible states.",
+    "Switch on the tag and exhaustiveness checking becomes possible.",
+  ],
 };

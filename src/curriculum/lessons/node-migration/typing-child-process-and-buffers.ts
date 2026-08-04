@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "typing-child-process-and-buffers",
@@ -20,7 +19,48 @@ export const lesson: Lesson = {
   ],
   problem:
     "Buffer is a Uint8Array with extras, and code that assumes one when it has the other fails only on the byte sequences you did not test.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `const { stdout } = execSync("ls " + userInput);
+parse(stdout);
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "Shelling out with concatenated user input.",
+  },
+  ts: {
+    code: `type ExecResult = { stdout: Uint8Array; stderr: Uint8Array };
+declare function execFileSync(
+  file: string,
+  args: string[],
+  opts: { encoding: "utf8" },
+): string;
+declare function execFileSync(file: string, args: string[]): ExecResult;
+
+export function listDir(dir: string): string {
+  return execFileSync("ls", ["-la", dir], { encoding: "utf8" });
+}
+
+const binary = execFileSync("ls", ["-la"]);
+const asString: string = binary;
+`,
+    highlights: [{ start: 13, end: 14 }],
+    caption:
+      "Prefer execFile with an args array. Without encoding, the result is not a string.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 14,
+        messageIncludes: "Type 'ExecResult' is not assignable to type 'str",
+      },
+    ],
+  },
+  insight: [
+    "Use execFile/spawn with an args array to avoid shell injection.",
+    "encoding utf8 selects the string overload.",
+    "Bound timeout and maxBuffer for untrusted workloads.",
+  ],
+  security: {
+    title: "Shell injection via child_process",
+    body: "Never build a shell command string from user input. Use execFile/spawn with discrete arguments.",
+    severity: "critical",
+  },
 };

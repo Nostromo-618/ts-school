@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "error-cause-and-chaining",
@@ -13,7 +12,31 @@ export const lesson: Lesson = {
   keywords: ["cause", "error chaining", "wrapping", "context", "unknown"],
   problem:
     "Catching and rethrowing with a friendlier message throws away the only stack trace that pointed at the real failure.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `throw new Error('failed: ' + err);
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "String-concatenating nested errors.",
+  },
+  ts: {
+    code: `declare const root: Error;
+const wrapped = new Error("failed", { cause: root });
+const c: unknown = wrapped.cause;
+const bad: string = wrapped.cause;
+`,
+    highlights: [{ start: 4, end: 4 }],
+    caption: "Error.cause is unknown — not string.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 4,
+        messageIncludes: "Type 'unknown' is not assignable to type 'string",
+      },
+    ],
+  },
+  insight: [
+    "Use the cause option to chain errors without losing the stack.",
+    "cause is unknown — narrow before reading.",
+    "Preserve causes across async boundaries.",
+  ],
 };

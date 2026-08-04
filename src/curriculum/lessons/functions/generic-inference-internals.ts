@@ -20,7 +20,8 @@ function pair(a, b) {
 const p = pair(1, "x"); // [any, any] vibe in untyped code
 `,
     highlights: [{ start: 2, end: 5 }],
-    caption: "Without inference rules, paired values share no declared relationship.",
+    caption:
+      "Without inference rules, paired values share no declared relationship.",
   },
   ts: {
     code: `function pair<T>(a: T, b: T): [T, T] {
@@ -36,7 +37,8 @@ const ok: string | number = p[0];
 void ok;
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "An explicit T checks arguments; inferred unions must be stated or formed carefully.",
+    caption:
+      "An explicit T checks arguments; inferred unions must be stated or formed carefully.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -53,7 +55,7 @@ void ok;
   quiz: [
     {
       id: "infer-supertype",
-      prompt: "What is T in pair(1, \"x\") for pair<T>(a: T, b: T)?",
+      prompt: 'What is T in pair(1, "x") for pair<T>(a: T, b: T)?',
       choices: [
         { id: "a", text: "number" },
         { id: "b", text: "string" },

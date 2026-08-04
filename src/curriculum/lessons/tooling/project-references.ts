@@ -68,8 +68,7 @@ void root;
         { id: "d", text: "DOM libs" },
       ],
       answerId: "b",
-      explanation:
-        "composite marks a project as a referenceable build unit.",
+      explanation: "composite marks a project as a referenceable build unit.",
     },
   ],
   exercise: {

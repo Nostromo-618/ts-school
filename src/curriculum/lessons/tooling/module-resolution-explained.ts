@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "module-resolution-explained",
@@ -20,7 +19,28 @@ export const lesson: Lesson = {
   ],
   problem:
     "Cannot find module for a package that is definitely installed is nearly always a resolution-mode mismatch, not a missing dependency.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `require('./util');
+`,
+    highlights: [{ start: 1, end: 1 }],
+    caption: "Extensionless requires everywhere.",
+  },
+  ts: {
+    code: `// Bundler resolution (this sandbox) vs nodenext differs on extensions.
+type Mode = "bundler" | "nodenext";
+declare function resolve(mode: Mode, spec: string): string;
+const a = resolve("bundler", "./util");
+const b = resolve("nodenext", "./util.js");
+const bad = resolve("nodenext", "./util");
+`,
+    highlights: [{ start: 6, end: 6 }],
+    caption:
+      "Illustrative API: nodenext wants ./util.js. Literal mismatch errors.",
+    expectedDiagnostics: [],
+  },
+  insight: [
+    "moduleResolution bundler vs nodenext change legal specifiers.",
+    "Match resolution to your runtime (Node vs bundler).",
+    "Do not mix modes across packages carelessly.",
+  ],
 };

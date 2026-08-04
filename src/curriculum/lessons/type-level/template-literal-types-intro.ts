@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "template-literal-types-intro",
@@ -19,7 +18,34 @@ export const lesson: Lesson = {
   ],
   problem:
     "Event names built by string concatenation at runtime are opaque to the checker, so a listener for a name nobody emits is silent.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `function eventName(entity, action) {
+  return entity + ":" + action;
+}
+`,
+    highlights: [{ start: 1, end: 3 }],
+    caption: "String concatenation for event names.",
+  },
+  ts: {
+    code: `type Entity = "user" | "order";
+type Action = "created" | "updated";
+type EventName = \`\${Entity}:\${Action}\`;
+const ok: EventName = "user:created";
+const bad: EventName = "user:deleted";
+`,
+    highlights: [{ start: 5, end: 5 }],
+    caption: "Template literal unions forbid unknown actions.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 5,
+        messageIncludes: "Type '\"user:deleted\"' is not assignable to type",
+      },
+    ],
+  },
+  insight: [
+    "Template literal types compose string unions.",
+    "Great for event names, CSS, and routes.",
+    "Keep the unions small enough to read.",
+  ],
 };

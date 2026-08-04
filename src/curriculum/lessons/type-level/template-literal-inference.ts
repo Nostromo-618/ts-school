@@ -38,7 +38,10 @@ type Params = ExtractParams<"/users/:id/posts/:postId">;
 
 const need: Params = "userId";
 `,
-    highlights: [{ start: 1, end: 6 }, { start: 11, end: 11 }],
+    highlights: [
+      { start: 1, end: 6 },
+      { start: 11, end: 11 },
+    ],
     caption: "infer walks the template; wrong param names are not assignable.",
     expectedDiagnostics: [
       {
@@ -56,21 +59,22 @@ const need: Params = "userId";
   quiz: [
     {
       id: "tpl-infer",
-      prompt: "What does `S extends \\`${string}:${infer P}\\`` bind in P for \"/users/:id\"?",
+      prompt:
+        'What does `S extends \\`${string}:${infer P}\\`` bind in P for "/users/:id"?',
       choices: [
-        { id: "a", text: "\"/users\"" },
-        { id: "b", text: "\"id\"" },
-        { id: "c", text: "\":id\"" },
+        { id: "a", text: '"/users"' },
+        { id: "b", text: '"id"' },
+        { id: "c", text: '":id"' },
         { id: "d", text: "the whole string" },
       ],
       answerId: "b",
       explanation:
-        "The pattern consumes up through the colon; infer P takes the trailing segment \"id\".",
+        'The pattern consumes up through the colon; infer P takes the trailing segment "id".',
     },
   ],
   exercise: {
     prompt:
-      "Implement StartsWithHello<S> that is true if S starts with \"hello\", else false (as type booleans).",
+      'Implement StartsWithHello<S> that is true if S starts with "hello", else false (as type booleans).',
     starter: `type StartsWithHello<S extends string> = false; // TODO
 
 type A = StartsWithHello<"hello-world">;

@@ -62,8 +62,7 @@ const bad: WireEvent = { at: new Date(), name: "x" };
         { id: "d", text: "null" },
       ],
       answerId: "b",
-      explanation:
-        "JSON has no Date type; stringify uses toJSON → string.",
+      explanation: "JSON has no Date type; stringify uses toJSON → string.",
     },
   ],
   exercise: {

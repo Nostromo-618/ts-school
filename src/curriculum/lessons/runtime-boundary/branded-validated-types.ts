@@ -78,7 +78,10 @@ send(raw);
       prompt: "What should be the only way to obtain an Email?",
       choices: [
         { id: "a", text: "string interpolation" },
-        { id: "b", text: "A parser/smart constructor that validates then brands" },
+        {
+          id: "b",
+          text: "A parser/smart constructor that validates then brands",
+        },
         { id: "c", text: "JSON.parse" },
         { id: "d", text: "process.env" },
       ],
@@ -89,14 +92,16 @@ send(raw);
   ],
   exercise: {
     prompt:
-      "Define UserId brand and parseUserId(s: string): UserId | null requiring s.startsWith(\"user_\").",
+      'Define UserId brand and parseUserId(s: string): UserId | null requiring s.startsWith("user_").',
     starter: `type UserId = string;
 function parseUserId(s: string): UserId | null {
   return s as UserId;
 }
 `,
     assertion: "no-errors",
-    hints: ["Use a unique symbol brand; return null when the prefix is missing."],
+    hints: [
+      "Use a unique symbol brand; return null when the prefix is missing.",
+    ],
     solution: `declare const userIdBrand: unique symbol;
 type UserId = string & { readonly [userIdBrand]: void };
 

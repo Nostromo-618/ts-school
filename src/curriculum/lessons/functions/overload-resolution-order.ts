@@ -42,7 +42,8 @@ const b = read("notes.txt", "utf8");
 const c: string = read(3);
 `,
     highlights: [{ start: 14, end: 14 }],
-    caption: "Declaration order picks the fd overload; assigning to string fails.",
+    caption:
+      "Declaration order picks the fd overload; assigning to string fails.",
     expectedDiagnostics: [
       {
         code: 2322,

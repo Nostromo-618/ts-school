@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "nouncheckedindexedaccess",
@@ -19,7 +18,34 @@ export const lesson: Lesson = {
   ],
   problem:
     "map[key] is typed as present for every key, so a cache miss is typed identically to a cache hit.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `const first = arr[0];
+first.toUpperCase();
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "Indexing assumed defined.",
+  },
+  ts: {
+    code: `// Host baseline does not enable noUncheckedIndexedAccess.
+// Model the safer type explicitly:
+function first(arr: string[]): string | undefined {
+  return arr[0];
+}
+const s: string = first(["a"]);
+`,
+    highlights: [{ start: 6, end: 6 }],
+    caption: "Model index access as T | undefined. Assignment to string fails.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 6,
+        messageIncludes: "Type 'string | undefined' is not assignable to t",
+      },
+    ],
+  },
+  insight: [
+    "noUncheckedIndexedAccess adds | undefined to index reads.",
+    "Even without the flag, treat indexes as optional in Node services.",
+    "Narrow before use.",
+  ],
 };

@@ -42,7 +42,8 @@ const collapsed: (x: string) => string = identity;
 const n = collapsed(1);
 `,
     highlights: [{ start: 11, end: 11 }],
-    caption: "Once collapsed to a concrete signature, other T values are rejected.",
+    caption:
+      "Once collapsed to a concrete signature, other T values are rejected.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -59,11 +60,12 @@ const n = collapsed(1);
   quiz: [
     {
       id: "hkt-q",
-      prompt: "What does `identity<string>` (without call parentheses) produce?",
+      prompt:
+        "What does `identity<string>` (without call parentheses) produce?",
       choices: [
         { id: "a", text: "A compile error" },
         { id: "b", text: "An instantiation expression: (x: string) => string" },
-        { id: "c", text: "The string \"identity\"" },
+        { id: "c", text: 'The string "identity"' },
         { id: "d", text: "A Promise<string>" },
       ],
       answerId: "b",
@@ -72,8 +74,7 @@ const n = collapsed(1);
     },
   ],
   exercise: {
-    prompt:
-      "Create const asNumber = identity<number> and call it with 42.",
+    prompt: "Create const asNumber = identity<number> and call it with 42.",
     starter: `function identity<T>(x: T): T {
   return x;
 }

@@ -42,7 +42,8 @@ const ok = takeNumber(1);
 const bad: string = ok;
 `,
     highlights: [{ start: 12, end: 12 }],
-    caption: "@ts-expect-error documents intentional failures; returns stay number.",
+    caption:
+      "@ts-expect-error documents intentional failures; returns stay number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -79,7 +80,7 @@ const bad: string = ok;
 }
 `,
     assertion: "no-errors",
-    hints: ["Add // @ts-expect-error before onlyNumber(\"x\"); and a good call."],
+    hints: ['Add // @ts-expect-error before onlyNumber("x"); and a good call.'],
     solution: `function onlyNumber(n: number): number {
   return n;
 }
