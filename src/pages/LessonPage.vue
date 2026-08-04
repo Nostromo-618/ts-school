@@ -1,31 +1,32 @@
 <script setup lang="ts">
 /**
- * PLACEHOLDER — replaced by `add-lesson-engine`.
- *
- * One route component renders every lesson: the route table supplies the id,
- * this component resolves the `Lesson` from the registry. That contract is the
- * finished one. What is placeholder is the *body*: the dual-pane editor, the
- * live diagnostics list, the quiz and exercise blocks all belong to the lesson
- * engine, and until they exist this page renders the lesson's metadata and says
- * plainly that the body is not written yet.
- *
- * The lesson-engine agent replaces everything below the `lesson` lookup. It
- * should not need to touch `src/router.ts`, `src/nav.ts`, or `src/curriculum/`.
+ * One route component for every lesson. The route table supplies the id; this
+ * page resolves the `Lesson` from the registry and composes the dual-pane
+ * engine, insights, optional quiz/exercise blocks, and security / diagram.
  */
-import { computed } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
-import { VdBadge, VdIcon } from "@vanduo-oss/vd3";
+import { VdAlert, VdIcon } from "@vanduo-oss/vd3";
+import { VdFlowchart } from "@vanduo-oss/vd3-cbun/flowchart";
+import DualPane from "@/components/lesson/DualPane.vue";
+import ExerciseBlock from "@/components/lesson/ExerciseBlock.vue";
+import QuizBlock from "@/components/lesson/QuizBlock.vue";
+import TierBadge from "@/components/lesson/TierBadge.vue";
 import {
-  TIER_BADGE_VARIANTS,
-  TIER_LABELS,
   isPlaceholder,
   lessonById,
   lessonNeighbours,
   lessonRoute,
   trackById,
+  type SecurityNote,
 } from "@/curriculum";
+import { useProgressStore } from "@/stores/progress";
 
 const props = defineProps<{ lessonId: string }>();
+
+const progress = useProgressStore();
+const quizDone = ref(false);
+const exerciseDone = ref(false);
 
 const lesson = computed(() => lessonById(props.lessonId));
 const track = computed(() =>
@@ -40,6 +41,60 @@ const prerequisites = computed(() =>
 const isUnwritten = computed(
   () => lesson.value !== undefined && isPlaceholder(lesson.value.ts),
 );
+const isComplete = computed(() => progress.isComplete(props.lessonId));
+
+function syncLessonProgress(id: string): void {
+  progress.hydrate();
+  progress.markInProgress(id);
+  const entry = progress.lessons[id];
+  quizDone.value = entry?.quizScore !== undefined;
+  exerciseDone.value = entry?.exercisePassed === true;
+}
+
+watch(
+  () => props.lessonId,
+  (id) => {
+    syncLessonProgress(id);
+  },
+);
+
+onMounted(() => {
+  syncLessonProgress(props.lessonId);
+});
+
+function maybeAutoComplete(): void {
+  const current = lesson.value;
+  if (!current || isComplete.value) return;
+  const needsQuiz = (current.quiz?.length ?? 0) > 0;
+  const needsExercise = current.exercise !== undefined;
+  if (needsQuiz && !quizDone.value) return;
+  if (needsExercise && !exerciseDone.value) return;
+  if (!needsQuiz && !needsExercise) return;
+  progress.markComplete(props.lessonId);
+}
+
+function onQuizComplete(): void {
+  quizDone.value = true;
+  maybeAutoComplete();
+}
+
+function onExercisePass(): void {
+  exerciseDone.value = true;
+  maybeAutoComplete();
+}
+
+function markComplete(): void {
+  progress.markComplete(props.lessonId);
+}
+
+const SECURITY_VARIANTS: Record<
+  SecurityNote["severity"],
+  "info" | "warning" | "danger"
+> = {
+  info: "info",
+  caution: "warning",
+  critical: "danger",
+};
 </script>
 
 <template>
@@ -73,9 +128,7 @@ const isUnwritten = computed(
       <h1>{{ lesson.title }}</h1>
 
       <div class="vd-inline" data-gap="fib-5">
-        <VdBadge :variant="TIER_BADGE_VARIANTS[lesson.tier]" pill>
-          {{ TIER_LABELS[lesson.tier] }}
-        </VdBadge>
+        <TierBadge :tier="lesson.tier" />
         <span class="vd-text-muted vd-text-sm">
           <VdIcon :name="track?.icon ?? 'circle'" size="sm" />
           {{ track?.title ?? lesson.track }}
@@ -106,11 +159,91 @@ const isUnwritten = computed(
       </ul>
     </section>
 
-    <!-- Replaced by DualPane + DiagnosticsList in `add-lesson-engine`. -->
     <p v-if="isUnwritten" class="vd-alert vd-alert-info" role="status">
       This lesson is on the map but not written yet. Its JavaScript and
       TypeScript panes, insights, and exercise arrive with the content tiers.
     </p>
+
+    <DualPane :js="lesson.js" :ts="lesson.ts" />
+
+    <section
+      v-if="lesson.insight.length > 0"
+      class="vd-stack"
+      data-gap="fib-5"
+      aria-labelledby="lesson-insight"
+    >
+      <h2 id="lesson-insight">Takeaways</h2>
+      <ul>
+        <li v-for="(item, index) in lesson.insight" :key="index">
+          {{ item }}
+        </li>
+      </ul>
+    </section>
+
+    <VdAlert
+      v-if="lesson.security"
+      :variant="SECURITY_VARIANTS[lesson.security.severity]"
+      :title="lesson.security.title"
+    >
+      {{ lesson.security.body }}
+    </VdAlert>
+
+    <section
+      v-if="lesson.diagram"
+      class="vd-stack"
+      data-gap="fib-5"
+      aria-labelledby="lesson-diagram"
+    >
+      <h2 id="lesson-diagram">Diagram</h2>
+      <VdFlowchart :data="lesson.diagram" readonly auto-fit />
+    </section>
+
+    <QuizBlock
+      v-if="lesson.quiz && lesson.quiz.length > 0"
+      :lesson-id="lesson.id"
+      :questions="lesson.quiz"
+      @complete="onQuizComplete"
+    />
+
+    <ExerciseBlock
+      v-if="lesson.exercise"
+      :lesson-id="lesson.id"
+      :exercise="lesson.exercise"
+      @pass="onExercisePass"
+    />
+
+    <section
+      v-if="lesson.references && lesson.references.length > 0"
+      class="vd-stack"
+      data-gap="fib-5"
+      aria-labelledby="lesson-references"
+    >
+      <h2 id="lesson-references">References</h2>
+      <ul>
+        <li v-for="reference in lesson.references" :key="reference.href">
+          <a :href="reference.href" rel="noopener noreferrer" target="_blank">
+            {{ reference.title }}
+          </a>
+          <span v-if="reference.note" class="vd-text-muted">
+            — {{ reference.note }}
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="ts-lesson-complete vd-inline" data-gap="fib-8">
+      <button
+        v-if="!isComplete"
+        type="button"
+        class="vd-btn vd-btn-secondary vd-btn-sm"
+        @click="markComplete"
+      >
+        Mark complete
+      </button>
+      <p v-else class="vd-text-muted vd-text-sm" role="status">
+        Marked complete.
+      </p>
+    </div>
 
     <nav class="ts-lesson-pager" aria-label="Lesson navigation">
       <RouterLink

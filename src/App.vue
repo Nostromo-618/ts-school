@@ -7,10 +7,12 @@ import SchoolNavbar from "@/layout/SchoolNavbar.vue";
 import SchoolFooter from "@/layout/SchoolFooter.vue";
 import SchoolLayout from "@/layout/SchoolLayout.vue";
 import GlobalSearchModal from "@/overlays/GlobalSearchModal.vue";
+import { useProgressStore } from "@/stores/progress";
 import { useThemeStore } from "@/stores/theme";
 
 const route = useRoute();
 const theme = useThemeStore();
+const progress = useProgressStore();
 
 // ── Per-route SEO (baked into the prerendered HTML via @unhead) ──────
 const BRAND_TITLE = "TypeScript School";
@@ -41,10 +43,11 @@ useHead({
 const isLesson = computed(() => route.meta?.layout === "lesson");
 
 onMounted(() => {
-  // Client only: the theme is hydrated from localStorage rather than
-  // serialised into the page, because `script-src 'self'` blocks the inline
-  // script vite-ssg would use for initial state.
+  // Client only: theme and learner progress hydrate from localStorage rather
+  // than serialised into the page, because `script-src 'self'` blocks the
+  // inline script vite-ssg would use for initial state.
   theme.init();
+  progress.hydrate();
 });
 </script>
 

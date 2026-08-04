@@ -199,6 +199,25 @@ body {
   gap: var(--vd-space-fib-13, 1.3125rem);
 }
 
+/* Dual-pane lesson geometry — layout only; editors are styled by vd3-cbun. */
+.ts-dual-pane-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--vd-space-fib-13, 1.3125rem);
+  align-items: start;
+}
+
+.ts-pane-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--vd-space-fib-5, 0.5rem);
+}
+
+.ts-pane-label {
+  font-weight: 600;
+}
+
 .ts-hero-actions {
   display: flex;
   flex-wrap: wrap;

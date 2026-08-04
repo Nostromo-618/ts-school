@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
-import { VdBadge, VdIcon } from "@vanduo-oss/vd3";
+import { VdBadge, VdIcon, VdProgress } from "@vanduo-oss/vd3";
 import {
   TIERS,
   TIER_BADGE_VARIANTS,
@@ -13,11 +13,13 @@ import {
   lessonsByTrack,
   type Tier,
 } from "@/curriculum";
+import { useProgressStore } from "@/stores/progress";
 
 type TierFilter = Tier | "all";
 
 const counts = lessonCounts();
 const filter = ref<TierFilter>("all");
+const progress = useProgressStore();
 
 const filters: { value: TierFilter; label: string; count: number }[] = [
   { value: "all", label: "Everything", count: counts.total },
@@ -33,12 +35,15 @@ const filters: { value: TierFilter; label: string; count: number }[] = [
  * filtering drops out entirely rather than rendering an empty card.
  */
 const visibleTracks = computed(() =>
-  TRACKS.map((track) => ({
-    track,
-    lessons: lessonsByTrack(track.id).filter(
+  TRACKS.map((track) => {
+    const lessons = lessonsByTrack(track.id).filter(
       (lesson) => filter.value === "all" || lesson.tier === filter.value,
-    ),
-  })).filter((entry) => entry.lessons.length > 0),
+    );
+    const completed = lessons.filter((lesson) =>
+      progress.isComplete(lesson.id),
+    ).length;
+    return { track, lessons, completed };
+  }).filter((entry) => entry.lessons.length > 0),
 );
 </script>
 
@@ -96,12 +101,11 @@ const visibleTracks = computed(() =>
           </span>
         </h2>
         <p class="vd-text-muted vd-text-sm">{{ entry.track.description }}</p>
-        <!--
-          Progress seam: `add-learner-features` renders a <VdProgress> here,
-          fed by the persisted progress store, showing how many of this track's
-          lessons the reader has completed. Nothing else on this page needs to
-          change for that.
-        -->
+        <VdProgress
+          :value="entry.completed"
+          :max="entry.lessons.length"
+          :label="`${entry.completed} of ${entry.lessons.length} complete`"
+        />
       </header>
 
       <ol class="ts-track-lessons">
