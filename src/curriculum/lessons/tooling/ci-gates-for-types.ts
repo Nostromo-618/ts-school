@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "ci-gates-for-types",
@@ -13,7 +12,70 @@ export const lesson: Lesson = {
   keywords: ["ci", "gate", "ratchet", "error budget", "cache", "pipeline"],
   problem:
     "A codebase with 400 known errors either blocks every pull request or checks nothing, unless the gate counts rather than passes.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `// JS CI often runs tests only — type errors never appear.
+console.log("shipped");
+`,
+    highlights: [{ start: 1, end: 2 }],
+    caption: "Without a type gate, regressions are invisible in CI.",
+  },
+  ts: {
+    code: `type GateResult = { errors: number; maxErrors: number };
+
+function passes(gate: GateResult): boolean {
+  return gate.errors <= gate.maxErrors;
+}
+
+const migrating: GateResult = { errors: 380, maxErrors: 400 };
+const ok = passes(migrating);
+
+const broken: GateResult = { errors: 401, maxErrors: 400 };
+const claim: true = passes(broken);
+void ok;
+`,
+    highlights: [{ start: 12, end: 12 }],
+    caption: "Ratchet gates compare counts — over budget is false.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 11,
+        messageIncludes: "boolean",
+      },
+    ],
+  },
+  insight: [
+    "Put tsc --noEmit early in CI; cache .tsbuildinfo when using incremental/project references.",
+    "Ratchets encode a budget; tighten maxErrors over time.",
+    "Do not let suppressions grow unbounded — count @ts-expect-error too.",
+  ],
+  quiz: [
+    {
+      id: "ci-q",
+      prompt: "Best CI strategy for a half-migrated repo?",
+      choices: [
+        { id: "a", text: "Disable typecheck until migration finishes" },
+        { id: "b", text: "Ratchet error counts so they cannot increase" },
+        { id: "c", text: "Only typecheck on Fridays" },
+        { id: "d", text: "Rely on editor squiggles" },
+      ],
+      answerId: "b",
+      explanation:
+        "Budgets allow progress without blocking every PR on historical debt.",
+    },
+  ],
+  exercise: {
+    prompt:
+      "Write passes(errors: number, max: number): boolean.",
+    starter: `function passes(errors: number, max: number) {
+  return errors <= max;
+}
+`,
+    assertion: "no-errors",
+    hints: ["Annotate the return as boolean."],
+    solution: `function passes(errors: number, max: number): boolean {
+  return errors <= max;
+}
+void passes(1, 2);
+`,
+  },
 };

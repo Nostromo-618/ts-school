@@ -1,5 +1,4 @@
 import type { Lesson } from "@/curriculum/types";
-import { placeholderJsPane, placeholderTsPane } from "@/curriculum/placeholder";
 
 export const lesson: Lesson = {
   id: "ts-expect-error-as-an-assertion",
@@ -19,7 +18,76 @@ export const lesson: Lesson = {
   ],
   problem:
     "Nothing stops a type from getting looser, so the invalid usage your API deliberately rejects starts compiling and no test notices.",
-  js: placeholderJsPane(),
-  ts: placeholderTsPane(),
-  insight: [],
+  js: {
+    code: `// JS cannot assert “this call is illegal” — everything is legal.
+function takeNumber(n) {
+  return n + 1;
+}
+takeNumber("nope");
+`,
+    highlights: [{ start: 5, end: 5 }],
+    caption: "Negative type tests have no JS equivalent.",
+  },
+  ts: {
+    code: `function takeNumber(n: number): number {
+  return n + 1;
+}
+
+// Negative test: this line must stay an error.
+// @ts-expect-error string is not a number
+takeNumber("nope");
+
+// If the API loosens to accept string, @ts-expect-error becomes unused (TS2578).
+const ok = takeNumber(1);
+const bad: string = ok;
+`,
+    highlights: [{ start: 12, end: 12 }],
+    caption: "@ts-expect-error documents intentional failures; returns stay number.",
+    expectedDiagnostics: [
+      {
+        code: 2322,
+        line: 11,
+        messageIncludes: "number",
+      },
+    ],
+  },
+  insight: [
+    "@ts-expect-error is better than @ts-ignore for tests — unused expect-errors fail.",
+    "Put negative tests next to the API so loosenings break CI.",
+    "Do not use expect-error to silence real bugs in production code paths.",
+  ],
+  quiz: [
+    {
+      id: "expect-err",
+      prompt: "What happens if @ts-expect-error sits on a line with no error?",
+      choices: [
+        { id: "a", text: "Nothing" },
+        { id: "b", text: "TypeScript reports that the directive is unused" },
+        { id: "c", text: "The file is skipped" },
+        { id: "d", text: "Runtime throws" },
+      ],
+      answerId: "b",
+      explanation:
+        "Unused @ts-expect-error is itself an error — that is the assertion.",
+    },
+  ],
+  exercise: {
+    prompt:
+      "Write onlyNumber(n: number) and a @ts-expect-error call with a string, plus a valid call.",
+    starter: `function onlyNumber(n: number) {
+  return n;
+}
+`,
+    assertion: "no-errors",
+    hints: ["Add // @ts-expect-error before onlyNumber(\"x\"); and a good call."],
+    solution: `function onlyNumber(n: number): number {
+  return n;
+}
+
+// @ts-expect-error string should be rejected
+onlyNumber("x");
+
+void onlyNumber(1);
+`,
+  },
 };
