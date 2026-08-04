@@ -57,7 +57,7 @@ const isEditable = (element: EventTarget | null): boolean => {
 
 const onKeydown = (event: KeyboardEvent): void => {
   if (
-    (event.key === "k" && (event.metaKey || event.ctrlKey)) ||
+    (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) ||
     event.key === "/"
   ) {
     // `/` is a normal character inside a field; only the bare page gets it.
