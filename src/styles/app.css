@@ -5,6 +5,12 @@
 
 :root {
   color-scheme: light dark;
+
+  --ts-ai-sidebar-width: 24rem;
+  --ts-notes-sidebar-width: 22rem;
+  --ts-ai-dock-width: 0px;
+  --ts-notes-dock-left: 0px;
+  --ts-notes-dock-right: 0px;
 }
 
 html,
@@ -92,13 +98,17 @@ body {
 
 .ts-filter-search {
   display: flex;
-  flex: 1 1 18rem;
+  flex: 1 1 24rem;
+  min-width: min(100%, 20rem);
+  max-width: 100%;
   align-items: center;
   gap: var(--vd-space-fib-3, 0.3125rem);
 }
 
 .ts-filter-search .vd-input {
   flex: 1;
+  min-width: 0;
+  width: 100%;
 }
 
 .ts-tier-summary {
@@ -234,6 +244,26 @@ body {
   list-style: none;
 }
 
+.ts-tier-card-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.ts-tier-card-link:hover,
+.ts-tier-card-link:focus-visible {
+  border-color: var(--vd-color-primary, currentColor);
+  outline: none;
+}
+
+.ts-tier-card-link:focus-visible {
+  box-shadow: 0 0 0 2px var(--vd-color-primary);
+}
+
 .ts-tier-card-title,
 .ts-track-grid-title {
   display: flex;
@@ -253,23 +283,100 @@ body {
   margin: 0;
 }
 
-/* History page: two charts side by side when width allows. */
+/* History page: charts in a responsive grid; wide series can span.
+   minmax(~24–26rem) keeps long titles + legends out of a cramped 3-col
+   middling width; auto-fit drops to 2 then 1 as the viewport shrinks. */
 .ts-history-charts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: var(--vd-space-fib-21, 2.125rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: var(--vd-space-fib-34, 3.375rem) var(--vd-space-fib-21, 2.125rem);
+  align-items: start;
   margin: 0;
 }
 
 .ts-history-chart {
   margin: 0;
   min-width: 0;
+  max-width: 100%;
+}
+
+.ts-history-chart-wide {
+  grid-column: 1 / -1;
 }
 
 .ts-history-chart-title {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+/* HTML legend stays in document flow (vd3 SVG legends share the title band
+   and overflow into neighbors when columns are narrow). */
+.ts-history-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--vd-text-muted, #868e96);
+}
+
+.ts-history-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ts-history-legend-swatch {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 0.125rem;
+  background: var(--vd-chart-1, #5c7cfa);
+  flex-shrink: 0;
+}
+
+.ts-history-legend-swatch[data-series="1"] {
+  background: var(--vd-chart-2, #228be6);
+}
+
+/* Clip SVG paint that escapes the viewBox (vd3 sets overflow: visible). */
+.ts-history-chart .vd-chart-root {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.ts-history-chart .vd-chart-root svg {
+  overflow: hidden;
+}
+
+.ts-history-sources {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ts-history-sources ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.ts-history-sources li {
+  margin: 0.35rem 0;
+}
+
+.ts-history-sources a {
+  overflow-wrap: anywhere;
+}
+
+.ts-history-inline-cite {
+  margin: 0;
 }
 
 /* ── Shell ───────────────────────────────────────────────────────────
@@ -307,10 +414,54 @@ body {
   color: var(--vd-text-secondary, var(--vd-text-muted));
 }
 
+/* Stronger frost than vd3 defaults (~0.65 / fully transparent at top). */
+.vd-navbar.vd-navbar-glass {
+  --vd-glass-bg-opacity: 0.9;
+  --vd-glass-blur: 48px;
+  --vd-glass-saturate: 2;
+  --vd-glass-border-alpha: 0.28;
+  --vd-glass-shadow: 0 10px 36px rgb(0 0 0 / 18%);
+}
+
+.vd-navbar.vd-navbar-glass:not(.vd-navbar-scrolled) {
+  /* Keep a light frost at the top of the page — not fully transparent. */
+  background: color-mix(in srgb, var(--vd-bg-primary, #fff) 88%, transparent);
+  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  backdrop-filter: blur(28px) saturate(1.6);
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--vd-border-color, #000) 22%,
+    transparent
+  );
+  box-shadow: 0 1px 0 rgb(0 0 0 / 4%);
+}
+
+.vd-navbar.vd-navbar-glass.vd-navbar-scrolled {
+  --vd-glass-blur: 80px;
+  --vd-glass-saturate: 2.4;
+  --vd-glass-bg-opacity: 0.92;
+}
+
 /* Below the breakpoint the collapsible menu is a fixed drawer and leaves the
    flow, so the actions need to claim the space between brand and burger. */
 .ts-navbar-actions {
   margin-left: auto;
+}
+
+/* Profile control is a RouterLink that reuses the icon-button chrome. */
+.ts-navbar-actions a.vd-theme-switcher-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* VdFooter `:columns` grids the <footer> itself (one child = container), so we
+   put `vd-footer-3col` on an inner wrapper instead. */
+.ts-footer-columns > .vd-footer-section {
+  min-width: 0;
+  margin-bottom: 0;
 }
 
 .ts-footer-brand {
@@ -319,6 +470,20 @@ body {
   gap: var(--vd-space-fib-8, 0.8125rem);
   margin-bottom: var(--vd-space-fib-8, 0.8125rem);
   font-size: 1.125rem;
+}
+
+.ts-footer-blurb {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ts-footer-columns .vd-footer-list-item {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.ts-footer-columns .vd-footer-link {
+  margin-bottom: 0;
 }
 
 .ts-lesson-frame {
@@ -396,4 +561,446 @@ body {
 .ts-search-modal .ts-search-group {
   padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-13, 1.3125rem) 0;
   font-weight: 600;
+}
+
+.ts-search-source {
+  display: inline-block;
+  margin-left: var(--vd-space-fib-5, 0.5rem);
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--vd-radius-sm, 0.25rem);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--vd-text-muted, #6b7280);
+  border: 1px solid var(--vd-border-color, #e5e7eb);
+}
+
+.ts-search-source[data-source="semantic"] {
+  color: var(--vd-color-primary, #2563eb);
+  border-color: color-mix(
+    in srgb,
+    var(--vd-color-primary, #2563eb) 35%,
+    transparent
+  );
+}
+
+/* ── Lesson AI chat sidebar ── */
+
+.ts-ai-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 40;
+  width: min(var(--ts-ai-sidebar-width), 100vw);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--vd-bg-elevated, var(--vd-bg-primary, #fff));
+  border-left: 1px solid var(--vd-border-color, #e5e7eb);
+  box-shadow: var(--vd-shadow-lg, 0 10px 30px rgb(0 0 0 / 12%));
+}
+
+.ts-ai-sidebar.is-pinned {
+  box-shadow: none;
+}
+
+/* Notes sidebar — left or right dock */
+.ts-notes-sidebar {
+  position: fixed;
+  top: 0;
+  z-index: 39;
+  width: min(var(--ts-notes-sidebar-width), 100vw);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--vd-bg-elevated, var(--vd-bg-primary, #fff));
+  box-shadow: var(--vd-shadow-lg, 0 10px 30px rgb(0 0 0 / 12%));
+}
+
+.ts-notes-sidebar.is-side-right {
+  right: 0;
+  border-left: 1px solid var(--vd-border-color, #e5e7eb);
+}
+
+.ts-notes-sidebar.is-side-left {
+  left: 0;
+  border-right: 1px solid var(--vd-border-color, #e5e7eb);
+}
+
+.ts-notes-sidebar.is-pinned {
+  box-shadow: none;
+}
+
+/* When both claim the right edge, stack notes to the left of AI. */
+@media (min-width: 48rem) {
+  .ts-app-shell.is-ai-chat-pinned.is-notes-pinned-right
+    .ts-notes-sidebar.is-side-right {
+    right: var(--ts-ai-sidebar-width);
+  }
+}
+
+.ts-notes-sidebar-header {
+  padding: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  border-bottom: 1px solid var(--vd-border-color, #e5e7eb);
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-notes-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vd-space-fib-5, 0.5rem);
+  padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-13, 1.3125rem);
+  border-bottom: 1px solid var(--vd-border-color, #e5e7eb);
+}
+
+.ts-notes-size-hint {
+  margin: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-13, 1.3125rem) 0;
+}
+
+.ts-notes-editor,
+.ts-notes-preview {
+  flex: 1;
+  min-height: 0;
+  margin: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  overflow: auto;
+}
+
+.ts-notes-editor {
+  resize: none;
+  font-family: var(--vd-font-mono, ui-monospace, monospace);
+  line-height: 1.45;
+}
+
+.ts-notes-preview {
+  padding: var(--vd-space-fib-8, 0.8125rem);
+  border: 1px solid var(--vd-border-color, #e5e7eb);
+  border-radius: var(--vd-radius-md, 0.5rem);
+  background: var(--vd-bg-secondary, #f5f5f5);
+}
+
+.ts-notes-preview pre {
+  overflow-x: auto;
+  padding: var(--vd-space-fib-5, 0.5rem);
+  border-radius: var(--vd-radius-sm, 0.25rem);
+  background: var(--vd-bg-primary, #fff);
+  font-family: var(--vd-font-mono, ui-monospace, monospace);
+  font-size: 0.9em;
+}
+
+.ts-notes-preview code.language-ts,
+.ts-notes-preview code.language-typescript {
+  color: var(--vd-color-primary, #2563eb);
+}
+
+.ts-notes-preview a[href^="javascript:"] {
+  pointer-events: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Docked pin: leave room for the pane so content is not covered. Narrow
+   viewports keep the overlay (full-width pane) so the page is not emptied. */
+@media (min-width: 48rem) {
+  .ts-app-shell.is-ai-chat-pinned {
+    --ts-ai-dock-width: var(--ts-ai-sidebar-width);
+  }
+
+  .ts-app-shell.is-notes-pinned-left {
+    --ts-notes-dock-left: var(--ts-notes-sidebar-width);
+  }
+
+  .ts-app-shell.is-notes-pinned-right {
+    --ts-notes-dock-right: var(--ts-notes-sidebar-width);
+  }
+
+  .ts-app-shell.is-ai-chat-pinned > .vd-navbar.vd-navbar-fixed,
+  .ts-app-shell.is-notes-pinned-right > .vd-navbar.vd-navbar-fixed {
+    right: calc(var(--ts-ai-dock-width) + var(--ts-notes-dock-right));
+  }
+
+  .ts-app-shell.is-notes-pinned-left > .vd-navbar.vd-navbar-fixed {
+    left: var(--ts-notes-dock-left);
+  }
+
+  .ts-app-shell.is-ai-chat-pinned > main,
+  .ts-app-shell.is-ai-chat-pinned > footer,
+  .ts-app-shell.is-notes-pinned-right > main,
+  .ts-app-shell.is-notes-pinned-right > footer {
+    margin-right: calc(var(--ts-ai-dock-width) + var(--ts-notes-dock-right));
+  }
+
+  .ts-app-shell.is-notes-pinned-left > main,
+  .ts-app-shell.is-notes-pinned-left > footer {
+    margin-left: var(--ts-notes-dock-left);
+  }
+}
+
+.ts-ai-sidebar-header,
+.ts-ai-sidebar-footer {
+  padding: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  border-bottom: 1px solid var(--vd-border-color, #e5e7eb);
+  display: flex;
+  align-items: center;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-ai-sidebar-footer {
+  border-bottom: 0;
+  border-top: 1px solid var(--vd-border-color, #e5e7eb);
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.ts-ai-messages {
+  flex: 1;
+  overflow: auto;
+  padding: var(--vd-space-fib-13, 1.3125rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+}
+
+.ts-ai-bubble {
+  max-width: 95%;
+  padding: var(--vd-space-fib-8, 0.8125rem);
+  border-radius: var(--vd-radius-md, 0.5rem);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ts-ai-model-hint {
+  margin: 0 var(--vd-space-fib-13, 1.3125rem) var(--vd-space-fib-8, 0.8125rem);
+  line-height: 1.35;
+}
+
+.ts-ai-bubble.is-user {
+  align-self: flex-end;
+  background: color-mix(
+    in srgb,
+    var(--vd-color-primary, #2563eb) 12%,
+    transparent
+  );
+}
+
+.ts-ai-bubble.is-assistant {
+  align-self: flex-start;
+  background: var(--vd-bg-secondary, #f5f5f5);
+  white-space: normal;
+}
+
+.ts-ai-bubble-md a {
+  color: var(--vd-color-primary, #2563eb);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.ts-ai-bubble-md p {
+  margin: 0 0 0.6em;
+}
+
+.ts-ai-bubble-md p:last-child {
+  margin-bottom: 0;
+}
+
+.ts-ai-bubble-md code {
+  font-family: var(--vd-font-mono, ui-monospace, monospace);
+  font-size: 0.92em;
+}
+
+.ts-ai-bubble-md pre {
+  overflow-x: auto;
+  padding: var(--vd-space-fib-5, 0.5rem);
+  border-radius: var(--vd-radius-sm, 0.25rem);
+  background: color-mix(in srgb, var(--vd-bg-primary, #fff) 70%, #000);
+}
+
+.ts-ai-pending-edit {
+  margin: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  padding: var(--vd-space-fib-8, 0.8125rem);
+  border: 1px solid var(--vd-border-color, #e5e7eb);
+  border-radius: var(--vd-radius-md, 0.5rem);
+}
+
+.ts-ai-load-progress {
+  display: grid;
+  gap: var(--vd-space-fib-5, 0.5rem);
+  margin: 0 var(--vd-space-fib-13, 1.3125rem) var(--vd-space-fib-8, 0.8125rem);
+  padding: var(--vd-space-fib-8, 0.8125rem);
+  border: 1px solid var(--vd-border-color, #e5e7eb);
+  border-radius: var(--vd-radius-md, 0.5rem);
+  background: color-mix(
+    in srgb,
+    var(--vd-color-warning, #f59e0b) 8%,
+    transparent
+  );
+}
+
+.ts-ai-load-source {
+  justify-self: start;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--vd-border-color, #e5e7eb);
+  border-radius: var(--vd-radius-sm, 0.35rem);
+  color: var(--vd-text-muted, #6b7280);
+}
+
+.ts-ai-load-source[data-source="local"],
+.ts-ai-load-source[data-source="cache"] {
+  color: var(--vd-color-success, #16a34a);
+  border-color: color-mix(
+    in srgb,
+    var(--vd-color-success, #16a34a) 45%,
+    transparent
+  );
+}
+
+.ts-ai-load-source[data-source="network"] {
+  color: var(--vd-color-warning, #d97706);
+  border-color: color-mix(
+    in srgb,
+    var(--vd-color-warning, #d97706) 45%,
+    transparent
+  );
+}
+
+.ts-ai-freeze-hint {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--vd-text-muted, #6b7280);
+}
+
+/* ── Mandatory terms gate + farewell (ikigai-inspired, vd tokens) ── */
+
+.ts-app-shell.is-consent-locked {
+  overflow: hidden;
+}
+
+.ts-app-shell.is-farewell .ts-app-main--farewell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.ts-farewell-page {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.ts-farewell-inner {
+  width: min(28rem, 100%);
+  text-align: center;
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+}
+
+.ts-farewell-icon {
+  font-size: clamp(2.4rem, 6vw, 3.2rem);
+  color: var(--vd-color-primary);
+  line-height: 1;
+}
+
+.ts-farewell-inner h1 {
+  margin: 0;
+  font-size: clamp(1.45rem, 3.4vw, 1.85rem);
+  letter-spacing: -0.02em;
+}
+
+.ts-farewell-inner p {
+  margin: 0;
+  color: var(--vd-text-muted, var(--vd-text-secondary));
+  line-height: 1.55;
+  max-width: 36ch;
+}
+
+.ts-farewell-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.ts-consent-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--vd-bg-primary) 55%, rgb(15 23 42 / 72%));
+  backdrop-filter: blur(6px);
+}
+
+.ts-consent-panel {
+  width: min(40rem, 100%);
+  max-height: min(88vh, 56.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.35rem 1.4rem 1.2rem;
+  border-radius: var(--vd-radius-md, 0.5rem);
+  border: 1px solid var(--vd-border-color);
+  background: var(--vd-bg-primary);
+  box-shadow: var(--vd-shadow-md);
+  color: var(--vd-text-primary);
+}
+
+.ts-consent-header h1 {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  letter-spacing: -0.02em;
+}
+
+.ts-consent-version {
+  margin: 0 0 0.65rem;
+  color: var(--vd-text-muted, var(--vd-text-secondary));
+  font-size: 0.8rem;
+}
+
+.ts-consent-header p {
+  margin: 0;
+  color: var(--vd-text-muted, var(--vd-text-secondary));
+  line-height: 1.55;
+}
+
+.ts-consent-body {
+  overflow: auto;
+  padding-right: 0.25rem;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.ts-consent-section h2 {
+  margin: 0 0 0.35rem;
+  font-size: 0.98rem;
+}
+
+.ts-consent-section p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--vd-text-primary);
+}
+
+.ts-consent-link {
+  margin-top: 0.35rem !important;
+}
+
+.ts-consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--vd-border-color);
 }

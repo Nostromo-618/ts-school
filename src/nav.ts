@@ -109,6 +109,36 @@ const PAGES: NavPage[] = [
     icon: "info",
     keywords: ["about", "typescript school", "mission", "compiler", "why"],
   },
+  {
+    id: "terms",
+    title: "Terms",
+    route: "/terms",
+    icon: "file-text",
+    keywords: [
+      "terms",
+      "disclaimer",
+      "liability",
+      "AI Act",
+      "transparency",
+      "MIT",
+      "license",
+    ],
+  },
+  {
+    id: "profile",
+    title: "Profile",
+    route: "/profile",
+    icon: "user",
+    keywords: [
+      "profile",
+      "progress",
+      "notes",
+      "export",
+      "clear",
+      "local data",
+      "privacy",
+    ],
+  },
 ];
 
 const toSection = (lesson: Lesson): NavSection => ({

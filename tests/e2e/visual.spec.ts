@@ -1,11 +1,11 @@
-import { expect, test } from "@playwright/test";
-import { FIXTURE_LESSON } from "./fixtures";
+import { expect, FIXTURE_LESSON, test } from "./fixtures";
 
 const routes = [
   { name: "home", path: "/" },
   { name: "curriculum", path: "/curriculum" },
   { name: "lesson-first-type-error", path: FIXTURE_LESSON.path },
   { name: "history", path: "/history" },
+  { name: "profile", path: "/profile" },
 ] as const;
 
 test.describe("visual baselines", () => {

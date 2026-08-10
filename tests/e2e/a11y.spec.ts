@@ -1,13 +1,31 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
-import { FIXTURE_LESSON } from "./fixtures";
+import { expect, FIXTURE_LESSON, test } from "./fixtures";
 
 const routes = [
   { name: "home", path: "/" },
   { name: "curriculum", path: "/curriculum" },
   { name: "lesson", path: FIXTURE_LESSON.path },
   { name: "history", path: "/history" },
+  { name: "glossary", path: "/glossary" },
+  { name: "about", path: "/about" },
+  { name: "terms", path: "/terms" },
+  { name: "profile", path: "/profile" },
 ] as const;
+
+async function expectNoBlockingAxe(
+  page: import("@playwright/test").Page,
+): Promise<void> {
+  const results = await new AxeBuilder({ page })
+    .disableRules(["color-contrast"])
+    .analyze();
+  const blocking = results.violations.filter(
+    (v) => v.impact === "serious" || v.impact === "critical",
+  );
+  expect(
+    blocking,
+    blocking.map((v) => `${v.id}: ${v.help}`).join("\n") || undefined,
+  ).toEqual([]);
+}
 
 test.describe("a11y smoke", () => {
   for (const route of routes) {
@@ -16,21 +34,58 @@ test.describe("a11y smoke", () => {
     }) => {
       await page.goto(route.path);
       await page.waitForLoadState("networkidle");
-
-      // color-contrast is a known vd3 primary-blue theme limitation (#339af0
-      // on white / white on primary). Smoke still catches other serious/critical
-      // issues; contrast belongs to the design-system package, not this site.
-      const results = await new AxeBuilder({ page })
-        .disableRules(["color-contrast"])
-        .analyze();
-      const blocking = results.violations.filter(
-        (v) => v.impact === "serious" || v.impact === "critical",
-      );
-
-      expect(
-        blocking,
-        blocking.map((v) => `${v.id}: ${v.help}`).join("\n") || undefined,
-      ).toEqual([]);
+      await expectNoBlockingAxe(page);
     });
   }
+});
+
+test.describe("a11y farewell", () => {
+  test.use({ skipTocSeed: true });
+
+  test("farewell has no serious or critical axe violations", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      sessionStorage.setItem("ts-school-toc-declined", "2");
+    });
+    await page.goto("/farewell");
+    await page.waitForLoadState("networkidle");
+    await expectNoBlockingAxe(page);
+  });
+});
+
+test.describe("a11y disclaimer gate", () => {
+  test.use({ skipTocSeed: true });
+
+  test("disclaimer gate overlay has no serious or critical axe violations", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("disclaimer-gate")).toBeVisible();
+    await expectNoBlockingAxe(page);
+  });
+});
+
+test.describe("a11y AI risk gate", () => {
+  test.use({ skipAiRiskSeed: true });
+
+  test("AI risk gate overlay has no serious or critical axe violations", async ({
+    page,
+  }) => {
+    await page.goto(FIXTURE_LESSON.path);
+    await page.getByTestId("ts-open-ai-chat").click();
+    await expect(page.getByTestId("ai-risk-gate")).toBeVisible();
+    await expectNoBlockingAxe(page);
+  });
+});
+
+test.describe("a11y notes sidebar", () => {
+  test("notes sidebar has no serious or critical axe violations", async ({
+    page,
+  }) => {
+    await page.goto("/profile");
+    await page.getByTestId("ts-open-notes").click();
+    await expect(page.getByTestId("ts-notes-sidebar")).toBeVisible();
+    await expectNoBlockingAxe(page);
+  });
 });

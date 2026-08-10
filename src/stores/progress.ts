@@ -209,6 +209,18 @@ export const useProgressStore = defineStore("progress", () => {
     ).length;
   }
 
+  /** Wipe in-memory progress and remove the storage key. */
+  function clearProgress(): void {
+    lessons.value = emptyProgress().lessons;
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem(PROGRESS_STORAGE_KEY);
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
   const completedTotal = computed(
     () =>
       Object.values(lessons.value).filter(
@@ -228,6 +240,7 @@ export const useProgressStore = defineStore("progress", () => {
     statusOf,
     isComplete,
     completedCountForTrack,
+    clearProgress,
     /** Test seam: replace in-memory state without touching storage. */
     _replaceForTests(next: ProgressV1): void {
       lessons.value = next.lessons;

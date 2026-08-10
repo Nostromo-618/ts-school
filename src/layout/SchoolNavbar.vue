@@ -29,9 +29,11 @@ const navRef = ref<HTMLElement | null>(null);
 const isScrolled = useNavbarGlassScroll(navRef);
 const menuOpen = ref(false);
 
-// The nav tree already declares the standalone pages. Home is the brand link,
-// so it is not listed a second time.
-const links = nav.pages.filter((page) => page.route !== "/");
+// The nav tree already declares the standalone pages. Home is the brand link;
+// Profile is the actions icon — neither is listed a second time in the text row.
+const links = nav.pages.filter(
+  (page) => page.route !== "/" && page.route !== "/profile",
+);
 
 const closeMenu = (): void => {
   menuOpen.value = false;
@@ -42,6 +44,16 @@ watch(() => route.path, closeMenu);
 const openSearch = (): void => {
   closeMenu();
   window.dispatchEvent(new CustomEvent("ts:open-search"));
+};
+
+const openAsk = (): void => {
+  closeMenu();
+  window.dispatchEvent(new CustomEvent("ts:open-ai-chat"));
+};
+
+const openNotes = (): void => {
+  closeMenu();
+  window.dispatchEvent(new CustomEvent("ts:open-notes"));
 };
 </script>
 
@@ -83,6 +95,33 @@ const openSearch = (): void => {
       </div>
 
       <div class="vd-navbar-actions ts-navbar-actions">
+        <button
+          type="button"
+          class="vd-theme-switcher-toggle"
+          aria-label="Open study notes"
+          data-testid="ts-open-notes"
+          @click="openNotes"
+        >
+          <i class="ph ph-note" aria-hidden="true"></i>
+        </button>
+        <button
+          type="button"
+          class="vd-theme-switcher-toggle"
+          aria-label="Ask the lesson assistant"
+          data-testid="ts-open-ai-chat"
+          @click="openAsk"
+        >
+          <i class="ph ph-chat-circle" aria-hidden="true"></i>
+        </button>
+        <RouterLink
+          to="/profile"
+          class="vd-theme-switcher-toggle"
+          aria-label="Open profile"
+          data-testid="ts-open-profile"
+          @click="closeMenu"
+        >
+          <i class="ph ph-user" aria-hidden="true"></i>
+        </RouterLink>
         <button
           type="button"
           class="vd-theme-switcher-toggle"

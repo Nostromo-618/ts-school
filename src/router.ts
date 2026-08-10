@@ -6,6 +6,9 @@ import CurriculumPage from "@/pages/curriculum.vue";
 import GlossaryPage from "@/pages/glossary.vue";
 import HistoryPage from "@/pages/history.vue";
 import AboutPage from "@/pages/about.vue";
+import TermsPage from "@/pages/terms.vue";
+import FarewellPage from "@/pages/farewell.vue";
+import ProfilePage from "@/pages/profile.vue";
 import { allLessons, lessonRoute, trackById } from "@/curriculum";
 
 /**
@@ -55,7 +58,7 @@ export const buildRoutes = (): RouteRecordRaw[] => {
     meta: {
       title: "TypeScript School",
       description:
-        "Learn TypeScript by fixing real JavaScript, with every diagnostic checked by the real compiler.",
+        "Learn TypeScript by fixing real JavaScript — every diagnostic from Strada at build time, verified in CI.",
       keywords: ["typescript", "javascript", "types", "learn"],
     },
   });
@@ -91,7 +94,7 @@ export const buildRoutes = (): RouteRecordRaw[] => {
     meta: {
       title: "History",
       description:
-        "JavaScript, Node.js, and TypeScript milestones from ES5 through the TypeScript 7 Go port — and why this school type-checks with 6.0.3.",
+        "JavaScript, Node.js, and TypeScript milestones from ES5 through the TypeScript 7 Go port — and why lesson diagnostics use Strada 6.0.3 at build time alongside typescript@7.",
       keywords: [
         "history",
         "timeline",
@@ -110,8 +113,58 @@ export const buildRoutes = (): RouteRecordRaw[] => {
     meta: {
       title: "About",
       description:
-        "What TypeScript School is, who it is for, and why the in-browser checker pins TypeScript 6.0.3 instead of 7.",
+        "What TypeScript School is, who it is for, and how build-time Strada diagnostics and solution-match exercises work with typescript@7.",
       keywords: ["about", "typescript school", "mission", "compiler"],
+    },
+  });
+
+  routes.push({
+    path: "/terms",
+    name: "terms",
+    component: TermsPage,
+    meta: {
+      title: "Terms",
+      description:
+        "TypeScript School terms of use and disclaimer: hobby project, as-is warranty waiver, AI-assisted content transparency, and MIT license note.",
+      keywords: [
+        "terms",
+        "disclaimer",
+        "liability",
+        "AI Act",
+        "transparency",
+        "MIT",
+      ],
+    },
+  });
+
+  routes.push({
+    path: "/farewell",
+    name: "farewell",
+    component: FarewellPage,
+    meta: {
+      title: "Farewell",
+      description:
+        "You declined the site terms. Re-read the disclaimer when you are ready to continue.",
+      keywords: [],
+    },
+  });
+
+  routes.push({
+    path: "/profile",
+    name: "profile",
+    component: ProfilePage,
+    meta: {
+      title: "Profile",
+      description:
+        "Review local learning progress, notes, and browser data — export or clear what TypeScript School stores on this device.",
+      keywords: [
+        "profile",
+        "progress",
+        "notes",
+        "export",
+        "clear",
+        "local data",
+      ],
     },
   });
 
