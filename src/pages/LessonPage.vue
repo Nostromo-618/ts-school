@@ -228,7 +228,22 @@ const SECURITY_VARIANTS: Record<
       :starter-diagnostics="lessonDiagnostics?.starter"
       :solution-diagnostics="lessonDiagnostics?.solution"
       @pass="onExercisePass"
-    />
+    >
+      <template #actions>
+        <button
+          v-if="!isComplete"
+          type="button"
+          class="vd-btn vd-btn-secondary vd-btn-sm"
+          @click="markComplete"
+        >
+          <VdIcon name="check-circle" size="sm" aria-hidden="true" />
+          Mark complete
+        </button>
+        <p v-else class="vd-text-muted vd-text-sm" role="status">
+          Marked complete.
+        </p>
+      </template>
+    </ExerciseBlock>
 
     <section
       v-if="lesson.references && lesson.references.length > 0"
@@ -249,13 +264,18 @@ const SECURITY_VARIANTS: Record<
       </ul>
     </section>
 
-    <div class="ts-lesson-complete vd-inline" data-gap="fib-8">
+    <div
+      v-if="!lesson.exercise"
+      class="ts-lesson-complete vd-inline"
+      data-gap="fib-8"
+    >
       <button
         v-if="!isComplete"
         type="button"
         class="vd-btn vd-btn-secondary vd-btn-sm"
         @click="markComplete"
       >
+        <VdIcon name="check-circle" size="sm" aria-hidden="true" />
         Mark complete
       </button>
       <p v-else class="vd-text-muted vd-text-sm" role="status">

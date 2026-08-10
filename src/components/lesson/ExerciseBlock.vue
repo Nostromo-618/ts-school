@@ -5,7 +5,7 @@
  * Strada generator), not live-checked.
  */
 import { computed, ref, watch } from "vue";
-import { VdAlert } from "@vanduo-oss/vd3";
+import { VdAlert, VdIcon } from "@vanduo-oss/vd3";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
 import { formatExerciseAiHelpPrompt } from "@/ai/exercise-help";
 import ProseHtml from "@/components/ProseHtml.vue";
@@ -138,6 +138,7 @@ function askAiHelp(): void {
         class="vd-btn vd-btn-primary vd-btn-sm"
         @click="check"
       >
+        <VdIcon name="check" size="sm" aria-hidden="true" />
         Check
       </button>
       <button
@@ -146,6 +147,7 @@ function askAiHelp(): void {
         class="vd-btn vd-btn-secondary vd-btn-sm"
         @click="showHints = !showHints"
       >
+        <VdIcon name="lightbulb" size="sm" aria-hidden="true" />
         {{ showHints ? "Hide hints" : "Show hints" }}
       </button>
       <button
@@ -154,6 +156,7 @@ function askAiHelp(): void {
         class="vd-btn vd-btn-outline vd-btn-sm"
         @click="revealSolution"
       >
+        <VdIcon name="eye" size="sm" aria-hidden="true" />
         Show solution
       </button>
       <button
@@ -162,8 +165,10 @@ function askAiHelp(): void {
         data-testid="ts-exercise-ai-help"
         @click="askAiHelp"
       >
+        <VdIcon name="chat-circle" size="sm" aria-hidden="true" />
         AI help
       </button>
+      <slot name="actions" />
     </div>
 
     <VdAlert v-if="alreadyPassed" variant="success" role="status">
@@ -183,6 +188,17 @@ function askAiHelp(): void {
 </template>
 
 <style scoped>
+.ts-exercise-actions {
+  /* Prefer one row on desktop; wrap only when the row cannot fit. */
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 40rem) {
+  .ts-exercise-actions {
+    flex-wrap: wrap;
+  }
+}
+
 .ts-exercise-mismatch {
   display: block;
   margin-top: var(--vd-space-fib-3, 0.3125rem);
