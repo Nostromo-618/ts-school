@@ -37,7 +37,7 @@ import { RouterLink, useRoute } from "vue-router";
 import { useNavbarGlassScroll, VdThemeCustomizer } from "@vanduo-oss/vd3";
 import SchoolBrandMark from "@/components/SchoolBrandMark.vue";
 import SchoolThemeSwitcher from "@/overlays/SchoolThemeSwitcher.vue";
-import { nav } from "@/nav";
+import { navbarLinkPages } from "@/nav";
 
 const DESKTOP_QUERY = "(min-width: 992px)";
 
@@ -55,11 +55,8 @@ const linksOverflow = computed(
   () => canScrollLeft.value || canScrollRight.value,
 );
 
-// The nav tree already declares the standalone pages. Home is the brand link;
-// Profile is the actions icon — neither is listed a second time in the text row.
-const links = nav.pages.filter(
-  (page) => page.route !== "/" && page.route !== "/profile",
-);
+// Home is the brand; Profile is the actions icon; Terms is footer-only.
+const links = navbarLinkPages();
 
 const closeMenu = (): void => {
   menuOpen.value = false;

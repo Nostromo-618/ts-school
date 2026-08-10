@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createRouter, createMemoryHistory } from "vue-router";
 import { allLessons, lessonRoute, TIERS, TRACKS } from "@/curriculum";
-import { nav, navSections, tierForRoute } from "@/nav";
+import { nav, navbarLinkPages, navSections, tierForRoute } from "@/nav";
 import { buildRoutes } from "@/router";
 
 // vd3-docs hand-maintains its nav tree alongside its route table, so a page can
@@ -69,6 +69,18 @@ describe("derived navigation tree", () => {
     expect(routes).toContain("/history");
     expect(routes).toContain("/about");
     expect(routes).toContain("/terms");
+  });
+
+  it("keeps Terms out of primary navbar text links", () => {
+    const routes = navbarLinkPages().map((page) => page.route);
+
+    expect(routes).toContain("/curriculum");
+    expect(routes).toContain("/glossary");
+    expect(routes).toContain("/history");
+    expect(routes).toContain("/about");
+    expect(routes).not.toContain("/");
+    expect(routes).not.toContain("/profile");
+    expect(routes).not.toContain("/terms");
   });
 
   it("maps a lesson route back to its tier tab", () => {

@@ -191,6 +191,18 @@ const buildTree = (lessons: readonly Lesson[]): NavTree => {
 /** The derived tree. Computed once at module load from the registry. */
 export const nav: NavTree = buildTree(allLessons);
 
+/**
+ * Standalone pages rendered as primary-navbar text links.
+ * Home is the brand; Profile is the actions icon; Terms lives in the footer.
+ */
+export const navbarLinkPages = (tree: NavTree = nav): NavPage[] =>
+  tree.pages.filter(
+    (page) =>
+      page.route !== "/" &&
+      page.route !== "/profile" &&
+      page.route !== "/terms",
+  );
+
 /** Every section in the tree, flattened in tab-then-category order. */
 export const navSections = (tree: NavTree = nav): NavSection[] =>
   tree.tabs.flatMap((tab) =>

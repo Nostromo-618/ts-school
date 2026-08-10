@@ -133,16 +133,20 @@ reader can continue learning.
 
 `/history`, `/about`, and `/terms` MUST be registered as standalone pages in the
 derived nav tree's hand-written pages list and as named routes in
-`buildRoutes()`, so the navbar lists them and the global search index includes
-them. Footer site links MUST also reach them. `/farewell` is a consent-only
-route and MUST NOT be added to the nav pages list.
+`buildRoutes()`, so the global search index includes them. The primary navbar
+text links MUST include `/history` and `/about`; `/terms` MUST appear in the
+footer "The site" column (not the primary navbar). Footer site links MUST also
+reach history and about. `/farewell` is a consent-only route and MUST NOT be
+added to the nav pages list.
 
-#### Scenario: navbar lists history, about, and terms
+#### Scenario: nav tree lists history, about, and terms; navbar omits terms
 
 - **GIVEN** the derived nav tree
 - **WHEN** its standalone pages are inspected
 - **THEN** `/history`, `/about`, and `/terms` are present with titles and
   keywords
+- **AND** primary navbar text links include `/history` and `/about` but not
+  `/terms`
 
 #### Scenario: search indexes the new pages
 

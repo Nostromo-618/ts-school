@@ -33,11 +33,11 @@ const siteLinks = [
 </script>
 
 <template>
-  <VdFooter>
+  <VdFooter size="sm" class="ts-site-footer">
     <div class="vd-footer-3col ts-footer-columns">
       <section class="vd-footer-section">
         <div class="ts-footer-brand">
-          <SchoolBrandMark size="2.5rem" />
+          <SchoolBrandMark size="2rem" />
           <span class="ts-brand-text">
             <span class="ts-brand-name">TypeScript</span>
             <span class="ts-brand-word">School</span>
@@ -103,3 +103,45 @@ const siteLinks = [
     </template>
   </VdFooter>
 </template>
+
+<style>
+/*
+ * Compact site footer (~40% shorter vertically). size="sm" already cuts
+ * package padding-y; the rest tightens copyright chrome, type, and list gaps
+ * without changing dark-theme color tokens.
+ */
+.ts-site-footer.vd-footer {
+  --vd-footer-section-spacing: var(--vd-space-fib-13, 1.3125rem);
+  --vd-footer-padding-y-sm: var(--vd-space-fib-13, 1.3125rem);
+}
+
+.ts-site-footer .ts-footer-brand {
+  gap: var(--vd-space-fib-5, 0.5rem);
+  margin-bottom: var(--vd-space-fib-5, 0.5rem);
+  font-size: 1rem;
+}
+
+.ts-site-footer .ts-footer-blurb {
+  line-height: 1.35;
+  font-size: var(--vd-font-size-sm, 0.8125rem);
+}
+
+.ts-site-footer .vd-footer-heading {
+  font-size: var(--vd-font-size-md, 0.9375rem);
+  margin-bottom: var(--vd-space-fib-5, 0.5rem);
+}
+
+.ts-site-footer .vd-footer-list-item {
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.ts-site-footer .vd-footer-link {
+  font-size: var(--vd-font-size-sm, 0.8125rem);
+}
+
+.ts-site-footer .vd-footer-copyright {
+  margin-top: var(--vd-space-fib-13, 1.3125rem);
+  padding-top: var(--vd-space-fib-8, 0.8125rem);
+}
+</style>

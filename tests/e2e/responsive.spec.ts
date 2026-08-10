@@ -110,6 +110,22 @@ test.describe("navbar mid-width layout", () => {
 });
 
 test.describe("mobile responsive critical paths", () => {
+  test("Terms is in the footer, not the primary navbar", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+
+    const primary = page.getByRole("navigation", { name: "Primary" });
+    await expect(primary.getByRole("link", { name: "Terms" })).toHaveCount(0);
+    await expect(primary.getByRole("link", { name: "About" })).toBeVisible();
+
+    const footer = page.locator("footer.ts-site-footer");
+    await footer.scrollIntoViewIfNeeded();
+    await expect(
+      footer.getByRole("heading", { name: "The site" }),
+    ).toBeVisible();
+    await expect(footer.getByRole("link", { name: "Terms" })).toBeVisible();
+  });
+
   test("navbar stays a single row with brand, actions, and hamburger", async ({
     page,
   }, testInfo) => {
