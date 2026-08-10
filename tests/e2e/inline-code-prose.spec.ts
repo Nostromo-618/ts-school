@@ -1,4 +1,4 @@
-import { expect, FIXTURE_LESSON, test } from "./fixtures";
+import { expect, test } from "./fixtures";
 
 test.describe("inline code prose", () => {
   test("backticked lesson insight renders a code element", async ({ page }) => {

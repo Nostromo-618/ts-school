@@ -135,10 +135,7 @@ const visibleTracks = computed(() =>
           :key="lesson.id"
           class="ts-track-lesson"
         >
-          <RouterLink
-            :to="lessonRoute(lesson)"
-            class="ts-track-lesson-link"
-          >
+          <RouterLink :to="lessonRoute(lesson)" class="ts-track-lesson-link">
             <VdBadge :variant="TIER_BADGE_VARIANTS[lesson.tier]" pill>
               {{ TIER_LABELS[lesson.tier] }}
             </VdBadge>

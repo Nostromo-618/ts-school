@@ -107,9 +107,12 @@ export default [
     files: [
       'src/overlays/TsAiChatSidebar.vue',
       'src/overlays/TsNotesSidebar.vue',
+      'src/overlays/TsNotesModal.vue',
+      'src/components/ProseHtml.vue',
     ],
     rules: {
       'vue/no-v-html': 'off',
+      'vue/no-v-text-v-html-on-component': 'off',
     },
   },
   {

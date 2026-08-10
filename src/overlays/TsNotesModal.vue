@@ -56,9 +56,7 @@ const previewHtml = computed(() => renderNotesHtml(props.body));
 const panelStyle = computed((): CSSProperties => {
   // Sheet mode: CSS owns placement (near-full inset when expanded).
   if (!freeMove.value) {
-    return props.folded
-      ? { height: "auto", minHeight: "0", top: "auto" }
-      : {};
+    return props.folded ? { height: "auto", minHeight: "0", top: "auto" } : {};
   }
   // Always set height explicitly when folded so a prior expanded px height
   // cannot linger and leave a blank band above the title row.
@@ -232,10 +230,7 @@ onUnmounted(() => {
         @click.stop="emit('toggle-fold')"
         @pointerdown.stop
       >
-        <VdIcon
-          :name="folded ? 'caret-down' : 'caret-up'"
-          aria-hidden="true"
-        />
+        <VdIcon :name="folded ? 'caret-down' : 'caret-up'" aria-hidden="true" />
       </VdButton>
       <VdButton
         variant="ghost"

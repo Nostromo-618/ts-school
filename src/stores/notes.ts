@@ -77,10 +77,7 @@ function currentViewport(): { width: number; height: number } {
 function writeWindow(win: NotesWindowV1): void {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(
-      NOTES_WINDOW_STORAGE_KEY,
-      JSON.stringify(win),
-    );
+    window.localStorage.setItem(NOTES_WINDOW_STORAGE_KEY, JSON.stringify(win));
   } catch {
     /* private mode / quota */
   }
@@ -89,10 +86,7 @@ function writeWindow(win: NotesWindowV1): void {
 function writeFolded(value: boolean): void {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(
-      NOTES_FOLDED_KEY,
-      serializeFoldedFlag(value),
-    );
+    window.localStorage.setItem(NOTES_FOLDED_KEY, serializeFoldedFlag(value));
   } catch {
     /* private mode / quota */
   }

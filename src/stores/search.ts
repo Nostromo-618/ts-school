@@ -74,7 +74,12 @@ export type LexicalDoc = {
 };
 
 type RankableHit = {
-  doc: LexicalDoc & { id?: string; icon?: string; category?: string; tab?: string };
+  doc: LexicalDoc & {
+    id?: string;
+    icon?: string;
+    category?: string;
+    tab?: string;
+  };
   score: number;
   source: "fuzzy" | "semantic" | "substring";
 };
@@ -234,9 +239,11 @@ function titleSubstringBoost(doc: LexicalDoc, query: string): number {
   if (keywords.some((keyword) => keyword.toLowerCase().includes(needle))) {
     return 1;
   }
-  if (String(doc.route ?? "")
-    .toLowerCase()
-    .includes(needle)) {
+  if (
+    String(doc.route ?? "")
+      .toLowerCase()
+      .includes(needle)
+  ) {
     return 0.5;
   }
   return 0;
@@ -424,10 +431,7 @@ export const useSearchStore = defineStore("search", () => {
     });
   }
 
-  function mapRefinedHits(
-    q: string,
-    ranked: RankableHit[],
-  ): SearchResult[] {
+  function mapRefinedHits(q: string, ranked: RankableHit[]): SearchResult[] {
     return ranked.map((hit) => {
       const doc = hit.doc;
       const entry: SearchEntry = {
@@ -468,8 +472,7 @@ export const useSearchStore = defineStore("search", () => {
         doc: hit.doc as RankableHit["doc"],
         score: hit.score,
         source: (hit.source === "semantic" ? "semantic" : "fuzzy") as
-          | "fuzzy"
-          | "semantic",
+          "fuzzy" | "semantic",
       }));
       const ranked = refineSearchHits(merged, q);
       // Relevance floor: if nothing survives grounding, show empty — never a

@@ -164,9 +164,7 @@ export function serializeFoldedFlag(folded: boolean): string {
 }
 
 /** CSS px equivalent of the free-move breakpoint (assumes 16px root). */
-export function notesFreeMoveBreakpointPx(
-  rootFontSizePx = 16,
-): number {
+export function notesFreeMoveBreakpointPx(rootFontSizePx = 16): number {
   return NOTES_FREE_MOVE_BREAKPOINT_REM * rootFontSizePx;
 }
 

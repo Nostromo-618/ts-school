@@ -93,10 +93,7 @@ function isCorrect(question: QuizQuestion): boolean {
       </div>
 
       <ul class="ts-quiz-choices" role="list">
-        <li
-          v-for="(choice, choiceIndex) in question.choices"
-          :key="choice.id"
-        >
+        <li v-for="(choice, choiceIndex) in question.choices" :key="choice.id">
           <button
             type="button"
             class="ts-quiz-choice"

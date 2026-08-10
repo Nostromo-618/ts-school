@@ -118,12 +118,7 @@ function applyPendingComposer(): void {
   const pending = aiChat.takePendingComposer();
   if (!pending) return;
   inputText.value = pending.text;
-  if (
-    pending.autoSend &&
-    loaded.value &&
-    !loading.value &&
-    !streaming.value
-  ) {
+  if (pending.autoSend && loaded.value && !loading.value && !streaming.value) {
     void nextTick(() => {
       // Re-check after paint: a concurrent reload must not steal the seed.
       if (!loaded.value || loading.value || streaming.value) return;
@@ -375,7 +370,9 @@ async function send(): Promise<void> {
           : { role: "assistant", content: reply };
       } catch (inner) {
         if (isGuardrailError(inner)) {
-          messages.value[idx] = policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE);
+          messages.value[idx] = policyAssistantMessage(
+            ASK_POLICY_BLOCK_MESSAGE,
+          );
         } else {
           errorText.value =
             inner instanceof Error ? inner.message : String(inner);

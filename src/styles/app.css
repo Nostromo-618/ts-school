@@ -54,11 +54,7 @@
 .vd-btn-primary .vd-text-muted,
 .vd-btn-primary .vd-text-secondary,
 .vd-btn-primary .vd-text-light {
-  color: color-mix(
-    in srgb,
-    var(--vd-text-on-primary, #fff) 78%,
-    transparent
-  );
+  color: color-mix(in srgb, var(--vd-text-on-primary, #fff) 78%, transparent);
 }
 
 /* Package surfaces that hardcode `1px` instead of the width tokens above. */
@@ -105,9 +101,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+
   /* Document is the lesson scroll root — do not trap overflow on the shell. */
-  overflow-x: clip;
-  overflow-y: auto;
+  overflow: clip auto;
 }
 
 #main-content {
@@ -454,6 +450,7 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--vd-space-fib-13, 1.3125rem);
+
   /* Stretch so the shorter JS column does not leave a dead white void beside
      diagnostics (reads as a mid-page clip when the fold cuts the TS pane). */
   align-items: stretch;
@@ -473,8 +470,7 @@ body {
  */
 .ts-dual-pane .vd-code-editor-input,
 .ts-exercise .vd-code-editor-input {
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto hidden;
 }
 
 .ts-pane-header {
@@ -748,9 +744,9 @@ body {
   .vd-navbar > .vd-navbar-container {
     display: grid;
     grid-template-columns: minmax(min-content, 1fr) minmax(0, auto) minmax(
-      min-content,
-      1fr
-    );
+        min-content,
+        1fr
+      );
     align-items: center;
     flex-wrap: unset;
   }
@@ -1133,20 +1129,14 @@ body {
 
 /* Expanded sheet: near-full viewport below the fixed navbar. */
 .ts-notes-modal.is-sheet:not(.is-folded) {
-  top: calc(var(--vd-navbar-height, 3.4375rem) + 0.5rem);
-  right: 0.75rem;
-  bottom: 0.75rem;
-  left: 0.75rem;
+  inset: calc(var(--vd-navbar-height, 3.4375rem) + 0.5rem) 0.75rem 0.75rem;
   width: auto;
   height: auto;
   max-width: none;
 }
 
 .ts-notes-modal.is-sheet.is-folded {
-  left: 0.75rem;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  top: auto;
+  inset: auto 0.75rem 0.75rem;
   width: auto;
   height: auto;
   min-height: 0;
