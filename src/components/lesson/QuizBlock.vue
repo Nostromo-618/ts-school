@@ -158,7 +158,7 @@ function isCorrect(question: QuizQuestion): boolean {
   width: 100%;
   margin: 0;
   padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-8, 0.8125rem);
-  border: 1px solid var(--vd-border-color, currentcolor);
+  border: var(--vd-border-width, 2px) solid var(--vd-border-color, currentcolor);
   border-radius: var(--vd-btn-border-radius, var(--vd-radius-fib-5, 0.3125rem));
   background: transparent;
   color: inherit;
@@ -184,9 +184,9 @@ function isCorrect(question: QuizQuestion): boolean {
 }
 
 .ts-quiz-choice:focus-visible {
-  outline: 2px solid
+  outline: var(--vd-border-width, 2px) solid
     var(--vd-input-focus-border-color, var(--vd-color-primary, #2563eb));
-  outline-offset: 2px;
+  outline-offset: var(--vd-border-width, 2px);
 }
 
 .ts-quiz-choice-letter {

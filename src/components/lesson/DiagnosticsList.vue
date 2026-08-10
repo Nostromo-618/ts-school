@@ -93,7 +93,7 @@ const emit = defineEmits<{
   width: 100%;
   margin: 0;
   padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-8, 0.8125rem);
-  border: 1px solid var(--vd-border-color, currentcolor);
+  border: var(--vd-border-width, 2px) solid var(--vd-border-color, currentcolor);
   border-radius: var(--vd-radius-md, 0.5rem);
   background: transparent;
   color: inherit;
