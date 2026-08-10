@@ -23,8 +23,8 @@ import { useThemeStore } from "@/stores/theme";
 const TsAiChatSidebar = defineAsyncComponent(
   () => import("@/overlays/TsAiChatSidebar.vue"),
 );
-const TsNotesSidebar = defineAsyncComponent(
-  () => import("@/overlays/TsNotesSidebar.vue"),
+const TsNotesModal = defineAsyncComponent(
+  () => import("@/overlays/TsNotesModal.vue"),
 );
 
 const route = useRoute();
@@ -66,13 +66,6 @@ const isLesson = computed(() => route.meta?.layout === "lesson");
 
 const isFarewellRoute = computed(
   () => route.name === "farewell" || route.path === "/farewell",
-);
-
-const notesDockedLeft = computed(
-  () => notes.open && notes.pinned && notes.pinSide === "left",
-);
-const notesDockedRight = computed(
-  () => notes.open && notes.pinned && notes.pinSide === "right",
 );
 
 function goFarewell(): void {
@@ -130,8 +123,6 @@ watch(showFarewell, (declined) => {
       'is-consent-locked': showGate,
       'is-farewell': isFarewellRoute,
       'is-ai-chat-pinned': aiChat.open && aiChat.pinned,
-      'is-notes-pinned-left': notesDockedLeft,
-      'is-notes-pinned-right': notesDockedRight,
     }"
   >
     <template v-if="!isFarewellRoute">
@@ -155,16 +146,17 @@ watch(showFarewell, (declined) => {
         @close="aiChat.closeChat"
         @toggle-pin="aiChat.togglePin"
       />
-      <TsNotesSidebar
+      <TsNotesModal
         :open="notes.open"
-        :pinned="notes.pinned"
-        :pin-side="notes.pinSide"
+        :folded="notes.folded"
+        :geometry="notes.geometry"
         :body="notes.body"
         :near-soft-limit="notes.nearSoftLimit"
         @close="notes.closeNotes"
-        @toggle-pin="notes.togglePin"
+        @toggle-fold="notes.toggleFold"
         @update:body="notes.setBody"
-        @set-pin-side="notes.setPinSide"
+        @update:geometry="notes.setWindow"
+        @reclamp="notes.reclampToViewport"
       />
       <VdToastContainer />
     </template>

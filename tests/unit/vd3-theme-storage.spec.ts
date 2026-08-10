@@ -93,6 +93,8 @@ describe("vd3 theme storage prefix", () => {
     raw.setItem("vanduo-future-setting", "w");
     raw.setItem("ts-school-progress", "keep");
     raw.setItem("ts-school-notes", "keep-notes");
+    raw.setItem("ts-school-notes-window", "keep-window");
+    raw.setItem("ts-school-notes-folded", "1");
 
     clearVd3ThemeStorageKeys(raw);
 
@@ -102,6 +104,8 @@ describe("vd3 theme storage prefix", () => {
     expect(raw.getItem("vanduo-future-setting")).toBeNull();
     expect(raw.getItem("ts-school-progress")).toBe("keep");
     expect(raw.getItem("ts-school-notes")).toBe("keep-notes");
+    expect(raw.getItem("ts-school-notes-window")).toBe("keep-window");
+    expect(raw.getItem("ts-school-notes-folded")).toBe("1");
   });
 
   it("routes live localStorage writes for vanduo-* through to ts-school-*", () => {

@@ -17,10 +17,12 @@ import {
 } from "@/stores/progress";
 import { AI_CHAT_PINNED_KEY } from "@/stores/aiChat";
 import {
+  NOTES_FOLDED_KEY,
   NOTES_PINNED_KEY,
   NOTES_PIN_SIDE_KEY,
   NOTES_SCHEMA_VERSION,
   NOTES_STORAGE_KEY,
+  NOTES_WINDOW_STORAGE_KEY,
   parseNotes,
   type NotesV1,
 } from "@/stores/notes";
@@ -52,12 +54,15 @@ export { VD3_THEME_KEYS, LEGACY_VD3_THEME_KEYS };
 export const SCHOOL_STORAGE_KEYS = [
   PROGRESS_STORAGE_KEY,
   NOTES_STORAGE_KEY,
-  NOTES_PINNED_KEY,
-  NOTES_PIN_SIDE_KEY,
+  NOTES_WINDOW_STORAGE_KEY,
+  NOTES_FOLDED_KEY,
   TOC_STORAGE_KEY,
   AI_RISK_STORAGE_KEY,
   AI_CHAT_PINNED_KEY,
 ] as const;
+
+/** Cleared on clear-all even after migration removed them from inventory. */
+const LEGACY_NOTES_PIN_KEYS = [NOTES_PINNED_KEY, NOTES_PIN_SIDE_KEY] as const;
 
 export const EXPORT_VERSION = 1 as const;
 
@@ -127,16 +132,16 @@ export function buildLocalDataInventory(): LocalDataInventoryItem[] {
       label: "Notes body",
     },
     {
-      key: NOTES_PINNED_KEY,
-      present: safeGetItem(NOTES_PINNED_KEY) !== null,
+      key: NOTES_WINDOW_STORAGE_KEY,
+      present: safeGetItem(NOTES_WINDOW_STORAGE_KEY) !== null,
       group: "school",
-      label: "Notes pin preference",
+      label: "Notes window geometry",
     },
     {
-      key: NOTES_PIN_SIDE_KEY,
-      present: safeGetItem(NOTES_PIN_SIDE_KEY) !== null,
+      key: NOTES_FOLDED_KEY,
+      present: safeGetItem(NOTES_FOLDED_KEY) !== null,
       group: "school",
-      label: "Notes pin side",
+      label: "Notes fold preference",
     },
     {
       key: TOC_STORAGE_KEY,
@@ -157,6 +162,21 @@ export function buildLocalDataInventory(): LocalDataInventoryItem[] {
       label: "AI chat pin preference",
     },
   ];
+
+  // Legacy pin keys only while still present (migration residue).
+  for (const [key, label] of [
+    [NOTES_PINNED_KEY, "Legacy notes pin preference"],
+    [NOTES_PIN_SIDE_KEY, "Legacy notes pin side"],
+  ] as const) {
+    if (safeGetItem(key) !== null) {
+      items.push({
+        key,
+        present: true,
+        group: "school",
+        label,
+      });
+    }
+  }
 
   for (const key of VD3_THEME_KEYS) {
     items.push({
@@ -199,6 +219,8 @@ export function buildSchoolExport(
     TOC_STORAGE_KEY,
     AI_RISK_STORAGE_KEY,
     AI_CHAT_PINNED_KEY,
+    NOTES_WINDOW_STORAGE_KEY,
+    NOTES_FOLDED_KEY,
     NOTES_PINNED_KEY,
     NOTES_PIN_SIDE_KEY,
     ...VD3_THEME_KEYS,
@@ -333,6 +355,9 @@ export function clearSchoolLocalStorage(
   options: ClearAllSchoolDataOptions = {},
 ): void {
   for (const key of SCHOOL_STORAGE_KEYS) {
+    safeRemoveItem(key);
+  }
+  for (const key of LEGACY_NOTES_PIN_KEYS) {
     safeRemoveItem(key);
   }
   // Clears `ts-school-*` theme keys and any leftover legacy `vanduo-*` keys.

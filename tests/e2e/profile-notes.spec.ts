@@ -7,8 +7,8 @@ import {
 } from "./fixtures";
 
 const NOTES_STORAGE_KEY = "ts-school-notes";
-const NOTES_PINNED_KEY = "ts-school-notes-pinned";
-const NOTES_PIN_SIDE_KEY = "ts-school-notes-pin-side";
+const NOTES_WINDOW_KEY = "ts-school-notes-window";
+const NOTES_FOLDED_KEY = "ts-school-notes-folded";
 
 test.describe("profile and notes", () => {
   test("opens profile from the navbar icon", async ({ page }) => {
@@ -50,12 +50,14 @@ test.describe("profile and notes", () => {
     );
   });
 
-  test("notes persist across reload", async ({ page }) => {
+  test("notes open/close and body persist across reload", async ({ page }) => {
     await page.goto(FIXTURE_LESSON.path);
     await page.getByTestId("ts-open-notes").click();
-    await expect(page.getByTestId("ts-notes-sidebar")).toBeVisible();
+    await expect(page.getByTestId("ts-notes-modal")).toBeVisible();
     await page.getByTestId("ts-notes-editor").fill("persist me across reload");
     await page.waitForTimeout(400);
+    await page.getByTestId("ts-notes-close").click();
+    await expect(page.getByTestId("ts-notes-modal")).toBeHidden();
     await page.reload();
     await page.getByTestId("ts-open-notes").click();
     await expect(page.getByTestId("ts-notes-editor")).toHaveValue(
@@ -68,45 +70,125 @@ test.describe("profile and notes", () => {
     expect(stored).toContain("persist me across reload");
   });
 
-  test("pins notes left or right at desktop width", async ({ page }) => {
+  test("notes drag, resize, and fold persist at desktop width", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(FIXTURE_LESSON.path);
     await page.getByTestId("ts-open-notes").click();
-    await page.getByTestId("ts-notes-pin-left").click();
-    await expect(page.getByTestId("ts-notes-sidebar")).toHaveAttribute(
-      "data-pin-side",
-      "left",
-    );
-    await expect(page.getByTestId("ts-notes-sidebar")).toHaveAttribute(
-      "data-pinned",
-      "true",
-    );
-    await expect(page.locator(".ts-app-shell")).toHaveClass(
-      /is-notes-pinned-left/,
-    );
+    const modal = page.getByTestId("ts-notes-modal");
+    await expect(modal).toBeVisible();
+    await expect(modal).toHaveAttribute("data-sheet", "false");
 
-    await page.getByTestId("ts-notes-pin-right").click();
-    await expect(page.getByTestId("ts-notes-sidebar")).toHaveAttribute(
-      "data-pin-side",
-      "right",
+    const before = await modal.boundingBox();
+    expect(before).toBeTruthy();
+
+    const drag = page.getByTestId("ts-notes-drag-handle");
+    const dragBox = await drag.boundingBox();
+    expect(dragBox).toBeTruthy();
+    await page.mouse.move(
+      dragBox!.x + dragBox!.width / 2,
+      dragBox!.y + dragBox!.height / 2,
     );
-    await expect(page.locator(".ts-app-shell")).toHaveClass(
-      /is-notes-pinned-right/,
+    await page.mouse.down();
+    await page.mouse.move(
+      dragBox!.x + dragBox!.width / 2 - 140,
+      dragBox!.y + dragBox!.height / 2 - 60,
+      { steps: 12 },
     );
+    await page.mouse.up();
+
+    const afterDrag = await modal.boundingBox();
+    expect(afterDrag).toBeTruthy();
+    expect(afterDrag!.x).toBeLessThan(before!.x - 40);
+    expect(afterDrag!.y).toBeLessThan(before!.y - 20);
+
+    const resize = page.getByTestId("ts-notes-resize-handle");
+    const resizeBox = await resize.boundingBox();
+    expect(resizeBox).toBeTruthy();
+    await page.mouse.move(
+      resizeBox!.x + resizeBox!.width / 2,
+      resizeBox!.y + resizeBox!.height / 2,
+    );
+    await page.mouse.down();
+    await page.mouse.move(
+      resizeBox!.x + resizeBox!.width / 2 + 80,
+      resizeBox!.y + resizeBox!.height / 2 + 60,
+      { steps: 10 },
+    );
+    await page.mouse.up();
+
+    const afterResize = await modal.boundingBox();
+    expect(afterResize).toBeTruthy();
+    expect(afterResize!.width).toBeGreaterThan(before!.width + 40);
+    expect(afterResize!.height).toBeGreaterThan(before!.height + 20);
+
+    await page.getByTestId("ts-notes-fold").click();
+    await expect(modal).toHaveAttribute("data-folded", "true");
+    await expect(page.getByTestId("ts-notes-editor")).toHaveCount(0);
+
+    const foldedGeom = await page.evaluate((key) => localStorage.getItem(key), NOTES_WINDOW_KEY);
+    const foldedFlag = await page.evaluate((key) => localStorage.getItem(key), NOTES_FOLDED_KEY);
+    expect(foldedGeom).toBeTruthy();
+    expect(foldedFlag).toBe("1");
+    const parsed = JSON.parse(foldedGeom!) as {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    };
+    expect(parsed.x).toBeGreaterThanOrEqual(afterResize!.x - 24);
+    expect(parsed.x).toBeLessThanOrEqual(afterResize!.x + 24);
+    expect(parsed.width).toBeGreaterThan(before!.width + 40);
+
+    await page.reload();
+    await page.getByTestId("ts-open-notes").click();
+    await expect(modal).toBeVisible();
+    await expect(modal).toHaveAttribute("data-folded", "true");
+    const restored = await modal.boundingBox();
+    expect(restored).toBeTruthy();
+    expect(Math.abs(restored!.x - afterResize!.x)).toBeLessThan(24);
+    expect(Math.abs(restored!.width - afterResize!.width)).toBeLessThan(24);
+
+    await page.getByTestId("ts-notes-fold").click();
+    await expect(modal).toHaveAttribute("data-folded", "false");
+    await expect(page.getByTestId("ts-notes-editor")).toBeVisible();
+    const unfolded = await modal.boundingBox();
+    expect(unfolded!.height).toBeGreaterThan(restored!.height + 40);
+  });
+
+  test("notes and Ask AI coexist on desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(FIXTURE_LESSON.path);
+    await page.getByTestId("ts-open-ai-chat").click();
+    await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
+    await page.getByTestId("ts-open-notes").click();
+    await expect(page.getByTestId("ts-notes-modal")).toBeVisible();
+    await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
     await expect(page.locator(".ts-app-shell")).not.toHaveClass(
-      /is-notes-pinned-left/,
+      /is-notes-pinned/,
+    );
+  });
+
+  test("notes mobile sheet opens, folds, and closes without dock insets", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(FIXTURE_LESSON.path);
+    await page.getByTestId("ts-open-notes").click();
+    const modal = page.getByTestId("ts-notes-modal");
+    await expect(modal).toBeVisible();
+    await expect(modal).toHaveAttribute("data-sheet", "true");
+    await expect(page.locator(".ts-app-shell")).not.toHaveClass(
+      /is-notes-pinned/,
     );
 
-    const side = await page.evaluate(
-      (key) => localStorage.getItem(key),
-      NOTES_PIN_SIDE_KEY,
-    );
-    expect(side).toBe("right");
-    const pinned = await page.evaluate(
-      (key) => localStorage.getItem(key),
-      NOTES_PINNED_KEY,
-    );
-    expect(pinned).toBe("1");
+    await page.getByTestId("ts-notes-fold").click();
+    await expect(modal).toHaveAttribute("data-folded", "true");
+    await page.getByTestId("ts-notes-fold").click();
+    await expect(page.getByTestId("ts-notes-editor")).toBeVisible();
+    await page.getByTestId("ts-notes-close").click();
+    await expect(modal).toBeHidden();
   });
 
   test("export download contains progress and notes", async ({ page }) => {
@@ -159,7 +241,7 @@ test.describe("profile and notes", () => {
     page,
   }) => {
     await page.addInitScript(
-      ({ progressKey, notesKey, aiKey }) => {
+      ({ progressKey, notesKey, aiKey, windowKey, foldedKey }) => {
         localStorage.setItem(
           progressKey,
           JSON.stringify({
@@ -181,6 +263,11 @@ test.describe("profile and notes", () => {
           }),
         );
         localStorage.setItem(
+          windowKey,
+          JSON.stringify({ version: 1, x: 40, y: 40, width: 320, height: 400 }),
+        );
+        localStorage.setItem(foldedKey, "1");
+        localStorage.setItem(
           aiKey,
           JSON.stringify({
             version: "1",
@@ -192,6 +279,8 @@ test.describe("profile and notes", () => {
         progressKey: PROGRESS_STORAGE_KEY,
         notesKey: NOTES_STORAGE_KEY,
         aiKey: AI_RISK_STORAGE_KEY,
+        windowKey: NOTES_WINDOW_KEY,
+        foldedKey: NOTES_FOLDED_KEY,
       },
     );
 
@@ -207,6 +296,8 @@ test.describe("profile and notes", () => {
 
     expect(await page.evaluate((k) => localStorage.getItem(k), PROGRESS_STORAGE_KEY)).toBeNull();
     expect(await page.evaluate((k) => localStorage.getItem(k), NOTES_STORAGE_KEY)).toBeNull();
+    expect(await page.evaluate((k) => localStorage.getItem(k), NOTES_WINDOW_KEY)).toBeNull();
+    expect(await page.evaluate((k) => localStorage.getItem(k), NOTES_FOLDED_KEY)).toBeNull();
     expect(await page.evaluate((k) => localStorage.getItem(k), AI_RISK_STORAGE_KEY)).toBeNull();
 
     // ToC was also cleared — accept again so Ask can open.

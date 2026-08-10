@@ -75,7 +75,7 @@ async function onConfirmClearAll(): Promise<void> {
     notes.flushPersist();
     notes.clearNotes();
     notes.closeNotes();
-    notes.setPinSide("right");
+    notes.resetChromePrefs();
 
     progress.clearProgress();
 
@@ -248,10 +248,11 @@ async function onConfirmClearAll(): Promise<void> {
     >
       <div class="vd-stack" data-gap="fib-8">
         <p>
-          This removes progress, notes, pin preferences, theme preferences this
-          site can write, Terms acceptance, and any legacy AI risk key. Best-effort
-          model cache deletion runs next — some browser caches may remain. You
-          will need to accept the site terms again before continuing.
+          This removes progress, notes, notes window preferences, AI pin
+          preference, theme preferences this site can write, Terms acceptance,
+          and any legacy AI risk key. Best-effort model cache deletion runs next
+          — some browser caches may remain. You will need to accept the site
+          terms again before continuing.
         </p>
         <div class="vd-cluster" data-gap="fib-8">
           <VdButton

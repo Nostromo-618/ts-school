@@ -65,6 +65,8 @@ export const LEGACY_VD3_THEME_KEYS = [
 export const VD3_SITE_PREFIX_PROTECTED_KEYS = [
   "ts-school-progress",
   "ts-school-notes",
+  "ts-school-notes-window",
+  "ts-school-notes-folded",
   "ts-school-notes-pinned",
   "ts-school-notes-pin-side",
   "ts-school-toc-accepted",

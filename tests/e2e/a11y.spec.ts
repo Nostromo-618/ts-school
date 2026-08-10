@@ -66,13 +66,13 @@ test.describe("a11y disclaimer gate", () => {
   });
 });
 
-test.describe("a11y notes sidebar", () => {
-  test("notes sidebar has no serious or critical axe violations", async ({
+test.describe("a11y notes modal", () => {
+  test("notes modal has no serious or critical axe violations", async ({
     page,
   }) => {
     await page.goto("/profile");
     await page.getByTestId("ts-open-notes").click();
-    await expect(page.getByTestId("ts-notes-sidebar")).toBeVisible();
+    await expect(page.getByTestId("ts-notes-modal")).toBeVisible();
     await expectNoBlockingAxe(page);
   });
 });

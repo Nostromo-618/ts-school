@@ -7,16 +7,31 @@
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import {
+  NOTES_FOLDED_KEY,
+  NOTES_PINNED_KEY,
+  NOTES_PIN_SIDE_KEY,
+  NOTES_WINDOW_STORAGE_KEY,
+  clampNotesWindow,
+  defaultNotesWindow,
+  parseFoldedFlag,
+  parseNotesWindow,
+  readLegacyPinSide,
+  serializeFoldedFlag,
+  type NotesWindowV1,
+} from "@/lib/notes-window";
 
 export const NOTES_STORAGE_KEY = "ts-school-notes";
-export const NOTES_PINNED_KEY = "ts-school-notes-pinned";
-export const NOTES_PIN_SIDE_KEY = "ts-school-notes-pin-side";
+export {
+  NOTES_FOLDED_KEY,
+  NOTES_PINNED_KEY,
+  NOTES_PIN_SIDE_KEY,
+  NOTES_WINDOW_STORAGE_KEY,
+} from "@/lib/notes-window";
 export const NOTES_SCHEMA_VERSION = 1 as const;
 
 /** Soft warning threshold — long notes stay localStorage until quota forces IDB. */
 export const NOTES_SOFT_SIZE_BYTES = 100_000;
-
-export type NotesPinSide = "left" | "right";
 
 export interface NotesV1 {
   version: typeof NOTES_SCHEMA_VERSION;
@@ -52,41 +67,44 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
-function readPinned(): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    const raw = window.localStorage.getItem(NOTES_PINNED_KEY);
-    return raw === "1" || raw === "true";
-  } catch {
-    return false;
+function currentViewport(): { width: number; height: number } {
+  if (typeof window === "undefined") {
+    return { width: 1280, height: 800 };
   }
+  return { width: window.innerWidth, height: window.innerHeight };
 }
 
-function writePinned(value: boolean): void {
+function writeWindow(win: NotesWindowV1): void {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(NOTES_PINNED_KEY, value ? "1" : "0");
+    window.localStorage.setItem(
+      NOTES_WINDOW_STORAGE_KEY,
+      JSON.stringify(win),
+    );
   } catch {
     /* private mode / quota */
   }
 }
 
-function readPinSide(): NotesPinSide {
-  if (typeof window === "undefined") return "right";
+function writeFolded(value: boolean): void {
+  if (typeof window === "undefined") return;
   try {
-    const raw = window.localStorage.getItem(NOTES_PIN_SIDE_KEY);
-    return raw === "left" ? "left" : "right";
+    window.localStorage.setItem(
+      NOTES_FOLDED_KEY,
+      serializeFoldedFlag(value),
+    );
   } catch {
-    return "right";
+    /* private mode / quota */
   }
 }
 
-function writePinSide(side: NotesPinSide): void {
+function deleteLegacyPinKeys(): void {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(NOTES_PIN_SIDE_KEY, side);
+    window.localStorage.removeItem(NOTES_PINNED_KEY);
+    window.localStorage.removeItem(NOTES_PIN_SIDE_KEY);
   } catch {
-    /* private mode / quota */
+    /* ignore */
   }
 }
 
@@ -94,8 +112,8 @@ export const useNotesStore = defineStore("notes", () => {
   const body = ref("");
   const updatedAt = ref(new Date(0).toISOString());
   const open = ref(false);
-  const pinned = ref(false);
-  const pinSide = ref<NotesPinSide>("right");
+  const folded = ref(false);
+  const geometry = ref<NotesWindowV1>(defaultNotesWindow(currentViewport()));
   const ready = ref(false);
   let persistTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -158,8 +176,59 @@ export const useNotesStore = defineStore("notes", () => {
         /* ignore */
       }
     }
-    pinned.value = readPinned();
-    pinSide.value = readPinSide();
+
+    const viewport = currentViewport();
+    let loaded: NotesWindowV1 | undefined;
+    try {
+      const rawWin = window.localStorage.getItem(NOTES_WINDOW_STORAGE_KEY);
+      if (rawWin !== null) {
+        try {
+          loaded = parseNotesWindow(JSON.parse(rawWin) as unknown);
+          if (!loaded) {
+            window.localStorage.removeItem(NOTES_WINDOW_STORAGE_KEY);
+          }
+        } catch {
+          window.localStorage.removeItem(NOTES_WINDOW_STORAGE_KEY);
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+
+    const legacySide = readLegacyPinSide((key) => {
+      try {
+        return window.localStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    });
+
+    if (loaded) {
+      const clamped = clampNotesWindow(loaded, viewport);
+      geometry.value = clamped;
+      if (
+        clamped.x !== loaded.x ||
+        clamped.y !== loaded.y ||
+        clamped.width !== loaded.width ||
+        clamped.height !== loaded.height
+      ) {
+        writeWindow(clamped);
+      }
+    } else if (legacySide !== undefined) {
+      geometry.value = defaultNotesWindow(viewport, legacySide);
+      writeWindow(geometry.value);
+    } else {
+      geometry.value = defaultNotesWindow(viewport);
+    }
+
+    try {
+      const rawFold = window.localStorage.getItem(NOTES_FOLDED_KEY);
+      folded.value = parseFoldedFlag(rawFold);
+    } catch {
+      folded.value = false;
+    }
+
+    deleteLegacyPinKeys();
     // Do not auto-open on hydrate — open is session UI only.
     ready.value = true;
   }
@@ -188,37 +257,54 @@ export const useNotesStore = defineStore("notes", () => {
 
   function openNotes(): void {
     open.value = true;
+    reclampToViewport();
   }
 
   function closeNotes(): void {
     open.value = false;
-    if (pinned.value) {
-      pinned.value = false;
-      writePinned(false);
+  }
+
+  function setFolded(value: boolean): void {
+    folded.value = value;
+    writeFolded(value);
+  }
+
+  function toggleFold(): void {
+    setFolded(!folded.value);
+  }
+
+  function setWindow(next: NotesWindowV1): void {
+    const clamped = clampNotesWindow(next, currentViewport());
+    geometry.value = clamped;
+    writeWindow(clamped);
+  }
+
+  function reclampToViewport(): void {
+    geometry.value = clampNotesWindow(geometry.value, currentViewport());
+    writeWindow(geometry.value);
+  }
+
+  /** Reset chrome prefs after Profile clear-all (body cleared separately). */
+  function resetChromePrefs(): void {
+    folded.value = false;
+    geometry.value = defaultNotesWindow(currentViewport());
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem(NOTES_WINDOW_STORAGE_KEY);
+        window.localStorage.removeItem(NOTES_FOLDED_KEY);
+        deleteLegacyPinKeys();
+      } catch {
+        /* ignore */
+      }
     }
-  }
-
-  function setPinned(value: boolean): void {
-    pinned.value = value;
-    if (value) open.value = true;
-    writePinned(value);
-  }
-
-  function togglePin(): void {
-    setPinned(!pinned.value);
-  }
-
-  function setPinSide(side: NotesPinSide): void {
-    pinSide.value = side;
-    writePinSide(side);
   }
 
   return {
     body,
     updatedAt,
     open,
-    pinned,
-    pinSide,
+    folded,
+    geometry,
     ready,
     approxBytes,
     nearSoftLimit,
@@ -227,9 +313,11 @@ export const useNotesStore = defineStore("notes", () => {
     clearNotes,
     openNotes,
     closeNotes,
-    setPinned,
-    togglePin,
-    setPinSide,
+    setFolded,
+    toggleFold,
+    setWindow,
+    reclampToViewport,
+    resetChromePrefs,
     /** Flush pending debounce (tests / clear-all). */
     flushPersist(): void {
       if (persistTimer) {
@@ -253,12 +341,14 @@ export const useNotesStore = defineStore("notes", () => {
       body.value = emptyNotes().body;
       updatedAt.value = emptyNotes().updatedAt;
       open.value = false;
-      pinned.value = false;
-      pinSide.value = "right";
+      folded.value = false;
+      geometry.value = defaultNotesWindow({ width: 1280, height: 800 });
       ready.value = false;
       if (typeof window !== "undefined") {
         try {
           window.localStorage.removeItem(NOTES_STORAGE_KEY);
+          window.localStorage.removeItem(NOTES_WINDOW_STORAGE_KEY);
+          window.localStorage.removeItem(NOTES_FOLDED_KEY);
           window.localStorage.removeItem(NOTES_PINNED_KEY);
           window.localStorage.removeItem(NOTES_PIN_SIDE_KEY);
         } catch {
