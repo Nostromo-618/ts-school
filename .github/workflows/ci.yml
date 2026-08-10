@@ -26,7 +26,7 @@ jobs:
           repository: vanduo-oss/labs
           path: .ci-labs
 
-      - name: Link Labs for file: dependency
+      - name: "Link Labs for file: dependency"
         run: |
           mkdir -p ../0_vanduo
           ln -sfn "$GITHUB_WORKSPACE/.ci-labs" ../0_vanduo/labs
