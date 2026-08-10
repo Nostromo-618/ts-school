@@ -40,10 +40,13 @@ export const createApp = ViteSSG(
     // Site defaults for new visitors (no vanduo-* localStorage prefs yet).
     // Stored prefs always win — vd3 loadPreference uses getItem ?? default.
     // Lato is self-hosted in vd3 (font-src 'self'); radius is rem without unit.
+    // ThemeDefaults has a single NEUTRAL (no light/dark keys); stone is the
+    // light/global baseline. Dark charcoal is applied by the theme store.
     app.use(VanduoVue, {
       themeDefaults: {
         PRIMARY_LIGHT: "violet",
         PRIMARY_DARK: "violet",
+        NEUTRAL: "stone",
         RADIUS: "0.375",
         FONT: "lato",
       },

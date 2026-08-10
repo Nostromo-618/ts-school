@@ -21,11 +21,12 @@ import {
  * preference would only misbehave when both are on screen — which is exactly
  * the configuration this site ships.
  *
- * The one policy the site adds is a per-mode default neutral: warm in light,
- * near-black in dark, following the mode while the neutral is still one of
+ * The one policy the site adds is a per-mode default neutral: stone in light,
+ * charcoal in dark, following the mode while the neutral is still one of
  * those two defaults. An explicit pick sticks across mode changes. Default
- * primary, radius, and font are not this store's business — `main.ts`
- * registers them through `VanduoVue`'s `themeDefaults`.
+ * primary, radius, font, and the single-key NEUTRAL baseline (`stone`) are
+ * not this store's business — `main.ts` registers them through `VanduoVue`'s
+ * `themeDefaults` (vd3 has no NEUTRAL_LIGHT / NEUTRAL_DARK).
  */
 
 /** Site defaults, tracked per scheme because the engine has a single NEUTRAL. */
