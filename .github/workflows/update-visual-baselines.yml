@@ -1,0 +1,54 @@
+name: update-visual-baselines
+
+on:
+  workflow_dispatch:
+
+# Writes Linux Chromium Desktop baselines as an artifact for commit locally.
+# Commits via GITHUB_TOKEN would not retrigger CI, so we upload instead.
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Checkout Labs engines
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: vanduo-oss/labs
+          path: .ci-labs
+
+      - name: "Link Labs for file: dependency"
+        run: |
+          mkdir -p ../0_vanduo
+          ln -sfn "$GITHUB_WORKSPACE/.ci-labs" ../0_vanduo/labs
+          test -f ../0_vanduo/labs/package.json
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: 11.18.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.17.0
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run build
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Update Chromium Desktop Linux visual baselines
+        run: pnpm exec playwright test tests/e2e/visual.spec.ts --project='Chromium Desktop' --update-snapshots
+
+      - name: Upload Linux visual baselines
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: linux-visual-baselines
+          path: tests/e2e/visual.spec.ts-snapshots/*-linux.png
+          if-no-files-found: error
