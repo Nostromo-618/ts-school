@@ -176,6 +176,38 @@ body {
   font-weight: 600;
 }
 
+/* About page — technology inventory (definition list, not a badge wall). */
+.ts-tech-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vd-space-fib-8, 0.8125rem);
+  margin: 0;
+  padding: 0;
+}
+
+.ts-tech-item {
+  display: grid;
+  grid-template-columns: minmax(8rem, 14rem) minmax(0, 1fr);
+  gap: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-13, 1.3125rem);
+  align-items: baseline;
+}
+
+.ts-tech-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.ts-tech-blurb {
+  margin: 0;
+}
+
+@media (max-width: 40rem) {
+  .ts-tech-item {
+    grid-template-columns: 1fr;
+    gap: var(--vd-space-fib-2, 0.1875rem);
+  }
+}
+
 .ts-glossary {
   display: flex;
   flex-direction: column;
