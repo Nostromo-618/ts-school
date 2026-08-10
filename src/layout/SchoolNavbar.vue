@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
     <div class="vd-navbar-container">
       <div class="vd-navbar-brand">
         <RouterLink to="/" class="ts-brand-link" @click="closeMenu">
-          <SchoolBrandMark size="2rem" />
+          <SchoolBrandMark :size="isDesktop ? '2rem' : '1.75rem'" />
           <span class="ts-brand-text">
             <span class="ts-brand-name">TypeScript</span>
             <span class="ts-brand-word">School</span>

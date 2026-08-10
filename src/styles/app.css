@@ -590,11 +590,6 @@ body {
     display: none;
   }
 
-  .vd-navbar .ts-brand-mark {
-    width: 1.75rem !important;
-    height: 1.75rem !important;
-  }
-
   .vd-navbar .ts-navbar-actions {
     flex: 1 1 auto;
     width: auto;
