@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generated-types-from-contracts", "typing-request-handlers"],
   keywords: ["database", "sql", "rows", "prisma", "kysely", "nullable"],
   problem:
-    "A migration made a column nullable and every read site still believes it cannot be `null`.",
+    "A migration made a column nullable and every read site still believes it cannot be `null`. Look at the left pane: nullable columns are runtime `null` with no warning in JS. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "string | `null` must be narrowed before string methods. Treat query results like untrusted input: types should match the live schema, including nulls. Regenerate row types in CI when migrations land. ORM client types help only if they track schema; raw SQL needs your own row types. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// JS: drivers return plain objects — nulls surprise you in production.
 function getUser(row) {

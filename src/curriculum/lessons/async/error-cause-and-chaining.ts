@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["custom-error-classes"],
   keywords: ["cause", "error chaining", "wrapping", "context", "unknown"],
   problem:
-    "Catching and rethrowing with a friendlier message throws away the only stack trace that pointed at the real failure.",
+    "Catching and rethrowing with a friendlier message throws away the only stack trace that pointed at the real failure. Look at the left pane: `String`-concatenating nested errors. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Error.cause is `unknown` — not string. Use the cause option to chain errors without losing the stack. cause is `unknown` — narrow before reading. Preserve causes across async boundaries. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `throw new Error('failed: ' + err);
 `,

@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "override",
   ],
   problem:
-    "A base class with a method that throws 'not implemented' pushes a compile-time contract into a runtime failure.",
+    "A base class with a method that throws 'not implemented' pushes a compile-time contract into a runtime failure. Look at the left pane: base class constructed directly. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "abstract classes cannot be instantiated. abstract forces subclasses to implement members. Prefer interfaces when you only need a shape. Use abstract classes when you share implementation. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `class Animal { speak() {} }
 new Animal();

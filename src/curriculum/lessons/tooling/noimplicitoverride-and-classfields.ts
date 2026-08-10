@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "emit",
   ],
   problem:
-    "Renaming a base-class method leaves the subclass with a method that overrides nothing and is `never` called.",
+    "Renaming a base-class method leaves the subclass with a method that overrides nothing and is `never` called. Look at the left pane: overrides with no marker. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "override documents intent. speak returns string. noImplicitOverride requires the override keyword. It catches renames on the base class. Use with useDefineForClassFields awareness. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `class Dog extends Animal { speak() { return 'woof'; } }
 `,

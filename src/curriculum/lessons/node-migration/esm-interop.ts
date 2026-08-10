@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "The same import statement resolves to the module or to its default export depending on flags set three configs away.",
+    "The same import statement resolves to the module or to its default export depending on flags set three configs away. Look at the left pane: require a CJS helper and call it directly. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Normalize default-vs-namespace interop. pad returns string, not number. CJS packages may need `esModuleInterop` or import = require depending on export style. Runtime shape can be module or module.default — normalize once at the boundary. Check emitted JS when bundlers and `tsc` disagree about interop. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const legacy = require("legacy-lib");
 legacy.pad("x", 3);

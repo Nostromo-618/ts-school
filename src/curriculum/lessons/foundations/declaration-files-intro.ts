@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsconfig-essentials"],
   keywords: [".d.ts", "ambient", "@types", "DefinitelyTyped", "declare"],
   problem:
-    "You install a popular npm package, import it, and TypeScript says the module has no types — even though the package works fine at runtime.",
+    "You install a popular npm package, import it, and TypeScript says the module has no types — even though the package works fine at runtime. Look at the left pane: javaScript packages often ship without type information. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "`TS2307` until the package ships types or you add @types/slugify. .d.ts files are TypeScript's description of existing JavaScript — they emit nothing. Prefer packages with bundled types; otherwise install @types/name from DefinitelyTyped. You can `declare` a minimal ambient module locally when upstream types are missing. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// Runtime works; editors know nothing about slugify's API.
 const slugify = require("slugify");

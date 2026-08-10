@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["null-and-undefined"],
   keywords: ["optional chaining", "nullish coalescing", "?.", "??"],
   problem:
-    "|| treats 0 and the empty string as missing, so a default quietly overrides a legitimate value.",
+    "|| treats 0 and the empty string as missing, so a default quietly overrides a legitimate value. Look at the left pane: missing profile throws; empty email is replaced by ||. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Optional properties are `undefined` until you chain with ?. ?. short-circuits to `undefined` when the receiver is nullish. nobody@example.com. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function email(user) {
   return user.profile.email || "nobody@example.com";

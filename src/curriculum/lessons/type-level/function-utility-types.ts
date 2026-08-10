@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["utility-types-tour", "function-type-expressions"],
   keywords: ["ReturnType", "Parameters", "Awaited", "signature", "derive"],
   problem:
-    "A wrapper around someone else's function restates its argument list, and the restatement is wrong within a release.",
+    "A wrapper around someone else's function restates its argument list, and the restatement is wrong within a release. Look at the left pane: extracting callback shapes by hand. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`Parameters<Fn>`[0] is number, not string. `Parameters` and `ReturnType` extract call signatures. `ConstructorParameters` / `InstanceType` do the same for classes. Use them to stay DRY with third-party function types. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function call(fn, arg) { return fn(arg); }
 `,
@@ -27,7 +29,7 @@ const r: Ret = "x";
 const bad: Arg = "1";
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "`Parameters`<Fn>[0] is number, not string.",
+    caption: "`Parameters<Fn>`[0] is number, not string.",
     expectedDiagnostics: [
       {
         code: 2322,

@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "resolution",
   ],
   problem:
-    "A package with an exports map and a stale top-level types field resolves fine for the author and to `any` for everyone else.",
+    "A package with an exports map and a stale top-level types field resolves fine for the author and to `any` for everyone else. Look at the left pane: exports with a runtime path only. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Author a types condition. Optional types is not a number. Put a types condition in exports so TypeScript resolves declarations reliably. Dual packages need both import and require entry points. Prefer exports.types over legacy typesVersions when you can. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `const exportsMap = { ".": "./dist/index.js" };
 `,

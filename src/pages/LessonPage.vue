@@ -1,8 +1,8 @@
 <script setup lang="ts">
 /**
  * One route component for every lesson. The route table supplies the id; this
- * page resolves the `Lesson` from the registry and composes the dual-pane
- * engine, insights, optional quiz/exercise blocks, and security / diagram.
+ * page resolves the `Lesson` from the registry and composes problem, dual-pane,
+ * solution narrative, insights, optional quiz/exercise, then prerequisites.
  */
 import { computed, onMounted, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
@@ -154,22 +154,6 @@ const SECURITY_VARIANTS: Record<
       <ProseHtml :text="lesson.problem" />
     </section>
 
-    <section
-      v-if="prerequisites.length > 0"
-      class="vd-stack"
-      data-gap="fib-5"
-      aria-labelledby="lesson-prerequisites"
-    >
-      <h2 id="lesson-prerequisites">Read these first</h2>
-      <ul>
-        <li v-for="prerequisite in prerequisites" :key="prerequisite.id">
-          <RouterLink :to="lessonRoute(prerequisite)">
-            {{ prerequisite.title }}
-          </RouterLink>
-        </li>
-      </ul>
-    </section>
-
     <VdAlert v-if="isUnwritten" variant="info" role="status">
       This lesson is on the map but not written yet. Its JavaScript and
       TypeScript panes, insights, and exercise arrive with the content tiers.
@@ -181,6 +165,15 @@ const SECURITY_VARIANTS: Record<
       :ts="lesson.ts"
       :diagnostics="paneDiagnostics"
     />
+
+    <section
+      class="vd-stack"
+      data-gap="fib-5"
+      aria-labelledby="lesson-solution"
+    >
+      <h2 id="lesson-solution">The solution</h2>
+      <ProseHtml :text="lesson.solution" />
+    </section>
 
     <section
       v-if="lesson.insight.length > 0"
@@ -282,6 +275,22 @@ const SECURITY_VARIANTS: Record<
         Marked complete.
       </p>
     </div>
+
+    <section
+      v-if="prerequisites.length > 0"
+      class="vd-stack"
+      data-gap="fib-5"
+      aria-labelledby="lesson-prerequisites"
+    >
+      <h2 id="lesson-prerequisites">Read these first</h2>
+      <ul>
+        <li v-for="prerequisite in prerequisites" :key="prerequisite.id">
+          <RouterLink :to="lessonRoute(prerequisite)">
+            {{ prerequisite.title }}
+          </RouterLink>
+        </li>
+      </ul>
+    </section>
 
     <nav class="ts-lesson-pager" aria-label="Lesson navigation">
       <RouterLink

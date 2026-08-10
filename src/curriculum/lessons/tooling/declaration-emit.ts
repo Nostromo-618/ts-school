@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "portability",
   ],
   problem:
-    "A type that compiles fine cannot be written into a declaration file, and the error names a file you have `never` opened.",
+    "A type that compiles fine cannot be written into a declaration file, and the error names a file you have `never` opened. Look at the left pane: without .d.ts, the public API is whatever you export in JS. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Explicit Public return types keep .d.ts self-contained. declaration: true writes .d.ts; `declarationMap` helps editors jump to source. isolatedDeclarations requires enough annotations for emit without typechecking inference. Export the types you return — do not leak private aliases into public signatures. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// JS has no declaration emit — consumers read the source or nothing.
 export function make() {

@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "ReturnType",
   ],
   problem:
-    "Reading a type argument back out of a generic type has no syntax at all until you reach for `infer`.",
+    "Reading a type argument back out of a generic type has no syntax at all until you reach for `infer`. Look at the left pane: javaScript has no way to name “whatever getUser returns”. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`infer R` binds the return type inside the match; wrong assignments fail. `infer only` works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator. Multiple `infer positions` can bind several type variables in one match (e.g. parameters and return together). `ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// JS: "return type of fn" is a comment, not a check.
 function getUser() {
@@ -54,7 +56,7 @@ const wrong: User = { id: 1 };
       { start: 11, end: 12 },
     ],
     caption:
-      "`infer` R binds the return type inside the match; wrong assignments fail.",
+      "`infer R` binds the return type inside the match; wrong assignments fail.",
     expectedDiagnostics: [
       {
         code: 2741,
@@ -64,14 +66,14 @@ const wrong: User = { id: 1 };
     ],
   },
   insight: [
-    "`infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator.",
-    "Multiple `infer` positions can bind several type variables in one match (e.g. parameters and return together).",
+    "`infer only` works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator.",
+    "Multiple `infer positions` can bind several type variables in one match (e.g. parameters and return together).",
     "`ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism.",
   ],
   quiz: [
     {
       id: "infer-where",
-      prompt: "Where is `infer` legal?",
+      prompt: "Where is `infer legal`?",
       choices: [
         { id: "a", text: "Anywhere a type annotation appears" },
         { id: "b", text: "Only in the true/false arms of a conditional type" },
@@ -83,7 +85,7 @@ const wrong: User = { id: 1 };
       ],
       answerId: "c",
       explanation:
-        "`infer` introduces a type variable by matching a shape in the extends check. Outside that clause it is a syntax error.",
+        "`infer introduces` a type variable by matching a shape in the extends check. Outside that clause it is a syntax error.",
     },
   ],
   exercise: {
@@ -96,7 +98,7 @@ const check: A = 0; // should be an error — A must be string
 `,
     assertion: "no-errors",
     hints: [
-      "Match T against `readonly` [`infer` H, ...`unknown`[]] or (`infer` H)[].",
+      "Match T against `readonly` [`infer H`, ...`unknown`[]] or (`infer H`)[].",
       "Use a conditional: T extends … ? H : `never`.",
     ],
     solution: `type Head<T> = T extends readonly [infer H, ...unknown[]]

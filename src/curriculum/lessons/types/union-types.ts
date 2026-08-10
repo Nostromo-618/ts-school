@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["object-type-literals"],
   keywords: ["union", "|", "narrowing", "nullable"],
   problem:
-    "A function that returns a user or `null` is documented in a comment, and every caller decides for itself whether to check.",
+    "A function that returns a user or `null` is documented in a comment, and every caller decides for itself whether to check. Look at the left pane: `null` is a valid return; calling .name is not. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "You must narrow User | `null` before reading name. A union is a value that could be any of the members — only common operations are allowed until you narrow. User | `null` is the honest return type for 'maybe found'. Narrow with equality checks, `typeof`, or predicates — do not assert the danger away. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function findUser(id) {
   if (id === "missing") return null;

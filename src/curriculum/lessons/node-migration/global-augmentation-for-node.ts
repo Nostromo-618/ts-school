@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "augmentation",
   ],
   problem:
-    "A declaration file with a single import stops being ambient, and every global augmentation in it silently stops applying.",
+    "A declaration file with a single import stops being ambient, and every global augmentation in it silently stops applying. Look at the left pane: stashing state on global without declaring it. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "`declare` global adds appCache. A Map is not a number. Augment globals from a module file (export {} if needed). Prefer explicit imports over ambient globals for app state. Keep augmentations minimal — they apply everywhere. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `global.cache = new Map();
 `,

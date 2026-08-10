@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-process-env"],
   keywords: ["argv", "parseArgs", "cli", "commander", "options"],
   problem:
-    "Argument parsers return a bag of loosely typed values, so the flags your program supports exist only in the help text.",
+    "Argument parsers return a bag of loosely typed values, so the flags your program supports exist only in the help text. Look at the left pane: trusting argv[2] without checking it exists. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Parse into CliOptions. A raw argv string is not a number. Parse argv into a dedicated options type early. Prefer parseArgs helpers, then validate business rules. Fail with a usage message when operands are missing. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const file = process.argv[2];
 doWork(file);
@@ -54,7 +56,7 @@ const asNum: number = raw;
   ],
   security: {
     title: "CLI args are untrusted paths and flags",
-    body: "Validate paths and `never` pass raw argv into a shell without escaping.",
+    body: "Validate paths and never pass raw argv into a shell without escaping.",
     severity: "caution",
   },
 };

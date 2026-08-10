@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["types-are-erased", "unknown-vs-any"],
   keywords: ["boundary", "untrusted input", "IO", "validation"],
   problem:
-    "A request handler types req.body as a rich interface and then trusts every field without checking.",
+    "A request handler types req.body as a rich interface and then trusts every field without checking. Look at the left pane: no TypeScript error here — that's the point: the type ends at the assertion; runtime still lies. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "No TypeScript error here — that's the point: the type ends at the assertion; runtime still lies. Everything that crosses IO (HTTP, disk, env, queues) starts as untrusted. Types inside your process are only as true as the validations at the edge. Treat as Model and `any` as 'I stopped checking' — prefer `unknown` + parse. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function createUser(body) {
   return { id: body.id, admin: body.admin === true };

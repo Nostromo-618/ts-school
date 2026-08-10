@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "factory",
   ],
   problem:
-    "A factory that takes a class and returns instances of it cannot be typed with a plain function type.",
+    "A factory that takes a class and returns instances of it cannot be typed with a plain function type. Look at the left pane: new on an `unknown` constructor. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Ctor signature requires string. number fails. new (...) => T describes constructible values. (...) => T describes callables — do not confuse them. Factories that accept classes need construct signatures. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function make(C, arg) { return new C(arg); }
 `,

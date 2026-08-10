@@ -75,7 +75,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "async / await",
     tier: "beginner",
     definition:
-      "Syntax that makes a function return a Promise and unwraps one at await. An async function's return type is always `Promise`<T>, even when you write a bare T.",
+      "Syntax that makes a function return a Promise and unwraps one at await. An async function's return type is always `Promise<T>`, even when you write a bare T.",
     aliases: ["async", "await"],
     related: ["async-await-typing", "promise-types"],
   },
@@ -536,7 +536,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Promise<T>",
     tier: "beginner",
     definition:
-      "A value that will settle to T (or reject). The type parameter is what await and .then receive — `Promise`<User> is not interchangeable with `Promise`<`any`>.",
+      "A value that will settle to T (or reject). The type parameter is what await and .then receive — `Promise<User>` is not interchangeable with `Promise<any>`.",
     aliases: ["Promise", "thenable"],
     related: [
       "promise-types",

@@ -58,6 +58,31 @@ describe('curriculum registry', () => {
     expect(incomplete).toEqual([]);
   });
 
+  it('gives every lesson a non-empty solution narrative', () => {
+    const incomplete = allLessons
+      .filter((lesson) => lesson.solution.trim() === '')
+      .map((lesson) => lesson.id);
+
+    expect(incomplete).toEqual([]);
+  });
+
+  it('keeps problem and solution above the richness floor', () => {
+    const FLOOR = 160;
+    const thin = allLessons
+      .filter(
+        (lesson) =>
+          lesson.problem.trim().length < FLOOR ||
+          lesson.solution.trim().length < FLOOR,
+      )
+      .map((lesson) => ({
+        id: lesson.id,
+        problem: lesson.problem.trim().length,
+        solution: lesson.solution.trim().length,
+      }));
+
+    expect(thin).toEqual([]);
+  });
+
   it('gives every lesson searchable keywords', () => {
     const unkeyworded = allLessons
       .filter((lesson) => lesson.keywords.length === 0)

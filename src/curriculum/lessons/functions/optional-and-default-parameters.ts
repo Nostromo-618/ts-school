@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns", "null-and-undefined"],
   keywords: ["optional parameter", "default parameter", "?", "undefined"],
   problem:
-    "Callers skip an argument; callees read it as a real value and crash on .toUpperCase().",
+    "Callers skip an argument; callees read it as a real value and crash on .toUpperCase(). Look at the left pane: missing args become `undefined` with no warning. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "name is required; omitting it is a type error. Optional parameters are T | `undefined` and must follow required ones. guest. Prefer defaults when you have a sensible fallback; prefer ? when absence is meaningful. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function greet(name, excited) {
   const base = "hello " + name.toUpperCase();

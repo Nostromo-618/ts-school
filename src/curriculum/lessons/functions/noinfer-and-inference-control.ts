@@ -7,11 +7,13 @@ export const lesson: Lesson = {
   track: "functions",
   order: 18,
   summary:
-    "`NoInfer`<T> tells the checker not to take a candidate from a position — the fix for a default argument that widens the type you were narrowing.",
+    "`NoInfer<T>` tells the checker not to take a candidate from a position — the fix for a default argument that widens the type you were narrowing.",
   prerequisites: ["generic-inference-internals"],
   keywords: ["NoInfer", "inference", "candidate", "default", "generic"],
   problem:
-    "One extra argument silently widens T, so an API that validated its input yesterday accepts anything today.",
+    "One extra argument silently widens T, so an API that validated its input yesterday accepts anything today. Look at the left pane: defaults participate in the same untyped soup as other arguments. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`NoInfer` blocks candidates from fallback; mismatched literals error. Inference sites that should only *check* against T, not *define* T, should be wrapped in `NoInfer<T>`. Classic cases: default values, secondary arguments, and context that must follow a primary source of truth. Before `NoInfer`, libraries used crazy double-generic tricks; prefer the built-in now. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS: defaults just fill in — they also "teach" the type if you imagine one.
 function createRoute(path, fallback = "/") {
@@ -47,14 +49,14 @@ const b = pick("left", "right");
     ],
   },
   insight: [
-    "Inference sites that should only *check* against T, not *define* T, should be wrapped in `NoInfer`<T>.",
+    "Inference sites that should only *check* against T, not *define* T, should be wrapped in `NoInfer<T>`.",
     "Classic cases: default values, secondary arguments, and context that must follow a primary source of truth.",
     "Before `NoInfer`, libraries used crazy double-generic tricks; prefer the built-in now.",
   ],
   quiz: [
     {
       id: "noinfer-q",
-      prompt: "What does `NoInfer`<T> do at an inference site?",
+      prompt: "What does `NoInfer<T>` do at an inference site?",
       choices: [
         { id: "a", text: "Erases T to `unknown`" },
         {
@@ -71,7 +73,7 @@ const b = pick("left", "right");
   ],
   exercise: {
     prompt:
-      "Write assertEqual<T>(actual: T, expected: `NoInfer`<T>): `void` that only compares, and call it with matching string literals.",
+      "Write assertEqual<T>(actual: T, expected: `NoInfer<T>`): `void` that only compares, and call it with matching string literals.",
     starter: `function assertEqual(actual, expected) {
   if (actual !== expected) throw new Error("mismatch");
 }
@@ -79,7 +81,7 @@ const b = pick("left", "right");
 assertEqual("a", "a");
 `,
     assertion: "no-errors",
-    hints: ["actual: T, expected: `NoInfer`<T>"],
+    hints: ["actual: T, expected: `NoInfer<T>`"],
     solution: `function assertEqual<T>(actual: T, expected: NoInfer<T>): void {
   if (actual !== expected) throw new Error("mismatch");
 }

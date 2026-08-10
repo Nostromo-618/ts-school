@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 9,
   summary:
-    "Zod, Valibot, ArkType, TypeBox: `declare` the schema, `infer` the type from it. The direction of that arrow is what stops the two from drifting.",
+    "Zod, Valibot, ArkType, TypeBox: `declare` the schema, `infer the` type from it. The direction of that arrow is what stops the two from drifting.",
   prerequisites: ["writing-a-validator-by-hand", "typeof-type-queries"],
   keywords: [
     "zod",
@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "standard schema",
   ],
   problem:
-    "A hand-written interface and a hand-written validator describe the same shape twice, and only one of them gets updated.",
+    "A hand-written interface and a hand-written validator describe the same shape twice, and only one of them gets updated. Look at the left pane: two sources of truth — the typedef and the runtime checks — drift apart. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "User is inferred from the schema object. Assigning age (number) to string fails. One schema → inferred static type + runtime parse. Invert that and drift returns. Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson. At trust boundaries, call `.parse` / safeParse — never `as User` on JSON. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// types.js — hope someone updates this when the validator changes
 /** @typedef {{ id: string, age: number }} User */
@@ -84,7 +86,7 @@ const age: string = user.age;
   insight: [
     "One schema → inferred static type + runtime parse. Invert that and drift returns.",
     "Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson.",
-    "At trust boundaries, call `.parse` / safeParse — `never` `as User` on JSON.",
+    "At trust boundaries, call `.parse` / safeParse — never `as User` on JSON.",
   ],
   security: {
     title: "Inferred types are only as safe as the parse you run",
@@ -95,7 +97,7 @@ const age: string = user.age;
     {
       id: "svl-1",
       prompt:
-        "Why `infer` the type from the schema instead of writing both by hand?",
+        "Why `infer the` type from the schema instead of writing both by hand?",
       choices: [
         { id: "a", text: "Inference is required by Node." },
         {

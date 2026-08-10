@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["string", "number", "boolean", "bigint", "String object"],
   problem:
-    "JavaScript has one number type and seven falsy values, and a codebase that never says which it means ends up with '1' + 1 in production.",
+    "JavaScript has one number type and seven falsy values, and a codebase that never says which it means ends up with '1' + 1 in production. Look at the left pane: primitives mix silently; the bug is often string vs number. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "number is not `String`, and it is not the string \"7\". Prefer lowercase primitives: string, number, boolean — not `String`, Number, Boolean wrappers. `bigint` is a separate type; you cannot mix it with number without an explicit conversion. At HTTP boundaries, parse strings into the primitive you mean before calling domain functions. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function addDays(start, days) {
   return start + days * 86400000;

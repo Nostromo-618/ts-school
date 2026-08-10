@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "typeof import",
   ],
   problem:
-    "A module mock whose signature has drifted from the real module passes every test and fails in production.",
+    "A module mock whose signature has drifted from the real module passes every test and fails in production. Look at the left pane: mocked module with untyped factory. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Generic mockModule preserves connect's `Promise<void>`. Type the mocked module surface explicitly. Factory return values must satisfy that surface. Prefer dependency injection when mocks get heavy. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `jest.mock('./db');
 `,
@@ -35,7 +37,7 @@ const p: Promise<void> = db.connect();
 const bad: number = db.connect();
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "Generic mockModule preserves connect's `Promise`<`void`>.",
+    caption: "Generic mockModule preserves connect's `Promise<void>`.",
     expectedDiagnostics: [
       {
         code: 2322,

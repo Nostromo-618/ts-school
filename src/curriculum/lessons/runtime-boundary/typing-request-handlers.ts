@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "validation",
   ],
   problem:
-    "Express types req.body as `any`, so the most attacker-controlled value in the process is the least checked one.",
+    "Express types req.body as `any`, so the most attacker-controlled value in the process is the least checked one. Look at the left pane: destructuring req.body with no checks — role can be anything. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Parse body into CreateUserBody before insert. A cast still yields a string role — assigning to number fails. Type the framework request body as `unknown` (or leave it untyped) and parse in the handler or a middleware. admin. Generics on Express handlers are only as honest as the middleware that populated them. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function createUser(req, res) {
   const { email, role } = req.body;

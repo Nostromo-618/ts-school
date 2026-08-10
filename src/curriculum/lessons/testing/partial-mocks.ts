@@ -7,11 +7,13 @@ export const lesson: Lesson = {
   track: "testing",
   order: 5,
   summary:
-    "`Partial`<T> for the shallow case, a recursive helper for the deep one, and the single cast at the boundary that you should make deliberately and once.",
+    "`Partial<T>` for the shallow case, a recursive helper for the deep one, and the single cast at the boundary that you should make deliberately and once.",
   prerequisites: ["typing-mocks-and-stubs", "utility-types-tour"],
   keywords: ["Partial", "DeepPartial", "mock", "cast", "recursive"],
   problem:
-    "Mocking a client with thirty methods to test one of them means writing twenty-nine you will never call.",
+    "Mocking a client with thirty methods to test one of them means writing twenty-nine you will never call. Look at the left pane: `Partial` mock passed where full API required. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "`Pick<Api,'get'>` is not Api — missing post. Type partial mocks with `Pick`/`Partial` of the real interface. Do not cast partials to the full type. Keep tests honest about which methods are used. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const api = { get: jest.fn(), post: jest.fn() };
 `,
@@ -34,7 +36,7 @@ declare function useAll(client: Api): void;
 useAll(api);
 `,
     highlights: [{ start: 14, end: 14 }],
-    caption: "`Pick`<Api,'get'> is not Api — missing post.",
+    caption: "`Pick<Api,'get'>` is not Api — missing post.",
     expectedDiagnostics: [
       {
         code: 2345,

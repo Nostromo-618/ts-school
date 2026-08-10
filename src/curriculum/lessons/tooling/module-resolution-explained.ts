@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "resolution",
   ],
   problem:
-    "Cannot find module for a package that is definitely installed is nearly always a resolution-mode mismatch, not a missing dependency.",
+    "Cannot find module for a package that is definitely installed is nearly always a resolution-mode mismatch, not a missing dependency. Look at the left pane: extensionless requires everywhere. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Illustrative API: nodenext wants ./util.js — extensionless fails the SpecFor check. `moduleResolution` bundler vs nodenext change legal specifiers. Match resolution to your runtime (Node vs bundler). Do not mix modes across packages carelessly. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `require('./util');
 `,

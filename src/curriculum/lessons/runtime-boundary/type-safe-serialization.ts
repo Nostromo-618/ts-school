@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generated-types-from-contracts", "utility-types-tour"],
   keywords: ["serialization", "JSON", "Date", "round trip", "Jsonify"],
   problem:
-    "A field typed Date is a string by the time it reaches the client, and the type says otherwise on both sides.",
+    "A field typed Date is a string by the time it reaches the client, and the type says otherwise on both sides. Look at the left pane: the wire shape is not the in-memory shape. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Jsonify maps Date to string — assigning a Date fails. Model wire types separately from domain types when JSON is involved. `undefined` keys disappear; Date becomes string; Map/Set become objects/arrays or fail. Revivers and custom serializers must stay in sync with Jsonify-like types. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS: JSON.stringify drops undefined and turns Date into a string.
 const payload = { at: new Date(), note: undefined };

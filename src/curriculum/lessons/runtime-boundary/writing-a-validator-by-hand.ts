@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "error message",
   ],
   problem:
-    "Every codebase writes this eventually, and the version written in a hurry checks the happy path only.",
+    "Every codebase writes this eventually, and the version written in a hurry checks the happy path only. Look at the left pane: happy-path mapping with no checks — missing roles blows up later. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Return a result, not a cast. The deliberate lines show that forcing User still leaves id as string — assigning to number fails. Validate every field you will read; skip nothing because 'the client is ours'. Return `{ ok, value } | { ok, error }` (or throw) so failure cannot be ignored as silently as a boolean. Build the output object from checked primitives — do not return the original `unknown` reference. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function parseUser(input) {
   return {

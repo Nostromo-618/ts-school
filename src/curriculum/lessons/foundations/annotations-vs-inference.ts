@@ -7,11 +7,13 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 4,
   summary:
-    "When to write the type yourself and when to let TypeScript `infer` it — and the quiet ways inference can widen further than you meant.",
+    "When to write the type yourself and when to let TypeScript `infer it` — and the quiet ways inference can widen further than you meant.",
   prerequisites: ["types-are-erased"],
   keywords: ["inference", "annotation", "let", "const", "explicit types"],
   problem:
-    "Annotating everything is noise; annotating nothing lets a string slip into a number-shaped hole after a refactor.",
+    "Annotating everything is noise; annotating nothing lets a string slip into a number-shaped hole after a refactor. Look at the left pane: without types, string | number collapses into 'whatever'. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Annotate or parse when inference widens past the API. Prefer inference for locals whose initializer already states the type clearly. Annotate function parameters, public returns, and values that cross module boundaries. When inference produces a union you did not want, fix the initializer or add an annotation — do not silence with `any`. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function createServer(port) {
   return { listen: () => port };

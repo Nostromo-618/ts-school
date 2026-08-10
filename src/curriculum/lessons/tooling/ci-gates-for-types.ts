@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["type-checking-performance", "suppressions"],
   keywords: ["ci", "gate", "ratchet", "error budget", "cache", "pipeline"],
   problem:
-    "A codebase with 400 known errors either blocks every pull request or checks nothing, unless the gate counts rather than passes.",
+    "A codebase with 400 known errors either blocks every pull request or checks nothing, unless the gate counts rather than passes. Look at the left pane: without a type gate, regressions are invisible in CI. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Ratchet gates compare counts — over budget is false. Put `tsc` --`noEmit` early in CI; cache .tsbuildinfo when using incremental/project references. Ratchets encode a budget; tighten maxErrors over time. Do not let suppressions grow unbounded — count @ts-expect-error too. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS CI often runs tests only — type errors never appear.
 console.log("shipped");

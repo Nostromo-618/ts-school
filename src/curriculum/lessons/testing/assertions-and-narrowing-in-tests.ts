@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-your-test-files", "assertion-functions"],
   keywords: ["assertion", "narrowing", "toBeDefined", "non-null", "expect"],
   problem:
-    "Every line after a truthiness assertion still sees the nullable type, so tests fill up with bangs.",
+    "Every line after a truthiness assertion still sees the nullable type, so tests fill up with bangs. Look at the left pane: jest expects do not narrow TypeScript types. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Assertion functions narrow after expectDefined. id is string. Runtime expects do not narrow TS types unless you wrap them. `asserts` x is T bridges test `asserts` into control flow. Alternatively assign after a guard. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `expect(user).toBeDefined();
 expect(user.id).toBe('1');

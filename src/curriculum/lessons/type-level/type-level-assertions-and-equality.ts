@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["conditional-types-intro", "assignability-rules"],
   keywords: ["Equal", "type assertion", "identity", "Expect", "type test"],
   problem:
-    "Mutual assignability is not equality, so the obvious type-equality check quietly passes for `any` and `never`.",
+    "Mutual assignability is not equality, so the obvious type-equality check quietly passes for `any` and `never`. Look at the left pane: runtime deep-equal cannot assert compile-time type identity. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "The identity trick rejects `any`/`never` false friends. A extends B and B extends A is assignability, not equality — `any` and `never` break it. The `<T>() => T extends X ? 1 : 2` trick compares how X behaves under inference. Use Expect<Equal<A, B>> in type-level tests; treat failures as red builds. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS: "same shape?" is JSON.stringify or a hand-rolled deepEqual.
 function sameShape(a, b) {

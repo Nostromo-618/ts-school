@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns"],
   keywords: ["callback", "function type", "=>", "higher-order"],
   problem:
-    "A callback that was supposed to return a boolean returns a string; Array.prototype.filter still 'works' with surprising results.",
+    "A callback that was supposed to return a boolean returns a string; Array.prototype.filter still 'works' with surprising results. Look at the left pane: truthy strings keep everything — not what you meant. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "The callback must return boolean, not string. Function type expressions describe parameters and return without naming an implementation. Generics on the helper (keep<T>) tie the callback's value type to the array element type. Prefer named alias types for callbacks you reuse across modules. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function keep(items, predicate) {
   return items.filter(predicate);
@@ -48,7 +50,7 @@ keep([1, 2, 3], (n) => String(n));
         { id: "a", text: "A value that is always boolean" },
         { id: "b", text: "A function from T to boolean" },
         { id: "c", text: "An array of booleans" },
-        { id: "d", text: "A `Promise`<boolean>" },
+        { id: "d", text: "A `Promise<boolean>`" },
       ],
       answerId: "b",
       explanation: "It is a call signature type.",

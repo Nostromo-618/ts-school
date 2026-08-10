@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "method",
   ],
   problem:
-    "The flag is on, the check still does not apply to methods, and nothing explains why one of your two handlers is checked.",
+    "The flag is on, the check still does not apply to methods, and nothing explains why one of your two handlers is checked. Look at the left pane: assuming a Dog handler can accept `any` Animal. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Under `strictFunctionTypes`, parameter positions are checked contravariantly. Function parameters are checked more strictly under this flag. A Dog=>`void` is not an Animal=>`void`. This prevents barking on plain Animals. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `const handler = (dog) => dog.bark();
 acceptAnimal(handler);

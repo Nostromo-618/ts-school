@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["any-and-implicit-any"],
   keywords: ["strict", "strictNullChecks", "noImplicitAny", "flags", "config"],
   problem:
-    "Without `strict`, TypeScript agrees that `undefined` is a perfectly good string, which removes most of the reason to adopt it.",
+    "Without `strict`, TypeScript agrees that `undefined` is a perfectly good string, which removes most of the reason to adopt it. Look at the left pane: optional values and missing arguments are everyday Node bugs. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`strictNullChecks` turns 'maybe missing' into a compile error. `strict` enables a bundle: `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, and more. For a brownfield Node app, turn flags on one at a time — start with `noImplicitAny` and `strictNullChecks`. A codebase that compiles only with `strict: false` is barely typed; prefer fixing errors over disabling the flag. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function label(user) {
   // user might be missing; .name still "works" until it doesn't.

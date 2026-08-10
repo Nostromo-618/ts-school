@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["esm-imports-and-exports", "renaming-your-first-file"],
   keywords: ["commonjs", "esm", "nodenext", "type module", "extensions"],
   problem:
-    "ERR_MODULE_NOT_FOUND for a file that plainly exists is the extension rule, and nothing in the message says so.",
+    "ERR_MODULE_NOT_FOUND for a file that plainly exists is the extension rule, and nothing in the message says so. Look at the left pane: cJS require without extensions — Node forgives you. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Model nodenext extension rules with literal types. Extensionless path is not \"./config.js\". Under ESM / nodenext, relative imports need an explicit `.js` extension (even from `.ts` sources). Replace require/module.exports with import/export and node: builtins. Derive paths from `import.meta`.url instead of __dirname. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `const readConfig = require("./config");
 module.exports = { readConfig };

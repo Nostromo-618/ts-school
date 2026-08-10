@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["primitive-types"],
   keywords: ["array", "tuple", "readonly", "destructuring"],
   problem:
-    "An array of anything is an array of nothing in particular, so a list of pairs and a list of strings type-check identically.",
+    "An array of anything is an array of nothing in particular, so a list of pairs and a list of strings type-check identically. Look at the left pane: destructuring assumes numbers; strings still 'work' until toFixed. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "A tuple fixes length and element types; string[] will not do. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function pointLabel(pair) {
   const [x, y] = pair;

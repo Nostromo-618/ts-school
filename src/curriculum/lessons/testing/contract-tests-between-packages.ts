@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["testing-declaration-files", "ci-gates-for-types"],
   keywords: ["contract test", "api surface", "breaking change", "semver", "ci"],
   problem:
-    "Semver says a type change is breaking, and nothing in the release process can tell whether one happened.",
+    "Semver says a type change is breaking, and nothing in the release process can tell whether one happened. Look at the left pane: without type contracts, breakages arrive as production errors. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Consumer assignments fail when the contract params drift. Keep a tiny consumer package or type tests that import the public API in CI. API Extractor / attw / semver-check tools snapshot the surface. Treat type-only breaks as major versions when you publish libraries. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// JS breaking changes are runtime surprises for callers.
 function greet(name) {

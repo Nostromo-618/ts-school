@@ -7,11 +7,13 @@ export const lesson: Lesson = {
   track: "async",
   order: 3,
   summary:
-    "Node-style (err, value) callbacks become `Promise`<T> with explicit error rejection — type both sides of the bridge.",
+    "Node-style (err, value) callbacks become `Promise<T>` with explicit error rejection — type both sides of the bridge.",
   prerequisites: ["async-await-typing", "function-type-expressions"],
   keywords: ["callback", "promisify", "errback", "Node"],
   problem:
-    "A callback forgets to check err and reads value; TypeScript can make that mistake harder when you model the pair.",
+    "A callback forgets to check err and reads value; TypeScript can make that mistake harder when you model the pair. Look at the left pane: ignoring err is a classic Node footgun. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Optional value on the success path must be narrowed. Model err-first callbacks as (err: Error | `null`, value?: T) => `void`. Promisify by rejecting on err and resolving only when value is present. Prefer native promise APIs (fs/promises) over hand-rolled wrappers when available. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function readConfig(cb) {
   cb(null, { port: 3000 });

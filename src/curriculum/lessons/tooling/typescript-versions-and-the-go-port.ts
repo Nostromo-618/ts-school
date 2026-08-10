@@ -19,7 +19,9 @@ export const lesson: Lesson = {
     "migration",
   ],
   problem:
-    "TypeScript 7 is a native binary with no JavaScript createProgram API yet, so tools that embed the compiler need a dual-install strategy.",
+    "TypeScript 7 is a native binary with no JavaScript createProgram API yet, so tools that embed the compiler need a dual-install strategy. Look at the left pane: no JS API means no in-browser `tsc` from the native port. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "This site uses typescript@7 for tooling CLI and typescript-strada@6 for build-time diagnostics. TypeScript 7 is the primary package here (native CLI); Strada 6 stays as typescript-strada for createProgram. Microsoft publishes the Strada API line as `@typescript/typescript6`; this site aliases it `typescript-strada` for build-time diagnostics. Lesson diagnostics are generated at build time — the browser never ships a compiler. Plan editor/CI native speedups separately from tools that still need the JS Compiler API. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// Native compilers are CLIs — not importable JS libraries.
 // Embedding tsc in a browser worker needs a JS API that TS 7 does not ship.

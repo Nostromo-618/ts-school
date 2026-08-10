@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "throw helper",
   ],
   problem:
-    "Extracting throw new Error(...) into a helper makes the checker believe execution continues, and the code after it becomes reachable.",
+    "Extracting throw new Error(...) into a helper makes the checker believe execution continues, and the code after it becomes reachable. Look at the left pane: exit looks like a normal call. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`never` makes abort() an exit for CFA; a `void` throw helper leaves x possibly `null`. `never` helps control-flow analysis after abort/throw. Mark `process.exit` wrappers as `never`. Do not use `never` for functions that sometimes return. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function abort() { process.exit(1); }
 `,

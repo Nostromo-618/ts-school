@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["schema-validation-libraries", "declaration-files-intro"],
   keywords: ["openapi", "protobuf", "graphql", "codegen", "contract", "drift"],
   problem:
-    "Generated types describe the contract as it was when the generator last ran, which is not necessarily the contract the server is serving.",
+    "Generated types describe the contract as it was when the generator last ran, which is not necessarily the contract the server is serving. Look at the left pane: no contract artifact means no mechanical sync. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Generated DTO types still need a parse step — casts lie. Codegen removes transcription bugs; it does not prove the server still matches. CI should regenerate and fail on drift, or validate responses at runtime. Prefer generating both types and validators from one schema when possible. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS: hand-written clients drift from the server silently.
 async function getUser(id) {

@@ -7,11 +7,13 @@ export const lesson: Lesson = {
   track: "async",
   order: 1,
   summary:
-    "A Promise carries a value type — `Promise`<User> is not `Promise`<`any`>, and mixing them loses safety at await.",
+    "A Promise carries a value type — `Promise<User>` is not `Promise<any>`, and mixing them loses safety at await.",
   prerequisites: ["typing-parameters-and-returns", "union-types"],
   keywords: ["Promise", "async", "generics", "then"],
   problem:
-    "A function returns a Promise that sometimes resolves to a user and sometimes to `null`, but callers always await .email.",
+    "A function returns a Promise that sometimes resolves to a user and sometimes to `null`, but callers always await .email. Look at the left pane: `null`.email awaits you in production. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "The Promise type includes `null` — narrow after await/then. Annotate `Promise<T>` on functions that return promises so callers see T. `Promise<User | null>` is honest; `Promise<User>` with silent `null` is not. Avoid `Promise<any>` — it undoes the generic. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function findUser(id) {
   return Promise.resolve(id === "x" ? null : { id, email: "a@b.co" });
@@ -36,9 +38,9 @@ findUser("x").then((u) => u.email);
     expectedDiagnostics: [{ code: 18047, line: 7, messageIncludes: "null" }],
   },
   insight: [
-    "Annotate `Promise`<T> on functions that return promises so callers see T.",
-    "`Promise`<User | `null`> is honest; `Promise`<User> with silent `null` is not.",
-    "Avoid `Promise`<`any`> — it undoes the generic.",
+    "Annotate `Promise<T>` on functions that return promises so callers see T.",
+    "`Promise<User | null>` is honest; `Promise<User>` with silent `null` is not.",
+    "Avoid `Promise<any>` — it undoes the generic.",
   ],
   quiz: [
     {
@@ -47,7 +49,7 @@ findUser("x").then((u) => u.email);
       choices: [
         { id: "a", text: "User" },
         { id: "b", text: "User | `null`" },
-        { id: "c", text: "`Promise`<User>" },
+        { id: "c", text: "`Promise<User>`" },
         { id: "d", text: "`any`" },
       ],
       answerId: "b",

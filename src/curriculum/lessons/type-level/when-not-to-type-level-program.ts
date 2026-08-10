@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "judgement",
   ],
   problem:
-    "The most impressive type in a codebase is often the one nobody else can change, which makes it a liability rather than an asset.",
+    "The most impressive type in a codebase is often the one nobody else can change, which makes it a liability rather than an asset. Look at the left pane: simple runtime helpers stay readable; types should not obscure them. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Wrong keys produce opaque errors; fixed interfaces stay clear. Type-level code is code — it needs readers, tests, and an exit strategy. If a runtime parse already exists, duplicating the grammar in types may be redundant. Ship the simplest type that prevents the bug class you care about; deepen only when bugs demand it. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// JS: a one-liner everyone understands.
 function pick(obj, keys) {

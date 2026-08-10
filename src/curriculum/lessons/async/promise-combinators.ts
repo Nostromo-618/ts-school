@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["promise-types", "arrays-and-tuples"],
   keywords: ["Promise.all", "allSettled", "race", "tuple", "AggregateError"],
   problem:
-    "`Promise.all` over a heterogeneous array collapses to a union unless the argument is a tuple, and array literals are not tuples by default.",
+    "`Promise.all` over a heterogeneous array collapses to a union unless the argument is a tuple, and array literals are not tuples by default. Look at the left pane: assuming `Promise.all` shape. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`Promise.all` returns User[], not number. all fails fast; allSettled preserves per-task status. race/`any` pick first settlement — type the winner carefully. Type the array you pass in — inference follows. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `Promise.all(tasks).then(xs => xs[0].id);
 `,

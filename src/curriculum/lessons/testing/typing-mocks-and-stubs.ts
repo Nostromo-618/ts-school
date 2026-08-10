@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["structural-typing", "typed-fixtures-and-factories"],
   keywords: ["mock", "stub", "fake", "interface", "structural", "test double"],
   problem:
-    "A mock cast to the full interface compiles today and silently misses the method added tomorrow.",
+    "A mock cast to the full interface compiles today and silently misses the method added tomorrow. Look at the left pane: mock returns a wrong-shaped user. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Mock must satisfy Db. u is User | `undefined`, not number. Type mocks as the real dependency interface. async mocks should return Promises. Avoid `any` in test doubles. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const db = { get: () => ({ id: 1 }) };
 `,
@@ -46,7 +48,7 @@ const bad: number = u;
   ],
   exercise: {
     prompt:
-      "Type db as Db and make get return `Promise`<User | `undefined`>. Match the solution text.",
+      "Type db as Db and make get return `Promise<User | undefined>`. Match the solution text.",
     starter: `type User = { id: string };
 type Db = { get(id: string): Promise<User | undefined> };
 

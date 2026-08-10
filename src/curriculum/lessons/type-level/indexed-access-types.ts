@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "keyof",
   ],
   problem:
-    "Duplicating a nested field's type gives you two declarations to keep in step and no error when they drift.",
+    "Duplicating a nested field's type gives you two declarations to keep in step and no error when they drift. Look at the left pane: nested field access without a named nested type. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Indexed access digs out number. string fails. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function ageOf(user) {
   return user.age;

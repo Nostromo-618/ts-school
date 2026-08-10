@@ -20,7 +20,9 @@ export const lesson: Lesson = {
     "interop",
   ],
   problem:
-    "A typed-error library is all-or-nothing at a boundary, and half-adopted it produces two error models in one codebase.",
+    "A typed-error library is all-or-nothing at a boundary, and half-adopted it produces two error models in one codebase. Look at the left pane: thrown errors have no channel in the type system. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Result puts errors in the return type — success fields stay narrow. Typed error channels make failure part of the signature — callers must handle or propagate E. Interop cost: thrown exceptions and Result styles do not mix cleanly at boundaries. Adopt at module borders first; avoid dual styles inside one feature. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS: errors are thrown values — catch whatever.
 async function load() {
@@ -91,7 +93,7 @@ if (!r.ok) {
   ],
   exercise: {
     prompt:
-      "Define Result<T, E> and a function ok(value: T): Result<T, `never`>.",
+      "Define Result<T, E> and a function ok(value: T): Result<T, never>.",
     starter: `type Result<T, E> = unknown;
 `,
     assertion: "no-errors",

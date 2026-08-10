@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro"],
   keywords: ["class", "constructor", "implements", "parameter properties"],
   problem:
-    "Factory functions return ad-hoc objects; nothing ensures two factories build the same fields.",
+    "Factory functions return ad-hoc objects; nothing ensures two factories build the same fields. Look at the left pane: mail vs email — the classic factory typo. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Parameter properties create typed instance fields. public/private/protected in the constructor parameter list `declare` and assign fields. implements Interface checks the instance shape; it does not change emit. Prefer plain objects + functions unless you need identity, `instanceof`, or inheritance. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function makeUser(id, email) {
   return { id, mail: email };

@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["type-space-vs-value-space", "const-assertions"],
   keywords: ["typeof", "type query", "value to type", "inference", "config"],
   problem:
-    "The config object and the Config interface are maintained separately, and they diverge on the first hurried commit.",
+    "The config object and the Config interface are maintained separately, and they diverge on the first hurried commit. Look at the left pane: config object with no derived type. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`typeof` + `as const` derives literal port type. `typeof` value queries the type of a value. Use it to keep config objects as the source of truth. Combine with `as const` for literal unions. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `const defaults = { host: 'localhost', port: 3000 };
 `,

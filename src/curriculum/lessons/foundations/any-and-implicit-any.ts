@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["any", "implicit any", "noImplicitAny", "escape hatch", "unsound"],
   problem:
-    "One `any` at the edge of a module silently disables checking for every value derived from it.",
+    "One `any` at the edge of a module silently disables checking for every value derived from it. Look at the left pane: no types means no argument about whether userId is a string. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`TS7006`: parameter 'body' implicitly has an `any` type. Explicit `any` opts out of checking for that value and everything derived from it. `noImplicitAny` (on under `strict`) forces you to notice untyped parameters instead of inventing `any` for you. Prefer `unknown` at boundaries, then narrow — `any` is an escape hatch, not a default. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function handle(body) {
   // Trust the client: body.userId is "whatever".

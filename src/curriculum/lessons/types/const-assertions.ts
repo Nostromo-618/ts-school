@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["literal-types", "inference-and-widening"],
   keywords: ["as const", "const assertion", "readonly", "literal", "widening"],
   problem:
-    "A config object's values widen to string the moment it is declared, so nothing downstream can depend on what is actually in it.",
+    "A config object's values widen to string the moment it is declared, so nothing downstream can depend on what is actually in it. Look at the left pane: mutable string[] invites drift. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`as const` routes do not include /admin. `as const` freezes literal types and makes tuples `readonly`. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const routes = ["/", "/about"];
 routes.push("/admin");

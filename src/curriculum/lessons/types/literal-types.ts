@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["union-types"],
   keywords: ["literal", "string literal", "magic string", "const"],
   problem:
-    'A typo\'d method name — "POSt" — is a perfectly good string, so it fails at runtime against a route table rather than at the keystroke.',
+    "A typo'd method name — \"POSt\" — is a perfectly good string, so it fails at runtime against a route table rather than at the keystroke. Look at the left pane: typos in method verbs are invisible without a closed set. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Only the literals in Method are assignable. GET. Unions of literals give you exhaustive-friendly APIs without enums. const assertions and annotated bindings prevent widening back to string. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function handle(method, path) {
   if (method === "GET") return "read " + path;

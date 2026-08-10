@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsc-cli", "any-and-implicit-any"],
   keywords: ["eslint", "typescript-eslint", "lint", "floating promises"],
   problem:
-    "`tsc` is green but someone left an awaited promise floating and an eslint-disable for no-explicit-`any` on every file.",
+    "`tsc` is green but someone left an awaited promise floating and an eslint-disable for no-explicit-`any` on every file. Look at the left pane: unhandled rejection risk — lint can require await/`void`. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Types alone do not enforce that you await; lint complements `tsc`. Let `tsc` own type correctness; let typescript-eslint own footguns like floating promises. Prefer @typescript-eslint/no-explicit-`any` with disciplined exceptions. Do not disable entire rule sets to silence one file — fix or narrow the disable. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `async function save(row) {
   await dbWrite(row);
@@ -61,7 +63,7 @@ export const ignored: void = save({ id: 1 });
     },
   ],
   exercise: {
-    prompt: "Await save or type the result as `Promise`<`void`>.",
+    prompt: "Await save or type the result as `Promise<void>`.",
     starter: `async function save(row: { id: number }): Promise<void> {
   await Promise.resolve(row);
 }
@@ -69,7 +71,7 @@ export const ignored: void = save({ id: 1 });
 export const ignored: void = save({ id: 1 });
 `,
     assertion: "no-errors",
-    hints: ["export const ignored: `Promise`<`void`> = save({ id: 1 });"],
+    hints: ["export const ignored: `Promise<void>` = save({ id: 1 });"],
     solution: `async function save(row: { id: number }): Promise<void> {
   await Promise.resolve(row);
 }

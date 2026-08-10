@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["any-and-implicit-any"],
   keywords: ["unknown", "any", "top type", "narrowing"],
   problem:
-    "Typing inbound JSON as `any` lets every property access compile — including ones that will throw.",
+    "Typing inbound JSON as `any` lets every property access compile — including ones that will throw. Look at the left pane: no check that value is a string. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`unknown` forbids property access until you narrow. `any` is contagious; `unknown` forces a decision at each use site. Narrow `unknown` with `typeof`, `Array.isArray`, or custom predicates. Library boundaries should accept `unknown` (or generics), not any. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function upper(value) {
   return value.toUpperCase();

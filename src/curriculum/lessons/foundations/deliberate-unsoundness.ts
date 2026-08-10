@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["structural-typing", "type-space-vs-value-space"],
   keywords: ["soundness", "bivariance", "covariance", "assertion", "trade-off"],
   problem:
-    "A type-checked program can still throw a TypeError, and believing otherwise is how the checked parts stop being reviewed.",
+    "A type-checked program can still throw a TypeError, and believing otherwise is how the checked parts stop being reviewed. Look at the left pane: array aliasing is the classic covariance hole — JS has it raw. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Double assertions bypass the checker — know when you opted out. Soundness holes are documented trade-offs, not bugs — treat them as places needing human review. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// JS is unsound by default — types do not exist.
 const dogs = [{ bark() {} }];

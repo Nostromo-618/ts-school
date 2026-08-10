@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-your-test-files", "object-type-literals"],
   keywords: ["factory", "fixture", "satisfies", "test data"],
   problem:
-    "A shared fixture object is missing a new required field; half the suite still passes with partial data.",
+    "A shared fixture object is missing a new required field; half the suite still passes with partial data. Look at the left pane: overrides are unchecked; email becomes a number. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`Partial<User>` still requires override values to match field types. Type factories as returning the production type, not a looser blob. `Partial<T>` is ideal for overrides — values remain checked. `satisfies` User on literal fixtures also catches missing fields without widening. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function userFixture(overrides) {
   return { id: "1", email: "a@b.co", ...overrides };
@@ -33,18 +35,18 @@ userFixture({ email: 1 });
 `,
     highlights: [{ start: 7, end: 7 }],
     caption:
-      "`Partial`<User> still requires override values to match field types.",
+      "`Partial<User>` still requires override values to match field types.",
     expectedDiagnostics: [{ code: 2322, line: 7, messageIncludes: "number" }],
   },
   insight: [
     "Type factories as returning the production type, not a looser blob.",
-    "`Partial`<T> is ideal for overrides — values remain checked.",
+    "`Partial<T>` is ideal for overrides — values remain checked.",
     "`satisfies` User on literal fixtures also catches missing fields without widening.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "What does `Partial`<User> mean for overrides?",
+      prompt: "What does `Partial<User>` mean for overrides?",
       choices: [
         { id: "a", text: "All fields required" },
         { id: "b", text: "All fields optional, but still correctly typed" },

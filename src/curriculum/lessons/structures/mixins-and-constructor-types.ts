@@ -19,7 +19,9 @@ export const lesson: Lesson = {
     "composition",
   ],
   problem:
-    "Two orthogonal behaviours both want to be a base class, and JavaScript gives you one prototype chain.",
+    "Two orthogonal behaviours both want to be a base class, and JavaScript gives you one prototype chain. Look at the left pane: jS mixins work; typing the constructor parameter is the hard part. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Mixin constructors use `any`[] rest; instance fields compose. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// JS: mixins are functions that extend a class.
 function Timestamped(Base) {

@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "Exclude",
   ],
   problem:
-    "The same conditional type returns a different answer for a union than for each of its members, and nothing in the syntax hints at it.",
+    "The same conditional type returns a different answer for a union than for each of its members, and nothing in the syntax hints at it. Look at the left pane: runtime filtering does not change how callers type the result. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Naked parameters distribute; wrapping in a tuple disables it. Distribution happens when the checked type is a naked type parameter (not wrapped in another type constructor). `Exclude<T, U>` and `Extract<T, U>` rely on distribution: each union member is tested separately. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// JS mental model: "filter the union" is a loop you invent.
 function excludeNulls(values) {
@@ -61,7 +63,7 @@ const oops: Distributed = [1, "a"];
   },
   insight: [
     "Distribution happens when the checked type is a naked type parameter (not wrapped in another type constructor).",
-    "`Exclude`<T, U> and `Extract`<T, U> rely on distribution: each union member is tested separately.",
+    "`Exclude<T, U>` and `Extract<T, U>` rely on distribution: each union member is tested separately.",
     "Write [T] extends [U] (or T[] extends …) when you need the union kept together.",
   ],
   quiz: [
@@ -70,7 +72,7 @@ const oops: Distributed = [1, "a"];
       prompt:
         "How do you stop a conditional type from distributing over a union?",
       choices: [
-        { id: "a", text: "Add `infer` in the extends clause" },
+        { id: "a", text: "Add `infer in` the extends clause" },
         {
           id: "b",
           text: "Wrap the type parameter in a tuple: [T] extends […]",

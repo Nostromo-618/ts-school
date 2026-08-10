@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "type-aliases-intro"],
   keywords: ["index signature", "Record", "dictionary", "open shape", "key"],
   problem:
-    "An index signature says every key exists, so a typo'd lookup type-checks and returns `undefined`.",
+    "An index signature says every key exists, so a typo'd lookup type-checks and returns `undefined`. Look at the left pane: open string key bag with mixed values. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Index signature number forbids string values. Index signatures describe open-ended key sets. They weaken specific known keys — use carefully. Prefer `Record<K,V>` or maps for many dynamic keys. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const bag = {};
 bag[key] = value;
@@ -38,6 +40,6 @@ bag["label"] = "x";
   insight: [
     "Index signatures describe open-ended key sets.",
     "They weaken specific known keys — use carefully.",
-    "Prefer `Record`<K,V> or maps for many dynamic keys.",
+    "Prefer `Record<K,V>` or maps for many dynamic keys.",
   ],
 };

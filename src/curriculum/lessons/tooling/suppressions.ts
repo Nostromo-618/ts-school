@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["reading-type-errors", "eslint-with-typescript"],
   keywords: ["ts-expect-error", "ts-ignore", "suppression", "debt", "review"],
   problem:
-    "@ts-ignore stays silent forever, including after the underlying problem is fixed and the suppression is hiding a new one.",
+    "@ts-ignore stays silent forever, including after the underlying problem is fixed and the suppression is hiding a new one. Look at the left pane: @ts-ignore hiding a landmine. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Suppressions are last resort. Final line shows a real error still caught. Prefer @ts-expect-error over @ts-ignore — it fails when the error disappears. Leave a comment explaining why. Fix the type instead when you can. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// @ts-ignore
 const n = null.length;

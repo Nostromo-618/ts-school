@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typeof-type-queries", "const-assertions"],
   keywords: ["satisfies", "validation", "inference", "literals", "config"],
   problem:
-    "Annotating a config as a wide `Record` loses the literal keys you wanted for autocomplete.",
+    "Annotating a config as a wide `Record` loses the literal keys you wanted for autocomplete. Look at the left pane: palette validated only by convention. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`satisfies` checks the value while preserving literals. danger is not number. `satisfies` checks against a type without widening to it. Preserves literal inference for keys/values. Prefer it over as when you want both check and inference. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const palette = { primary: "#0af", danger: "red" };
 `,

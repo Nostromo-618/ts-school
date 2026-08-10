@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "seam",
   ],
   problem:
-    "Mocking frameworks exist to solve a nominal-typing problem that TypeScript does not have.",
+    "Mocking frameworks exist to solve a nominal-typing problem that TypeScript does not have. Look at the left pane: duck-typed logger with no contract. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Structural typing accepts matching shapes; debug-only object fails. Structural typing makes lightweight stubs easy. Export small interfaces for dependencies. Avoid relying on excess fields in doubles. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function greet(logger) { logger.info('hi'); }
 `,

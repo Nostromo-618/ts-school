@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "route",
   ],
   problem:
-    "Event names built by string concatenation at runtime are opaque to the checker, so a listener for a name nobody emits is silent.",
+    "Event names built by string concatenation at runtime are opaque to the checker, so a listener for a name nobody emits is silent. Look at the left pane: `String` concatenation for event names. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Template literal unions forbid `unknown` actions. Template literal types compose string unions. Great for event names, CSS, and routes. Keep the unions small enough to read. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function eventName(entity, action) {
   return entity + ":" + action;

@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["union-types"],
   keywords: ["typeof", "narrowing", "type guard", "null"],
   problem:
-    "You checked the type on line 3, but on line 7 the value is still a union as far as anything reading the code can tell.",
+    "You checked the type on line 3, but on line 7 the value is still a union as far as anything reading the code can tell. Look at the left pane: number(true) is 1 — `typeof` would have rejected the boolean path. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Multiply is not valid on string | number until you narrow. string. object. After an early return in the number branch, the rest of the function sees the remaining union members. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function asNumber(value) {
   if (typeof value === "number") return value;

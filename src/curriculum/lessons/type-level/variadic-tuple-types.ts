@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["rest-parameters", "infer-keyword"],
   keywords: ["variadic tuple", "spread", "tuple", "compose", "Promise.all"],
   problem:
-    "A function that appends an argument to another function's parameter list cannot be typed without tuple manipulation.",
+    "A function that appends an argument to another function's parameter list cannot be typed without tuple manipulation. Look at the left pane: wrappers without tuple types erase the wrapped signature. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Variadic [...P, A] extends the parameter tuple. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS: wrap a function and lose parameter types.
 function withLogger(fn) {
@@ -61,7 +63,7 @@ const bad: GreetWithExclaim = (name: string, loud: string) =>
   insight: [
     "Variadic tuple types let you spread one tuple type into another: [...A, ...B].",
     "They power typed `Promise.all`, middleware, and curry without any[].",
-    "`infer` P on a rest parameter yields a tuple type you can manipulate.",
+    "`infer P` on a rest parameter yields a tuple type you can manipulate.",
   ],
   quiz: [
     {
@@ -80,13 +82,13 @@ const bad: GreetWithExclaim = (name: string, loud: string) =>
   ],
   exercise: {
     prompt:
-      "Implement Cons<H, T extends `unknown`[]> = [H, ...T]. Show a value of Cons<string, [number]>.",
+      "Implement Cons<H, T extends unknown[]> = [H, ...T]. Show a value of Cons<string, [number]>.",
     starter: `type Cons<H, T extends unknown[]> = unknown; // TODO
 
 const c: Cons<string, [number]> = ["a", 1];
 `,
     assertion: "no-errors",
-    hints: ["type Cons<H, T extends `unknown`[]> = [H, ...T]"],
+    hints: ["type Cons<H, T extends unknown[]> = [H, ...T]"],
     solution: `type Cons<H, T extends unknown[]> = [H, ...T];
 
 const c: Cons<string, [number]> = ["a", 1];

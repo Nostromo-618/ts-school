@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["narrowing-with-typeof", "null-and-undefined"],
   keywords: ["truthiness", "falsy", "narrowing", "if"],
   problem:
-    "if (count) skips the branch when count is 0, which is the one case the code was written to handle.",
+    "if (count) skips the branch when count is 0, which is the one case the code was written to handle. Look at the left pane: no TypeScript error here — that's the point: truthiness treats 0 as empty. Prefer != `null` when 0 is meaningful. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "No TypeScript error here — that's the point: truthiness treats 0 as empty. Prefer != `null` when 0 is meaningful. Truthiness narrowing removes all falsy values, not just nullish ones. if (value) is fine for objects and nullable references when empty is not a value you care about. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function label(count) {
   if (count) return "count=" + count;

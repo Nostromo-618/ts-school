@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "esbuild",
   ],
   problem:
-    "A re-exported type compiles under `tsc` and produces a runtime import of something that does not exist under esbuild.",
+    "A re-exported type compiles under `tsc` and produces a runtime import of something that does not exist under esbuild. Look at the left pane: type and value imports look the same. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Cannot resolve ./user — illustrates why type-only imports must be marked for isolated transpile. `isolatedModules` assumes each file is transpiled alone. `verbatimModuleSyntax` forces type/value import honesty. Prefer import type for types-only bindings. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `export { type User } from './user';
 `,

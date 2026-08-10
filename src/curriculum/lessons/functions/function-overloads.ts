@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "api design",
   ],
   problem:
-    "readFile returns a Buffer or a string depending on an options field, and one signature cannot say that honestly.",
+    "readFile returns a Buffer or a string depending on an options field, and one signature cannot say that honestly. Look at the left pane: one function, two call shapes, no guidance. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Overload signatures document call forms. boolean is not accepted. List public overload signatures, then one implementation signature. Keep overloads minimal — unions often suffice. Implementation signature must accept every overload input. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function read(x) {
   if (typeof x === 'number') return items[x];

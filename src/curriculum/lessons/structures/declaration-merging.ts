@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "An interface you did not write gained a property because a dependency declared one with the same name.",
+    "An interface you did not write gained a property because a dependency declared one with the same name. Look at the left pane: redeclarations silently fight each other. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Merged interface requires both fields. Interfaces merge; type aliases do not. Merging is useful for augmentation — dangerous for app models. Prefer one declaration unless you are extending a library. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// two interfaces with same name in JS just overwrite
 `,

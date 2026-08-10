@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns", "arrays-and-tuples"],
   keywords: ["rest", "spread", "...", "variadic"],
   problem:
-    "A logger that takes 'any number of values' eventually receives an options object in the middle of the list.",
+    "A logger that takes 'any number of values' eventually receives an options object in the middle of the list. Look at the left pane: arguments is untyped; string sneaks into numeric reduce. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Rest element types apply to every variadic argument. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function sum() {
   return [...arguments].reduce((a, b) => a + b, 0);

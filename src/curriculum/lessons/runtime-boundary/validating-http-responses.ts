@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "boundary",
   ],
   problem:
-    "An upstream service renames a field and your typed client keeps compiling, all the way to the `undefined` that reaches the user.",
+    "An upstream service renames a field and your typed client keeps compiling, all the way to the `undefined` that reaches the user. Look at the left pane: json() is unchecked — a renamed field becomes a runtime TypeError. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Parse the body before reading fields. Casting unknown to UserDto still leaves name as string — number assign fails. Wire types (DTO) are untrusted even when 'our' service produced them — deploys drift. Put parseUserDto (or schema.parse) immediately after `JSON.parse` / res.json(). `as UserDto` on a response compiles forever and fails at the worst time. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `async function getUser(id) {
   const res = await fetch("/api/users/" + id);

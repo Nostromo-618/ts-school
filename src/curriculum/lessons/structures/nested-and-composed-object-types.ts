@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["optional-and-readonly-properties", "type-aliases-intro"],
   keywords: ["composition", "intersection", "nested", "extends"],
   problem:
-    "Address fields are duplicated on User, Order, and Invoice until one of them renames zip to postalCode alone.",
+    "Address fields are duplicated on User, Order, and Invoice until one of them renames zip to postalCode alone. Look at the left pane: duplicated shapes drift under different names. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Compose Address once; nest it where needed. Nest object types for ownership (Order.shipTo: Address). A & B intersects properties — useful for mixing capabilities. interface Child extends Parent { ... } is the interface form of composition. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function shipTo(order) {
   return order.street + ", " + order.zip;

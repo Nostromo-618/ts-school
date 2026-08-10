@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["node-builtin-modules", "function-overloads"],
   keywords: ["fs", "fs/promises", "path", "Buffer", "encoding", "overload"],
   problem:
-    "readFile returns a Buffer or a string depending on an options argument, and forgetting the encoding gives you a Buffer where you wanted text.",
+    "readFile returns a Buffer or a string depending on an options argument, and forgetting the encoding gives you a Buffer where you wanted text. Look at the left pane: readFileSync without encoding — binary treated like text later. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Overloads distinguish string vs binary. Bytes are not a string. Pass utf8 when you want string; otherwise you get binary data. Normalize user paths before joining with trusted roots. fs/promises follows the same string-vs-buffer split. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `const data = fs.readFileSync(userPath);
 handle(data.toString());

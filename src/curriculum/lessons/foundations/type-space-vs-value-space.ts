@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "Cannot find name X — used as a value — appears when you reference a type where a value was needed, and the message `never` says which space it looked in.",
+    "Cannot find name X — used as a value — appears when you reference a type where a value was needed, and the message `never` says which space it looked in. Look at the left pane: one name, no type/value distinction. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Types and values inhabit different spaces; same name can coexist. id is string. type/interface live in type space; const/function in value space. `typeof` bridges value to type. Confusion here causes 'used as a value' errors. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `const User = { id: 1 };
 `,

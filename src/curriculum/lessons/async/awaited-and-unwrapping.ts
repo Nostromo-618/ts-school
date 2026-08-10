@@ -7,11 +7,13 @@ export const lesson: Lesson = {
   track: "async",
   order: 4,
   summary:
-    "`Awaited`<T> flattens as far as await would. Where nested promises come from and why the naive unwrap type is wrong.",
+    "`Awaited<T>` flattens as far as await would. Where nested promises come from and why the naive unwrap type is wrong.",
   prerequisites: ["async-await-typing", "function-utility-types"],
   keywords: ["Awaited", "thenable", "unwrap", "nested promise", "utility type"],
   problem:
-    "A cache that stores promises hands back `Promise`<`Promise`<T>> and the type that describes it has to flatten recursively.",
+    "A cache that stores promises hands back `Promise<`Promise<T>`> and the type that describes it has to flatten recursively. Look at the left pane: nested promises confuse readers. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "`Awaited` unwraps Promise layers. N is number. async functions wrap returns in `Promise`. `Awaited<T>` unwraps nested thenables in types. Avoid returning `Promise<`Promise<T>`> manually. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `async function inner() { return 1; }
 async function outer() { return inner(); }
@@ -42,7 +44,7 @@ const bad: N = "1";
   },
   insight: [
     "async functions wrap returns in `Promise`.",
-    "`Awaited`<T> unwraps nested thenables in types.",
-    "Avoid returning `Promise`<`Promise`<T>> manually.",
+    "`Awaited<T>` unwraps nested thenables in types.",
+    "Avoid returning `Promise<`Promise<T>`> manually.",
   ],
 };

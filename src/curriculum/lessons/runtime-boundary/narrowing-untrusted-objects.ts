@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "untrusted",
   ],
   problem:
-    "'toString' in payload is true for every object ever created, which makes the obvious presence check useless as a validator.",
+    "'toString' in payload is true for every object ever created, which makes the obvious presence check useless as a validator. Look at the left pane: `in` walks the prototype chain — inherited keys look like own data. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Prefer `Object.hasOwn` for untrusted keys. The deliberate assign shows a bad `in`-based guard still leaves a string, not a number. `key in obj` is true for inherited properties — useless as an allowlist for JSON payloads. `Object.hasOwn(obj, key)` (or `Object.prototype`.hasOwnProperty.call) checks own keys only. Reject `__proto__`, `constructor`, and `prototype` keys before merging untrusted objects into config. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function looksLikeConfig(payload) {
   // True for {}, and for anything that inherits Object.prototype.

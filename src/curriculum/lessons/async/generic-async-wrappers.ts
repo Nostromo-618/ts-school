@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "generic",
   ],
   problem:
-    "A retry helper typed with (...args: `any`[]) => `any` turns every wrapped function into an untyped one.",
+    "A retry helper typed with (...args: `any`[]) => `any` turns every wrapped function into an untyped one. Look at the left pane: untyped wrappers erase parameter and return information. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Variadic A and R keep the wrapped async signature. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// JS: wrap and hope.
 function withRetry(fn) {
@@ -87,7 +89,7 @@ const bad: number = user.id;
   ],
   exercise: {
     prompt:
-      "Write withLog that wraps (...args: A) => `Promise`<R> and returns the same signature, calling fn once.",
+      "Write withLog that wraps (...args: A) => `Promise<R>` and returns the same signature, calling fn once.",
     starter: `function withLog(fn: Function) {
   return fn;
 }

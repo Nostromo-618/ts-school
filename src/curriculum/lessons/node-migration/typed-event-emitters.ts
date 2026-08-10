@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["template-literal-types-intro", "typing-http-servers"],
   keywords: ["EventEmitter", "events", "typed events", "on", "emit", "generic"],
   problem:
-    "emitter.on('conected', handler) compiles, runs, and `never` fires, because event names are just strings.",
+    "emitter.on('conected', handler) compiles, runs, and never fires, because event names are just strings. Look at the left pane: emitting a partial payload while listeners assume email exists. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Typed emit requires a full User — missing email is an error. Map event names to payload types so emit/on stay in sync. Wrap EventEmitter or use a typed emitter helper. Remove listeners with `AbortSignal` to avoid leaks. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `emitter.on("user", (u) => {
   send(u.email);

@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["why-types", "types-are-erased"],
   keywords: ["migration", "Node", "incremental", "adopt"],
   problem:
-    "Teams rewrite everything in one PR, break production, and blame TypeScript instead of the big-bang process.",
+    "Teams rewrite everything in one PR, break production, and blame TypeScript instead of the big-bang process. Look at the left pane: id may be string | string[] | `undefined` in real Node. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Migration surfaces the union you already had to handle. Migrate incrementally: `allowJs`, then `checkJs`, then rename files. Runtime behavior stays JavaScript — types do not deploy a new Node. Start with boundary modules (HTTP, env, DB rows) where bugs cluster. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// The service already works. The risk is untyped boundaries.
 function handler(req, res) {

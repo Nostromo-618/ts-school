@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["schema-validation-libraries", "node-builtin-modules"],
   keywords: ["process.env", "config", "environment", "validation", "12 factor"],
   problem:
-    'A missing environment variable becomes `undefined`, then "`undefined`" in a URL, and the failure surfaces as a 404 from an upstream service.',
+    "A missing environment variable becomes `undefined`, then \"`undefined`\" in a URL, and the failure surfaces as a 404 from an upstream service. Look at the left pane: passing `process.env`.PORT straight into listen. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Require and parse. Env values are string | `undefined`, not number. Env values are string | `undefined` until you parse them. Build a typed config object at startup. Treat empty string as missing. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `const port = process.env.PORT;
 listen(port);

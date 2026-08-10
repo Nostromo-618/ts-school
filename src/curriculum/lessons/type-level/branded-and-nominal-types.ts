@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["unique-symbol", "intersection-types"],
   keywords: ["branded type", "nominal", "opaque", "UserId", "unique symbol"],
   problem:
-    "Every id in the system is a string, so passing an order id where a user id was expected is a type-correct data breach.",
+    "Every id in the system is a string, so passing an order id where a user id was expected is a type-correct data breach. Look at the left pane: structural string identity cannot tell user from order. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Brands make swapped ids a type error. Branding is an intersection with a unique phantom property — erased at runtime, nominal at compile time. Only trusted constructors (or assertions) should mint brands; a bare `as UserId` anywhere reopens the hole. unique symbol brands are stronger than string-literal brand keys that can collide across packages. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// JS: ids are strings — mix them freely.
 function refund(orderId, userId) {

@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "inferring-type-arguments"],
   keywords: ["utility", "pluck", "groupBy", "keyof", "generic", "lodash"],
   problem:
-    "The hand-rolled groupBy at the bottom of utils.js returns an object of arrays of anything, forever.",
+    "The hand-rolled groupBy at the bottom of utils.js returns an object of arrays of anything, forever. Look at the left pane: pick returns a plain object with no key relationship. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "`Pick<T,K>` only has selected keys — age is gone. `keyof` + generics model dictionary utilities safely. Return `Pick`/`Omit` rather than a loose record. This is how lodash-style helpers become honest. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function pick(obj, keys) {
   const out = {};
@@ -36,7 +38,7 @@ const idName = pick(user, ["id", "name"]);
 const age: number = idName.age;
 `,
     highlights: [{ start: 12, end: 12 }],
-    caption: "`Pick`<T,K> only has selected keys — age is gone.",
+    caption: "`Pick<T,K>` only has selected keys — age is gone.",
     expectedDiagnostics: [
       {
         code: 2339,

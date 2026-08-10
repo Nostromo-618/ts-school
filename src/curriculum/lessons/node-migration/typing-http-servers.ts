@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "generics",
   ],
   problem:
-    "IncomingMessage is a stream with a headers bag, and every framework layers a differently-shaped fiction over it.",
+    "IncomingMessage is a stream with a headers bag, and every framework layers a differently-shaped fiction over it. Look at the left pane: indexing db with a URL segment and assuming the row exists. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "url is optional. Assigning string | `undefined` to string fails. HTTP request fields are often optional — narrow before parsing. Framework generics only help if you parse params/body. Keep handlers thin: parse, domain logic, encode. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `http.createServer((req, res) => {
   const id = req.url.split("/")[2];

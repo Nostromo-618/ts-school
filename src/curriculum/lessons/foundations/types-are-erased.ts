@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["first-type-error"],
   keywords: ["erasure", "compile time", "runtime", "emit", "no runtime cost"],
   problem:
-    "Newcomers assume a type annotation validates data at runtime; it does not, and a wrong assumption there is how untrusted input walks straight in.",
+    "Newcomers assume a type annotation validates data at runtime; it does not, and a wrong assumption there is how untrusted input walks straight in. Look at the left pane: `JSON.parse` returns whatever the wire sent — no shape check. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "No TypeScript error here — that's the point: `as User` is a compile-time claim; Node still crashes. TypeScript erases types: the emitted JavaScript has no `User`, no annotations, no assertions. A type annotation documents intent for the checker; it never validates bytes from the network. At trust boundaries use `unknown` + narrowing (or a schema library) — covered in the runtime-boundary track. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// "Validated" only by hope and a comment.
 function sendWelcome(user) {

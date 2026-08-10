@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["primitive-types", "structural-typing"],
   keywords: ["object type", "properties", "optional", "nested"],
   problem:
-    "Every Node handler passes objects around, and without a shape written down the only documentation is the last person who read the code.",
+    "Every Node handler passes objects around, and without a shape written down the only documentation is the last person who read the code. Look at the left pane: snake_case vs camelCase — `undefined` expiresAt math. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "The object type names the fields callers must provide. Write the shape once at the boundary; let inference carry it inward. Optional properties use ?: — absent is not the same as present-but-`undefined` unless you configure `exactOptionalPropertyTypes`. Nested objects are just properties whose types are other object types. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function createSession(input) {
   return {

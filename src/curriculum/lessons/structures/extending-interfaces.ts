@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro"],
   keywords: ["extends", "inheritance", "interface"],
   problem:
-    "Admin users need a role field; copying the whole User interface guarantees the next User change is forgotten on Admin.",
+    "Admin users need a role field; copying the whole User interface guarantees the next User change is forgotten on Admin. Look at the left pane: role is assumed; missing means `undefined` in the log line. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Extends pulls in User fields and still requires role. Child is assignable to Parent when it only adds fields (structural). Multiple extends is allowed: interface C extends A, B. Prefer extends over copy-paste when modeling specialization. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function audit(actor) {
   return actor.id + ":" + actor.role;

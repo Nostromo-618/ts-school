@@ -14,7 +14,9 @@ export const lesson: Lesson = {
   ],
   keywords: ["@types", "DefinitelyTyped", "types field", "bundled types"],
   problem:
-    "import express from 'express' fails type-checking until @types/express is installed — or the package ships its own types.",
+    "import express from 'express' fails type-checking until @types/express is installed — or the package ships its own types. Look at the left pane: runtime works; the editor has no API surface. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`TS2307` until types exist — bundled or @types. types. exports. Install @types/foo as a devDependency matching the major of foo when needed. foo. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `const leftPad = require("left-pad");
 leftPad("x", 3);

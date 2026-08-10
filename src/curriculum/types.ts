@@ -167,8 +167,17 @@ export interface Lesson {
   prerequisites: LessonId[];
   /** Extra search terms beyond the title and summary. */
   keywords: string[];
-  /** The one-line statement of what goes wrong in JavaScript. */
+  /**
+   * Concrete illustration of what goes wrong in JavaScript — multi-sentence
+   * prose naming the failure mode (ProseHtml / Labs markdown-lite; backticks OK).
+   */
   problem: string;
+  /**
+   * Narrative of how the TypeScript side addresses `problem`. Distinct from
+   * `exercise.solution` (the code string used by solution-match Check).
+   * ProseHtml / Labs markdown-lite; dual panes remain the living code example.
+   */
+  solution: string;
   /** Left pane: idiomatic JavaScript that is quietly broken. */
   js: CodePane;
   /** Right pane: the TypeScript that catches it, plus what the compiler says. */

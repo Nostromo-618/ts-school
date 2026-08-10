@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["exhaustiveness-checking", "parse-dont-validate"],
   keywords: ["versioning", "wire format", "message", "compatibility", "queue"],
   problem:
-    "A queue holds messages written by three versions of the producer, and the consumer's type describes only the newest.",
+    "A queue holds messages written by three versions of the producer, and the consumer's type describes only the newest. Look at the left pane: missing version branches fail open in JS. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Passing a wider union into an older handler fails the build. Version discriminants belong on the wire; exhaustiveness forces consumer updates. Keep old versions in the union until the queue is drained — do not delete early. Parse `unknown` JSON into the versioned union before switching. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// JS: consumers switch on version — miss a case, silent drop.
 function handle(msg) {

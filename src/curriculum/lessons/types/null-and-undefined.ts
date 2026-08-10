@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["union-types", "strict-mode"],
   keywords: ["null", "undefined", "strictNullChecks", "optional"],
   problem:
-    "Without `strictNullChecks` every type silently includes `null` and `undefined`, so the most common runtime crash in Node is invisible to the checker.",
+    "Without `strictNullChecks` every type silently includes `null` and `undefined`, so the most common runtime crash in Node is invisible to the checker. Look at the left pane: `undefined`.trim is a classic production TypeError. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`undefined` is not assignable to string under `strictNullChecks`. `null` is often an intentional empty; `undefined` often means 'not provided' — pick a convention and stick to it. `strictNullChecks` makes both absences visible in the type system. Prefer T | `undefined` for optional params and T | `null` when a search can miss. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function header(name) {
   return name.trim().toUpperCase();

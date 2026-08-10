@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["object-type-literals"],
   keywords: ["interface", "implements", "object shape"],
   problem:
-    "Two modules invent slightly different field names for the same record; nothing forces them to agree.",
+    "Two modules invent slightly different field names for the same record; nothing forces them to agree. Look at the left pane: id vs userId — `undefined` in the database key. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "The interface is the shared contract. Interfaces describe object shapes and can be extended later. They are open to declaration merging — useful for ambient libs, surprising in app code. Use interfaces for object contracts you expect to grow; prefer type for unions and mapped work. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function saveUser(user) {
   return user.userId + ":" + user.email;

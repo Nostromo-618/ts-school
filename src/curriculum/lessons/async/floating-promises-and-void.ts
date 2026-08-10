@@ -16,7 +16,9 @@ export const lesson: Lesson = {
     "unhandled rejection",
   ],
   problem:
-    "Forgetting one await turns an error path into an unhandled rejection that takes the whole process down.",
+    "Forgetting one await turns an error path into an unhandled rejection that takes the whole process down. Look at the left pane: forgotten await is a process-level hazard in modern Node. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "`Promise<void>` is not a string — and floating calls need discipline. TypeScript itself does not error on floating promises; @typescript-eslint/no-floating-promises does. `void` promise is the intentional escape hatch those rules recognize. Prefer await in async functions; only `void` when the rejection is handled elsewhere. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// JS: fire-and-forget is easy — and rejects crash Node.
 async function write(path, data) {
@@ -46,7 +48,7 @@ const wrong: string = p;
 `,
     highlights: [{ start: 15, end: 15 }],
     caption:
-      "`Promise`<`void`> is not a string — and floating calls need discipline.",
+      "`Promise<void>` is not a string — and floating calls need discipline.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -85,7 +87,7 @@ const wrong: string = p;
   ],
   exercise: {
     prompt:
-      "Write async function run(): `Promise`<number> that returns 1, and await it in main.",
+      "Write async function run(): `Promise<number>` that returns 1, and await it in main.",
     starter: `async function run() {
   return 1;
 }

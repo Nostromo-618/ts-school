@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "encoding",
   ],
   problem:
-    "Buffer is a Uint8Array with extras, and code that assumes one when it has the other fails only on the byte sequences you did not test.",
+    "Buffer is a Uint8Array with extras, and code that assumes one when it has the other fails only on the byte sequences you did not test. Look at the left pane: shelling out with concatenated user input. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Prefer execFile with an args array. Without encoding, the result is not a string. Use execFile/spawn with an args array to avoid shell injection. encoding utf8 selects the string overload. Bound timeout and maxBuffer for untrusted workloads. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `const { stdout } = execSync("ls " + userInput);
 parse(stdout);

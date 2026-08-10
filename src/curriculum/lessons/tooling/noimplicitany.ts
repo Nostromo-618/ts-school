@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["the-strictness-ladder", "any-and-implicit-any"],
   keywords: ["noImplicitAny", "implicit any", "parameters", "strict", "flag"],
   problem:
-    "Without it, every unannotated parameter is `any`, and a file can be fully typed on paper and unchecked in practice.",
+    "Without it, every unannotated parameter is `any`, and a file can be fully typed on paper and unchecked in practice. Look at the left pane: `Parameters` silently become `any`. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "`noImplicitAny` (via `strict`) errors on untyped parameters. Untyped parameters become implicit `any` without the flag. Annotate or use contextual typing from callers. Turn this on early in a migration. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function add(a, b) { return a + b; }
 `,

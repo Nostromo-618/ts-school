@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "typing-your-test-files"],
   keywords: ["generic", "instantiation", "constraint", "coverage", "test"],
   problem:
-    "Testing a generic helper with one type argument tests one instantiation and tells you nothing about the rest.",
+    "Testing a generic helper with one type argument tests one instantiation and tells you nothing about the rest. Look at the left pane: only runtime equality checked. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Type-level Equal `asserts` inference. false is not true. Test generics at the type level as well as runtime. Helpers like Expect/Equal catch inference regressions. Keep type tests in `.ts` files checked by `tsc`. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `expect(identity(1)).toBe(1);
 `,

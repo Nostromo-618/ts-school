@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["catch-gives-you-unknown", "classes-intro"],
   keywords: ["Error", "extends", "instanceof", "setPrototypeOf", "stack"],
   problem:
-    "Subclassing Error and compiling down to ES5 quietly breaks `instanceof`, so the catch block that handles your error never runs.",
+    "Subclassing Error and compiling down to ES5 quietly breaks `instanceof`, so the catch block that handles your error never runs. Look at the left pane: throwing plain objects. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Custom Error subclasses carry typed fields. handle returns number. Extend Error and set name for debuggability. `instanceof` works within the same realm. Include cause when wrapping lower-level failures. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `throw { code: 404, message: 'missing' };
 `,

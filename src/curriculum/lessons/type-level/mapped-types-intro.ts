@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["keyof-operator", "indexed-access-types"],
   keywords: ["mapped type", "in keyof", "transform", "Partial", "homomorphic"],
   problem:
-    "Hand-writing the nullable version of a twenty-field interface produces a second twenty-field interface to maintain.",
+    "Hand-writing the nullable version of a twenty-field interface produces a second twenty-field interface to maintain. Look at the left pane: shallow freeze with no type change. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Mapped `readonly` fields reject assignment. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `function freeze(obj) { return obj; }
 `,
@@ -37,7 +39,7 @@ u.name = "Bob";
   },
   insight: [
     "Mapped types transform each property via [K in `keyof` T].",
-    "`Readonly`<T> and `Partial`<T> are mapped types.",
+    "`Readonly<T>` and `Partial<T>` are mapped types.",
     "Start here before conditional types.",
   ],
   quiz: [
@@ -45,7 +47,7 @@ u.name = "Bob";
       id: "q1",
       prompt: "What is the core pattern of a mapped type?",
       choices: [
-        { id: "a", text: "extends `infer` on a function" },
+        { id: "a", text: "extends `infer on` a function" },
         {
           id: "b",
           text: "Transform each property via `[K in keyof T]`",

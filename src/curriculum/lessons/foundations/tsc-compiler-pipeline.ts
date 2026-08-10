@@ -14,7 +14,9 @@ export const lesson: Lesson = {
   ],
   keywords: ["compiler", "binder", "checker", "program", "AST", "compiler api"],
   problem:
-    "Treating the compiler as a black box makes its performance characteristics and its error messages equally mysterious.",
+    "Treating the compiler as a black box makes its performance characteristics and its error messages equally mysterious. Look at the left pane: transpile-only pipelines skip the checker TypeScript spends time in. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Checker diagnostics exist without emit — generator/CI mode uses `noEmit`. `Program` owns `SourceFile`s; `TypeChecker` answers type questions after bind. Errors can originate in parse, bind, or check — the code number hints which family. Emit is optional: `noEmit` / transpile-only tools skip or replace the checker. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `// JS tooling often "compiles" by parsing+emitting only (esbuild/swc).
 // That pipeline has no checker stage — types are deleted, not proven.

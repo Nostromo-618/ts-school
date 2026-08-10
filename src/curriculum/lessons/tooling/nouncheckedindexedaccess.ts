@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "record",
   ],
   problem:
-    "map[key] is typed as present for every key, so a cache miss is typed identically to a cache hit.",
+    "map[key] is typed as present for every key, so a cache miss is typed identically to a cache hit. Look at the left pane: indexing assumed defined. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Model index access as T | `undefined`. Assignment to string fails. `noUncheckedIndexedAccess` adds | `undefined` to index reads. Even without the flag, treat indexes as optional in Node services. Narrow before use. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `const first = arr[0];
 first.toUpperCase();

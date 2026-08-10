@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["inference-and-widening"],
   keywords: ["structural", "duck typing", "excess property", "compatibility"],
   problem:
-    "Coming from nominal languages, you expect two types with different names to be incompatible even when their fields match — TypeScript disagrees.",
+    "Coming from nominal languages, you expect two types with different names to be incompatible even when their fields match — TypeScript disagrees. Look at the left pane: shape compatibility is informal in JS; secrets hitch a ride easily. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Fresh object literals get excess-property checks; named variables do not. Compatibility is structural: if the required fields exist with compatible types, the name of the type rarely matters. Object literals passed directly are checked for `unknown` properties — a footgun-prevention feature, not a second type system. Assign the literal to a variable first if you intentionally need extra fields (or use a wider type). Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function printUser(user) {
   return user.id + ":" + user.name;

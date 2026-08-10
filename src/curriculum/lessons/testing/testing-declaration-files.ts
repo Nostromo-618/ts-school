@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["publishing-types", "type-level-tests"],
   keywords: ["d.ts", "public api", "arethetypeswrong", "resolution", "package"],
   problem:
-    "The types you tested are the source's; the types you shipped are the emitted ones, and they are not always the same.",
+    "The types you tested are the source's; the types you shipped are the emitted ones, and they are not always the same. Look at the left pane: without .d.ts, consumers only have runtime discovery. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Tests against the public `declare` surface catch return-type drift. Run type tests against packed output or emitted .d.ts, not only src/. arethetypeswrong checks export maps across module resolutions. Breakages in declaration emit (cannot be named) show up here first. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// JS: there is no declaration file to test — the .js is the API.
 export function api() {

@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "amaro",
   ],
   problem:
-    "Some TypeScript syntax emits real JavaScript, so a file using it cannot be run by simply deleting the types.",
+    "Some TypeScript syntax emits real JavaScript, so a file using it cannot be run by simply deleting the types. Look at the left pane: enums/namespaces need transform — not erasable. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Annotations strip cleanly. length returns number. Type-only syntax can be stripped without a full emit pipeline. Enums, namespaces, and parameter properties may need transformation. Prefer erasable forms when targeting Node type stripping. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// Node type stripping runs without emit
 `,

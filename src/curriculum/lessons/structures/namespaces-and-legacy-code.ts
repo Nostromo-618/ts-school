@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["declaration-merging", "esm-imports-and-exports"],
   keywords: ["namespace", "module", "legacy", "declare", "DefinitelyTyped"],
   problem:
-    "Half of DefinitelyTyped predates ES modules, so consuming it means understanding a module system you would never choose.",
+    "Half of DefinitelyTyped predates ES modules, so consuming it means understanding a module system you would never choose. Look at the left pane: iife/global namespaces in old scripts. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Prefer ES modules; namespaces still type. greet returns string. Namespaces are legacy — use ES modules for new code. They still appear in older DefinitelyTyped patterns. Migrate outward-in: leave namespace wrappers until the end. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `var App = App || {};
 App.util = {};

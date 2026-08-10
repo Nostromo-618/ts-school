@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "legacy",
   ],
   problem:
-    "A migration that has to finish before it delivers value is a migration that gets cancelled at the halfway point.",
+    "A migration that has to finish before it delivers value is a migration that gets cancelled at the halfway point. Look at the left pane: all-or-nothing migrations rarely finish. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Ratchets track counts — the budget is a number, not a string. Ship value continuously: `strict` islands expand; legacy shrinks. CI ratchets (error count / `any` count) beat a binary pass/fail on a half-migrated tree. Codemods + `allowJs` get files into the graph; types follow folder by folder. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `// JS big-bang rewrite: replace everything, ship nothing for months.
 function migrateAll() {

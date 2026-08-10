@@ -16,7 +16,9 @@ export const lesson: Lesson = {
     "unknown",
   ],
   problem:
-    "Adding a type parameter to a published type is a breaking change unless it has a default.",
+    "Adding a type parameter to a published type is a breaking change unless it has a default. Look at the left pane: box with no default element type. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Default T=string when unargued. a.value is string, not number. Default type parameters kick in when inference cannot. Useful for option bags and empty collections. Document defaults — callers may not notice them. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function box(value) { return { value }; }
 `,

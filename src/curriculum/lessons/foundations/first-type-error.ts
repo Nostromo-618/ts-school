@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["why-types"],
   keywords: ["tsc", "cli", "noEmit", "checkJs", "first error"],
   problem:
-    "Nothing tells you a file is wrong until it runs, and in a Node service 'runs' can mean 'in production, at 3am'.",
+    "Nothing tells you a file is wrong until it runs, and in a Node service 'runs' can mean 'in production, at 3am'. Look at the left pane: `String` coercion turns tax math into concatenation or NaN territory. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`TS2345`: the argument type must match the parameter. Read a TypeScript error bottom-up: expected type, actual type, then the expression on the flagged line. The error code (here 2345) is stable; the prose may change between TypeScript releases. Fix the types at the boundary (parse the query string) rather than widening the parameter to string | number. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `function addTax(amount) {
   return amount * 1.2;

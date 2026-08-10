@@ -21,7 +21,9 @@ export const lesson: Lesson = {
     "aliased condition",
   ],
   problem:
-    "Narrowing looks like magic until it stops working, and then there is nothing to reason about unless you know what it is actually doing.",
+    "Narrowing looks like magic until it stops working, and then there is nothing to reason about unless you know what it is actually doing. Look at the left pane: control flow in JS does not refine declared types — there are none. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "CFA narrows in branches; wrong assignments still fail outside them. Each reference gets a type from reaching definitions along the control-flow graph. Discriminant checks, `typeof`, and equality create edges that refine types in true/false successors. When CFA “fails,” ask what assignment or call could have invalidated the predicate since it was proven. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
   js: {
     code: `// JS: if-checks are just branches — no type changes.
 function len(x) {

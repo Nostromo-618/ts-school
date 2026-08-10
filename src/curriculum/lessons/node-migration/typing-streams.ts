@@ -18,7 +18,9 @@ export const lesson: Lesson = {
     "backpressure",
   ],
   problem:
-    "Streams predate generics in Node's types, so object-mode chunks are typed as `any` unless you say otherwise.",
+    "Streams predate generics in Node's types, so object-mode chunks are typed as `any` unless you say otherwise. Look at the left pane: calling string methods on a Buffer chunk. The language will happily evaluate it; only a later runtime path reveals the damage.",
+  solution:
+    "Decode explicitly. BufferLike has no toUpperCase. Object-mode vs byte streams change chunk types — model that in wrappers. Always handle stream error events. Prefer pipeline() for cleanup over hand-rolled listeners. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `readable.on("data", (chunk) => {
   sink.write(chunk.toUpperCase());

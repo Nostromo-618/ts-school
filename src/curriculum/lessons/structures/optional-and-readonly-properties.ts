@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "null-and-undefined"],
   keywords: ["optional", "readonly", "?", "mutation"],
   problem:
-    "A config object gets mutated mid-request; the next handler sees a different port than the one that was validated.",
+    "A config object gets mutated mid-request; the next handler sees a different port than the one that was validated. Look at the left pane: mutation changes meaning for every other reference to cfg. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "`readonly` blocks assignment through that property. optional (host?) means the property may be missing; read it as T | `undefined`. `readonly` is a type-level constraint — runtime code can still mutate if it cheats. Combine them: `readonly` id: string for identity fields that never change. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
   js: {
     code: `function bind(config) {
   config.port = Number(config.port);

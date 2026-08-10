@@ -20,7 +20,9 @@ export const lesson: Lesson = {
     "MessagePort",
   ],
   problem:
-    "postMessage accepts `any`, so the protocol between two threads in the same repository is documented nowhere.",
+    "postMessage accepts `any`, so the protocol between two threads in the same repository is documented nowhere. Look at the left pane: structured clone cannot carry functions; JS will not warn. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "Protocol types make illegal messages a compile error. Define request/response unions shared by both threads — same as a network protocol. Structured clone supports many built-ins but not functions or DOM nodes in Node workers the same way. Validate `unknown` messages at the edge; do not trust postMessage peers blindly. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `// JS workers: postMessage anything — functions silently drop.
 parentPort.postMessage({ type: "result", fn: () => 1 });

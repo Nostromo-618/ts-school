@@ -11,7 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["async-await-typing", "generics-intro"],
   keywords: ["async iterator", "generator", "for await", "yield", "streaming"],
   problem:
-    "Generator<T, TReturn, TNext> has three parameters and almost every example on the internet uses only the first.",
+    "Generator<T, TReturn, TNext> has three parameters and almost every example on the internet uses only the first. Look at the left pane: async iteration without element types. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+  solution:
+    "AsyncGenerator yields number. sum returns number. AsyncGenerator<T> types yielded values. for-await works on async iterables. Prefer streams for large IO; generators for composed async sequences. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
   js: {
     code: `for await (const chunk of stream) { sink(chunk); }
 `,

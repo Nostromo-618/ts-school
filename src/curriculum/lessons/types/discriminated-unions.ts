@@ -17,7 +17,9 @@ export const lesson: Lesson = {
     "state machine",
   ],
   problem:
-    "A result object with optional data and optional error lets you construct the impossible state where both are present.",
+    "A result object with optional data and optional error lets you construct the impossible state where both are present. Look at the left pane: optional fields allow both data and error at once. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+  solution:
+    "Tagged Result forbids mixing ok with error. Give every variant a literal tag so the checker can discriminate. Optional data+error models allow impossible states. Switch on the tag and exhaustiveness checking becomes possible. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
   js: {
     code: `function handle(res) {
   if (res.error) return res.error;
