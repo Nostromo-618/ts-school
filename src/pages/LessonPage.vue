@@ -267,19 +267,19 @@ const SECURITY_VARIANTS: Record<
       <RouterLink
         v-if="neighbours.previous"
         :to="lessonRoute(neighbours.previous)"
-        class="vd-btn vd-btn-secondary vd-btn-sm"
+        class="vd-btn vd-btn-secondary"
       >
-        <VdIcon name="arrow-left" size="sm" />
+        <VdIcon name="arrow-left" size="md" />
         {{ neighbours.previous.title }}
       </RouterLink>
       <span v-else></span>
       <RouterLink
         v-if="neighbours.next"
         :to="lessonRoute(neighbours.next)"
-        class="vd-btn vd-btn-secondary vd-btn-sm"
+        class="vd-btn vd-btn-secondary"
       >
         {{ neighbours.next.title }}
-        <VdIcon name="arrow-right" size="sm" />
+        <VdIcon name="arrow-right" size="md" />
       </RouterLink>
     </nav>
   </article>

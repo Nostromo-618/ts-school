@@ -444,6 +444,11 @@ body {
   gap: var(--vd-space-fib-13, 1.3125rem);
 }
 
+.ts-lesson-pager .vd-btn {
+  font-size: var(--vd-font-size-lg, 1.125rem);
+  font-weight: var(--vd-font-weight-semibold, 600);
+}
+
 /* Dual-pane lesson geometry — layout only; editors are styled by vd3-cbun. */
 .ts-dual-pane-grid {
   display: grid;
