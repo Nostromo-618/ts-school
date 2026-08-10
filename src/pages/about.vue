@@ -113,9 +113,15 @@ const techGroups: TechGroup[] = [
       },
       {
         name: "vue-tsc",
-        href: "https://github.com/vuejs/language-tools",
+        href: "https://www.npmjs.com/package/vue-tsc",
         blurb:
           "Vue SFC typecheck via a Strada-aware wrapper (native TS 7 has no ./lib/tsc API for this).",
+        extraLinks: [
+          {
+            label: "language-tools",
+            href: "https://github.com/vuejs/language-tools",
+          },
+        ],
       },
     ],
   },
@@ -144,9 +150,13 @@ const techGroups: TechGroup[] = [
       },
       {
         name: "axe-core",
-        href: "https://github.com/dequelabs/axe-core",
+        href: "https://www.deque.com/axe/core-documentation/",
         blurb: "Accessibility scans via @axe-core/playwright in e2e.",
         extraLinks: [
+          {
+            label: "GitHub",
+            href: "https://github.com/dequelabs/axe-core",
+          },
           {
             label: "@axe-core/playwright",
             href: "https://www.npmjs.com/package/@axe-core/playwright",
@@ -163,6 +173,10 @@ const techGroups: TechGroup[] = [
             label: "typescript-eslint",
             href: "https://typescript-eslint.io/",
           },
+          {
+            label: "eslint-plugin-vue",
+            href: "https://eslint.vuejs.org/",
+          },
         ],
       },
       {
@@ -174,6 +188,12 @@ const techGroups: TechGroup[] = [
         name: "Stylelint",
         href: "https://stylelint.io/",
         blurb: "CSS lint over src/**/*.css with stylelint-config-standard.",
+        extraLinks: [
+          {
+            label: "stylelint-config-standard",
+            href: "https://github.com/stylelint/stylelint-config-standard",
+          },
+        ],
       },
     ],
   },
@@ -196,6 +216,10 @@ const techGroups: TechGroup[] = [
           "@huggingface/transformers at build time to generate search embedding vectors (not required for core browsing).",
         extraLinks: [
           {
+            label: "@huggingface/transformers",
+            href: "https://www.npmjs.com/package/@huggingface/transformers",
+          },
+          {
             label: "Hugging Face",
             href: "https://huggingface.co/",
           },
@@ -203,7 +227,7 @@ const techGroups: TechGroup[] = [
       },
       {
         name: "LiteRT-LM",
-        href: "https://ai.google.dev/edge/litert-lm/js",
+        href: "https://developers.google.com/edge/litert-lm/js",
         blurb:
           "@litert-lm/core runs optional local chat in the browser (WebGPU); weights are not shipped in the static dist.",
         extraLinks: [
@@ -215,7 +239,7 @@ const techGroups: TechGroup[] = [
       },
       {
         name: "Gemma",
-        href: "https://ai.google.dev/gemma",
+        href: "https://deepmind.google/models/gemma/",
         blurb:
           "Optional on-device model weights (e.g. litert-community Gemma builds on Hugging Face) for the Ask assistant.",
       },
@@ -372,6 +396,7 @@ const techGroups: TechGroup[] = [
             <dt class="ts-tech-name">
               <a
                 :href="item.href"
+                class="ts-tech-link"
                 rel="noopener noreferrer"
                 target="_blank"
                 >{{ item.name }}</a
@@ -384,7 +409,7 @@ const techGroups: TechGroup[] = [
                 >
                   <a
                     :href="link.href"
-                    class="vd-text-sm"
+                    class="vd-text-sm ts-tech-link"
                     rel="noopener noreferrer"
                     target="_blank"
                     >{{ link.label }}</a

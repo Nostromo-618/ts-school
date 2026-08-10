@@ -318,6 +318,22 @@ body {
   font-weight: 600;
 }
 
+/*
+ * vd3’s reset sets `a:not([class]) { color: currentColor }`, which outranks
+ * the later `a { color: var(--vd-color-primary) }` rule. Classless tech
+ * primaries therefore looked like plain bold text while RouterLinks (empty
+ * `class=""`) and `.vd-text-sm` extras stayed purple. `.ts-tech-link` opts
+ * into the same primary link treatment used elsewhere on About.
+ */
+.ts-tech-list .ts-tech-link {
+  color: var(--vd-color-primary);
+}
+
+.ts-tech-list .ts-tech-link:hover {
+  color: var(--vd-color-primary-dark);
+  text-decoration: underline;
+}
+
 .ts-tech-blurb {
   margin: 0;
 }
