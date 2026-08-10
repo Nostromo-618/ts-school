@@ -1369,6 +1369,18 @@ body {
   white-space: normal;
 }
 
+.ts-ai-bubble.is-policy {
+  background: transparent;
+  padding: 0;
+  max-width: 100%;
+}
+
+.ts-ai-policy-block-inner {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--vd-space-fib-5, 0.5rem);
+}
+
 .ts-ai-bubble-md a {
   color: var(--vd-color-primary, #2563eb);
   text-decoration: underline;

@@ -142,6 +142,8 @@ declare module "@vanduo-oss/vdl-engines/guardrails/tools.js" {
 }
 
 declare module "@vanduo-oss/vdl-engines/guardrails/llm.js" {
+  export const LLM_BLOCK_MESSAGE: string;
+  export const LLM_OUTPUT_BLOCK_MESSAGE: string;
   export function validateLlmInput(input: unknown): {
     allowed: boolean;
     message?: string;

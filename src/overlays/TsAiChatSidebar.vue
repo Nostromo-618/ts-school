@@ -13,7 +13,14 @@ import {
 } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
-import { VdButton, VdIcon, VdProgress } from "@vanduo-oss/vd3";
+import { VdAlert, VdButton, VdIcon, VdProgress } from "@vanduo-oss/vd3";
+import {
+  ASK_POLICY_BLOCK_MESSAGE,
+  isGuardrailError,
+  isLabsPolicyBlockReply,
+  policyAssistantMessage,
+  type AskChatMessage,
+} from "@/ai/ask-policy-block";
 import {
   SCHOOL_TOOL_DEFS,
   composeSchoolSystemExtra,
@@ -27,6 +34,15 @@ import {
 } from "@/ai/school-model-picker";
 import { useAiChatStore } from "@/stores/aiChat";
 import { useLessonEditorStore } from "@/stores/lessonEditor";
+import {
+  LLM_BLOCK_MESSAGE,
+  LLM_OUTPUT_BLOCK_MESSAGE,
+} from "@vanduo-oss/vdl-engines/guardrails/llm.js";
+
+const LABS_POLICY_BLOCK_MESSAGES = [
+  LLM_BLOCK_MESSAGE,
+  LLM_OUTPUT_BLOCK_MESSAGE,
+] as const;
 
 const props = defineProps<{
   open: boolean;
@@ -65,9 +81,7 @@ const freezeHint = ref("");
 const loadSource = ref<"cache" | "local" | "network" | "unknown" | "">("");
 const errorText = ref("");
 const inputText = ref("");
-const messages = ref<Array<{ role: "user" | "assistant"; content: string }>>(
-  [],
-);
+const messages = ref<AskChatMessage[]>([]);
 const messagesEl = ref<HTMLElement | null>(null);
 const composerEl = ref<HTMLTextAreaElement | null>(null);
 const gemmaModels = ref<Array<{ id: string; label: string }>>([
@@ -340,26 +354,34 @@ async function send(): Promise<void> {
       },
     });
     messages.value[idx] = { role: "assistant", content: reply };
+    if (isLabsPolicyBlockReply(reply, LABS_POLICY_BLOCK_MESSAGES)) {
+      messages.value[idx] = policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE);
+    }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    const isGuardrail =
-      err instanceof Error &&
-      (err.name === "GuardrailError" ||
-        /bypass my safety|guardrail/i.test(message));
-    if (isGuardrail) {
-      // Keep the learner message; show the deterministic block as the reply.
-      messages.value[idx] = { role: "assistant", content: message };
+    if (isGuardrailError(err)) {
+      // Keep the learner message; show a firm policy notice as the reply.
+      messages.value[idx] = policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE);
     } else if (message === toolsUnsupportedError) {
       try {
         const reply = await chat.generate(text, (partial: string) => {
           messages.value[idx] = { role: "assistant", content: partial };
         });
-        messages.value[idx] = { role: "assistant", content: reply };
+        messages.value[idx] = isLabsPolicyBlockReply(
+          reply,
+          LABS_POLICY_BLOCK_MESSAGES,
+        )
+          ? policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE)
+          : { role: "assistant", content: reply };
       } catch (inner) {
-        errorText.value =
-          inner instanceof Error ? inner.message : String(inner);
-        messages.value.pop();
-        messages.value.pop();
+        if (isGuardrailError(inner)) {
+          messages.value[idx] = policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE);
+        } else {
+          errorText.value =
+            inner instanceof Error ? inner.message : String(inner);
+          messages.value.pop();
+          messages.value.pop();
+        }
       }
     } else {
       errorText.value = message;
@@ -579,11 +601,26 @@ onBeforeUnmount(() => {
         v-for="(msg, index) in messages"
         :key="index"
         class="ts-ai-bubble"
-        :class="msg.role === 'user' ? 'is-user' : 'is-assistant'"
+        :class="[
+          msg.role === 'user' ? 'is-user' : 'is-assistant',
+          msg.kind === 'policy' ? 'is-policy' : '',
+        ]"
         data-testid="ts-ai-bubble"
         :data-role="msg.role"
+        :data-kind="msg.kind || undefined"
       >
         <template v-if="msg.role === 'user'">{{ msg.content }}</template>
+        <VdAlert
+          v-else-if="msg.kind === 'policy'"
+          variant="danger"
+          role="alert"
+          data-testid="ts-ai-policy-block"
+        >
+          <span class="ts-ai-policy-block-inner">
+            <VdIcon name="shield-warning" aria-hidden="true" />
+            <span>{{ msg.content }}</span>
+          </span>
+        </VdAlert>
         <!-- Escaped Labs markdown only (labsMarkdownToHtml); not raw model HTML. -->
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div
