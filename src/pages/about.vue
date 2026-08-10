@@ -181,7 +181,7 @@ const techGroups: TechGroup[] = [
     id: "search-ai",
     title: "Search & optional on-device AI",
     intro:
-      "Curriculum browsing works without models. Ask and hybrid search are opt-in; see Terms for the AI risk notice.",
+      "Curriculum browsing works without models. Ask and hybrid search are opt-in; assistant risks are covered in the site Terms.",
     items: [
       {
         name: "Fuse.js",
