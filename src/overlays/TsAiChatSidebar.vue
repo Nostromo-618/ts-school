@@ -11,6 +11,7 @@ import {
   watch,
   shallowRef,
 } from "vue";
+import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { VdButton, VdIcon, VdProgress } from "@vanduo-oss/vd3";
 import {
@@ -24,6 +25,7 @@ import {
   schoolModelOptionLabel,
   schoolModelRecommendHint,
 } from "@/ai/school-model-picker";
+import { useAiChatStore } from "@/stores/aiChat";
 import { useLessonEditorStore } from "@/stores/lessonEditor";
 
 const props = defineProps<{
@@ -44,6 +46,8 @@ const pinLabel = computed(() =>
 const route = useRoute();
 const router = useRouter();
 const editor = useLessonEditorStore();
+const aiChat = useAiChatStore();
+const { pendingComposerText } = storeToRefs(aiChat);
 
 const lessonId = computed(() => {
   const id = route.params.lessonId;
@@ -89,6 +93,31 @@ function focusComposer(): void {
     if (!el || el.disabled) return;
     el.focus();
   });
+}
+
+/**
+ * Apply a one-shot composer seed from the aiChat store (e.g. exercise AI help).
+ * Auto-sends only when the model is already Ready.
+ */
+function applyPendingComposer(): void {
+  if (!props.open) return;
+  const pending = aiChat.takePendingComposer();
+  if (!pending) return;
+  inputText.value = pending.text;
+  if (
+    pending.autoSend &&
+    loaded.value &&
+    !loading.value &&
+    !streaming.value
+  ) {
+    void nextTick(() => {
+      // Re-check after paint: a concurrent reload must not steal the seed.
+      if (!loaded.value || loading.value || streaming.value) return;
+      void send();
+    });
+    return;
+  }
+  focusComposer();
 }
 
 type LoadProgressEvent = {
@@ -377,8 +406,15 @@ watch(
     }
     // Focus when reopening with an already-loaded model (textarea remounts).
     focusComposer();
+    applyPendingComposer();
   },
+  { immediate: true, flush: "post" },
 );
+
+watch(pendingComposerText, (text) => {
+  if (!text || !props.open) return;
+  applyPendingComposer();
+});
 
 onBeforeUnmount(() => {
   if (progressUnsub) {

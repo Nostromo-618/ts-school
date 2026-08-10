@@ -134,4 +134,24 @@ describe("TsAiChatSidebar composer focus", () => {
     expect(wrapper.find('[data-testid="ts-ai-input"]').exists()).toBe(false);
     wrapper.unmount();
   });
+
+  it("leaves pending prompt in the composer when the model is not loaded", async () => {
+    const { useAiChatStore } = await import("@/stores/aiChat");
+    const store = useAiChatStore();
+    store.queueComposerPrompt("Help with Make addTax compile", {
+      autoSend: true,
+    });
+
+    const wrapper = await mountSidebar(true);
+    await flushPromises();
+    await nextTick();
+
+    const input = wrapper.get('[data-testid="ts-ai-input"]');
+    expect((input.element as HTMLTextAreaElement).value).toContain(
+      "Make addTax compile",
+    );
+    expect((input.element as HTMLTextAreaElement).disabled).toBe(true);
+    expect(wrapper.findAll('[data-testid="ts-ai-bubble"]')).toHaveLength(0);
+    wrapper.unmount();
+  });
 });

@@ -7,8 +7,10 @@
 import { computed, ref, watch } from "vue";
 import { VdAlert } from "@vanduo-oss/vd3";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
-import type { Exercise } from "@/curriculum";
+import { formatExerciseAiHelpPrompt } from "@/ai/exercise-help";
+import { lessonById, type Exercise } from "@/curriculum";
 import { normalizeSource, type TsDiagnostic } from "@/typecheck";
+import { useAiChatStore } from "@/stores/aiChat";
 import { useProgressStore } from "@/stores/progress";
 import { useLessonEditorStore } from "@/stores/lessonEditor";
 import DiagnosticsList from "./DiagnosticsList.vue";
@@ -26,6 +28,7 @@ const emit = defineEmits<{
 
 const progress = useProgressStore();
 const editor = useLessonEditorStore();
+const aiChat = useAiChatStore();
 const showHints = ref(false);
 const showSolution = ref(false);
 const passed = ref(false);
@@ -87,6 +90,19 @@ function revealSolution(): void {
   showSolution.value = true;
   code.value = props.exercise.solution;
 }
+
+function askAiHelp(): void {
+  const lesson = lessonById(props.lessonId);
+  const prompt = formatExerciseAiHelpPrompt({
+    lessonId: props.lessonId,
+    lessonTitle: lesson?.title ?? props.lessonId,
+    exercise: props.exercise,
+    currentCode: code.value,
+    solutionRevealed: showSolution.value,
+  });
+  aiChat.queueComposerPrompt(prompt, { autoSend: true });
+  aiChat.openChat();
+}
 </script>
 
 <template>
@@ -138,6 +154,14 @@ function revealSolution(): void {
         @click="revealSolution"
       >
         Show solution
+      </button>
+      <button
+        type="button"
+        class="vd-btn vd-btn-secondary vd-btn-sm"
+        data-testid="ts-exercise-ai-help"
+        @click="askAiHelp"
+      >
+        AI help
       </button>
     </div>
 

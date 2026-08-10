@@ -101,4 +101,24 @@ describe("aiChat store", () => {
     expect(store.open).toBe(true);
     expect(store.pinned).toBe(false);
   });
+
+  it("queues and consumes a one-shot composer prompt", () => {
+    const store = useAiChatStore();
+    store.queueComposerPrompt("Help with exercise", { autoSend: true });
+
+    expect(store.pendingComposerText).toBe("Help with exercise");
+    expect(store.pendingAutoSend).toBe(true);
+
+    const taken = store.takePendingComposer();
+    expect(taken).toEqual({ text: "Help with exercise", autoSend: true });
+    expect(store.pendingComposerText).toBeNull();
+    expect(store.pendingAutoSend).toBe(false);
+    expect(store.takePendingComposer()).toBeNull();
+  });
+
+  it("ignores blank composer prompts", () => {
+    const store = useAiChatStore();
+    store.queueComposerPrompt("   ");
+    expect(store.pendingComposerText).toBeNull();
+  });
 });
