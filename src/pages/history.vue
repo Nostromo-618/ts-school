@@ -22,7 +22,9 @@ import {
 } from "@/data/history";
 
 const timelineRoot = ref<HTMLElement | null>(null);
-useTimeline(timelineRoot);
+/* vd3 defaults: 140ms × index (cap 7 → 980ms) + 0.55s fade — too leisurely
+   for this long milestone list. Local opts + page CSS keep reduced-motion. */
+useTimeline(timelineRoot, { staggerMs: 50, maxStaggerIndex: 4 });
 
 const npmLineData = npmWeeklyPoints.map((point) => ({
   year: point.year,
@@ -431,3 +433,28 @@ const octoverseBarData = octoverseGrowthPoints.map((point) => ({
     </p>
   </section>
 </template>
+
+<style>
+/* History-only: quicker, smoother reveal than vd3's 0.55s / 12px slide.
+   Stagger delay still comes from --vd-timeline-reveal-delay (useTimeline). */
+#history .vd-timeline-animated .vd-timeline-item {
+  transition:
+    opacity 0.38s,
+    transform 0.38s cubic-bezier(0.22, 0.8, 0.28, 1);
+  transform: translateY(8px);
+}
+
+#history .vd-timeline-animated .vd-timeline-item .vd-timeline-marker {
+  transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+  transition-delay: calc(var(--vd-timeline-reveal-delay, 0s) + 0.06s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #history .vd-timeline-animated .vd-timeline-item,
+  #history .vd-timeline-animated .vd-timeline-item .vd-timeline-marker {
+    opacity: 1;
+    transition: none;
+    transform: none;
+  }
+}
+</style>
