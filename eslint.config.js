@@ -170,8 +170,10 @@ export default [
     ignores: [
       'dist/**',
       'node_modules/**',
-      // CI clones Labs engines here for the file: dependency; never lint it.
+      // CI clones Labs engines / VDL packages here for file: deps; never lint them.
       '.ci-labs/**',
+      '.ci-vdl-ai-chat/**',
+      '.ci-vdl-hybrid-search/**',
       'playwright-report/**',
       'test-results/**',
       'coverage/**',
