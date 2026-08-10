@@ -20,7 +20,7 @@ import { buildRoutes } from "@/router";
 
 describe("disclaimer copy", () => {
   it("bumps TOC_VERSION and folds Ask risks into site terms", () => {
-    expect(TOC_VERSION).toBe("3");
+    expect(TOC_VERSION).toBe("4");
     const blob = DISCLAIMER_SECTIONS.map((s) => `${s.heading}\n${s.body}`).join(
       "\n",
     );

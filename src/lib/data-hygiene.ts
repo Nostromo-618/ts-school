@@ -9,6 +9,7 @@
 
 import { AI_RISK_STORAGE_KEY } from "@/content/ai-disclaimer";
 import { TOC_STORAGE_KEY, TOC_VERSION } from "@/content/disclaimer";
+import { SCHOOL_AI_MODEL_ID_KEY } from "@/ai/school-model-picker";
 import {
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
@@ -35,6 +36,9 @@ import {
 /** Labs AiChat marks cached models with this localStorage prefix. */
 export const MODEL_CACHE_FLAG_PREFIX = "vdl-ai-chat-model-cached:";
 
+/** Labs Cache Storage bucket for LiteRT `.litertlm` weights. */
+export const LITERT_MODEL_CACHE_NAME = "vdl-litert-models";
+
 /**
  * Heuristic matching Labs `_isLikelyModelStorageName` — Cache Storage /
  * IndexedDB names that look like MLC / WebLLM / LiteRT / model artifacts.
@@ -43,7 +47,7 @@ export const MODEL_CACHE_FLAG_PREFIX = "vdl-ai-chat-model-cached:";
  */
 export function isLikelyModelStorageName(name: string): boolean {
   const normalized = String(name || "").toLowerCase();
-  return /(webllm|mlc|onnx|wasm|gguf|gemma|llama|qwen|model|litert)/.test(
+  return /(webllm|mlc|onnx|wasm|gguf|gemma|llama|qwen|model|litert|vdl-litert)/.test(
     normalized,
   );
 }
@@ -59,6 +63,7 @@ export const SCHOOL_STORAGE_KEYS = [
   TOC_STORAGE_KEY,
   AI_RISK_STORAGE_KEY,
   AI_CHAT_PINNED_KEY,
+  SCHOOL_AI_MODEL_ID_KEY,
 ] as const;
 
 /** Cleared on clear-all even after migration removed them from inventory. */
@@ -82,7 +87,7 @@ export interface LocalDataInventoryItem {
 }
 
 export const NON_CLEARABLE_SURFACES = [
-  "HTTP disk cache for previously fetched `.litertlm` model files",
+  "HTTP disk cache for previously fetched `.litertlm` model files (browser-managed)",
   "OPFS / private filesystem entries the runtime does not enumerate",
   "Service Worker caches (this site does not register one today)",
   "OS-level or browser-private storage outside page JavaScript",
@@ -219,6 +224,7 @@ export function buildSchoolExport(
     TOC_STORAGE_KEY,
     AI_RISK_STORAGE_KEY,
     AI_CHAT_PINNED_KEY,
+    SCHOOL_AI_MODEL_ID_KEY,
     NOTES_WINDOW_STORAGE_KEY,
     NOTES_FOLDED_KEY,
     NOTES_PINNED_KEY,
@@ -301,10 +307,21 @@ export async function clearModelCachesBestEffort(): Promise<ClearModelCachesResu
   let deletedCacheStores = 0;
   let deletedDatabases = 0;
 
+  if (typeof caches !== "undefined" && typeof caches.delete === "function") {
+    try {
+      if (await caches.delete(LITERT_MODEL_CACHE_NAME)) {
+        deletedCacheStores += 1;
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
   if (typeof caches !== "undefined" && typeof caches.keys === "function") {
     try {
       const keys = await caches.keys();
       for (const key of keys) {
+        if (key === LITERT_MODEL_CACHE_NAME) continue;
         if (!isLikelyModelStorageName(key)) continue;
         const removed = await caches.delete(key);
         if (removed) deletedCacheStores += 1;

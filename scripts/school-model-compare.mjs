@@ -96,7 +96,7 @@ async function scoreLive(scorers) {
   // Avoid dynamic TS import of disclaimer (can hang under strip-types).
   // Keep in sync with src/content/disclaimer.ts TOC_VERSION / TOC_STORAGE_KEY.
   const TOC_STORAGE_KEY = "ts-school-toc-accepted";
-  const TOC_VERSION = "3";
+  const TOC_VERSION = "4";
 
   const base = (process.env.SCHOOL_COMPARE_BASE_URL || "http://localhost:5173").replace(
     /\/$/,

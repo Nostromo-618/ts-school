@@ -29,6 +29,8 @@ import {
 import { isSchoolInternalHref, renderAssistantHtml } from "@/ai/chat-markdown";
 import {
   SCHOOL_DEFAULT_MODEL_ID,
+  persistSchoolModelId,
+  readPersistedSchoolModelId,
   schoolModelOptionLabel,
   schoolModelRecommendHint,
 } from "@/ai/school-model-picker";
@@ -38,6 +40,18 @@ import {
   LLM_BLOCK_MESSAGE,
   LLM_OUTPUT_BLOCK_MESSAGE,
 } from "@vanduo-oss/vdl-engines/guardrails/llm.js";
+
+/** Mirrors Labs `MODEL_CACHE_FLAG_PREFIX` — avoid importing ai-chat.js at module top (SSR). */
+const MODEL_CACHE_FLAG_PREFIX = "vdl-ai-chat-model-cached:";
+
+function isSelectedModelMarkedCached(id: string): boolean {
+  if (typeof localStorage === "undefined") return false;
+  try {
+    return localStorage.getItem(`${MODEL_CACHE_FLAG_PREFIX}${id}`) === "1";
+  } catch {
+    return false;
+  }
+}
 
 const LABS_POLICY_BLOCK_MESSAGES = [
   LLM_BLOCK_MESSAGE,
@@ -70,7 +84,7 @@ const lessonId = computed(() => {
   return typeof id === "string" ? id : null;
 });
 
-const modelId = ref(SCHOOL_DEFAULT_MODEL_ID);
+const modelId = ref(readPersistedSchoolModelId());
 const loaded = ref(false);
 const loading = ref(false);
 const streaming = ref(false);
@@ -208,7 +222,9 @@ function applyProgress(data: LoadProgressEvent): void {
       }
       return;
     }
-    const described = describeLoadProgress(data);
+    const likelyCached =
+      data.source === "cache" || isSelectedModelMarkedCached(modelId.value);
+    const described = describeLoadProgress(data, { likelyCached });
     if (described.stage === "error") {
       clearProgressUi();
       statusText.value = "Error";
@@ -436,6 +452,10 @@ watch(
   },
   { immediate: true, flush: "post" },
 );
+
+watch(modelId, (id) => {
+  persistSchoolModelId(id);
+});
 
 watch(pendingComposerText, (text) => {
   if (!text || !props.open) return;

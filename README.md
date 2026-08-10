@@ -180,7 +180,10 @@ this table and the generator.
   the sidebar is usable.
 - Chat loads `@litert-lm/core` from npm (bundled) — not a CDN `import()`. Prefetch
   weights with `pnpm models:fetch` (or `--from-labs`); `pnpm dev` / `pnpm preview`
-  serve them at `/models/<id>/` and AiChat prefers that cache before Hugging Face.
+  serve them at `/models/<id>/` and AiChat prefers that path before Hugging Face.
+  After the first successful Hugging Face download, LiteRT weights are stored in
+  the origin Cache Storage bucket `vdl-litert-models` so refresh + Load uses
+  **From cache** instead of re-downloading (Profile clear-all removes it).
   Assistant bubbles render Labs markdown (`v-html` from escaped markdown only).
   Run `pnpm test:e2e:llm` locally to exercise Load → starter chat when weights exist.
 - Chat editor tools never silently overwrite panes — Accept/Reject is required.

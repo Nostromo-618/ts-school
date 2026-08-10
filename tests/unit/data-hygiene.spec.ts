@@ -5,6 +5,7 @@ import {
 } from "@/content/ai-disclaimer";
 import { TOC_STORAGE_KEY, TOC_VERSION } from "@/content/disclaimer";
 import {
+  LITERT_MODEL_CACHE_NAME,
   MODEL_CACHE_FLAG_PREFIX,
   NON_CLEARABLE_SURFACES,
   buildLocalDataInventory,
@@ -14,6 +15,7 @@ import {
   exportFilename,
   isLikelyModelStorageName,
 } from "@/lib/data-hygiene";
+import { SCHOOL_AI_MODEL_ID_KEY } from "@/ai/school-model-picker";
 import { NOTES_FOLDED_KEY, NOTES_STORAGE_KEY, NOTES_WINDOW_STORAGE_KEY } from "@/stores/notes";
 import { PROGRESS_STORAGE_KEY } from "@/stores/progress";
 import { AI_CHAT_PINNED_KEY } from "@/stores/aiChat";
@@ -120,7 +122,11 @@ describe("data hygiene", () => {
 
   it("clearAllSchoolData best-effort deletes likely caches", async () => {
     const deleteFn = vi.fn().mockResolvedValue(true);
-    const keysFn = vi.fn().mockResolvedValue(["webllm-model-cache", "unrelated"]);
+    const keysFn = vi.fn().mockResolvedValue([
+      LITERT_MODEL_CACHE_NAME,
+      "webllm-model-cache",
+      "unrelated",
+    ]);
     vi.stubGlobal("caches", { keys: keysFn, delete: deleteFn });
 
     const deleteDatabase = vi.fn(() => {
@@ -141,12 +147,16 @@ describe("data hygiene", () => {
     });
 
     window.localStorage.setItem(PROGRESS_STORAGE_KEY, "x");
+    window.localStorage.setItem(SCHOOL_AI_MODEL_ID_KEY, "gemma-4-E4B-it-web");
     const result = await clearAllSchoolData();
     expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull();
+    expect(window.localStorage.getItem(SCHOOL_AI_MODEL_ID_KEY)).toBeNull();
+    expect(deleteFn).toHaveBeenCalledWith(LITERT_MODEL_CACHE_NAME);
     expect(deleteFn).toHaveBeenCalledWith("webllm-model-cache");
     expect(deleteFn).not.toHaveBeenCalledWith("unrelated");
     expect(deleteDatabase).toHaveBeenCalledWith("litert-model-db");
-    expect(result.deletedCacheStores).toBe(1);
+    // LiteRT bucket + webllm heuristic cache
+    expect(result.deletedCacheStores).toBe(2);
     expect(result.deletedDatabases).toBe(1);
     vi.unstubAllGlobals();
   });
@@ -155,6 +165,7 @@ describe("data hygiene", () => {
     expect(NON_CLEARABLE_SURFACES.length).toBeGreaterThan(0);
     expect(isLikelyModelStorageName("mlc-webllm-cache")).toBe(true);
     expect(isLikelyModelStorageName("gemma-4-cache")).toBe(true);
+    expect(isLikelyModelStorageName(LITERT_MODEL_CACHE_NAME)).toBe(true);
     expect(isLikelyModelStorageName("user-prefs")).toBe(false);
     expect(AI_RISK_STORAGE_KEY).toBe("ts-school-ai-risk-accepted");
   });

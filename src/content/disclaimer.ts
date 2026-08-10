@@ -10,7 +10,7 @@
  */
 
 /** Bump when disclaimer clauses change in a way that needs re-consent. */
-export const TOC_VERSION = "3";
+export const TOC_VERSION = "4";
 
 /** localStorage key for versioned acceptance JSON. */
 export const TOC_STORAGE_KEY = "ts-school-toc-accepted";
@@ -53,7 +53,7 @@ export const DISCLAIMER_SECTIONS: DisclaimerSection[] = [
   },
   {
     heading: "Ask assistant — local model resources",
-    body: "Loading Gemma weights can use substantial RAM and GPU (WebGPU) and may briefly freeze the tab. Prefer the smaller E2B model on machines under ~16 GB RAM. You choose when to load; nothing downloads until you opt in (local `.models/` cache or Hugging Face).",
+    body: "Loading Gemma weights can use substantial RAM and GPU (WebGPU) and may briefly freeze the tab. Prefer the smaller E2B model on machines under ~16 GB RAM. You choose when to load; nothing downloads until you opt in (dev `.models/` mirror, browser Cache Storage after the first download, or Hugging Face). After a refresh you still click Load — GPU context is rebuilt — but cached weights should not re-download from the network.",
   },
   {
     heading: "Editor edits need your Accept",

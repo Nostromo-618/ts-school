@@ -3,6 +3,9 @@
 export const SCHOOL_DEFAULT_MODEL_ID = "gemma-4-E2B-it-web";
 export const SCHOOL_QUALITY_MODEL_ID = "gemma-4-E4B-it-web";
 
+/** Persist last Ask model selection across refresh. */
+export const SCHOOL_AI_MODEL_ID_KEY = "ts-school-ai-model-id";
+
 export function schoolModelOptionLabel(id: string): string {
   if (id === SCHOOL_QUALITY_MODEL_ID) {
     return "Gemma 4 E4B (~2.5GB) — Quality (recommended if ≥8GB RAM)";
@@ -11,6 +14,34 @@ export function schoolModelOptionLabel(id: string): string {
     return "Gemma 4 E2B (~2.0GB) — Fast (default)";
   }
   return id;
+}
+
+/** Allowed Gemma web model ids for the school picker. */
+export function isSchoolGemmaModelId(id: string): boolean {
+  return id === SCHOOL_DEFAULT_MODEL_ID || id === SCHOOL_QUALITY_MODEL_ID;
+}
+
+/** Read last selected model id from localStorage (falls back to default). */
+export function readPersistedSchoolModelId(): string {
+  if (typeof localStorage === "undefined") return SCHOOL_DEFAULT_MODEL_ID;
+  try {
+    const raw = localStorage.getItem(SCHOOL_AI_MODEL_ID_KEY);
+    if (raw && isSchoolGemmaModelId(raw)) return raw;
+  } catch {
+    /* ignore */
+  }
+  return SCHOOL_DEFAULT_MODEL_ID;
+}
+
+/** Persist picker selection. */
+export function persistSchoolModelId(id: string): void {
+  if (typeof localStorage === "undefined") return;
+  if (!isSchoolGemmaModelId(id)) return;
+  try {
+    localStorage.setItem(SCHOOL_AI_MODEL_ID_KEY, id);
+  } catch {
+    /* ignore */
+  }
 }
 
 /**

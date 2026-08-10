@@ -1,12 +1,19 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import {
+  SCHOOL_AI_MODEL_ID_KEY,
   SCHOOL_DEFAULT_MODEL_ID,
   SCHOOL_QUALITY_MODEL_ID,
+  persistSchoolModelId,
+  readPersistedSchoolModelId,
   schoolModelOptionLabel,
   schoolModelRecommendHint,
 } from "@/ai/school-model-picker";
 
 describe("school model picker copy", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
   it("keeps E2B as the default id", () => {
     expect(SCHOOL_DEFAULT_MODEL_ID).toBe("gemma-4-E2B-it-web");
     expect(SCHOOL_QUALITY_MODEL_ID).toBe("gemma-4-E4B-it-web");
@@ -22,5 +29,16 @@ describe("school model picker copy", () => {
     expect(schoolModelRecommendHint(4)).toMatch(/E2B/i);
     expect(schoolModelRecommendHint(8)).toMatch(/E4B/i);
     expect(schoolModelRecommendHint(null)).toMatch(/default/i);
+  });
+
+  it("persists and restores the selected Gemma model id", () => {
+    expect(readPersistedSchoolModelId()).toBe(SCHOOL_DEFAULT_MODEL_ID);
+    persistSchoolModelId(SCHOOL_QUALITY_MODEL_ID);
+    expect(window.localStorage.getItem(SCHOOL_AI_MODEL_ID_KEY)).toBe(
+      SCHOOL_QUALITY_MODEL_ID,
+    );
+    expect(readPersistedSchoolModelId()).toBe(SCHOOL_QUALITY_MODEL_ID);
+    persistSchoolModelId("not-a-model");
+    expect(readPersistedSchoolModelId()).toBe(SCHOOL_QUALITY_MODEL_ID);
   });
 });
