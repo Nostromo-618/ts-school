@@ -23,20 +23,18 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      # Private VDL packages are not on npm yet (file:../0_vanduo/...).
+      # VDL packages are not on npm yet (file:../0_vanduo/...); clone public siblings.
       - name: Checkout vdl-ai-chat
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: vanduo-oss/vdl-ai-chat
           path: .ci-vdl-ai-chat
-          token: ${{ secrets.VANDUO_READ_TOKEN }}
 
       - name: Checkout vdl-hybrid-search
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: vanduo-oss/vdl-hybrid-search
           path: .ci-vdl-hybrid-search
-          token: ${{ secrets.VANDUO_READ_TOKEN }}
 
       - name: "Link VDL packages for file: dependencies"
         run: |

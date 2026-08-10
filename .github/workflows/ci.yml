@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [main]
 
-# All @vanduo-oss/* npm deps install from the registry except the private
-# vdl-ai-chat / vdl-hybrid-search packages (file:../0_vanduo/... until published).
-# CI clones those repos as sibling paths (org Actions access or a read token).
+# All @vanduo-oss/* npm deps install from the registry except
+# vdl-ai-chat / vdl-hybrid-search (file:../0_vanduo/... until published).
+# CI clones those public repos as sibling paths (default GITHUB_TOKEN).
 
 # Least-privilege default token: this workflow only reads the repo.
 permissions:
@@ -21,22 +21,17 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      # Private vanduo-oss packages: default GITHUB_TOKEN is repo-scoped to
-      # ts-school and cannot read cross-org private repos. VANDUO_READ_TOKEN is
-      # the Nostromo-618 gh login (repo scope) — not a separate PAT.
       - name: Checkout vdl-ai-chat
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: vanduo-oss/vdl-ai-chat
           path: .ci-vdl-ai-chat
-          token: ${{ secrets.VANDUO_READ_TOKEN }}
 
       - name: Checkout vdl-hybrid-search
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: vanduo-oss/vdl-hybrid-search
           path: .ci-vdl-hybrid-search
-          token: ${{ secrets.VANDUO_READ_TOKEN }}
 
       - name: "Link VDL packages for file: dependencies"
         run: |
