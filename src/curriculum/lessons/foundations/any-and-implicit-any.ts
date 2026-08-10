@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 8,
   summary:
-    "any switches the checker off for everything it touches, and untyped parameters hand it to you without asking. Where it leaks in and how to see it.",
+    "`any` switches the checker off for everything it touches, and untyped parameters hand it to you without asking. Where it leaks in and how to see it.",
   prerequisites: ["annotations-vs-inference"],
   keywords: ["any", "implicit any", "noImplicitAny", "escape hatch", "unsound"],
   problem:
-    "One any at the edge of a module silently disables checking for every value derived from it.",
+    "One `any` at the edge of a module silently disables checking for every value derived from it.",
   js: {
     code: `function handle(body) {
   // Trust the client: body.userId is "whatever".
@@ -32,7 +32,7 @@ function handle(body) {
 handle({ userId: 42 });
 `,
     highlights: [{ start: 2, end: 2 }],
-    caption: "TS7006: parameter 'body' implicitly has an 'any' type.",
+    caption: "TS7006: parameter 'body' implicitly has an `any` type.",
     expectedDiagnostics: [
       {
         code: 7006,
@@ -42,31 +42,31 @@ handle({ userId: 42 });
     ],
   },
   insight: [
-    "Explicit any opts out of checking for that value and everything derived from it.",
-    "noImplicitAny (on under strict) forces you to notice untyped parameters instead of inventing any for you.",
-    "Prefer unknown at boundaries, then narrow — any is an escape hatch, not a default.",
+    "Explicit `any` opts out of checking for that value and everything derived from it.",
+    "`noImplicitAny` (on under `strict`) forces you to notice untyped parameters instead of inventing `any` for you.",
+    "Prefer `unknown` at boundaries, then narrow — `any` is an escape hatch, not a default.",
   ],
   security: {
     title: "any erases the trust boundary",
-    body: "Annotating request bodies as any (or leaving them implicit) means authorization IDs, roles, and nested objects are never checked. Attackers supply the shape; any tells TypeScript to look away.",
+    body: "Annotating request bodies as `any` (or leaving them implicit) means authorization IDs, roles, and nested objects are never checked. Attackers supply the shape; `any` tells TypeScript to look away.",
     severity: "critical",
   },
   quiz: [
     {
       id: "q1",
-      prompt: "What does noImplicitAny change?",
+      prompt: "What does `noImplicitAny` change?",
       choices: [
-        { id: "a", text: "It bans the any keyword entirely" },
+        { id: "a", text: "It bans the `any` keyword entirely" },
         {
           id: "b",
-          text: "It errors when TypeScript would otherwise invent an any",
+          text: "It errors when TypeScript would otherwise invent an `any`",
         },
         { id: "c", text: "It enables runtime validation" },
-        { id: "d", text: "It only affects .js files" },
+        { id: "d", text: "It only affects `.js` files" },
       ],
       answerId: "b",
       explanation:
-        "You can still write any explicitly; the flag stops implicit anys from slipping in unnoticed.",
+        "You can still write `any` explicitly; the flag stops implicit anys from slipping in unnoticed.",
     },
   ],
   exercise: {

@@ -8,6 +8,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { VdAlert, VdIcon } from "@vanduo-oss/vd3";
 import { VdFlowchart } from "@vanduo-oss/vd3-cbun/flowchart";
+import ProseHtml from "@/components/ProseHtml.vue";
 import DualPane from "@/components/lesson/DualPane.vue";
 import ExerciseBlock from "@/components/lesson/ExerciseBlock.vue";
 import QuizBlock from "@/components/lesson/QuizBlock.vue";
@@ -145,12 +146,12 @@ const SECURITY_VARIANTS: Record<
         </span>
       </div>
 
-      <p class="ts-lead">{{ lesson.summary }}</p>
+      <ProseHtml class="ts-lead" :text="lesson.summary" />
     </header>
 
     <section class="vd-stack" data-gap="fib-5" aria-labelledby="lesson-problem">
       <h2 id="lesson-problem">The problem</h2>
-      <p>{{ lesson.problem }}</p>
+      <ProseHtml :text="lesson.problem" />
     </section>
 
     <section
@@ -190,7 +191,7 @@ const SECURITY_VARIANTS: Record<
       <h2 id="lesson-insight">Takeaways</h2>
       <ul>
         <li v-for="(item, index) in lesson.insight" :key="index">
-          {{ item }}
+          <ProseHtml :text="item" />
         </li>
       </ul>
     </section>
@@ -200,7 +201,7 @@ const SECURITY_VARIANTS: Record<
       :variant="SECURITY_VARIANTS[lesson.security.severity]"
       :title="lesson.security.title"
     >
-      {{ lesson.security.body }}
+      <ProseHtml :text="lesson.security.body" />
     </VdAlert>
 
     <section

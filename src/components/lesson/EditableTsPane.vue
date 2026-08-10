@@ -9,6 +9,7 @@
 import { computed, ref } from "vue";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
 import type { VdCodeEditorExposed } from "@vanduo-oss/vd3-cbun/code-editor";
+import ProseHtml from "@/components/ProseHtml.vue";
 import type { TsDiagnostic } from "@/typecheck";
 import DiagnosticsList from "./DiagnosticsList.vue";
 
@@ -52,7 +53,9 @@ function jumpTo(diagnostic: TsDiagnostic): void {
   <div class="ts-pane ts-pane-ts vd-stack" data-gap="fib-5">
     <div class="ts-pane-header">
       <span class="ts-pane-label">TypeScript</span>
-      <span class="vd-text-muted vd-text-sm">{{ caption }}</span>
+      <span class="vd-text-muted vd-text-sm"
+        ><ProseHtml inline :text="caption"
+      /></span>
     </div>
     <VdCodeEditor
       ref="editorRef"

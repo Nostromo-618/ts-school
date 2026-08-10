@@ -8,6 +8,7 @@ import { computed, ref, watch } from "vue";
 import { VdAlert } from "@vanduo-oss/vd3";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
 import { formatExerciseAiHelpPrompt } from "@/ai/exercise-help";
+import ProseHtml from "@/components/ProseHtml.vue";
 import { lessonById, type Exercise } from "@/curriculum";
 import { normalizeSource, type TsDiagnostic } from "@/typecheck";
 import { useAiChatStore } from "@/stores/aiChat";
@@ -113,7 +114,7 @@ function askAiHelp(): void {
   >
     <header class="vd-stack" data-gap="fib-5">
       <h2 id="lesson-exercise">Exercise</h2>
-      <p>{{ exercise.prompt }}</p>
+      <ProseHtml :text="exercise.prompt" />
       <p class="vd-text-muted vd-text-sm">
         Check compares your code to the authored solution (normalized
         whitespace), not a live typecheck. Diagnostics below are build-time
@@ -174,7 +175,9 @@ function askAiHelp(): void {
     </VdAlert>
 
     <ul v-if="showHints && exercise.hints" class="ts-exercise-hints">
-      <li v-for="(hint, index) in exercise.hints" :key="index">{{ hint }}</li>
+      <li v-for="(hint, index) in exercise.hints" :key="index">
+        <ProseHtml :text="hint" />
+      </li>
     </ul>
   </section>
 </template>

@@ -10,13 +10,20 @@ test.describe("quiz and exercise flows", () => {
 
     await page
       .getByRole("button", {
-        name: /argument's type is not assignable to the parameter/i,
+        name: /B.*argument's type is not assignable to the parameter/i,
       })
       .click();
 
     await expect(
       page.getByRole("status").filter({ hasText: /Correct/i }),
     ).toBeVisible();
+
+    const letters = page.locator(".ts-quiz-choice-letter");
+    await expect(letters).toHaveCount(4);
+    await expect(letters.nth(0)).toHaveText("A");
+    await expect(letters.nth(1)).toHaveText("B");
+    await expect(letters.nth(2)).toHaveText("C");
+    await expect(letters.nth(3)).toHaveText("D");
 
     await expect(page.getByRole("heading", { name: "Exercise" })).toBeVisible();
     const exerciseEditor = page.getByLabel("Exercise editor");

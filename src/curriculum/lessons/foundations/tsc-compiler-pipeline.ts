@@ -46,7 +46,8 @@ const generatorStages = typecheckOnly(pipeline);
 const wrong: "emit" = generatorStages[0];
 `,
     highlights: [{ start: 16, end: 16 }],
-    caption: "Checker diagnostics exist without emit — the generator/CI mode.",
+    caption:
+      "Checker diagnostics exist without emit — generator/CI mode uses `noEmit`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -56,7 +57,7 @@ const wrong: "emit" = generatorStages[0];
     ],
   },
   insight: [
-    "Program owns SourceFiles; TypeChecker answers type questions after bind.",
+    "`Program` owns `SourceFile`s; `TypeChecker` answers type questions after bind.",
     "Errors can originate in parse, bind, or check — the code number hints which family.",
     "Emit is optional: `noEmit` / transpile-only tools skip or replace the checker.",
   ],

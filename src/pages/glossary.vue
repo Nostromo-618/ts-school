@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { VdBadge, VdIcon, VdInput } from "@vanduo-oss/vd3";
+import ProseHtml from "@/components/ProseHtml.vue";
 import {
   TIERS,
   TIER_BADGE_VARIANTS,
@@ -100,7 +101,7 @@ const lessonsFor = (ids: readonly string[]) =>
           </VdBadge>
         </dt>
         <dd class="ts-glossary-definition">
-          <p>{{ term.definition }}</p>
+          <ProseHtml :text="term.definition" />
           <p v-if="term.aliases?.length" class="vd-text-muted vd-text-xs">
             Also written: {{ term.aliases.join(", ") }}
           </p>

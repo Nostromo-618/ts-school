@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 10,
   summary:
-    "A tsconfig for a Node service, option by option: target, module, moduleResolution, lib, outDir, rootDir, strict, and skipLibCheck.",
+    "A `tsconfig` for a Node service, option by option: `target`, `module`, `moduleResolution`, `lib`, `outDir`, `rootDir`, `strict`, and `skipLibCheck`.",
   prerequisites: ["strict-mode"],
   keywords: ["tsconfig", "target", "module", "lib", "outDir", "configuration"],
   problem:
-    "Copying a tsconfig from a blog post produces errors that make no sense, because half its options were written for a different runtime.",
+    "Copying a `tsconfig` from a blog post produces errors that make no sense, because half its options were written for a different runtime.",
   js: {
     code: `// package.json "type": "module" but code still uses require —
 // config and runtime disagree long before types enter the picture.
@@ -42,26 +42,26 @@ export function read(path: string): string {
     ],
   },
   insight: [
-    "For Node today: module/moduleResolution bundler or nodenext, target es2022+, strict true.",
-    "lib should match your runtime — do not pull dom into a pure Node service.",
-    "skipLibCheck speeds builds by skipping .d.ts checking; it does not fix your code.",
+    "For Node today: `module`/`moduleResolution` bundler or nodenext, `target` es2022+, `strict` true.",
+    "`lib` should match your runtime — do not pull `dom` into a pure Node service.",
+    "`skipLibCheck` speeds builds by skipping `.d.ts` checking; it does not fix your code.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: 'Why avoid "lib": ["dom"] in a Node API service?',
+      prompt: 'Why avoid `"lib": ["dom"]` in a Node API service?',
       choices: [
         {
           id: "a",
           text: "DOM types make the compiler slower and invent browser globals",
         },
         { id: "b", text: "Node cannot run JavaScript" },
-        { id: "c", text: "strict mode requires it" },
-        { id: "d", text: "It disables noEmit" },
+        { id: "c", text: "`strict` mode requires it" },
+        { id: "d", text: "It disables `noEmit`" },
       ],
       answerId: "a",
       explanation:
-        "dom adds window/document and related types that hide mistakes in server code.",
+        "`dom` adds `window`/`document` and related types that hide mistakes in server code.",
     },
   ],
   exercise: {

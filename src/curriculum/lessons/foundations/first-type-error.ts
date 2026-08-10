@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 2,
   summary:
-    "Point tsc at a JavaScript file you already have, watch it disagree with you, and learn the shortest loop between writing a line and being told it is wrong.",
+    "Point `tsc` at a JavaScript file you already have, watch it disagree with you, and learn the shortest loop between writing a line and being told it is wrong.",
   prerequisites: ["why-types"],
   keywords: ["tsc", "cli", "noEmit", "checkJs", "first error"],
   problem:

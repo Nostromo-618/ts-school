@@ -8,6 +8,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { VdTabs } from "@vanduo-oss/vd3";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
+import ProseHtml from "@/components/ProseHtml.vue";
 import { isPlaceholder, type CodePane, type TsCodePane } from "@/curriculum";
 import type { TsDiagnostic } from "@/typecheck";
 import DiagnosticsList from "./DiagnosticsList.vue";
@@ -79,7 +80,9 @@ onBeforeUnmount(() => {
       >
         <div class="ts-pane-header">
           <span class="ts-pane-label">JavaScript</span>
-          <span class="vd-text-muted vd-text-sm">{{ js.caption }}</span>
+          <span class="vd-text-muted vd-text-sm"
+            ><ProseHtml inline :text="js.caption"
+          /></span>
         </div>
         <VdCodeEditor
           :model-value="js.code"
@@ -104,7 +107,9 @@ onBeforeUnmount(() => {
       >
         <div class="ts-pane-header">
           <span class="ts-pane-label">TypeScript</span>
-          <span class="vd-text-muted vd-text-sm">{{ ts.caption }}</span>
+          <span class="vd-text-muted vd-text-sm"
+            ><ProseHtml inline :text="ts.caption"
+          /></span>
         </div>
         <VdCodeEditor
           :model-value="ts.code"
@@ -121,7 +126,9 @@ onBeforeUnmount(() => {
       <div class="ts-pane ts-pane-js vd-stack" data-gap="fib-5">
         <div class="ts-pane-header">
           <span class="ts-pane-label">JavaScript</span>
-          <span class="vd-text-muted vd-text-sm">{{ js.caption }}</span>
+          <span class="vd-text-muted vd-text-sm"
+            ><ProseHtml inline :text="js.caption"
+          /></span>
         </div>
         <VdCodeEditor
           :model-value="js.code"
@@ -141,7 +148,9 @@ onBeforeUnmount(() => {
       <div v-else class="ts-pane ts-pane-ts vd-stack" data-gap="fib-5">
         <div class="ts-pane-header">
           <span class="ts-pane-label">TypeScript</span>
-          <span class="vd-text-muted vd-text-sm">{{ ts.caption }}</span>
+          <span class="vd-text-muted vd-text-sm"
+            ><ProseHtml inline :text="ts.caption"
+          /></span>
         </div>
         <VdCodeEditor
           :model-value="ts.code"

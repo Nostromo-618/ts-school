@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { RouterLink, useRoute, useRouter } from "vue-router";
 import { VdBadge, VdIcon, VdProgress } from "@vanduo-oss/vd3";
+import ProseHtml from "@/components/ProseHtml.vue";
 import {
   TIERS,
   TIER_BADGE_VARIANTS,
@@ -141,7 +142,10 @@ const visibleTracks = computed(() =>
             <RouterLink :to="lessonRoute(lesson)" class="ts-track-lesson-title">
               {{ lesson.title }}
             </RouterLink>
-            <p class="vd-text-muted vd-text-sm">{{ lesson.summary }}</p>
+            <ProseHtml
+              class="vd-text-muted vd-text-sm"
+              :text="lesson.summary"
+            />
           </div>
         </li>
       </ol>

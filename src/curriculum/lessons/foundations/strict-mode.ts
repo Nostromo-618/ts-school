@@ -34,7 +34,7 @@ function label(user: User) {
 label(undefined);
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "strictNullChecks turns 'maybe missing' into a compile error.",
+    caption: "`strictNullChecks` turns 'maybe missing' into a compile error.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -44,23 +44,23 @@ label(undefined);
     ],
   },
   insight: [
-    "strict enables a bundle: strictNullChecks, noImplicitAny, strictFunctionTypes, and more.",
-    "For a brownfield Node app, turn flags on one at a time — start with noImplicitAny and strictNullChecks.",
-    "A codebase that compiles only with strict:false is barely typed; prefer fixing errors over disabling the flag.",
+    "`strict` enables a bundle: `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, and more.",
+    "For a brownfield Node app, turn flags on one at a time — start with `noImplicitAny` and `strictNullChecks`.",
+    "A codebase that compiles only with `strict: false` is barely typed; prefer fixing errors over disabling the flag.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "Which strict flag rejects undefined where a User is required?",
+      prompt: "Which `strict` flag rejects undefined where a User is required?",
       choices: [
-        { id: "a", text: "noUnusedLocals" },
-        { id: "b", text: "strictNullChecks" },
-        { id: "c", text: "skipLibCheck" },
-        { id: "d", text: "allowJs" },
+        { id: "a", text: "`noUnusedLocals`" },
+        { id: "b", text: "`strictNullChecks`" },
+        { id: "c", text: "`skipLibCheck`" },
+        { id: "d", text: "`allowJs`" },
       ],
       answerId: "b",
       explanation:
-        "strictNullChecks makes null and undefined distinct from other types.",
+        "`strictNullChecks` makes `null` and `undefined` distinct from other types.",
     },
   ],
   exercise: {

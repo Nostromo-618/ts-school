@@ -37,23 +37,23 @@ sendWelcome(raw as User);
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "No TypeScript error here — that's the point: as User is a compile-time claim; Node still crashes.",
+      "No TypeScript error here — that's the point: `as User` is a compile-time claim; Node still crashes.",
     expectedDiagnostics: [],
   },
   insight: [
-    "TypeScript erases types: the emitted JavaScript has no User, no annotations, no assertions.",
+    "TypeScript erases types: the emitted JavaScript has no `User`, no annotations, no assertions.",
     "A type annotation documents intent for the checker; it never validates bytes from the network.",
-    "At trust boundaries use unknown + narrowing (or a schema library) — covered in the runtime-boundary track.",
+    "At trust boundaries use `unknown` + narrowing (or a schema library) — covered in the runtime-boundary track.",
   ],
   security: {
     title: "Assertions are not validation",
-    body: "Casting JSON.parse(...) as User (or any) is a security smell: attackers control the wire format. Prefer unknown and check email before use.",
+    body: "Casting `JSON.parse(...)` as `User` (or `any`) is a security smell: attackers control the wire format. Prefer `unknown` and check email before use.",
     severity: "critical",
   },
   quiz: [
     {
       id: "q1",
-      prompt: "After tsc emits JavaScript, what remains of type User?",
+      prompt: "After `tsc` emits JavaScript, what remains of type `User`?",
       choices: [
         { id: "a", text: "A runtime class named User" },
         { id: "b", text: "Nothing — types are erased" },
@@ -67,7 +67,7 @@ sendWelcome(raw as User);
   ],
   exercise: {
     prompt:
-      "Remove the unsafe assertion. Accept unknown and narrow before calling sendWelcome.",
+      "Remove the unsafe assertion. Accept `unknown` and narrow before calling `sendWelcome`.",
     starter: `type User = { id: string; email: string };
 
 function sendWelcome(user: User) {

@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["declaration-files-intro"],
   keywords: ["tsserver", "IDE", "completions", "refactor", "language service"],
   problem:
-    "Developers write code that 'looks fine', push, and only then learn CI's tsc disagrees — usually because the editor was checking a different config.",
+    "Developers write code that 'looks fine', push, and only then learn CI's `tsc` disagrees — usually because the editor was checking a different config.",
   js: {
     code: `function renameField(row) {
   return { user_id: row.userId };
@@ -34,7 +34,7 @@ function renameField(row: Row) {
 renameField({ userId: "u_1" });
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "The editor error is tsc's error — fix it before you push.",
+    caption: "The editor error is `tsc`'s error — fix it before you push.",
     expectedDiagnostics: [
       {
         code: 2353,
@@ -44,8 +44,8 @@ renameField({ userId: "u_1" });
     ],
   },
   insight: [
-    "Your editor speaks to tsserver using the same TypeScript version and tsconfig as CI when configured correctly.",
-    "Prefer workspace TypeScript over a global install so local and CI stay aligned (this repo dual-installs typescript@7 for tooling and typescript-strada@6.0.3 for createProgram).",
+    "Your editor speaks to `tsserver` using the same TypeScript version and `tsconfig` as CI when configured correctly.",
+    "Prefer workspace TypeScript over a global install so local and CI stay aligned (this repo dual-installs `typescript@7` for tooling and `typescript-strada@6.0.3` for `createProgram`).",
     "Use rename symbol and find references — they are type-aware, unlike text search.",
   ],
   quiz: [
@@ -55,10 +55,10 @@ renameField({ userId: "u_1" });
       choices: [
         {
           id: "a",
-          text: "Different TypeScript versions or different tsconfig roots",
+          text: "Different TypeScript versions or different `tsconfig` roots",
         },
         { id: "b", text: "Editors never type-check" },
-        { id: "c", text: "CI ignores strict mode always" },
+        { id: "c", text: "CI ignores `strict` mode always" },
         { id: "d", text: "JavaScript files cannot be checked" },
       ],
       answerId: "a",
@@ -67,7 +67,7 @@ renameField({ userId: "u_1" });
     },
   ],
   exercise: {
-    prompt: "Fix the call to use accountId.",
+    prompt: "Fix the call to use `accountId`.",
     starter: `type Row = { accountId: string };
 
 function renameField(row: Row) {
