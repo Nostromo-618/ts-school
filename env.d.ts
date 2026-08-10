@@ -145,7 +145,16 @@ declare module "@vanduo-oss/vdl-engines/guardrails/llm.js" {
   export function validateLlmInput(input: unknown): {
     allowed: boolean;
     message?: string;
+    code?: string;
+    matchedPatternIds?: string[];
   };
+  export function validateLlmOutput(input: unknown): {
+    allowed: boolean;
+    message?: string;
+    code?: string;
+    matchedPatternIds?: string[];
+  };
+  export function normalizeJailbreakScanText(text: string): string;
   export function buildChatSystemPrompt(
     options?: Record<string, unknown>,
   ): string;

@@ -342,7 +342,14 @@ async function send(): Promise<void> {
     messages.value[idx] = { role: "assistant", content: reply };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    if (message === toolsUnsupportedError) {
+    const isGuardrail =
+      err instanceof Error &&
+      (err.name === "GuardrailError" ||
+        /bypass my safety|guardrail/i.test(message));
+    if (isGuardrail) {
+      // Keep the learner message; show the deterministic block as the reply.
+      messages.value[idx] = { role: "assistant", content: message };
+    } else if (message === toolsUnsupportedError) {
       try {
         const reply = await chat.generate(text, (partial: string) => {
           messages.value[idx] = { role: "assistant", content: partial };
