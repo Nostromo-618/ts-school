@@ -1,20 +1,4 @@
-# semantic-search Specification
-
-## Purpose
-TBD - created by archiving change dogfood-vdl-packages. Update Purpose after archive.
-## Requirements
-### Requirement: Hybrid curriculum search engine
-
-The curriculum search store MUST use `HybridSearch` from
-`@vanduo-oss/vdl-hybrid-search` (formerly `NeptuneSearch` from
-`@vanduo-oss/vdl-engines`). Injectable Fuse/Transformers loaders MUST remain
-supported for CSP.
-
-#### Scenario: hybrid search constructs engine
-- **GIVEN** the search store initializes
-- **WHEN** `ensureEngine` runs
-- **THEN** it constructs `HybridSearch` with curriculum index/vector URLs and
-  host-provided loaders
+## ADDED Requirements
 
 ### Requirement: Same-origin ORT WASM for semantic search
 
@@ -24,4 +8,3 @@ The site MUST serve Transformers.js ONNX Runtime WASM assets from the same origi
 - **GIVEN** the search store constructs HybridSearch
 - **WHEN** semantic warmup starts
 - **THEN** ORT WASM loads from `${BASE_URL}transformers-wasm/` rather than cdn.jsdelivr.net
-

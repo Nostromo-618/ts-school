@@ -387,7 +387,14 @@ export const useSearchStore = defineStore("search", () => {
       maxResults: MAX_RESULTS,
       fuseThreshold: FUSE_THRESHOLD,
       loadFuse: async () => ({ default: Fuse }),
-      loadTransformers: async () => import("@huggingface/transformers"),
+      loadTransformers: async () => {
+        const mod = await import("@huggingface/transformers");
+        // CSP script-src 'self' blocks Transformers' default jsDelivr ORT WASM.
+        const wasm = mod.env.backends.onnx?.wasm;
+        if (wasm) wasm.wasmPaths = `${base}transformers-wasm/`;
+        return mod;
+      },
+      onnxWasmPaths: `${base}transformers-wasm/`,
     });
     search.onSemanticProgress((data) => {
       applySemanticProgress(data);

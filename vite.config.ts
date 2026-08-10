@@ -4,6 +4,7 @@ import { fileURLToPath, URL } from "node:url";
 import { readFileSync } from "node:fs";
 import { localModelsPlugin } from "./vite.local-models.ts";
 import { litertWasmPlugin } from "./vite.litert-wasm.ts";
+import { transformersWasmPlugin } from "./vite.transformers-wasm.ts";
 
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 
@@ -22,7 +23,12 @@ export default defineConfig({
   // vite-ssg feeds this to the router history base via import.meta.env.BASE_URL,
   // which is also the prefix everything under public/ is served from.
   base: process.env.VITE_BASE ?? "/",
-  plugins: [vue(), localModelsPlugin(projectRoot), litertWasmPlugin()],
+  plugins: [
+    vue(),
+    localModelsPlugin(projectRoot),
+    litertWasmPlugin(),
+    transformersWasmPlugin(),
+  ],
   define: {
     __APP_VERSION__: JSON.stringify(APP_VERSION),
   },
