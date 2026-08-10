@@ -480,6 +480,8 @@ onBeforeUnmount(() => {
       </select>
       <VdButton
         size="sm"
+        class="ts-ai-load-btn"
+        :class="{ 'is-awaiting-load': !loaded && !loading }"
         :disabled="loading || streaming"
         :loading="loading"
         data-testid="ts-ai-load"
@@ -607,3 +609,29 @@ onBeforeUnmount(() => {
     </footer>
   </aside>
 </template>
+
+<style scoped>
+/* Soft attention pulse while Ask is open and the model still needs loading.
+   Status text ("Model not loaded") carries the meaning; motion is secondary. */
+.ts-ai-load-btn.is-awaiting-load {
+  animation: ts-ai-load-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes ts-ai-load-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.68;
+    filter: brightness(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ts-ai-load-btn.is-awaiting-load {
+    animation: none;
+  }
+}
+</style>
