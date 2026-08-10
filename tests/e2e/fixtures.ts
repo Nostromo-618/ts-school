@@ -13,7 +13,7 @@ export const FIXTURE_LESSON = {
 } as const;
 
 export const PROGRESS_STORAGE_KEY = "ts-school-progress";
-export const THEME_STORAGE_KEY = "vanduo-theme-preference";
+export const THEME_STORAGE_KEY = "ts-school-theme-preference";
 export { TOC_STORAGE_KEY, TOC_VERSION, AI_RISK_STORAGE_KEY };
 
 export const EXERCISE_SOLUTION = `function addTax(amount: number): number {

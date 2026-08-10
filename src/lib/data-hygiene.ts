@@ -24,6 +24,11 @@ import {
   parseNotes,
   type NotesV1,
 } from "@/stores/notes";
+import {
+  LEGACY_VD3_THEME_KEYS,
+  VD3_THEME_KEYS,
+  clearVd3ThemeStorageKeys,
+} from "@/lib/vd3-theme-storage";
 
 /** Labs AiChat marks cached models with this localStorage prefix. */
 export const MODEL_CACHE_FLAG_PREFIX = "vdl-ai-chat-model-cached:";
@@ -41,15 +46,8 @@ export function isLikelyModelStorageName(name: string): boolean {
   );
 }
 
-/** vd3 theme preference keys the site can write via useThemePreference. */
-export const VD3_THEME_KEYS = [
-  "vanduo-theme-preference",
-  "vanduo-palette",
-  "vanduo-primary-color",
-  "vanduo-neutral-color",
-  "vanduo-radius",
-  "vanduo-font-preference",
-] as const;
+/** Site-prefixed vd3 theme keys (see `vd3-theme-storage.ts`). */
+export { VD3_THEME_KEYS, LEGACY_VD3_THEME_KEYS };
 
 export const SCHOOL_STORAGE_KEYS = [
   PROGRESS_STORAGE_KEY,
@@ -165,7 +163,7 @@ export function buildLocalDataInventory(): LocalDataInventoryItem[] {
       key,
       present: safeGetItem(key) !== null,
       group: "theme",
-      label: key.replace(/^vanduo-/, "Theme: "),
+      label: key.replace(/^ts-school-/, "Theme: "),
     });
   }
 
@@ -328,7 +326,7 @@ export interface ClearAllSchoolDataOptions {
 }
 
 /**
- * Remove school-owned localStorage keys + best-effort vd3 theme keys.
+ * Remove school-owned localStorage keys + site/legacy vd3 theme keys.
  * Does not touch in-memory Pinia — callers must reset stores / consent.
  */
 export function clearSchoolLocalStorage(
@@ -337,9 +335,8 @@ export function clearSchoolLocalStorage(
   for (const key of SCHOOL_STORAGE_KEYS) {
     safeRemoveItem(key);
   }
-  for (const key of VD3_THEME_KEYS) {
-    safeRemoveItem(key);
-  }
+  // Clears `ts-school-*` theme keys and any leftover legacy `vanduo-*` keys.
+  clearVd3ThemeStorageKeys();
   clearModelCacheFlags();
   if (
     options.clearTocDeclined !== false &&

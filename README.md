@@ -116,6 +116,31 @@ mise exec -- pnpm dev
 | `pnpm test:e2e:llm`        | Same + gated Gemma chat (needs `.models/` + WebGPU) |
 | `pnpm gate:release`        | Full release readiness gate (see above)           |
 
+## Theme localStorage keys
+
+`@vanduo-oss/vd3` 1.2.2 hardcodes theme preference keys with a `vanduo-`
+prefix (`VanduoVue` / `themeDefaults` expose no storage-prefix option). This
+site remaps those keys to `ts-school-*` via
+[`src/lib/vd3-theme-storage.ts`](./src/lib/vd3-theme-storage.ts) so prefs do
+not collide with other vd3 apps on the same origin:
+
+| vd3 key (hardcoded) | TypeScript School key |
+| ------------------- | --------------------- |
+| `vanduo-theme-preference` | `ts-school-theme-preference` |
+| `vanduo-palette` | `ts-school-palette` |
+| `vanduo-primary-color` | `ts-school-primary-color` |
+| `vanduo-neutral-color` | `ts-school-neutral-color` |
+| `vanduo-radius` | `ts-school-radius` |
+| `vanduo-font-preference` | `ts-school-font-preference` |
+
+On first load, any existing `vanduo-*` theme values are copied to the
+`ts-school-*` keys and the legacy keys are removed. Profile clear-all removes
+both. If upstream vd3 adds an official storage prefix, prefer that and retire
+the remapper.
+
+Site theme defaults (unchanged): violet primary, stone / charcoal neutrals,
+radius `0.375`, font `lato`.
+
 ## TypeScript dual install
 
 | Package               | Version | Role |

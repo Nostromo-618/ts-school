@@ -13,8 +13,8 @@ import {
  * Ported in shape from `vd3-docs/src/stores/theme.ts`, but not in substance.
  * The donor predates the package's `useThemePreference()` singleton and owns
  * the preference state itself; here the singleton is the only writer of the
- * `data-*` attributes and the `vanduo-*` storage keys, and this store is a thin
- * layer of site policy over it.
+ * `data-*` attributes and (via the site remapper) the `ts-school-*` theme
+ * storage keys, and this store is a thin layer of site policy over it.
  *
  * That matters because the shell renders the package's `VdThemeSwitcher` *and*
  * its `VdThemeCustomizer` at the same time. Two independent writers of the same

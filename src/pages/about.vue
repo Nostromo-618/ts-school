@@ -66,7 +66,7 @@ const techGroups: TechGroup[] = [
         name: "@vanduo-oss/vd3",
         href: "https://github.com/vanduo-oss/vd3",
         blurb:
-          "Layout primitives, buttons, forms, timeline, footer, and self-hosted fonts/icons.",
+          "Layout primitives, buttons, forms, timeline, footer, and self-hosted fonts/icons. Theme prefs are remapped from vd3’s hardcoded `vanduo-*` localStorage keys to `ts-school-*` so they do not collide with other vd3 sites on the same origin (see README).",
         extraLinks: [
           {
             label: "npm",

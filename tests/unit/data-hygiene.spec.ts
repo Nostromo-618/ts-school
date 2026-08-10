@@ -81,7 +81,7 @@ describe("data hygiene", () => {
     window.localStorage.setItem(PROGRESS_STORAGE_KEY, "x");
     window.localStorage.setItem(NOTES_STORAGE_KEY, "x");
     window.localStorage.setItem(AI_RISK_STORAGE_KEY, "x");
-    window.localStorage.setItem("vanduo-theme-preference", "dark");
+    window.localStorage.setItem("ts-school-theme-preference", "dark");
     window.localStorage.setItem(`${MODEL_CACHE_FLAG_PREFIX}gemma`, "1");
     window.sessionStorage.setItem("ts-school-toc-declined", TOC_VERSION);
 
@@ -90,7 +90,7 @@ describe("data hygiene", () => {
     expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull();
     expect(window.localStorage.getItem(NOTES_STORAGE_KEY)).toBeNull();
     expect(window.localStorage.getItem(AI_RISK_STORAGE_KEY)).toBeNull();
-    expect(window.localStorage.getItem("vanduo-theme-preference")).toBeNull();
+    expect(window.localStorage.getItem("ts-school-theme-preference")).toBeNull();
     expect(
       window.localStorage.getItem(`${MODEL_CACHE_FLAG_PREFIX}gemma`),
     ).toBeNull();

@@ -28,6 +28,19 @@ test.describe("theme persistence", () => {
       )
       .toBe("dark");
 
+    await expect
+      .poll(async () =>
+        page.evaluate(() => {
+          const leftovers: string[] = [];
+          for (let i = 0; i < localStorage.length; i += 1) {
+            const key = localStorage.key(i);
+            if (key?.startsWith("vanduo-")) leftovers.push(key);
+          }
+          return leftovers;
+        }),
+      )
+      .toEqual([]);
+
     await page.reload();
 
     await expect

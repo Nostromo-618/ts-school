@@ -1,4 +1,9 @@
 import { vi } from 'vitest';
+import { installVd3ThemeStoragePrefix } from '@/lib/vd3-theme-storage';
+
+// Mirror main.ts: remap vd3's hardcoded `vanduo-*` theme keys to `ts-school-*`
+// before any useThemePreference() access in unit tests.
+installVd3ThemeStoragePrefix();
 
 // jsdom ships neither of these, and vd3 components reach for both on mount.
 

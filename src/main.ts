@@ -4,6 +4,7 @@ import { VanduoVue } from "@vanduo-oss/vd3";
 import App from "./App.vue";
 import { buildRoutes } from "./router";
 import { hasDeclinedDisclaimer } from "./lib/disclaimer";
+import { installVd3ThemeStoragePrefix } from "./lib/vd3-theme-storage";
 import "@vanduo-oss/vd3/css";
 // Only the cbun bundles ts-school actually renders: charts on the adoption
 // pages, the code editor in both lesson panes, flowcharts for narrowing and
@@ -12,6 +13,10 @@ import "@vanduo-oss/vd3-cbun/charts/css";
 import "@vanduo-oss/vd3-cbun/code-editor/css";
 import "@vanduo-oss/vd3-cbun/flowchart/css";
 import "./styles/app.css";
+
+// vd3 hardcodes `vanduo-*` storage keys (no official prefix option in 1.2.2).
+// Remap to `ts-school-*` before any useThemePreference() hydration.
+installVd3ThemeStoragePrefix();
 
 const routes = buildRoutes();
 
@@ -37,7 +42,7 @@ export const createApp = ViteSSG(
   },
   ({ app, router }) => {
     app.use(createPinia());
-    // Site defaults for new visitors (no vanduo-* localStorage prefs yet).
+    // Site defaults for new visitors (no ts-school-* theme prefs yet).
     // Stored prefs always win — vd3 loadPreference uses getItem ?? default.
     // Lato is self-hosted in vd3 (font-src 'self'); radius is rem without unit.
     // ThemeDefaults has a single NEUTRAL (no light/dark keys); stone is the

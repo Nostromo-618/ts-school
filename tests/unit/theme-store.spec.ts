@@ -63,7 +63,14 @@ describe('theme store', () => {
     store.setRadius('0.5');
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(localStorage.getItem('vanduo-theme-preference')).toBe('dark');
+    expect(localStorage.getItem('ts-school-theme-preference')).toBe('dark');
+    // Remapper must not leave a shared vanduo-* key for other vd3 origins.
+    const vanduoKeys: string[] = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('vanduo-')) vanduoKeys.push(key);
+    }
+    expect(vanduoKeys).toEqual([]);
   });
 
   it('returns to the site defaults on reset', () => {
