@@ -25,6 +25,10 @@ test.describe("global search", () => {
       hasText: /first type error/i,
     });
     await expect(result.first()).toBeVisible({ timeout: 10_000 });
+    // Match-type pills (Fuzzy / Semantic / AI) are intentionally omitted.
+    await expect(searchDialog(page).getByText(/^Fuzzy$/i)).toHaveCount(0);
+    await expect(searchDialog(page).getByText(/^Semantic$/i)).toHaveCount(0);
+    await expect(searchDialog(page).getByText(/^AI$/i)).toHaveCount(0);
     await result.first().click();
 
     await expect(page).toHaveURL(new RegExp(`${FIXTURE_LESSON.path}$`));

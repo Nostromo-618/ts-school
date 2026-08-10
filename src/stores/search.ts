@@ -47,6 +47,59 @@ const MIN_QUERY_LENGTH = 2;
 const MAX_RESULTS = 20;
 const DEBOUNCE_MS = 280;
 
+/** Progress payload from Neptune `onSemanticProgress`. */
+export type SemanticProgressEvent = {
+  stage?: string;
+  message?: string;
+  progress?: { loaded?: number; total?: number };
+};
+
+/**
+ * Map a Neptune semantic progress event to footer status.
+ *
+ * Neptune (and transformers.js) can report `downloading` at 100% while the
+ * extractor promise and vectors are still finishing — leaving "Downloading
+ * model… 100%" stuck until `ready`. Treat ≥100% as download-complete and clear
+ * the downloading copy; show ready / error only from those stages.
+ */
+export function semanticStatusFromProgress(
+  data: SemanticProgressEvent,
+):
+  | { kind: "ready" }
+  | { kind: "error"; message: string }
+  | { kind: "status"; message: string }
+  | { kind: "clear" } {
+  if (data.stage === "ready") return { kind: "ready" };
+  if (data.stage === "error") {
+    return {
+      kind: "error",
+      message: data.message || "Semantic search unavailable",
+    };
+  }
+
+  const pct = downloadPercent(data);
+  if (
+    (data.stage === "downloading" || data.stage === "loading-model") &&
+    pct !== null &&
+    pct >= 100
+  ) {
+    return { kind: "clear" };
+  }
+
+  if (data.message) return { kind: "status", message: data.message };
+  return { kind: "clear" };
+}
+
+function downloadPercent(data: SemanticProgressEvent): number | null {
+  const loaded = data.progress?.loaded;
+  const total = data.progress?.total;
+  if (typeof loaded === "number" && typeof total === "number" && total > 0) {
+    return Math.round((loaded / total) * 100);
+  }
+  const match = data.message?.match(/(\d+)\s*%/);
+  return match ? Number(match[1]) : null;
+}
+
 const buildFallbackIndex = (tree: NavTree): SearchEntry[] => {
   const entries: SearchEntry[] = [];
   for (const page of tree.pages) {
@@ -121,6 +174,25 @@ export const useSearchStore = defineStore("search", () => {
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let searchGen = 0;
 
+  function applySemanticProgress(data: SemanticProgressEvent): void {
+    const next = semanticStatusFromProgress(data);
+    if (next.kind === "ready") {
+      semanticReady.value = true;
+      statusMessage.value = "";
+      return;
+    }
+    if (next.kind === "error") {
+      semanticFailed.value = true;
+      statusMessage.value = next.message;
+      return;
+    }
+    if (next.kind === "clear") {
+      statusMessage.value = "";
+      return;
+    }
+    statusMessage.value = next.message;
+  }
+
   async function ensureEngine(): Promise<NeptuneSearch> {
     if (engine.value) return engine.value;
     const base = import.meta.env.BASE_URL.endsWith("/")
@@ -134,24 +206,23 @@ export const useSearchStore = defineStore("search", () => {
       loadTransformers: async () => import("@huggingface/transformers"),
     });
     search.onSemanticProgress((data) => {
-      if (data.stage === "ready") {
-        semanticReady.value = true;
-        statusMessage.value = "";
-      } else if (data.stage === "error") {
-        semanticFailed.value = true;
-        statusMessage.value = data.message || "Semantic search unavailable";
-      } else if (data.message) {
-        statusMessage.value = data.message;
-      }
+      applySemanticProgress(data);
     });
     engine.value = search;
     void search
       .initSemantic()
       .then(() => {
         semanticReady.value = true;
+        statusMessage.value = "";
       })
       .catch(() => {
         semanticFailed.value = true;
+        if (
+          !statusMessage.value ||
+          /downloading model/i.test(statusMessage.value)
+        ) {
+          statusMessage.value = "Semantic search unavailable";
+        }
       });
     return search;
   }

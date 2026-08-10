@@ -171,13 +171,6 @@ onUnmounted(() => {
                 </div>
                 <div class="vd-doc-search-result-category">
                   {{ result.entry.category }}
-                  <span class="ts-search-source" :data-source="result.source">{{
-                    result.source === "semantic"
-                      ? "Semantic"
-                      : result.source === "fuzzy"
-                        ? "Fuzzy"
-                        : "Match"
-                  }}</span>
                 </div>
               </div>
             </li>

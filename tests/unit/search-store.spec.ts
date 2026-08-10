@@ -2,7 +2,10 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { allLessons, lessonRoute } from "@/curriculum";
 import { nav, navSections } from "@/nav";
-import { useSearchStore } from "@/stores/search";
+import {
+  semanticStatusFromProgress,
+  useSearchStore,
+} from "@/stores/search";
 
 // The search index is the second consumer of the derived nav tree, and the one
 // a reader notices first when it is wrong.
@@ -108,5 +111,46 @@ describe("search store", () => {
     expect(store.isOpen).toBe(false);
     expect(store.query).toBe("");
     expect(store.activeIndex).toBe(0);
+  });
+});
+
+describe("semanticStatusFromProgress", () => {
+  it("keeps mid-download status messages", () => {
+    expect(
+      semanticStatusFromProgress({
+        stage: "downloading",
+        message: "Downloading model… 45%",
+        progress: { loaded: 45, total: 100 },
+      }),
+    ).toEqual({ kind: "status", message: "Downloading model… 45%" });
+  });
+
+  it("clears downloading status once progress reaches 100%", () => {
+    expect(
+      semanticStatusFromProgress({
+        stage: "downloading",
+        message: "Downloading model… 100%",
+        progress: { loaded: 100, total: 100 },
+      }),
+    ).toEqual({ kind: "clear" });
+
+    expect(
+      semanticStatusFromProgress({
+        stage: "downloading",
+        message: "Downloading model… 100%",
+      }),
+    ).toEqual({ kind: "clear" });
+  });
+
+  it("marks ready and surfaces errors", () => {
+    expect(semanticStatusFromProgress({ stage: "ready" })).toEqual({
+      kind: "ready",
+    });
+    expect(
+      semanticStatusFromProgress({
+        stage: "error",
+        message: "boom",
+      }),
+    ).toEqual({ kind: "error", message: "boom" });
   });
 });

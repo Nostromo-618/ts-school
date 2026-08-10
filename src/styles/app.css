@@ -815,30 +815,41 @@ body {
   max-height: min(50vh, 26rem);
 }
 
+/* Slightly larger type than package defaults (xs/sm) for palette readability. */
+.ts-search-modal .vd-doc-search-input {
+  font-size: var(--vd-font-size-base, 1rem);
+}
+
 .ts-search-modal .ts-search-group {
   padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-13, 1.3125rem) 0;
+  font-size: var(--vd-font-size-sm, 0.8125rem);
   font-weight: 600;
 }
 
-.ts-search-source {
-  display: inline-block;
-  margin-left: var(--vd-space-fib-5, 0.5rem);
-  padding: 0.1rem 0.4rem;
-  border-radius: var(--vd-radius-sm, 0.25rem);
-  font-size: 0.7rem;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--vd-text-muted, #6b7280);
-  border: 1px solid var(--vd-border-color, #e5e7eb);
+.ts-search-modal .vd-doc-search-result-title {
+  font-size: var(--vd-font-size-base, 1rem);
 }
 
-.ts-search-source[data-source="semantic"] {
-  color: var(--vd-color-primary, #2563eb);
-  border-color: color-mix(
-    in srgb,
-    var(--vd-color-primary, #2563eb) 35%,
-    transparent
-  );
+.ts-search-modal .vd-doc-search-result-category {
+  font-size: var(--vd-font-size-sm, 0.8125rem);
+}
+
+.ts-search-modal .vd-doc-search-empty-title {
+  font-size: var(--vd-font-size-base, 1rem);
+}
+
+.ts-search-modal .vd-doc-search-empty-text {
+  font-size: var(--vd-font-size-sm, 0.8125rem);
+}
+
+.ts-search-modal .vd-doc-search-footer {
+  font-size: var(--vd-font-size-sm, 0.8125rem);
+}
+
+.ts-search-modal .vd-doc-search-footer kbd {
+  font-size: var(--vd-font-size-xs, 0.75rem);
+  min-width: 1.35rem;
+  height: 1.35rem;
 }
 
 /* ── Lesson AI chat sidebar ── */
