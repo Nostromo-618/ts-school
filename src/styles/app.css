@@ -23,6 +23,44 @@
   --vd-alert-border-width: 2px;
 }
 
+/*
+ * Dark text ladder — vd3's later `[data-theme="dark"]` block remaps
+ * `--vd-text-muted` / `--vd-text-secondary` onto mid-scale
+ * `--vd-color-gray-*` aliases (gray-5 / gray-6). With charcoal (and similar)
+ * neutrals those resolve to ~2.2–3.9:1 on charcoal surfaces, so captions like
+ * "58 lessons" and filter counts become nearly invisible. Prefer the lighter
+ * `--vd-gray-N` steps (same intent as vd3's earlier dark block) so muted stays
+ * secondary but readable. Light theme is untouched.
+ */
+[data-theme="dark"] {
+  --vd-text-secondary: var(--vd-gray-3);
+  --vd-text-muted: var(--vd-gray-4);
+  --vd-text-light: var(--vd-gray-5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --vd-text-secondary: var(--vd-gray-3);
+    --vd-text-muted: var(--vd-gray-4);
+    --vd-text-light: var(--vd-gray-5);
+  }
+}
+
+/*
+ * Filled primary chips: `.vd-text-muted` counts would still paint mid-gray on
+ * purple (muddy even after the ladder fix). Ease on-primary white so the label
+ * leads and the count stays readable.
+ */
+.vd-btn-primary .vd-text-muted,
+.vd-btn-primary .vd-text-secondary,
+.vd-btn-primary .vd-text-light {
+  color: color-mix(
+    in srgb,
+    var(--vd-text-on-primary, #fff) 78%,
+    transparent
+  );
+}
+
 /* Package surfaces that hardcode `1px` instead of the width tokens above. */
 .vd-btn,
 .vd-badge-outlined,
