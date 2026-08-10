@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns", "union-types"],
   keywords: ["generic", "type parameter", "identity", "reuse", "inference"],
   problem:
-    "A helper typed with `any` hands back `any`, so one utility function erases types across the entire codebase that uses it. Look at the left pane: one function, many shapes — no relationship preserved. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "A helper typed with `any` hands back `any`, so one utility function erases types across the entire codebase that uses it. One function, many shapes — no relationship preserved.",
   solution:
-    "Generic T ties input to output. string is not number. Generics preserve relationships between inputs and outputs. Let inference work — annotate when the relationship matters. Start with one type parameter before adding constraints. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Generic T ties input to output. string is not number. Generics preserve relationships between inputs and outputs. Let inference work — annotate when the relationship matters. Start with one type parameter before adding constraints.",
   js: {
     code: `function identity(x) { return x; }
 const n = identity(1);

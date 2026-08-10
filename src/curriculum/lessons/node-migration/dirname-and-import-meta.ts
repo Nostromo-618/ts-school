@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["commonjs-to-esm"],
   keywords: ["__dirname", "import.meta", "fileURLToPath", "path", "esm"],
   problem:
-    "Every file-reading helper in a Node codebase uses __dirname, and it does not exist in an ES module. Look at the left pane: __dirname in a CJS file. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Nearly every file-reading helper in a Node codebase reaches for `__dirname`, and that binding simply does not exist in an ES module. The helper still 'looks right' until the first ESM entrypoint loads it and throws. Path math becomes a module-system problem, not a filesystem one.",
   solution:
-    "ESM uses a helper from `import.meta`.url. __dirname typed as `undefined` is not a string. In ESM, build directory paths from `import.meta`.url via fileURLToPath. __dirname and __filename are CJS-only bindings. Keep a small helper so every file does not re-implement the URL dance. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "In ESM, build directory paths from `import.meta.url` via `fileURLToPath`. `__dirname` and `__filename` are CJS-only. Keep a tiny shared helper so every file does not re-implement the URL dance. Treating `__dirname` as `undefined` (or as a string it is not) is how the typechecker catches the mix-up early.",
   js: {
     code: `const configPath = path.join(__dirname, "config.json");
 `,

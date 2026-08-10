@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["discriminated-unions"],
   keywords: ["in operator", "narrowing", "property presence", "duck typing"],
   problem:
-    "Third-party union types rarely come with a discriminant, so branching on them needs a different proof. Look at the left pane: runtime key check without types. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Third-party union types rarely come with a discriminant, so branching on them needs a different proof. Runtime key check without types. `in` narrows unions when members have distinct keys.",
   solution:
-    "`in` narrows the true branch to Dog; the else is Cat, so bark() errors. `in` narrows unions when members have distinct keys. It still follows the prototype chain — pair with untrusted-object lessons. Prefer discriminated unions when you control the data model. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "`in` narrows the true branch to Dog; the else is Cat, so bark() errors. `in` narrows unions when members have distinct keys. It still follows the prototype chain — pair with untrusted-object lessons. Prefer discriminated unions when you control the data model.",
   js: {
     code: `function label(pet) {
   if ("bark" in pet) return pet.bark();

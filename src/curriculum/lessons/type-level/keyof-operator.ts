@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "union-types"],
   keywords: ["keyof", "keys", "union", "operator", "type query"],
   problem:
-    "A helper that takes a property name accepts `any` string, so a renamed field breaks at runtime instead of at build time. Look at the left pane: dynamic key access with no key constraint. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A helper that takes a property name accepts `any` string, so a renamed field breaks at runtime instead of at build time. Dynamic key access with no key constraint.",
   solution:
-    "`keyof` User forbids `unknown` keys. `keyof` T is the union of keys of T. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "`keyof` User forbids `unknown` keys. `keyof` T is the union of keys of T. Aim for a shape where the bad state is unrepresentable — or at least loudly illegal before it runs.",
   js: {
     code: `function get(obj, key) { return obj[key]; }
 `,

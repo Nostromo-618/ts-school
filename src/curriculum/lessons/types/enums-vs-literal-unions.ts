@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["literal-types"],
   keywords: ["enum", "literal union", "const enum", "erasable"],
   problem:
-    "enum is the feature that looks most familiar to developers arriving from other languages, and it is the one that behaves least like they expect. Look at the left pane: object maps still accept `any` string at the call site. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "enum is the feature that looks most familiar to developers arriving from other languages, and it is the one that behaves least like they expect. Object maps still accept `any` string at the call site.",
   solution:
-    "Prefer type Role = \"admin\" | \"user\" for erasable string sets. Numeric enums are bidirectional and surprisingly assignable from number — a frequent footgun. `String` enums require the enum member; bare strings are rejected (as shown). For most Node apps, a union of string literals (or `as const` objects) is simpler and erases cleanly. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Prefer type Role = \"admin\" | \"user\" for erasable string sets. Numeric enums are bidirectional and surprisingly assignable from number — a frequent footgun. `String` enums require the enum member; bare strings are rejected (as shown). For most Node apps, a union of string literals (or `as const` objects) is simpler and erases cleanly.",
   js: {
     code: `const Role = { Admin: "admin", User: "user" };
 

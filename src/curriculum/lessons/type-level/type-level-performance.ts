@@ -20,9 +20,9 @@ export const lesson: Lesson = {
     "recursion",
   ],
   problem:
-    "A clever type in a shared package makes the editor lag in every consumer, and the cost is invisible where it was written. Look at the left pane: unchecked recursion is expensive in values and in types. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A clever type in a shared package makes the editor lag in every consumer, and the cost is invisible where it was written. Unchecked recursion is expensive in values and in types.",
   solution:
-    "Deep key unions grow fast; bad keys still cost expansion. Every conditional/mapped expansion is work; shared packages multiply that work by consumer count. Prefer interfaces for object shapes when possible — they cache better than complex aliases. Profile with --generateTrace / --extendedDiagnostics before “optimizing” by guesswork. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Deep key unions grow fast; bad keys still cost expansion. Every conditional/mapped expansion is work; shared packages multiply that work by consumer count. Prefer interfaces for object shapes when possible — they cache better than complex aliases. Profile with --generateTrace / --extendedDiagnostics before “optimizing” by guesswork.",
   js: {
     code: `// JS analogy: a recursive utility with no memoization.
 function deepKeys(obj, path = "") {

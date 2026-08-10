@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "api",
   ],
   problem:
-    "Nothing stops a type from getting looser, so the invalid usage your API deliberately rejects starts compiling and no test notices. Look at the left pane: negative type tests have no JS equivalent. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Nothing stops a type from getting looser, so the invalid usage your API deliberately rejects starts compiling and no test notices. Negative type tests have no JS equivalent.",
   solution:
-    "@ts-expect-error documents intentional failures; returns stay number. @ts-expect-error is better than @ts-ignore for tests — unused expect-errors fail. Put negative tests next to the API so loosenings break CI. Do not use expect-error to silence real bugs in production code paths. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "@ts-expect-error documents intentional failures; returns stay number. @ts-expect-error is better than @ts-ignore for tests — unused expect-errors fail. Put negative tests next to the API so loosenings break CI. Do not use expect-error to silence real bugs in production code paths.",
   js: {
     code: `// JS cannot assert “this call is illegal” — everything is legal.
 function takeNumber(n) {

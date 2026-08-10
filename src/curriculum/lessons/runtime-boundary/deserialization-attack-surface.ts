@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "security",
   ],
   problem:
-    "A deep-merge helper applied to a request body can rewrite `Object.prototype` for the whole process. Look at the left pane: merging untrusted keys can pollute `Object.prototype`. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "A deep-merge helper applied to a request body can rewrite `Object.prototype` for the whole process. Merging untrusted keys can pollute `Object.prototype`. Never deep-merge untrusted objects onto prototypes or shared config.",
   solution:
-    "Allowlists + skipped proto keys; name is still string | `undefined`. Never deep-merge untrusted objects onto prototypes or shared config. Allowlist keys; reject __proto__, prototype, and constructor. Types describe intent after a safe parse — they do not make merge safe. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Allowlists + skipped proto keys; name is still string | `undefined`. Never deep-merge untrusted objects onto prototypes or shared config. Allowlist keys; reject __proto__, prototype, and constructor. Types describe intent after a safe parse — they do not make merge safe.",
   js: {
     code: `// JS: recursive merge trusts keys like __proto__.
 function merge(target, source) {

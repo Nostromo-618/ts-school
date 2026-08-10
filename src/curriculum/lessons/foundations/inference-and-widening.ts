@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["widening", "literal types", "const", "let", "fresh literals"],
   problem:
-    "A status that started as \"ready\" silently becomes `any` string, so typos like \"redy\" compile until something else breaks. Look at the left pane: javaScript has no notion of 'only these strings'. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "A variable initialized as `\"ready\"` can silently widen to `string`, so typos like `\"redy\"` compile until a comparison fails at runtime. Inference is helpful until widening erases the literal you cared about.",
   solution:
-    "let widens the literal; Status no longer accepts the binding. ready. ready. ready. Use a type annotation (let status: Status) or `as const` when the set of values matters. Widening is why stringly-typed enums feel fine in JS and then fail under TypeScript. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Use `as const` or a literal type annotation when the exact string/number matters. Let context (arguments, return positions) pin literals when you can. Widening is not a bug in TypeScript — it is a default; override it where the domain needs precision.",
   js: {
     code: `function setStatus(status) {
   return status;

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["classes-intro", "interfaces-intro"],
   keywords: ["implements", "extends", "inheritance", "structural", "contract"],
   problem:
-    "Developers arriving from nominal languages reach for implements to make a class assignable, which it never needed. Look at the left pane: extends used for everything. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Developers arriving from nominal languages reach for implements to make a class assignable, which it never needed. extends used for everything. Extends inherits implementation; implements only checks shape.",
   solution:
-    "implements checks the shape; bark returns string. extends inherits implementation; implements only checks shape. A class can implement multiple interfaces. Failing implements is a compile error on the class body. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "implements checks the shape; bark returns string. extends inherits implementation; implements only checks shape. A class can implement multiple interfaces. Failing implements is a compile error on the class body.",
   js: {
     code: `class Dog extends Animal {}
 `,

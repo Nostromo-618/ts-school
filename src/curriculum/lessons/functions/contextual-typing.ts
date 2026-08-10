@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["function-type-expressions"],
   keywords: ["contextual typing", "callback inference", "map"],
   problem:
-    "You annotate every callback parameter out of fear, then the annotations drift from the array element type after a refactor. Look at the left pane: strings have no toFixed — fails only when the line runs. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "You annotate every callback parameter out of fear, then the annotations drift from the array element type after a refactor. Strings have no toFixed — fails only when the line runs.",
   solution:
-    "Contextual typing still catches the wrong method. When a function expects (x: T) => U, an unannotated callback parameter becomes T. You usually do not need to restate the parameter type inside .map/.filter callbacks. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Contextual typing still catches the wrong method. When a function expects (x: T) => U, an unannotated callback parameter becomes T. You usually do not need to restate the parameter type inside .map/.filter callbacks.",
   js: {
     code: `const ids = ["a", "b", "c"];
 ids.map((id) => id.toFixed(0));

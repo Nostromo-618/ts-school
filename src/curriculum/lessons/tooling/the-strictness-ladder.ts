@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["strict-mode", "tsc-cli"],
   keywords: ["strict", "noImplicitAny", "strictNullChecks", "migration"],
   problem:
-    "Enabling \"`strict`\": true on a million-line repo produces 40k errors and a revert by Friday. Look at the left pane: each `strict` flag targets a class of this bug. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Enabling \"`strict`\": true on a million-line repo produces 40k errors and a revert by Friday. Each `strict` flag targets a class of this bug. Suggested order: `noImplicitAny` → `strictNullChecks` → `strictFunctionTypes` → full `strict`.",
   solution:
-    "`strictNullChecks` is usually the highest-value early climb. Suggested order: `noImplicitAny` → `strictNullChecks` → `strictFunctionTypes` → full `strict`. Track error counts per flag in CI so progress is visible. fix. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "`strictNullChecks` is usually the highest-value early climb. Track error counts per flag in CI so progress is visible. fix. Re-read the right-hand types once; the takeaways below compress what should stick.",
   js: {
     code: `function len(s) {
   return s.length;

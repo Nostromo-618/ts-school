@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["promise-types"],
   keywords: ["async", "await", "Promise", "return type"],
   problem:
-    "An async function forgets to return on one branch; callers await `undefined` and crash. Look at the left pane: implicit `undefined` return becomes a resolved `undefined`. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "An async function forgets to return on one branch; callers await `undefined` and crash. Implicit `undefined` return becomes a resolved `undefined`. Async function f(): `Promise<T>` means every return path must produce T (or throw).",
   solution:
-    "`Promise<User>` rejects a bare return (`undefined`). async function f(): `Promise<T>` means every return path must produce T (or throw). await expression has the inner type of the `Promise`. Try/catch around await still types the caught value as `unknown` under useUnknownInCatchVariables. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "`Promise<User>` rejects a bare return (`undefined`). async function f(): `Promise<T>` means every return path must produce T (or throw). await expression has the inner type of the `Promise`. Try/catch around await still types the caught value as `unknown` under useUnknownInCatchVariables.",
   js: {
     code: `async function loadName(id) {
   if (id === "missing") return;

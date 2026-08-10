@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "signal",
   ],
   problem:
-    "A request that the caller no longer wants keeps running, and there is no type-level pressure to accept a signal. Look at the left pane: no cancellation plumbing. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A request that the caller no longer wants keeps running, and there is no type-level pressure to accept a signal. No cancellation plumbing. Pass `AbortSignal` into APIs that support it.",
   solution:
-    "Thread `AbortSignal` through. load returns string, not number. Pass `AbortSignal` into APIs that support it. AbortError should be handled distinctly from other failures. Cancel on timeout and on navigation away. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Thread `AbortSignal` through. load returns string, not number. Pass `AbortSignal` into APIs that support it. AbortError should be handled distinctly from other failures. Cancel on timeout and on navigation away.",
   js: {
     code: `await fetch(url);
 `,

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["template-literal-types-intro", "infer-keyword"],
   keywords: ["template literal", "infer", "parse", "route params", "string"],
   problem:
-    "\"/users/:id/posts/:postId\" contains two parameter names that no framework can check unless the type system reads the string. Look at the left pane: parameter names are untyped strings in plain JS routers. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "\"/users/:id/posts/:postId\" contains two parameter names that no framework can check unless the type system reads the string. Parameter names are untyped strings in plain JS routers.",
   solution:
-    "`infer walks` the template; wrong param names are not assignable. Template literal types + `infer are` a parser: match a prefix, bind a piece, recurse on the rest. Keep grammars small — string parsers explode compile time quickly. Frameworks use this for typed routes; prefer codegen when the string language gets rich. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "`infer walks` the template; wrong param names are not assignable. Template literal types + `infer are` a parser: match a prefix, bind a piece, recurse on the rest. Keep grammars small — string parsers explode compile time quickly. Frameworks use this for typed routes; prefer codegen when the string language gets rich.",
   js: {
     code: `// JS: route params are strings looked up by name — typos are runtime 404s.
 function param(path, name) {

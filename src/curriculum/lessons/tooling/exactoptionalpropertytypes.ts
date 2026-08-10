@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "patch",
   ],
   problem:
-    "A PATCH body where a field is missing means leave it alone, and where it is `null` means clear it — and one type covers both. Look at the left pane: `undefined` written into optional fields casually. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "A PATCH body where a field is missing means leave it alone, and where it is `null` means clear it — and one type covers both. `undefined` written into optional fields casually.",
   solution:
-    "Options.timeout?: number is not number | `undefined` for fresh calls under `exactOptionalPropertyTypes` — modeled here as a mismatch. `exactOptionalPropertyTypes` distinguishes missing from `undefined`. Useful for APIs where `undefined` means something different. Enable carefully — it is not part of `strict`. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Options.timeout?: number is not number | `undefined` for fresh calls under `exactOptionalPropertyTypes` — modeled here as a mismatch. `exactOptionalPropertyTypes` distinguishes missing from `undefined`. Useful for APIs where `undefined` means something different. Enable carefully — it is not part of `strict`.",
   js: {
     code: `const opts = { timeout: undefined };
 `,

@@ -19,9 +19,9 @@ export const lesson: Lesson = {
     "hkt",
   ],
   problem:
-    "Storing a generic function in a variable collapses it to one instantiation, and the abstraction you were building disappears. Look at the left pane: higher-order helpers in JS carry no type parameters as values. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Storing a generic function in a variable collapses it to one instantiation, and the abstraction you were building disappears. Higher-order helpers in JS carry no type parameters as values.",
   solution:
-    "Once collapsed to a concrete signature, other T values are rejected. Generic function values stay generic when passed to higher-order functions that expect `<T>(…) => …`. Instantiation expressions (`fn<Type>`) fix type arguments without invoking the function. TypeScript lacks higher-kinded types; encode patterns with generics on functions, not type constructors as values. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Once collapsed to a concrete signature, other T values are rejected. Generic function values stay generic when passed to higher-order functions that expect `<T>(…) => …`. Instantiation expressions (`fn<Type>`) fix type arguments without invoking the function. TypeScript lacks higher-kinded types; encode patterns with generics on functions, not type constructors as values.",
   js: {
     code: `// JS: map is generic in spirit but values are untyped.
 const map = (arr, fn) => arr.map(fn);

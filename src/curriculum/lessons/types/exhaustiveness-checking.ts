@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["discriminated-unions"],
   keywords: ["never", "exhaustive", "switch", "assertNever", "default case"],
   problem:
-    "Adding a case to a union is a one-line change; finding the nine switch statements that needed updating is not. Look at the left pane: missing triangle case returns `undefined`. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Adding a case to a union is a one-line change; finding the nine switch statements that needed updating is not. Missing triangle case returns `undefined`. AssertNever(shape) in the default branch forces new variants to be handled.",
   solution:
-    "default: assertNever(shape) errors until triangle is handled. assertNever(shape) in the default branch forces new variants to be handled. Without it, forgetting a case returns `undefined` silently in JS. Prefer switch over if-chains for tagged unions. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "default: assertNever(shape) errors until triangle is handled. assertNever(shape) in the default branch forces new variants to be handled. Without it, forgetting a case returns `undefined` silently in JS. Prefer switch over if-chains for tagged unions.",
   js: {
     code: `function area(shape) {
   if (shape.kind === "circle") return Math.PI * shape.r ** 2;

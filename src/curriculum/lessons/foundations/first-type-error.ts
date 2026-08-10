@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["why-types"],
   keywords: ["tsc", "cli", "noEmit", "checkJs", "first error"],
   problem:
-    "Nothing tells you a file is wrong until it runs, and in a Node service 'runs' can mean 'in production, at 3am'. Look at the left pane: `String` coercion turns tax math into concatenation or NaN territory. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "The first red squiggle feels like the tool is broken — especially when the same JavaScript 'worked' yesterday. What actually happened is that a shape mismatch finally has a name and a location.",
   solution:
-    "`TS2345`: the argument type must match the parameter. Read a TypeScript error bottom-up: expected type, actual type, then the expression on the flagged line. The error code (here 2345) is stable; the prose may change between TypeScript releases. Fix the types at the boundary (parse the query string) rather than widening the parameter to string | number. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Read the diagnostic: expected vs actual, and the property or argument that disagrees. Fix the data or fix the type annotation — do not start with `as` or `any`. The left pane is the silent version of the same bug; the right pane is why you opened the lesson.",
   js: {
     code: `function addTax(amount) {
   return amount * 1.2;

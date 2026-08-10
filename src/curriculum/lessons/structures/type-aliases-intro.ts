@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "union-types"],
   keywords: ["type alias", "type", "union alias"],
   problem:
-    "The same User | `null` union is copy-pasted through ten files until one of them forgets the `null`. Look at the left pane: without a shared alias, shape drift is invisible. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "The same User | `null` union is copy-pasted through ten files until one of them forgets the `null`. Without a shared alias, shape drift is invisible. Type can name unions, intersections, primitives, and tuples — interface cannot.",
   solution:
-    "Aliases keep the union and the object shape in one place. type can name unions, intersections, primitives, and tuples — interface cannot. Aliases are transparent: UserOrAnon is exactly User | `null`. Prefer one exported alias over repeating the same union inline. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Aliases keep the union and the object shape in one place. type can name unions, intersections, primitives, and tuples — interface cannot. Aliases are transparent: UserOrAnon is exactly User | `null`. Prefer one exported alias over repeating the same union inline.",
   js: {
     code: `function nameOf(user) {
   return user ? user.name : "anonymous";

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-mocks-and-stubs", "utility-types-tour"],
   keywords: ["Partial", "DeepPartial", "mock", "cast", "recursive"],
   problem:
-    "Mocking a client with thirty methods to test one of them means writing twenty-nine you will never call. Look at the left pane: `Partial` mock passed where full API required. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Mocking a client with thirty methods to test one of them means writing twenty-nine you will never call. `Partial` mock passed where full API required. Type partial mocks with `Pick`/`Partial` of the real interface.",
   solution:
-    "`Pick<Api,'get'>` is not Api — missing post. Type partial mocks with `Pick`/`Partial` of the real interface. Do not cast partials to the full type. Keep tests honest about which methods are used. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "`Pick<Api,'get'>` is not Api — missing post. Type partial mocks with `Pick`/`Partial` of the real interface. Do not cast partials to the full type. Keep tests honest about which methods are used.",
   js: {
     code: `const api = { get: jest.fn(), post: jest.fn() };
 `,

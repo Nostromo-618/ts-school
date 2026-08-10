@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "noUncheckedIndexedAccess",
   ],
   problem:
-    "arr[0] is typed T even on an empty array, so the safest-looking line in the file is the one that throws. Look at the left pane: assuming items[0] exists. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "arr[0] is typed T even on an empty array, so the safest-looking line in the file is the one that throws. Assuming items[0] exists. Indexing may yield `undefined` — narrow before using methods.",
   solution:
-    "first returns string | `undefined`. Indexing may yield `undefined` — narrow before using methods. `noUncheckedIndexedAccess` makes this the default; model it even without the flag. Empty arrays are the classic production crash. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "first returns string | `undefined`. Indexing may yield `undefined` — narrow before using methods. `noUncheckedIndexedAccess` makes this the default; model it even without the flag. Empty arrays are the classic production crash.",
   js: {
     code: `function first(items) {
   return items[0].toUpperCase();

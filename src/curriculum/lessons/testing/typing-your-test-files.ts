@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["first-type-error", "annotations-vs-inference"],
   keywords: ["tests", "vitest", "expect", "types in tests"],
   problem:
-    "Test helpers take `any` and return `any`, so a renamed production field only fails in production. Look at the left pane: the helper 'passed' a bad fixture into a string API. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Test helpers take `any` and return `any`, so a renamed production field only fails in production. The helper 'passed' a bad fixture into a string API. Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI.",
   solution:
-    "Typed fixtures refuse the bad id at compile time. Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI. Prefer `unknown` + narrowing helpers over `any` in test utils. When production types change, failing tests should be type errors first. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Typed fixtures refuse the bad id at compile time. Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI. Prefer `unknown` + narrowing helpers over `any` in test utils. When production types change, failing tests should be type errors first.",
   js: {
     code: `function expectUser(value) {
   if (!value || typeof value.id !== "string") throw new Error("bad");

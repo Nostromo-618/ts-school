@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsconfig-essentials"],
   keywords: ["tsc", "CLI", "noEmit", "CI"],
   problem:
-    "CI runs `tsc` with different flags than developers, so the same PR is green locally and red in pipeline. Look at the left pane: without `tsc` in CI, string concatenation ships. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "CI runs `tsc` with different flags than developers, so the same PR is green locally and red in pipeline. Without `tsc` in CI, string concatenation ships. Use `tsc` --`noEmit` (or -b --pretty false) as the CI type gate.",
   solution:
-    "What `tsc -p . --noEmit` should fail on in CI. Use `tsc` --`noEmit` (or -b --pretty false) as the CI type gate. Prefer project flags via `tsconfig` over long ad-hoc CLI lists. Pin TypeScript so local, editor, and CI agree — this site uses typescript@7 for the CLI and typescript-strada@6.0.3 where createProgram is required. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "What `tsc -p . --noEmit` should fail on in CI. Use `tsc` --`noEmit` (or -b --pretty false) as the CI type gate. Prefer project flags via `tsconfig` over long ad-hoc CLI lists. Pin TypeScript so local, editor, and CI agree — this site uses typescript@7 for the CLI and typescript-strada@6.0.3 where createProgram is required.",
   js: {
     code: `// "It works when I run node" is not a typecheck.
 function add(a, b) {

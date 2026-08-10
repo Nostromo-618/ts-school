@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "constructor",
   ],
   problem:
-    "A field initialised in an async init method is `undefined` for every call that arrives before it, and the type says otherwise. Look at the left pane: fields used before assigned. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A field initialised in an async init method is `undefined` for every call that arrives before it, and the type says otherwise. Fields used before assigned. Definite assignment analysis catches uninitialised fields.",
   solution:
-    "Strict property initialization requires assigning name. Definite assignment analysis catches uninitialised fields. Use definite assignment assertions sparingly (!). Constructor parameter properties satisfy the check. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Strict property initialization requires assigning name. Definite assignment analysis catches uninitialised fields. Use definite assignment assertions sparingly (!). Constructor parameter properties satisfy the check.",
   js: {
     code: `class User { name; constructor() {} }
 `,

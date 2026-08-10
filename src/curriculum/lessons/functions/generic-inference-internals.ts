@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["inferring-type-arguments", "assignability-rules"],
   keywords: ["inference", "candidate", "priority", "supertype", "generic"],
   problem:
-    "Reordering two parameters changes the inferred type, and nothing in the signature says it should. Look at the left pane: without inference rules, paired values share no declared relationship. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Reordering two parameters changes the inferred type, and nothing in the signature says it should. Without inference rules, paired values share no declared relationship.",
   solution:
-    "An explicit T checks arguments; inferred unions must be stated or formed carefully. Each argument position that mentions T is an inference site; candidates are collected then combined. When candidates disagree, TypeScript often takes a common supertype (a union), not the first argument alone. An explicit type argument disables inference for that parameter and checks arguments against it. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "An explicit T checks arguments; inferred unions must be stated or formed carefully. Each argument position that mentions T is an inference site; candidates are collected then combined. When candidates disagree, TypeScript often takes a common supertype (a union), not the first argument alone. An explicit type argument disables inference for that parameter and checks arguments against it.",
   js: {
     code: `// JS: "identity" helpers just return what you pass — no shared T.
 function pair(a, b) {

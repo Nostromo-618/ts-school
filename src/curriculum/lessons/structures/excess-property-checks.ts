@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "assignability",
   ],
   problem:
-    "Passing { timeout: 100 } errors on a typo'd key, and hoisting it to a variable makes the error disappear without fixing anything. Look at the left pane: extra fields slide through. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Passing { timeout: 100 } errors on a typo'd key, and hoisting it to a variable makes the error disappear without fixing anything. Extra fields slide through. Excess property checks apply to fresh object literals.",
   solution:
-    "Fresh literals get excess property checks; variables can widen past them. Excess property checks apply to fresh object literals. Assigning through a variable bypasses them — beware. Use `satisfies` or exact types when extras must be rejected. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Fresh literals get excess property checks; variables can widen past them. Excess property checks apply to fresh object literals. Assigning through a variable bypasses them — beware. Use `satisfies` or exact types when extras must be rejected.",
   js: {
     code: `paint({ colour: 'red', gloss: true });
 `,

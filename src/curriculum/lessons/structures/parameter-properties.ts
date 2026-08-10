@@ -20,9 +20,9 @@ export const lesson: Lesson = {
     "di",
   ],
   problem:
-    "The most convenient class syntax in TypeScript is one of the few that Node's native type stripping refuses to run. Look at the left pane: manual field assignment in constructors. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "The most convenient class syntax in TypeScript is one of the few that Node's native type stripping refuses to run. Manual field assignment in constructors. `readonly`/public/private on ctor params create fields.",
   solution:
-    "Parameter properties `declare` and assign. name is string. `readonly`/public/private on ctor params create fields. Keep them for simple data holders; prefer explicit fields when logic grows. `erasableSyntaxOnly` may restrict some parameter property forms. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Parameter properties `declare` and assign. name is string. `readonly`/public/private on ctor params create fields. Keep them for simple data holders; prefer explicit fields when logic grows. `erasableSyntaxOnly` may restrict some parameter property forms.",
   js: {
     code: `class User {
   constructor(name) { this.name = name; }

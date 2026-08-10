@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "inference",
   ],
   problem:
-    "Extracting an object literal into a variable turns a compile error into silence, or silence into a compile error, with no other change. Look at the left pane: mode silently becomes a general string. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Extracting an object literal into a variable turns a compile error into silence, or silence into a compile error, with no other change. mode silently becomes a general string.",
   solution:
-    "string is not assignable to 'read' | 'write'. let often widens literals to string; const preserves them. Fresh object literals get excess property checks; variables do not. Annotate let when you need a literal union. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "string is not assignable to 'read' | 'write'. let often widens literals to string; const preserves them. Fresh object literals get excess property checks; variables do not. Annotate let when you need a literal union.",
   js: {
     code: `let mode = "read";
 setMode(mode);

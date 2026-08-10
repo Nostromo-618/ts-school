@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "encoding",
   ],
   problem:
-    "Buffer is a Uint8Array with extras, and code that assumes one when it has the other fails only on the byte sequences you did not test. Look at the left pane: shelling out with concatenated user input. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Child-process output is a `Buffer` or a string depending on options, and code that always calls `.toString()` on 'the result' breaks when encoding changes. Encoding and chunk types are easy to leave implicit.",
   solution:
-    "Prefer execFile with an args array. Without encoding, the result is not a string. Use execFile/spawn with an args array to avoid shell injection. encoding utf8 selects the string overload. Bound timeout and maxBuffer for untrusted workloads. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Type stdout/stderr according to the `encoding` you passed. Prefer `Buffer` when you mean bytes; decode explicitly at the boundary. Narrow exit codes and error objects instead of assuming every failure is an `Error` with `.message`. Make the option → return-type relationship visible in the types.",
   js: {
     code: `const { stdout } = execSync("ls " + userInput);
 parse(stdout);

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["adding-typescript-to-an-existing-project", "tsc-cli"],
   keywords: ["tsx", "ts-node", "emit", "production", "node"],
   problem:
-    "Production runs ts-node on every request; startup cost and trust in an on-the-fly compiler become the outage. Look at the left pane: runtime should execute trusted emit, not an ad-hoc transform. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Production runs `ts-node` (or similar) on every request; startup cost and trust in an on-the-fly compiler become the outage. Runtime should execute trusted emit, not an ad-hoc transform under load.",
   solution:
-    "Catch entry mistakes before any runner ships them. Production: compile with `tsc` (or a bundler) and run the JS output. Local: tsx / node --import tsx are fine for DX; keep them out of prod images. Match module settings (nodenext/bundler) to how you actually launch Node. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "In production: compile with `tsc` (or a bundler) and run the JavaScript output. Locally, `tsx` / `node --import tsx` are fine for DX — keep them out of prod images. Match `module` settings (`nodenext` / `bundler`) to how you actually launch Node. Catch entry mistakes before any runner ships them.",
   js: {
     code: `// Prod still needs plain JS (or a compiled artifact).
 function main() {

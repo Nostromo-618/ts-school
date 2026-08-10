@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["structural-typing"],
   keywords: ["diagnostics", "error codes", "Did you mean", "assignability"],
   problem:
-    "A wall of red text trains people to ignore the checker — learning to read one error well is faster than turning the checker off. Look at the left pane: a casing typo becomes '`undefined` Lovelace' at runtime. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Long error messages get skimmed, then silenced. The useful part is usually near the top: the property that failed assignability, or the overload that did not match. Learning to read them is faster than learning to disable them.",
   solution:
-    "`TS2345` spells out the missing property — firstName vs firstname. Start at the last line of the message: it names the expression TypeScript rejected. Work upward: required property, expected type, actual type. Error codes are searchable; 'Did you mean' hints often expose typos like nam vs name. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Start from the first line and the highlighted span. Expand 'excess property' and 'not assignable' into a concrete field mismatch. When the message cites an overload list, match your call arguments to each signature in order. Prefer fixing the types that describe intent over suppressing the noise.",
   js: {
     code: `function fullName(user) {
   return user.firstName + " " + user.lastName;

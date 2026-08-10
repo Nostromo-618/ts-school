@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["editor-driven-development", "tsc-cli"],
   keywords: ["tsserver", "language service", "workspace TypeScript"],
   problem:
-    "The editor uses a global TypeScript while CI uses the workspace pin (here typescript@7, with Strada 6 for tools that still need createProgram) — errors appear in only one place. Look at the left pane: without a project version, every machine invents its own truth. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "The editor uses a global TypeScript while CI uses the workspace pin (here typescript@7, with Strada 6 for tools that still need createProgram) — errors appear in only one place. Without a project version, every machine invents its own truth.",
   solution:
-    "Same checker as CI once the workspace TS version is selected. TypeScript: Select Workspace Version. Restart `tsserver` after `tsconfig` changes if diagnostics look stale. Huge monorepos may need project references so `tsserver` stays responsive. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Same checker as CI once the workspace TS version is selected. TypeScript: Select Workspace Version. Restart `tsserver` after `tsconfig` changes if diagnostics look stale. Huge monorepos may need project references so `tsserver` stays responsive.",
   js: {
     code: `function pick(arr) {
   return arr[0];

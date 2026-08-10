@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "opaque",
   ],
   problem:
-    "Validation happens at the edge and the value travels for another twenty functions, any of which may construct a fresh unvalidated one. Look at the left pane: nothing stops calling send with an unchecked string. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Validation happens at the edge and the value travels for another twenty functions, any of which may construct a fresh unvalidated one. Nothing stops calling send with an unchecked string.",
   solution:
-    "Only parseEmail mints Email — raw strings are rejected. Smart constructors return branded types; public APIs accept only the brand. Keep the brand key unexported so callers cannot forge values with object literals easily. Pair with runtime parsing — the brand is a compile-time receipt for a check that already ran. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Only parseEmail mints Email — raw strings are rejected. Smart constructors return branded types; public APIs accept only the brand. Keep the brand key unexported so callers cannot forge values with object literals easily. Pair with runtime parsing — the brand is a compile-time receipt for a check that already ran.",
   js: {
     code: `// JS: validate once, then pass raw strings everywhere.
 function isEmail(s) {

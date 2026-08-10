@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "refactoring",
   ],
   problem:
-    "JavaScript happily reads a property that does not exist and gives you `undefined`, so the failure surfaces three functions away from the mistake. Look at the left pane: a renamed field becomes NaN with no complaint at the call site. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "JavaScript will happily call a function with the wrong number of arguments, read missing properties as `undefined`, and keep going until something far away throws. The bug is not 'types exist' — it is that nothing refused the bad call when you wrote it.",
   solution:
-    "TypeScript refuses the payload that still uses the old field name. The bug is not 'division by `undefined`' — it is a shape mismatch at the boundary between two modules. A type checker moves that failure from production (or a distant unit test) to the edit you just made. You adopt TypeScript for the class of bug you already ship, not for academic purity. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Types are a local checkable contract: call sites and implementations have to agree before the code runs. Start with the mistakes you already make — wrong fields, missing null checks, bad returns — and let the checker make them loud. The TypeScript pane is the refusal; the takeaways are the habit.",
   js: {
     code: `// Downstream renamed total → totalCents; callers still send total.
 function charge(order) {

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["keyof-operator", "indexed-access-types"],
   keywords: ["mapped type", "in keyof", "transform", "Partial", "homomorphic"],
   problem:
-    "Hand-writing the nullable version of a twenty-field interface produces a second twenty-field interface to maintain. Look at the left pane: shallow freeze with no type change. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Hand-writing the nullable version of a twenty-field interface produces a second twenty-field interface to maintain. Shallow freeze with no type change. Name the shape so the broken call cannot compile quietly.",
   solution:
-    "Mapped `readonly` fields reject assignment. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Mapped `readonly` fields reject assignment. Check the TypeScript example for the concrete refusal, then keep the takeaways as reusable rules. Keep the TypeScript types in view — they are the fix for the failure mode above.",
   js: {
     code: `function freeze(obj) { return obj; }
 `,

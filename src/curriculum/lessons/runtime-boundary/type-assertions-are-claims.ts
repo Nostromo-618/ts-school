@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["where-types-end", "unknown-vs-any"],
   keywords: ["assertion", "as", "angle-bracket", "cast"],
   problem:
-    "Developers 'fix' a type error with as Type and ship a value that never matched Type. Look at the left pane: a mental cast does nothing at runtime. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Developers 'fix' a type error with as Type and ship a value that never matched Type. A mental cast does nothing at runtime. As Type is a compile-time claim; prefer narrowing that the checker can verify.",
   solution:
-    "No TypeScript error here — that's the point: the assertion skipped the check. Compiles. Crashes. as Type is a compile-time claim; prefer narrowing that the checker can verify. Double assertions (as `unknown` as T) are a smell — usually a wrong model. Use assertions for DOM/legacy interop after you have a real reason, not to silence errors. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "No TypeScript error here — that's the point: the assertion skipped the check. Compiles. Crashes. as Type is a compile-time claim; prefer narrowing that the checker can verify. Double assertions (as `unknown` as T) are a smell — usually a wrong model. Use assertions for DOM/legacy interop after you have a real reason, not to silence errors.",
   js: {
     code: `function asUser(value) {
   return value; // "trust me"

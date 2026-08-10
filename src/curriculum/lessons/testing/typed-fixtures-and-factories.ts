@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-your-test-files", "object-type-literals"],
   keywords: ["factory", "fixture", "satisfies", "test data"],
   problem:
-    "A shared fixture object is missing a new required field; half the suite still passes with partial data. Look at the left pane: overrides are unchecked; email becomes a number. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "A shared fixture object is missing a new required field; half the suite still passes with partial data. Overrides are unchecked; email becomes a number. Type factories as returning the production type, not a looser blob.",
   solution:
-    "`Partial<User>` still requires override values to match field types. Type factories as returning the production type, not a looser blob. `Partial<T>` is ideal for overrides — values remain checked. `satisfies` User on literal fixtures also catches missing fields without widening. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "`Partial<User>` still requires override values to match field types. Type factories as returning the production type, not a looser blob. `Partial<T>` is ideal for overrides — values remain checked. `satisfies` User on literal fixtures also catches missing fields without widening.",
   js: {
     code: `function userFixture(overrides) {
   return { id: "1", email: "a@b.co", ...overrides };

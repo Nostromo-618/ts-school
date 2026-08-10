@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "ReturnType",
   ],
   problem:
-    "Reading a type argument back out of a generic type has no syntax at all until you reach for `infer`. Look at the left pane: javaScript has no way to name “whatever getUser returns”. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Reading a type argument back out of a generic type has no syntax at all until you reach for `infer`. JavaScript has no way to name “whatever getUser returns”. `infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator.",
   solution:
-    "`infer R` binds the return type inside the match; wrong assignments fail. `infer only` works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator. Multiple `infer positions` can bind several type variables in one match (e.g. parameters and return together). `ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "`infer R` binds the return type inside the match; wrong assignments fail. `infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator. Multiple `infer` positions can bind several type variables in one match (e.g. parameters and return together). `ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism.",
   js: {
     code: `// JS: "return type of fn" is a comment, not a check.
 function getUser() {
@@ -66,8 +66,8 @@ const wrong: User = { id: 1 };
     ],
   },
   insight: [
-    "`infer only` works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator.",
-    "Multiple `infer positions` can bind several type variables in one match (e.g. parameters and return together).",
+    "`infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator.",
+    "Multiple `infer` positions can bind several type variables in one match (e.g. parameters and return together).",
     "`ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism.",
   ],
   quiz: [

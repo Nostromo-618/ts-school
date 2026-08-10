@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "workspace",
   ],
   problem:
-    "A monorepo where every package sees every other package's source has one enormous compilation unit and no boundaries at all. Look at the left pane: no project graph means no incremental typecheck boundaries. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A monorepo where every package sees every other package's source has one enormous compilation unit and no boundaries at all. No project graph means no incremental typecheck boundaries.",
   solution:
-    "composite marks buildable units in the reference graph. composite: true + references build a DAG that `tsc -b` can check incrementally. Prefer depending on emitted declarations of referenced projects, not their raw src across the graph. Solution-style roots list references without compiling app code themselves. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "composite marks buildable units in the reference graph. composite: true + references build a DAG that `tsc -b` can check incrementally. Prefer depending on emitted declarations of referenced projects, not their raw src across the graph. Solution-style roots list references without compiling app code themselves.",
   js: {
     code: `// JS monorepos often import source across packages with no build graph.
 // Everything is one pile of files to the bundler.

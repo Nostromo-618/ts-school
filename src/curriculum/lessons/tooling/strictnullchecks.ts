@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["the-strictness-ladder", "null-and-undefined"],
   keywords: ["strictNullChecks", "null", "undefined", "flag", "migration"],
   problem:
-    "Cannot read properties of `undefined` is the most common runtime error in Node, and this is the flag that finds it. Look at the left pane: `null` slides into string APIs. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Cannot read properties of `undefined` is the most common runtime error in Node, and this is the flag that finds it. `null` slides into string APIs. `strictNullChecks` makes `null`/`undefined` illicit for ordinary types.",
   solution:
-    "With `strictNullChecks`, `null` is not string. `strictNullChecks` makes `null`/`undefined` illicit for ordinary types. It is included in `strict`: true — keep it on. Use unions explicitly when absence is allowed. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "With `strictNullChecks`, `null` is not string. `strictNullChecks` makes `null`/`undefined` illicit for ordinary types. It is included in `strict`: true — keep it on. Use unions explicitly when absence is allowed.",
   js: {
     code: `function len(s) { return s.length; }
 len(null);

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-utility-functions", "inferring-type-arguments"],
   keywords: ["curry", "compose", "pipeline", "middleware", "inference"],
   problem:
-    "compose(a, b, c) is where every functional Node codebase discovers the limits of inference. Look at the left pane: curried add with no numeric guarantee. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "compose(a, b, c) is where every functional Node codebase discovers the limits of inference. Curried add with no numeric guarantee. Generics can thread types through partial application.",
   solution:
-    "Inner function returns number, not string. Generics can thread types through partial application. Prefer simple functions until currying clarifies an API. Inference across multiple arrows can need annotations. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Inner function returns number, not string. Generics can thread types through partial application. Prefer simple functions until currying clarifies an API. Inference across multiple arrows can need annotations.",
   js: {
     code: `function add(a) { return (b) => a + b; }
 `,

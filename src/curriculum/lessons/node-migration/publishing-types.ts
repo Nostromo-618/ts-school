@@ -12,14 +12,14 @@ export const lesson: Lesson = {
   keywords: [
     "publishing",
     "declaration",
-    "arethetypeswrong",
+    "@arethetypeswrong",
     "d.ts",
     "public api",
   ],
   problem:
-    "A package's types are only correct in the configuration its author used, and consumers find out at install time. Look at the left pane: without verified .d.ts, consumers guess the API. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "A package's types are only correct in the configuration its author used, and consumers find out at install time. Without verified `.d.ts`, downstream teams guess the API — or abandon your types entirely.",
   solution:
-    "Public returns should be explicit; optional Map values are | `undefined`. Emit declaration files and verify them with arethetypeswrong / publint. Prefer explicit return types on exports so .d.ts does not reference private names. Align `package.json` exports types conditions with the JS entrypoints you ship. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Emit declaration files and verify them with `@arethetypeswrong` / publint. Prefer explicit return types on exports so `.d.ts` does not leak private names. Align `package.json` `exports` types conditions with the JavaScript entrypoints you actually ship. Public returns should be explicit; optional `Map` values are `| undefined`.",
   js: {
     code: `// JS packages ship .js — types are optional afterthoughts.
 // "types" in package.json may point at missing or wrong files.
@@ -57,7 +57,7 @@ const n: number = u;
     ],
   },
   insight: [
-    "Emit declaration files and verify them with arethetypeswrong / publint.",
+    "Emit declaration files and verify them with @arethetypeswrong / publint.",
     "Prefer explicit return types on exports so .d.ts does not reference private names.",
     "Align `package.json` exports types conditions with the JS entrypoints you ship.",
   ],

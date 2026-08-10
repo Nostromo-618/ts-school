@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "utility-types-tour"],
   keywords: ["conditional type", "extends", "branch", "ternary", "generic"],
   problem:
-    "A function whose return type depends on an argument's type needs either three overloads or one conditional type. Look at the left pane: runtime `typeof` checks only. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A function whose return type depends on an argument's type needs either three overloads or one conditional type. Runtime `typeof` checks only. T extends U ? X : Y branches in the type system.",
   solution:
-    "Conditional type yields false for number — true is not assignable. T extends U ? X : Y branches in the type system. They power many library utilities. Distribute over naked type parameters — learn that next. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Conditional type yields false for number — true is not assignable. T extends U ? X : Y branches in the type system. They power many library utilities. Distribute over naked type parameters — learn that next.",
   js: {
     code: `function unwrap(x) { return x; }
 `,

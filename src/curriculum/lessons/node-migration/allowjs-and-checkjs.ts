@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["adding-typescript-to-an-existing-project"],
   keywords: ["allowJs", "checkJs", "JSDoc", "@ts-check"],
   problem:
-    "Untyped `.js` sits next to new `.ts` and silently reintroduces the bugs you adopted TypeScript to catch. Look at the left pane: with `checkJs`, JSDoc becomes a lightweight contract. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "New `.ts` files sit next to untyped `.js`, and the old bugs quietly re-enter through the door you left open. Without `checkJs`, JavaScript neighbors are invisible to the checker — so the migration feels unfinished even after you 'added TypeScript.' JSDoc can be a lightweight contract while files wait to be renamed.",
   solution:
-    "Same error you want `checkJs` to surface in `.js` files. `allowJs` includes `.js` in the project; `checkJs` type-checks them. // @ts-check at the top of a file enables checking even without `checkJs` globally. JSDoc @param/@returns is enough to unlock many migrations without a rename yet. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "`allowJs` pulls `.js` into the project; `checkJs` type-checks them. A file-level `// @ts-check` enables checking even when `checkJs` is not global. `@param` / `@returns` JSDoc unlocks a surprising amount of safety without a rename yet. Aim for the same diagnostic you would want in `.ts` — then rename when the shape is stable.",
   js: {
     code: `// @ts-check
 /** @param {number} n */

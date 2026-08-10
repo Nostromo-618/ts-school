@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["package-json-exports-and-types"],
   keywords: ["dual package", "conditional exports", "cjs", "esm", "instanceof"],
   problem:
-    "Two copies of the same class means `instanceof` fails between them, and the types compare as unrelated. Look at the left pane: duplicate module instances break identity checks. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Two copies of the same class mean `instanceof` fails between them, and TypeScript may treat the types as unrelated even when the source looks identical. Duplicate module instances break identity checks — a classic dual-package hazard when CJS and ESM graphs both load 'the same' library.",
   solution:
-    "Branded copies are not interchangeable — like dual package instances. Prefer a single module format for libraries when possible; dual publishing needs careful exports. `instanceof` and singletons are unsafe across duplicated copies. arethetypeswrong and Node’s dual-package docs describe the hazard conditions. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Branded or duplicated copies are not interchangeable. Prefer a single module format for libraries when you can; dual publishing needs careful `exports`. Do not trust `instanceof` or singletons across duplicated copies. `@arethetypeswrong` and Node's dual-package docs spell out the hazard conditions — verify before you publish.",
   js: {
     code: `// JS dual packages: two evaluations of the same class file.
 // instanceof across CJS/ESM copies returns false for "the same" class.
@@ -49,7 +49,7 @@ acceptA(fromB);
   insight: [
     "Prefer a single module format for libraries when possible; dual publishing needs careful exports.",
     "`instanceof` and singletons are unsafe across duplicated copies.",
-    "arethetypeswrong and Node’s dual-package docs describe the hazard conditions.",
+    "@arethetypeswrong and Node’s dual-package docs describe the hazard conditions.",
   ],
   security: {
     title: "Identity checks across copies",

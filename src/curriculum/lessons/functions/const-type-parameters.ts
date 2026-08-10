@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "api design",
   ],
   problem:
-    "Every user of your builder API has to remember `as const`, and the ones who forget get string instead of their route names. Look at the left pane: without literal inference, route names widen immediately. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Every user of your builder API has to remember `as const`, and the ones who forget get string instead of their route names. Without literal inference, route names widen immediately.",
   solution:
-    "<const T> preserves literal tuple types from the call site. const type parameters apply a const assertion to the inferred argument type. Library authors use them so callers need not write `as const` at every call. Combine with `readonly` arrays/tuples when you want immutable literal tables. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "<const T> preserves literal tuple types from the call site. const type parameters apply a const assertion to the inferred argument type. Library authors use them so callers need not write `as const` at every call. Combine with `readonly` arrays/tuples when you want immutable literal tables.",
   js: {
     code: `// JS: route tables are plain arrays of strings.
 function routes(names) {
@@ -77,7 +77,7 @@ const bad: First = "settings";
   ],
   exercise: {
     prompt:
-      "Write keys<const T extends `Record<string, unknown>`>(obj: T): (`keyof` T)[] that returns `Object.keys` cast appropriately, and call it on { a: 1 }.",
+      "Write keys<const T extends `Record<string, unknown>>`(obj: T): (`keyof` T)[] that returns `Object.keys` cast appropriately, and call it on { a: 1 }.",
     starter: `function keys(obj) {
   return Object.keys(obj);
 }
@@ -86,7 +86,7 @@ const k = keys({ a: 1 });
 `,
     assertion: "no-errors",
     hints: [
-      "Use <const T extends `Record<string, unknown>`> and return (`keyof` T)[].",
+      "Use <const T extends `Record<string, unknown>>` and return (`keyof` T)[].",
     ],
     solution: `function keys<const T extends Record<string, unknown>>(
   obj: T,

@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "standard schema",
   ],
   problem:
-    "A hand-written interface and a hand-written validator describe the same shape twice, and only one of them gets updated. Look at the left pane: two sources of truth — the typedef and the runtime checks — drift apart. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A hand-written interface and a hand-written validator describe the same shape twice, and only one of them gets updated. Two sources of truth — the typedef and the runtime checks — drift apart.",
   solution:
-    "User is inferred from the schema object. Assigning age (number) to string fails. One schema → inferred static type + runtime parse. Invert that and drift returns. Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson. At trust boundaries, call `.parse` / safeParse — never `as User` on JSON. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "User is inferred from the schema object. Assigning age (number) to string fails. One schema → inferred static type + runtime parse. Invert that and drift returns. Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson. At trust boundaries, call `.parse` / safeParse — never `as User` on JSON.",
   js: {
     code: `// types.js — hope someone updates this when the validator changes
 /** @typedef {{ id: string, age: number }} User */

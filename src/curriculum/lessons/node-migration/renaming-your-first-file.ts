@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["allowjs-and-checkjs", "running-typescript-in-node"],
   keywords: ["rename", ".ts", "incremental", "imports"],
   problem:
-    "Renaming a leaf file reveals that callers passed the wrong shapes all along — and that is the point. Look at the left pane: yrs vs years — hidden until the file is checked. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Renaming a leaf file reveals that callers passed the wrong shapes all along — and that is the point, not a reason to stop. A typo like `yrs` vs `years` stays hidden until the file is checked. The first rename teaches more than a week of planning meetings.",
   solution:
-    "The first rename teaches more than a week of planning. Rename leaves first (utils), then move inward toward HTTP entrypoints. Fix import paths/extensions according to your module setting (nodenext cares). One file green is progress — do not batch-rename hundreds at once. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Rename leaves first (utils), then move inward toward HTTP entrypoints. Fix import paths and extensions for your module setting (`nodenext` cares). One file green is progress — do not batch-rename hundreds at once and drown in noise.",
   js: {
     code: `// users.js
 export function age(user) {

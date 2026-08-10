@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "design",
   ],
   problem:
-    "isValid(input) checks the data and returns nothing about it, so the next line still handles a type that includes the invalid case. Look at the left pane: boolean validation — the proof does not travel with the value. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "isValid(input) checks the data and returns nothing about it, so the next line still handles a type that includes the invalid case. Boolean validation — the proof does not travel with the value.",
   solution:
-    "Parsing returns Email | `null`. Passing a plain string to send is a type error. Validation asks a question; parsing produces a value whose type encodes the answer. Branded types (or dedicated interfaces) stop raw strings from entering privileged APIs. Prefer `parseX(unknown): X | error` over `isX` + unchecked use at every call site. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Parsing returns Email | `null`. Passing a plain string to send is a type error. Validation asks a question; parsing produces a value whose type encodes the answer. Branded types (or dedicated interfaces) stop raw strings from entering privileged APIs. Prefer `parseX(unknown): X | error` over `isX` + unchecked use at every call site.",
   js: {
     code: `function isEmail(value) {
   return typeof value === "string" && value.includes("@");

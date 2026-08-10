@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["declaration-files-intro"],
   keywords: ["tsserver", "IDE", "completions", "refactor", "language service"],
   problem:
-    "Developers write code that 'looks fine', push, and only then learn CI's `tsc` disagrees — usually because the editor was checking a different config. Look at the left pane: without a project-wide checker, renames are search-and-hope. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Fighting the editor — ignoring squiggles, overusing suppressions — turns TypeScript into a CI-only tax. The feedback loop only works if you read diagnostics while you type.",
   solution:
-    "The editor error is `tsc`'s error — fix it before you push. Your editor speaks to `tsserver` using the same TypeScript version and `tsconfig` as CI when configured correctly. Prefer workspace TypeScript over a global install so local and CI stay aligned (this repo dual-installs `typescript@7` for tooling and `typescript-strada@6.0.3` for `createProgram`). Use rename symbol and find references — they are type-aware, unlike text search. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Treat the language service as part of the workflow: jump to definitions, inspect inferred types, fix errors before commit. Configure the workspace TypeScript version so the editor matches CI. Speed comes from trust in the squiggle, not from silencing it.",
   js: {
     code: `function renameField(row) {
   return { user_id: row.userId };

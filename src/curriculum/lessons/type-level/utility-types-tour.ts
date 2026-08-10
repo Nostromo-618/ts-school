@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["indexed-access-types", "optional-and-readonly-properties"],
   keywords: ["Partial", "Pick", "Omit", "Record", "Exclude", "utility types"],
   problem:
-    "`Omit` does not check that the key exists, so removing a field that was already renamed silently does nothing. Look at the left pane: patch can overwrite id. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "`Omit` does not check that the key exists, so removing a field that was already renamed silently does nothing. Patch can overwrite id. `Partial`, `Pick`, `Omit`, `Required` cover most object transforms.",
   solution:
-    "`Partial<`Pick<...>`> forbids patching id. `Partial`, `Pick`, `Omit`, `Required` cover most object transforms. Compose utilities instead of hand-rolling mapped types first. `Readonly` and `Record` round out the everyday set. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "`Partial<Pick<...>>` forbids patching id. `Partial`, `Pick`, `Omit`, `Required` cover most object transforms. Compose utilities instead of hand-rolling mapped types first. `Readonly` and `Record` round out the everyday set.",
   js: {
     code: `function update(user, patch) { return Object.assign({}, user, patch); }
 `,
@@ -30,7 +30,7 @@ const u = update({ id: "1", name: "Ada", age: 1 }, { name: "Bob" });
 const bad = update(u, { id: "2" });
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "`Partial<`Pick<...>`> forbids patching id.",
+    caption: "`Partial<Pick<...>>` forbids patching id.",
     expectedDiagnostics: [
       {
         code: 2353,

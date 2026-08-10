@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "framework",
   ],
   problem:
-    "Two decorator designs exist in the wild, they are not compatible, and the `tsconfig` flag that picks between them is easy to inherit by accident. Look at the left pane: decorators are ordinary functions; typing context.kind matters in TS. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "Two decorator designs exist in the wild, they are not compatible, and the `tsconfig` flag that picks between them is easy to inherit by accident. Decorators are ordinary functions; typing context.kind matters in TS.",
   solution:
-    "Decorator wrappers must preserve the method’s return type. experimentalDecorators enables the old TypeScript design; new code should prefer the standard model when the toolchain supports it. Context objects discriminate on kind: class, method, getter, setter, field, accessor. Do not mix legacy and standard decorators in one project — pick one emit story. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Decorator wrappers must preserve the method’s return type. experimentalDecorators enables the old TypeScript design; new code should prefer the standard model when the toolchain supports it. Context objects discriminate on kind: class, method, getter, setter, field, accessor. Do not mix legacy and standard decorators in one project — pick one emit story.",
   js: {
     code: `// JS stage-3 decorators wrap definitions — frameworks differ on details.
 function logged(value, context) {

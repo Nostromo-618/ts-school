@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "type parameter",
   ],
   problem:
-    "A cache typed with `any` is a cache that returns `any`, and every read site loses its type. Look at the left pane: box erases the wrapped type. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A cache typed with `any` is a cache that returns `any`, and every read site loses its type. Box erases the wrapped type. Generic classes keep element types on the instance.",
   solution:
-    "Box<number>.value is number, not string. Generic classes keep element types on the instance. Interfaces can be generic the same way. Infer T from the constructor argument when possible. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Box<number>.value is number, not string. Generic classes keep element types on the instance. Interfaces can be generic the same way. Infer T from the constructor argument when possible.",
   js: {
     code: `class Box { constructor(value) { this.value = value; } }
 `,

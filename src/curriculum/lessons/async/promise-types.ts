@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns", "union-types"],
   keywords: ["Promise", "async", "generics", "then"],
   problem:
-    "A function returns a Promise that sometimes resolves to a user and sometimes to `null`, but callers always await .email. Look at the left pane: `null`.email awaits you in production. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A function returns a Promise that sometimes resolves to a user and sometimes to `null`, but callers always await .email. `null`.email awaits you in production. Annotate `Promise<T>` on functions that return promises so callers see T.",
   solution:
-    "The Promise type includes `null` — narrow after await/then. Annotate `Promise<T>` on functions that return promises so callers see T. `Promise<User | null>` is honest; `Promise<User>` with silent `null` is not. Avoid `Promise<any>` — it undoes the generic. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "The Promise type includes `null` — narrow after await/then. Annotate `Promise<T>` on functions that return promises so callers see T. `Promise<User | null>` is honest; `Promise<User>` with silent `null` is not. Avoid `Promise<any>` — it undoes the generic.",
   js: {
     code: `function findUser(id) {
   return Promise.resolve(id === "x" ? null : { id, email: "a@b.co" });

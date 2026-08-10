@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["narrowing-with-typeof"],
   keywords: ["instanceof", "prototype", "class", "narrowing", "realm"],
   problem:
-    "`instanceof` Error is the standard way to inspect a caught value, and it silently stops working across a worker or vm boundary. Look at the left pane: assuming err has .message. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "`instanceof` Error is the standard way to inspect a caught value, and it silently stops working across a worker or vm boundary. Assuming err has .message. `instanceof` narrows class instances across catch/`unknown` boundaries.",
   solution:
-    "message returns string — assigning to number fails. `instanceof` narrows class instances across catch/`unknown` boundaries. Custom error classes carry fields the base Error does not. Cross-realm `instanceof` can fail — prefer brand checks for libraries. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "message returns string — assigning to number fails. `instanceof` narrows class instances across catch/`unknown` boundaries. Custom error classes carry fields the base Error does not. Cross-realm `instanceof` can fail — prefer brand checks for libraries.",
   js: {
     code: `function message(err) {
   if (err instanceof Error) return err.message;

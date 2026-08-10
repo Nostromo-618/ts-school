@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["discriminated-unions", "catch-gives-you-unknown"],
   keywords: ["Result", "Either", "ok", "err", "typed errors", "neverthrow"],
   problem:
-    "Nothing in a signature says which of the forty functions below it can throw, so error handling is guesswork by inspection. Look at the left pane: `null` means both empty and failure. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Nothing in a signature says which of the forty functions below it can throw, so error handling is guesswork by inspection. `null` means both empty and failure. Result types make failure explicit in the type.",
   solution:
-    "Discriminated Result — .value only on ok. Direct access fails. Result types make failure explicit in the type. Prefer them when exceptions are control flow. Keep error payloads structured for logging. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Discriminated Result — .value only on ok. Direct access fails. Result types make failure explicit in the type. Prefer them when exceptions are control flow. Keep error payloads structured for logging.",
   js: {
     code: `function parse(x) { try { return JSON.parse(x); } catch { return null; } }
 `,

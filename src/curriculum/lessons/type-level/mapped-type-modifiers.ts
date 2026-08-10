@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "optional",
   ],
   problem:
-    "Making every field required again after `Partial` has been applied is not expressible without modifier removal. Look at the left pane: re-requiring fields is a pile of `null` checks with no shared type. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Making every field required again after `Partial` has been applied is not expressible without modifier removal. Re-requiring fields is a pile of `null` checks with no shared type.",
   solution:
-    "-? strips optionality; -`readonly` strips `readonly`. Prefix modifiers with + or -; + is the default when you write ? or `readonly` alone. `Required<T>` is homomorphic mapped type with -?; `Partial` uses +?. Homomorphic mapped types (K in `keyof` T) preserve property modifiers you do not touch — until you explicitly add or remove them. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "-? strips optionality; -`readonly` strips `readonly`. Prefix modifiers with + or -; + is the default when you write ? or `readonly` alone. `Required<T>` is homomorphic mapped type with -?; `Partial` uses +?. Homomorphic mapped types (K in `keyof` T) preserve property modifiers you do not touch — until you explicitly add or remove them.",
   js: {
     code: `// JS: "required again" means runtime checks scattered everywhere.
 function requireConfig(partial) {

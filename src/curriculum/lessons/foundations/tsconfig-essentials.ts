@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["strict-mode"],
   keywords: ["tsconfig", "target", "module", "lib", "outDir", "configuration"],
   problem:
-    "Copying a `tsconfig` from a blog post produces errors that make no sense, because half its options were written for a different runtime. Look at the left pane: module format is a runtime/config concern; types inherit the mess. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Copying a `tsconfig` from a blog post produces errors that make no sense, because half its options were written for a different runtime. Module format is a runtime/config concern; types inherit the mess.",
   solution:
-    "Wrong module assumptions surface as 'Cannot find name require' — fix config, don't cast. For Node today: `module`/`moduleResolution` bundler or nodenext, `target` es2022+, `strict` true. `lib` should match your runtime — do not pull `dom` into a pure Node service. `skipLibCheck` speeds builds by skipping `.d.ts` checking; it does not fix your code. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Wrong module assumptions surface as errors like 'Cannot find name require' — fix config, do not cast. For Node today: `module` / `moduleResolution` `nodenext` or `bundler`, `target` ES2022+, `strict` true. `lib` should match your runtime — do not pull `dom` into a pure Node service. `skipLibCheck` speeds builds; it does not fix your code.",
   js: {
     code: `// package.json "type": "module" but code still uses require —
 // config and runtime disagree long before types enter the picture.

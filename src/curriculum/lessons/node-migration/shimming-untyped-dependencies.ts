@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["module-augmentation", "installing-types"],
   keywords: ["declare module", "shim", "ambient", "DefinitelyTyped", "untyped"],
   problem:
-    "One untyped dependency in a hot path turns a whole call graph into `any`, and `noImplicitAny` cannot see through it. Look at the left pane: untyped deps accept anything and return anything. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "One untyped dependency turns a whole call graph into `any`, and `noImplicitAny` cannot see through it. Teams either abandon the library or sprinkle casts until the checker is decorative.",
   solution:
-    "A minimal shim restores checking at the boundary. Start with a narrow shim of the functions you call — not a full fictional API. pkg. Prefer @types from DefinitelyTyped when available; contribute improvements upstream. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Write a minimal ambient module declaration for the surface you actually call — not a fake full API. Prefer upstream types or a thin typed wrapper you control. Keep the shim honest: if the runtime can return `null`, the declaration must say so. Expand the `.d.ts` only as you touch more of the library.",
   js: {
     code: `// JS: require an untyped helper and pass anything.
 const slugify = require("legacy-slugify");

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["null-and-undefined", "type-assertions-are-claims"],
   keywords: ["non-null assertion", "!", "definite assignment"],
   problem:
-    "map.get(key)! crashes when the key is missing — the bang only silenced the checker. Look at the left pane: map.get returns `undefined` when absent. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "map.get(key)! crashes when the key is missing — the bang only silenced the checker. Map.get returns `undefined` when absent. X! is shorthand for 'I promise x is not nullish' — same family as as.",
   solution:
-    "No TypeScript error here — that's the point: ! removes | `undefined` from the type, not from reality. Prefer an explicit check. x! is shorthand for 'I promise x is not nullish' — same family as as. Use if (!x) throw new Error(...) when absence is a bug you want to see. Ban ! in lint for app code if your team keeps foot-gunning with it. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "No TypeScript error here — that's the point: ! removes | `undefined` from the type, not from reality. Prefer an explicit check. x! is shorthand for 'I promise x is not nullish' — same family as as. Use if (!x) throw new Error(...) when absence is a bug you want to see. Ban ! in lint for app code if your team keeps foot-gunning with it.",
   js: {
     code: `const users = new Map();
 users.set("1", { name: "Ada" });

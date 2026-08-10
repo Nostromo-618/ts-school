@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["user-defined-type-guards"],
   keywords: ["asserts", "assertion function", "invariant", "narrowing"],
   problem:
-    "Throwing when a check fails does not change TypeScript's view of the value unless you mark the function as an assertion. Look at the left pane: runtime throw without an `asserts` signature — types ignore the check. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Throwing when a check fails does not change TypeScript's view of the value unless you mark the function as an assertion. Runtime throw without an `asserts` signature — types ignore the check.",
   solution:
-    "After `assertUser`, `raw` is User. Calling `greet` without asserting still errors. `asserts value is T` means: if the function returns, value is T; if not, it threw. Use assertions for internal invariants you control — not as a substitute for parsing untrusted JSON. A lying assertion function (returns without checking) is trusted by the checker; that is a critical footgun. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "After `assertUser`, `raw` is User. Calling `greet` without asserting still errors. `asserts value is T` means: if the function returns, value is T; if not, it threw. Use assertions for internal invariants you control — not as a substitute for parsing untrusted JSON. A lying assertion function (returns without checking) is trusted by the checker; that is a critical footgun.",
   js: {
     code: `function assertUser(value) {
   if (!value || typeof value.id !== "string") {

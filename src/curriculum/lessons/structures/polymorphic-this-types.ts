@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["abstract-classes", "generic-classes-and-interfaces"],
   keywords: ["this type", "fluent", "builder", "chaining", "subclass"],
   problem:
-    "A builder method typed to return the base class truncates the chain the moment someone subclasses it. Look at the left pane: runtime this-chaining works; bad return types break it in TS. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A builder method typed to return the base class truncates the chain the moment someone subclasses it. Runtime this-chaining works; bad return types break it in TS.",
   solution:
-    "Returning this preserves UserBuilder through the chain. The polymorphic this type is the type of the implementing class, not the base declaration site. Fluent APIs should return this (or a generic subtype) rather than the base class name. Interfaces can use thisType and methods returning this for the same pattern. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Returning this preserves UserBuilder through the chain. The polymorphic this type is the type of the implementing class, not the base declaration site. Fluent APIs should return this (or a generic subtype) rather than the base class name. Interfaces can use thisType and methods returning this for the same pattern.",
   js: {
     code: `// JS: fluent builders return this — subclasses keep working at runtime.
 class Builder {

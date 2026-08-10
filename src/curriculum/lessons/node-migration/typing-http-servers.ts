@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "generics",
   ],
   problem:
-    "IncomingMessage is a stream with a headers bag, and every framework layers a differently-shaped fiction over it. Look at the left pane: indexing db with a URL segment and assuming the row exists. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "HTTP handlers read `req.url` and body fields as if they were trusted structured data. Query params may be `string | string[] | undefined`; bodies are bytes until you parse them. Untyped handlers are where Node services leak.",
   solution:
-    "url is optional. Assigning string | `undefined` to string fails. HTTP request fields are often optional — narrow before parsing. Framework generics only help if you parse params/body. Keep handlers thin: parse, domain logic, encode. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "Type request/response boundaries explicitly — including unions for query values. Parse and validate bodies before business logic. Keep Node's `IncomingMessage` / `ServerResponse` (or your framework's types) at the edge; do not let raw request objects permeate the domain.",
   js: {
     code: `http.createServer((req, res) => {
   const id = req.url.split("/")[2];

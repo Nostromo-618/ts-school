@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "throw",
   ],
   problem:
-    "err.message on a caught value crashes with a different error whenever something threw a string. Look at the left pane: assuming catch binding is Error. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "err.message on a caught value crashes with a different error whenever something threw a string. Assuming catch binding is Error. Catch bindings are `unknown` in modern TS configs.",
   solution:
-    "Under useUnknownInCatchVariables / `strict`, e is `unknown` — no .message. catch bindings are `unknown` in modern TS configs. Narrow with `instanceof` Error before reading message. Never type catch as `any` to silence this. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Under useUnknownInCatchVariables / `strict`, e is `unknown` — no .message. catch bindings are `unknown` in modern TS configs. Narrow with `instanceof` Error before reading message. Never type catch as `any` to silence this.",
   js: {
     code: `try { await run(); } catch (e) { log(e.message); }
 `,

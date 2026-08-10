@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["function-type-expressions", "void-and-never"],
   keywords: ["void", "callback", "return value", "forEach", "assignability"],
   problem:
-    "arr.forEach(async item => ...) type-checks and the promises are dropped on the floor. Look at the left pane: forEach callback return values are ignored. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "arr.forEach(async item => ...) type-checks and the promises are dropped on the floor. forEach callback return values are ignored. `void` in callback positions is special — returned values are ignored.",
   solution:
-    "`void` callbacks may return values, but forEachNumber itself returns `void`. `void` in callback positions is special — returned values are ignored. Do not use forEach when you need a mapped array. Match callback return types to the combinator's contract. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "`void` callbacks may return values, but forEachNumber itself returns `void`. `void` in callback positions is special — returned values are ignored. Do not use forEach when you need a mapped array. Match callback return types to the combinator's contract.",
   js: {
     code: `[1,2].forEach(n => { return n * 2; });
 `,

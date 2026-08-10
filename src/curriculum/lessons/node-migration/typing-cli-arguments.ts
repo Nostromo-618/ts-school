@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-process-env"],
   keywords: ["argv", "parseArgs", "cli", "commander", "options"],
   problem:
-    "Argument parsers return a bag of loosely typed values, so the flags your program supports exist only in the help text. Look at the left pane: trusting argv[2] without checking it exists. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "`process.argv` is `string[]` with no structure — flags, positionals, and values are all the same. Parsers that return loose objects recreate the same ambiguity one layer up.",
   solution:
-    "Parse into CliOptions. A raw argv string is not a number. Parse argv into a dedicated options type early. Prefer parseArgs helpers, then validate business rules. Fail with a usage message when operands are missing. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Parse once into a typed options object (hand-rolled or via a library with good types). Reject unknown flags at the boundary. Keep raw `argv` out of business logic. The checker can only protect the shape you parse into — not the argv array itself.",
   js: {
     code: `const file = process.argv[2];
 doWork(file);

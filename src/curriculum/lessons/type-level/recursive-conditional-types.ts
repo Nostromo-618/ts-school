@@ -21,9 +21,9 @@ export const lesson: Lesson = {
     "tail recursion",
   ],
   problem:
-    "Type instantiation is excessively deep and possibly infinite is the error where type-level programming stops being free. Look at the left pane: runtime deep-freeze cannot make nested fields `readonly` in types. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Type instantiation is excessively deep and possibly infinite is the error where type-level programming stops being free. Runtime deep-freeze cannot make nested fields `readonly` in types.",
   solution:
-    "DeepReadonly recurses; assignment to a nested field fails. Recursive conditionals are powerful and expensive — each instantiation costs checker work. TypeScript caps instantiation depth; pathological recursion yields `TS2589`. Prefer depth limits, leaf special-cases (Date, Map), and simpler `Partial` when “deep” is not worth it. Treat the TypeScript pane as the worked example of that refusal — diagnostics included — and the takeaways as what should stick after you leave the page.",
+    "DeepReadonly recurses; assignment to a nested field fails. Recursive conditionals are powerful and expensive — each instantiation costs checker work. TypeScript caps instantiation depth; pathological recursion yields `TS2589`. Prefer depth limits, leaf special-cases (Date, Map), and simpler `Partial` when “deep” is not worth it.",
   js: {
     code: `// JS: deep-freeze by walking at runtime — no compile-time depth story.
 function deepFreeze(obj) {

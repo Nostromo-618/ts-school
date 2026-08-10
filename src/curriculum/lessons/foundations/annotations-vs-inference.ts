@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["types-are-erased"],
   keywords: ["inference", "annotation", "let", "const", "explicit types"],
   problem:
-    "Annotating everything is noise; annotating nothing lets a string slip into a number-shaped hole after a refactor. Look at the left pane: without types, string | number collapses into 'whatever'. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "Annotating everything makes noise; annotating nothing hides intent at API boundaries. The skill is knowing where inference is enough and where a written type is documentation and a contract.",
   solution:
-    "Annotate or parse when inference widens past the API. Prefer inference for locals whose initializer already states the type clearly. Annotate function parameters, public returns, and values that cross module boundaries. When inference produces a union you did not want, fix the initializer or add an annotation — do not silence with `any`. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Prefer inference for local variables; annotate exported functions, public API props, and tricky returns. If inference produces `any` or a useless wide type, that is a signal to annotate or redesign. Do not silence a hard error with `any` — fix the annotation.",
   js: {
     code: `function createServer(port) {
   return { listen: () => port };

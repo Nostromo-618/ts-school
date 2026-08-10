@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsc-cli", "any-and-implicit-any"],
   keywords: ["eslint", "typescript-eslint", "lint", "floating promises"],
   problem:
-    "`tsc` is green but someone left an awaited promise floating and an eslint-disable for no-explicit-`any` on every file. Look at the left pane: unhandled rejection risk — lint can require await/`void`. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "`tsc` is green but someone left an awaited promise floating and an eslint-disable for no-explicit-`any` on every file. Unhandled rejection risk — lint can require await/`void`.",
   solution:
-    "Types alone do not enforce that you await; lint complements `tsc`. Let `tsc` own type correctness; let typescript-eslint own footguns like floating promises. Prefer @typescript-eslint/no-explicit-`any` with disciplined exceptions. Do not disable entire rule sets to silence one file — fix or narrow the disable. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Types alone do not enforce that you await; lint complements `tsc`. Let `tsc` own type correctness; let typescript-eslint own footguns like floating promises. Prefer @typescript-eslint/no-explicit-`any` with disciplined exceptions. Do not disable entire rule sets to silence one file — fix or narrow the disable.",
   js: {
     code: `async function save(row) {
   await dbWrite(row);

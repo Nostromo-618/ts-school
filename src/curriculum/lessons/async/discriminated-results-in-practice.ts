@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["result-types", "exhaustiveness-checking"],
   keywords: ["Result", "boundary", "service", "error handling", "design"],
   problem:
-    "Result types used everywhere become noise; used nowhere they become surprises. The boundary is the whole decision. Look at the left pane: `null` collapses missing and failure. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "Result types used everywhere become noise; used nowhere they become surprises. The boundary is the whole decision. `null` collapses missing and failure. Model domain outcomes as tagged unions.",
   solution:
-    "Tagged statuses. user only exists on ok. Model domain outcomes as tagged unions. Call sites switch on status instead of `null` checks. Map transport errors separately from not-found. Once the types name the contract, the same edit that would have shipped quietly becomes a red squiggle at the call site instead.",
+    "Tagged statuses. user only exists on ok. Model domain outcomes as tagged unions. Call sites switch on status instead of `null` checks. Map transport errors separately from not-found.",
   js: {
     code: `async function load(id) {
   const row = await db.get(id);

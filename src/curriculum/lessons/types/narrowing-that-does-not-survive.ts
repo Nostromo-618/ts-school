@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["control-flow-analysis"],
   keywords: ["narrowing", "closure", "mutation", "callback", "invalidation"],
   problem:
-    "The value is definitely not `null` on line 4 and possibly `null` again on line 6, and the only thing between them is a callback. Look at the left pane: closures capture values; JS `never` re-checks assumptions. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "The value is definitely not `null` on line 4 and possibly `null` again on line 6, and the only thing between them is a callback. Closures capture values; JS `never` re-checks assumptions.",
   solution:
-    "Capture a local const after the `null` check to keep a stable narrow across the callback. Store the narrowed value in a const local (`const u = user`) before async boundaries. Mutable properties are invalidated aggressively — narrow the field into a local. Assertion functions and type guards re-establish facts the checker will not assume across calls. Hold the dual panes side by side: the left side is the silent failure; the right side is where the checker finally refuses it.",
+    "Capture a local const after the `null` check to keep a stable narrow across the callback. Store the narrowed value in a const local (`const u = user`) before async boundaries. Mutable properties are invalidated aggressively — narrow the field into a local. Assertion functions and type guards re-establish facts the checker will not assume across calls.",
   js: {
     code: `// JS: nothing tracks nullability across callbacks.
 function load(user, cb) {

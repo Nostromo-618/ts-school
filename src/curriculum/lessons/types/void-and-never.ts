@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["exhaustiveness-checking"],
   keywords: ["void", "never", "bottom type", "return type", "throw"],
   problem:
-    "A function typed `void` can still return something, and a function that always throws is not typed `never` unless you say so. Look at the left pane: throw vs log look the same without return types. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "A function typed `void` can still return something, and a function that always throws is not typed `never` unless you say so. Throw vs log look the same without return types.",
   solution:
-    "log returns `void` — not a string. `never` means the function does not return normally. `void` means it returns no useful value — callers should not read it. Use `never` for exhaustive checks and fail-fast helpers. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "log returns `void` — not a string. `never` means the function does not return normally. `void` means it returns no useful value — callers should not read it. Use `never` for exhaustive checks and fail-fast helpers.",
   js: {
     code: `function fail(msg) {
   throw new Error(msg);

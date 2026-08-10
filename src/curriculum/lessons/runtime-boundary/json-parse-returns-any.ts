@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["unknown-vs-any", "where-types-end"],
   keywords: ["JSON.parse", "any", "unknown", "parse"],
   problem:
-    "const data = `JSON.parse`(text) silently becomes `any`, undoing strictness for the rest of the function. Look at the left pane: missing fields crash later; parse never checked them. Without a typechecker there is nothing to refuse that misuse while you type — only later, on a live path.",
+    "const data = `JSON.parse`(text) silently becomes `any`, undoing strictness for the rest of the function. Missing fields crash later; parse never checked them. Treat `JSON.parse` as returning `unknown` even when the lib says `any`.",
   solution:
-    "No TypeScript error here — that's the point: `any` accepts everything — including missing. Treat `JSON.parse` as returning `unknown` even when the lib says `any`. Write a helper: function parseJson(text: string): `unknown` { return `JSON.parse`(text); }. Then validate with predicates or a schema library before use. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "No TypeScript error here — that's the point: `any` accepts everything — including missing. Treat `JSON.parse` as returning `unknown` even when the lib says `any`. Write a helper: function parseJson(text: string): `unknown` { return `JSON.parse`(text); }. Then validate with predicates or a schema library before use.",
   js: {
     code: `const data = JSON.parse('{"n":1}');
 data.n.toFixed(2);

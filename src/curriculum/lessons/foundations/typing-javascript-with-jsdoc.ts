@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "no build step",
   ],
   problem:
-    "A large Node codebase cannot be renamed to `.ts` in one commit, and until it is, nothing is checked at all. Look at the left pane: jSDoc types in a `.js` file. Edit-time tools are silent, so the mistake travels with the deploy until a concrete input detonates it.",
+    "A large Node codebase cannot be renamed to `.ts` in one commit, and until it is, nothing is checked at all. JSDoc types in a `.js` file can close that gap — if you treat them as real contracts, not comments you hope someone reads.",
   solution:
-    "Same contract in TS syntax. greet returns string. JSDoc + `checkJs` types an existing JS codebase. Migration path: JSDoc first, then rename to `.ts`. Keep JSDoc honest — it is checked like annotations. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "Enable `checkJs` or `// @ts-check`, then add `@param` / `@typedef` / `@returns` where it pays rent. JSDoc types are real to the language service. Migration path: JSDoc first, then rename to `.ts`. Keep JSDoc honest — it is checked like annotations, not decoration.",
   js: {
     code: `/** @param {string} name */
 function greet(name) { return name.toUpperCase(); }

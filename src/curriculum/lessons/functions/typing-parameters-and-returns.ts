@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference", "primitive-types"],
   keywords: ["parameters", "return type", "function", "void"],
   problem:
-    "A helper that sometimes returns a string and sometimes returns nothing becomes a landmine for every caller. Look at the left pane: a declared string return forbids the bare return. The language will happily evaluate it; only a later runtime path reveals the damage.",
+    "A helper that sometimes returns a string and sometimes returns nothing becomes a landmine for every caller. A declared string return forbids the bare return. Parameter types are the contract callers must satisfy.",
   solution:
-    "A declared string return forbids the bare return. Parameter types are the contract callers must satisfy. Annotate returns on public functions; let inference handle simple internals. `void` means 'ignore the return'; `undefined` as a value is a different idea. That is the whole move: make the broken path unrepresentable (or at least loudly illegal) before it reaches production.",
+    "A declared string return forbids the bare return. Parameter types are the contract callers must satisfy. Annotate returns on public functions; let inference handle simple internals. `void` means 'ignore the return'; `undefined` as a value is a different idea.",
   js: {
     code: `function formatCents(cents) {
   if (cents < 0) return;
