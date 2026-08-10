@@ -284,16 +284,53 @@ body {
 .ts-track-lessons {
   display: flex;
   flex-direction: column;
-  gap: var(--vd-space-fib-8, 0.8125rem);
+  gap: var(--vd-space-fib-3, 0.3125rem);
   margin: 0;
-  padding: var(--vd-space-fib-13, 1.3125rem);
+  padding: var(--vd-space-fib-8, 0.8125rem);
   list-style: none;
 }
 
 .ts-track-lesson {
+  margin: 0;
+}
+
+/* One link per row — badge, title, and summary share a single hit target.
+   Beat package `a:hover { color; text-decoration }` so only the title reads
+   as the link and the row keeps inherited body/muted colors. */
+.ts-track-lesson-link {
   display: flex;
   align-items: baseline;
   gap: var(--vd-space-fib-8, 0.8125rem);
+  padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-8, 0.8125rem);
+  border-radius: var(--vd-btn-border-radius, var(--vd-radius-fib-5, 0.3125rem));
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.ts-track-lesson-link:hover,
+.ts-track-lesson-link:focus,
+.ts-track-lesson-link:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ts-track-lesson-link:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.ts-track-lesson-link:hover,
+.ts-track-lesson-link:focus-visible {
+  background-color: color-mix(
+    in srgb,
+    var(--vd-color-primary, #845ef7) 10%,
+    var(--vd-bg-primary, #fff)
+  );
+}
+
+.ts-track-lesson-link:focus-visible {
+  outline: var(--vd-border-width) solid var(--vd-color-primary, currentColor);
+  outline-offset: var(--vd-border-width);
 }
 
 .ts-track-lesson-body {
@@ -307,6 +344,12 @@ body {
 
 .ts-track-lesson-title {
   font-weight: 600;
+  color: var(--vd-color-primary);
+}
+
+.ts-track-lesson-link:hover .ts-track-lesson-title,
+.ts-track-lesson-link:focus-visible .ts-track-lesson-title {
+  color: var(--vd-color-primary-dark, var(--vd-color-primary));
 }
 
 /* About page — technology inventory (definition list, not a badge wall). */

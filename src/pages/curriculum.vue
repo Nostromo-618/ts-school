@@ -135,18 +135,21 @@ const visibleTracks = computed(() =>
           :key="lesson.id"
           class="ts-track-lesson"
         >
-          <VdBadge :variant="TIER_BADGE_VARIANTS[lesson.tier]" pill>
-            {{ TIER_LABELS[lesson.tier] }}
-          </VdBadge>
-          <div class="ts-track-lesson-body">
-            <RouterLink :to="lessonRoute(lesson)" class="ts-track-lesson-title">
-              {{ lesson.title }}
-            </RouterLink>
-            <ProseHtml
-              class="vd-text-muted vd-text-sm"
-              :text="lesson.summary"
-            />
-          </div>
+          <RouterLink
+            :to="lessonRoute(lesson)"
+            class="ts-track-lesson-link"
+          >
+            <VdBadge :variant="TIER_BADGE_VARIANTS[lesson.tier]" pill>
+              {{ TIER_LABELS[lesson.tier] }}
+            </VdBadge>
+            <div class="ts-track-lesson-body">
+              <span class="ts-track-lesson-title">{{ lesson.title }}</span>
+              <ProseHtml
+                class="vd-text-muted vd-text-sm"
+                :text="lesson.summary"
+              />
+            </div>
+          </RouterLink>
         </li>
       </ol>
     </section>
