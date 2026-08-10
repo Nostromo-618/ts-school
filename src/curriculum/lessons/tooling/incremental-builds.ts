@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 16,
   summary:
-    "incremental, tsbuildinfo, composite, and why the second build is fast â plus the cache invalidations that make it slow again.",
+    "incremental, tsbuildinfo, composite, and why the second build is fast — plus the cache invalidations that make it slow again.",
   prerequisites: ["tsc-cli", "module-resolution-explained"],
   keywords: ["incremental", "tsbuildinfo", "composite", "cache", "build"],
   problem:

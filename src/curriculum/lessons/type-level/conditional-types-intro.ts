@@ -41,4 +41,23 @@ const bad: B = true;
     "They power many library utilities.",
     "Distribute over naked type parameters — learn that next.",
   ],
+  quiz: [
+    {
+      id: "q1",
+      prompt:
+        "What does type IsString<T> = T extends string ? true : false do?",
+      choices: [
+        { id: "a", text: "Converts T to a string at runtime" },
+        {
+          id: "b",
+          text: "Resolves to the literal true or false depending on whether T extends string",
+        },
+        { id: "c", text: "Always yields string" },
+        { id: "d", text: "Throws if T is not a string" },
+      ],
+      answerId: "b",
+      explanation:
+        "Conditional types choose a branch in the type system; there is no runtime check.",
+    },
+  ],
 };

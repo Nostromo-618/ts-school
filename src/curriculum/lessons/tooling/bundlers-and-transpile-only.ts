@@ -58,6 +58,11 @@ void ok;
     "Run tsc --noEmit (or vue-tsc) in CI even when Vite/esbuild build the artifacts.",
     "isolatedModules/verbatimModuleSyntax keep transpile-only tools honest about syntax.",
   ],
+  security: {
+    title: "Transpile-only ships unchecked trust bugs",
+    body: "If CI only runs a bundler, type errors on auth and validation never block a release. Always gate deploys with a real typecheck step — editor-only checking is not a control.",
+    severity: "critical",
+  },
   quiz: [
     {
       id: "bundle-q",

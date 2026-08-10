@@ -1,11 +1,10 @@
 /**
  * Shared diagnostic contract.
  *
- * Two independent subsystems meet here: the in-browser typecheck worker
- * (`src/typecheck/`) produces `TsDiagnostic`s, and lesson data
- * (`src/curriculum/`) authors `ExpectedDiagnostic`s. The compiler-truth test
- * suite asserts the second predicts the first. Keeping the contract in one
- * dependency-free module lets both sides evolve without importing each other.
+ * Lessons author `ExpectedDiagnostic`s; the build-time generator (Strada
+ * Compiler API via `typescript-strada`) produces full `TsDiagnostic`s into
+ * `src/curriculum/generated/diagnostics.ts`. The compiler-truth suite asserts
+ * expectations match real Strada output.
  */
 
 export type TsDiagnosticCategory =
@@ -44,23 +43,4 @@ export interface TypecheckOptions {
   strict?: boolean;
   /** Extra `lib.*.d.ts` names, e.g. "dom" for a browser-flavoured lesson. */
   libs?: string[];
-}
-
-export interface TypecheckRequest {
-  /** Correlates responses to requests so stale results can be discarded. */
-  requestId: number;
-  code: string;
-  options?: TypecheckOptions;
-}
-
-export interface TypecheckResponse {
-  requestId: number;
-  diagnostics: TsDiagnostic[];
-  /** Wall-clock time inside the worker, surfaced for the perf budget test. */
-  durationMs: number;
-}
-
-export interface TypecheckErrorResponse {
-  requestId: number;
-  error: string;
 }

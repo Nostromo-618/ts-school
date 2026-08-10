@@ -7,8 +7,8 @@
  */
 
 import type { Lesson } from "@/curriculum/types";
-import { lesson as whereTypesEnd } from "./where-types-end";
 import { lesson as unknownVsAny } from "./unknown-vs-any";
+import { lesson as whereTypesEnd } from "./where-types-end";
 import { lesson as jsonParseReturnsAny } from "./json-parse-returns-any";
 import { lesson as typeAssertionsAreClaims } from "./type-assertions-are-claims";
 import { lesson as nonNullAssertion } from "./non-null-assertion";
@@ -28,8 +28,8 @@ import { lesson as typeSafeSerialization } from "./type-safe-serialization";
 import { lesson as trustingYourOwnDatabase } from "./trusting-your-own-database";
 
 export const runtimeBoundaryLessons: readonly Lesson[] = [
-  whereTypesEnd,
   unknownVsAny,
+  whereTypesEnd,
   jsonParseReturnsAny,
   typeAssertionsAreClaims,
   nonNullAssertion,

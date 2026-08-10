@@ -28,29 +28,25 @@ function load(user, cb) {
 
 declare function later(cb: () => void): void;
 
-function load(user: User | null, cb: (name: string) => void) {
+function schedule(cb: (name: string) => void) {
+  let user: User | null = { name: "Ada" };
   if (user !== null) {
     later(() => {
-      // Prefer a const local for async boundaries; shown here for the quiz.
+      // CFA invalidates the narrow: user can be reassigned before this runs.
       cb(user.name);
     });
   }
+  user = null;
 }
-
-let u: User | null = { name: "Ada" };
-load(u, (name) => {
-  const n: number = name;
-  void n;
-});
 `,
-    highlights: [{ start: 16, end: 16 }],
+    highlights: [{ start: 9, end: 9 }],
     caption:
-      "Capture a local const after the null check to keep a stable narrow.",
+      "Capture a local const after the null check to keep a stable narrow across the callback.",
     expectedDiagnostics: [
       {
-        code: 2322,
-        line: 16,
-        messageIncludes: "string",
+        code: 18047,
+        line: 10,
+        messageIncludes: "null",
       },
     ],
   },
@@ -76,22 +72,32 @@ load(u, (name) => {
   ],
   exercise: {
     prompt:
-      "Fix pattern: after if (user !== null), const u = user; then use u.name in a nested function.",
+      "After the null check, assign const u = user, then use u.name inside later(...). Match the solution shape.",
     starter: `type User = { name: string };
-function run(user: User | null, cb: (n: string) => void) {
+declare function later(cb: () => void): void;
+function schedule(cb: (name: string) => void) {
+  let user: User | null = { name: "Ada" };
   if (user !== null) {
-    cb(user.name);
+    later(() => {
+      cb(user.name);
+    });
   }
+  user = null;
 }
 `,
     assertion: "no-errors",
-    hints: ["const u = user; cb(u.name)"],
+    hints: ["const u = user; later(() => cb(u.name));"],
     solution: `type User = { name: string };
-function run(user: User | null, cb: (n: string) => void) {
+declare function later(cb: () => void): void;
+function schedule(cb: (name: string) => void) {
+  let user: User | null = { name: "Ada" };
   if (user !== null) {
     const u = user;
-    cb(u.name);
+    later(() => {
+      cb(u.name);
+    });
   }
+  user = null;
 }
 `,
   },

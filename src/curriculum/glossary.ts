@@ -27,6 +27,15 @@ export interface GlossaryTerm {
 
 export const GLOSSARY: readonly GlossaryTerm[] = [
   {
+    id: "abort-signal",
+    term: "AbortSignal",
+    tier: "intermediate",
+    definition:
+      "A cancellation token passed into async work. When aborted, listeners run and fetch-like APIs reject — typed as a parameter, not a return value.",
+    aliases: ["AbortController", "cancellation", "signal"],
+    related: ["abortsignal-and-cancellation", "async-await-typing"],
+  },
+  {
     id: "ambient-declaration",
     term: "Ambient declaration",
     tier: "beginner",
@@ -55,11 +64,20 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
   {
     id: "assignability",
     term: "Assignability",
-    tier: "advanced",
+    tier: "beginner",
     definition:
       "The relation the checker evaluates when it asks whether a value of type A may be used where type B is expected. The subject of the most common error message in TypeScript.",
     aliases: ["subtyping", "not assignable"],
-    related: ["assignability-rules", "structural-typing"],
+    related: ["structural-typing", "assignability-rules"],
+  },
+  {
+    id: "async-await",
+    term: "async / await",
+    tier: "beginner",
+    definition:
+      "Syntax that makes a function return a Promise and unwraps one at await. An async function's return type is always Promise<T>, even when you write a bare T.",
+    aliases: ["async", "await"],
+    related: ["async-await-typing", "promise-types"],
   },
   {
     id: "awaited",
@@ -67,7 +85,12 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     tier: "intermediate",
     definition:
       "The utility type that unwraps a promise as far as await would, recursively, including thenables that are not promises.",
-    related: ["awaited-and-unwrapping"],
+    related: [
+      "awaited-and-unwrapping",
+      "promise-types",
+      "async-await-typing",
+      "promise-combinators",
+    ],
   },
   {
     id: "bivariance",
@@ -507,6 +530,33 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
       "A tsconfig pointing at another buildable project, letting a monorepo compile in dependency order and share build state.",
     aliases: ["composite"],
     related: ["project-references", "incremental-builds"],
+  },
+  {
+    id: "promise",
+    term: "Promise<T>",
+    tier: "beginner",
+    definition:
+      "A value that will settle to T (or reject). The type parameter is what await and .then receive — Promise<User> is not interchangeable with Promise<any>.",
+    aliases: ["Promise", "thenable"],
+    related: [
+      "promise-types",
+      "async-await-typing",
+      "promise-combinators",
+      "awaited-and-unwrapping",
+    ],
+  },
+  {
+    id: "promise-combinators",
+    term: "Promise combinators",
+    tier: "intermediate",
+    definition:
+      "Helpers such as Promise.all, allSettled, race, and any that combine multiple promises. Their TypeScript typings preserve tuple element types when you pass a fixed tuple of promises.",
+    aliases: ["Promise.all", "allSettled"],
+    related: [
+      "promise-combinators",
+      "variadic-tuple-types",
+      "awaited-and-unwrapping",
+    ],
   },
   {
     id: "prototype-pollution",

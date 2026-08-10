@@ -57,6 +57,11 @@ const bad: string = ok;
     "Put negative tests next to the API so loosenings break CI.",
     "Do not use expect-error to silence real bugs in production code paths.",
   ],
+  security: {
+    title: "Do not expect-error production trust checks",
+    body: "Using @ts-expect-error (or @ts-ignore) on request handlers, crypto, or permission checks turns a compile-time alarm into silent acceptance. Reserve negative directives for tests that assert an API stays narrow.",
+    severity: "caution",
+  },
   quiz: [
     {
       id: "expect-err",

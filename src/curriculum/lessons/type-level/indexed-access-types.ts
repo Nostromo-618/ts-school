@@ -47,4 +47,22 @@ const bad: Age = "30";
     "Chain for nested fields.",
     "Useful when you do not want to export every nested alias.",
   ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "What does User['id'] mean as a type?",
+      choices: [
+        { id: "a", text: "A runtime property lookup" },
+        {
+          id: "b",
+          text: "The type of the id property on User",
+        },
+        { id: "c", text: "An array of all User keys" },
+        { id: "d", text: "A mapped type over User" },
+      ],
+      answerId: "b",
+      explanation:
+        "Indexed access extracts a property's type so you can reuse nested shapes without exporting every alias.",
+    },
+  ],
 };

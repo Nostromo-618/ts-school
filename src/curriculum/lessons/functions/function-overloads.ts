@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 12,
   summary:
-    "Several signatures over one implementation, when the return type depends on the arguments â and the union or generic that is usually better.",
+    "Several signatures over one implementation, when the return type depends on the arguments — and the union or generic that is usually better.",
   prerequisites: ["generics-intro", "function-type-expressions"],
   keywords: [
     "overload",

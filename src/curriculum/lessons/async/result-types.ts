@@ -52,4 +52,30 @@ const bad: string = parseJson("{}").value;
     "Prefer them when exceptions are control flow.",
     "Keep error payloads structured for logging.",
   ],
+  exercise: {
+    prompt: "Only read .value after checking r.ok. Match the solution text.",
+    starter: `type Result<T, E = string> =
+  | { ok: true; value: T }
+  | { ok: false; error: E };
+
+declare function parseJson(text: string): Result<unknown>;
+
+const r = parseJson("{}");
+const v: unknown = r.value;
+`,
+    assertion: "no-errors",
+    hints: ["if (r.ok) { const v = r.value; }"],
+    solution: `type Result<T, E = string> =
+  | { ok: true; value: T }
+  | { ok: false; error: E };
+
+declare function parseJson(text: string): Result<unknown>;
+
+const r = parseJson("{}");
+if (r.ok) {
+  const v: unknown = r.value;
+  void v;
+}
+`,
+  },
 };

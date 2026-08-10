@@ -3,11 +3,9 @@
 ## Purpose
 
 Persists learner progress in a versioned localStorage schema, renders authored
-quizzes and compiler-validated exercises on lesson pages, and surfaces track
+quizzes and solution-match exercises on lesson pages, and surfaces track
 completion meters on the curriculum map.
-
 ## Requirements
-
 ### Requirement: versioned schema-validated progress store
 
 The system MUST persist learner progress under the localStorage key
@@ -50,25 +48,31 @@ quiz score MUST be recorded in the progress store.
 - **WHEN** the quiz is complete
 - **THEN** the progress store records the score for that lesson
 
-### Requirement: exercise block validated through the worker
+### Requirement: exercise block validated by solution-match
 
 When a lesson authors an `exercise`, the lesson page MUST render the prompt and
-an editable editor seeded with `starter`. The attempt MUST pass when the live
-typecheck diagnostics match the authored assertion: `"no-errors"` means zero
-diagnostics; an `ExpectedDiagnostic[]` means `matchesExpected` succeeds. On
-pass, the progress store MUST record the exercise as passed.
+an editable editor seeded with `starter`. Learner **Check** MUST pass when
+normalized editor text equals the authored `solution` (CRLF normalized, trim),
+as specified by `build-time-diagnostics`. Check MUST NOT require live compiler
+output. The UI MUST disclose that Check compares to the authored solution and
+that any diagnostics shown are build-time Strada snapshots. On pass, the
+progress store MUST record the exercise as passed. The authored `assertion`
+field remains for compiler-truth / CI validation of `solution`, not for learner
+Check.
 
-#### Scenario: no-errors assertion passes on silence
+#### Scenario: matching the solution passes
 
-- **GIVEN** an exercise with `assertion: "no-errors"`
-- **WHEN** the learner's code produces no diagnostics
-- **THEN** the exercise is marked passed
+- **GIVEN** an exercise with an authored `solution`
+- **WHEN** the learner pastes that solution (modulo normalized whitespace) and
+  activates Check
+- **THEN** the exercise is marked passed and progress records the pass
 
-#### Scenario: expected-diagnostic assertion uses the matcher
+#### Scenario: non-matching attempt fails Check
 
-- **GIVEN** an exercise whose assertion is a specific expected diagnostic set
-- **WHEN** the worker diagnostics match that set via `matchesExpected`
-- **THEN** the exercise is marked passed
+- **GIVEN** an exercise with an authored `solution`
+- **WHEN** the learner's editor text does not match the solution after
+  normalization and they activate Check
+- **THEN** the exercise is not marked passed
 
 ### Requirement: lesson completion wiring
 
@@ -99,11 +103,21 @@ progress store. Tracks with zero completions MUST still render a zero meter.
 
 When an authored lesson includes an exercise with a `solution` string, the
 compiler-truth suite MUST check that solution against the exercise assertion
-using the real TypeScript 6.0.3 compiler. Lessons without an exercise or without
-a solution MUST NOT fail for that reason.
+using the Strada Compiler API (`typescript-strada@6.0.3`), consistent with
+`build-time-diagnostics`. Lessons without an exercise or without a solution
+MUST NOT fail for that reason.
 
 #### Scenario: solution satisfies no-errors
 
 - **GIVEN** an authored exercise with a solution and `assertion: "no-errors"`
 - **WHEN** the compiler-truth suite runs
 - **THEN** checking the solution yields zero diagnostics
+
+### Requirement: Exercise Check remains solution-match
+
+Learner-facing Check MUST continue to pass via normalized solution-match against the authored solution; compiler assertions remain a CI / compiler-truth concern.
+
+#### Scenario: Fail path
+- **WHEN** a learner submits exercise code that does not match the solution
+- **THEN** Check reports failure without implying a live typecheck ran in the browser
+

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 14,
   summary:
-    "Objects that are also functions, and types that describe a class rather than its instances: (â¦): T and new (â¦): T.",
+    "Objects that are also functions, and types that describe a class rather than its instances: (…): T and new (…): T.",
   prerequisites: ["function-type-expressions", "interfaces-intro"],
   keywords: [
     "call signature",

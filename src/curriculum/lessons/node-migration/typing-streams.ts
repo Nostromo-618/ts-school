@@ -61,4 +61,32 @@ readable.on("data", (chunk) => {
     "Always handle stream error events.",
     "Prefer pipeline() for cleanup over hand-rolled listeners.",
   ],
+  exercise: {
+    prompt:
+      'Decode chunk with toString("utf8") before toUpperCase. Match the solution text.',
+    starter: `type BufferLike = { toString(enc?: string): string };
+interface Readable {
+  on(event: "data", listener: (chunk: BufferLike) => void): void;
+}
+declare const readable: Readable;
+
+readable.on("data", (chunk) => {
+  const upper: string = chunk.toUpperCase();
+  void upper;
+});
+`,
+    assertion: "no-errors",
+    hints: ['chunk.toString("utf8").toUpperCase()'],
+    solution: `type BufferLike = { toString(enc?: string): string };
+interface Readable {
+  on(event: "data", listener: (chunk: BufferLike) => void): void;
+}
+declare const readable: Readable;
+
+readable.on("data", (chunk) => {
+  const upper: string = chunk.toString("utf8").toUpperCase();
+  void upper;
+});
+`,
+  },
 };

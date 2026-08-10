@@ -1,18 +1,16 @@
 /**
  * A first-party virtual `ts.CompilerHost`.
  *
- * The compiler runs over exactly one learner-authored file, `lesson.ts`, plus
- * the `lib.*.d.ts` closure it needs — all held in memory. There is no
- * filesystem, no module graph, and no emit: this host can read nothing it was
- * not handed, and produces nothing but diagnostics.
+ * Node-only: used by the diagnostic generator and the compiler-truth suite.
+ * The browser never imports this module. The Strada (JS) Compiler API comes
+ * from `typescript-strada` (pinned 6.0.3); primary `typescript@7` is the
+ * native CLI and has no programmatic createProgram API yet.
  *
- * TypeScript is imported HERE AS A TYPE ONLY and passed in as `ts`. The import
- * erases at build time, so this module can never drag an 8.7 MB compiler into
- * the main bundle (only `worker.ts` imports it as a value), and the same code
- * is unit-testable in plain Node with no DOM and no worker.
+ * The API is injected as `ts` so tests and scripts can pass the Strada module
+ * explicitly without risk of bundling it into the client.
  */
 
-import type * as TsModule from "typescript";
+import type * as TsModule from "typescript-strada";
 import type {
   TsDiagnostic,
   TsDiagnosticCategory,
@@ -41,7 +39,7 @@ export const BASELINE_LIB = "es2022";
 /**
  * `--lib es6` and `--lib dom.iterable` name files. TypeScript's own `libMap` is
  * not public API, so this mirrors it for the names ts-school can request. Kept
- * in sync with `libFileNameFor()` in `scripts/sync-ts-libs.mjs`.
+ * in sync with `libFileNameFor()` in `scripts/load-strada-libs.mjs`.
  */
 const LIB_ALIASES = new Map([
   ["es6", "es2015"],

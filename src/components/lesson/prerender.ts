@@ -1,10 +1,6 @@
 /**
- * Maps authored `ExpectedDiagnostic`s onto the display shape used by
- * `DiagnosticsList` so SSG pages are meaningful before the worker answers.
- *
- * Expectations only pin `code`, `line`, and an optional message substring —
- * column / length / full message are unknown until the live checker runs —
- * so the fallback fills conservative defaults that the worker will replace.
+ * Fallback when generated diagnostics are missing: maps authored
+ * `ExpectedDiagnostic`s onto the display shape used by `DiagnosticsList`.
  */
 
 import type { ExpectedDiagnostic, TsDiagnostic } from "@/typecheck";

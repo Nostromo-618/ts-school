@@ -17,6 +17,9 @@ export default [
         parser: '@typescript-eslint/parser',
         sourceType: 'module',
         extraFileExtensions: ['.vue'],
+        // Primary package is typescript@7; the parser runs against Strada via
+        // pnpm overrides. Suppress the hard error if resolution still sees 7.
+        warnOnUnsupportedTypeScriptVersion: false,
       },
       globals: {
         window: 'readonly',
@@ -48,8 +51,7 @@ export default [
         MouseEvent: 'readonly',
         URL: 'readonly',
         CSS: 'readonly',
-        // The typecheck worker and its client: same-origin lib fetches and the
-        // postMessage protocol between them.
+        // Shared Web APIs used across the app (matchMedia, observers, fetch).
         Worker: 'readonly',
         MessageEvent: 'readonly',
         MessagePort: 'readonly',
@@ -97,6 +99,43 @@ export default [
         },
       ],
       'vue/multi-word-component-names': 'off',
+    },
+  },
+  {
+    // Escaped Labs markdown only — assistant bubbles / notes preview, not the
+    // lesson pipeline.
+    files: [
+      'src/overlays/TsAiChatSidebar.vue',
+      'src/overlays/TsNotesSidebar.vue',
+    ],
+    rules: {
+      'vue/no-v-html': 'off',
+    },
+  },
+  {
+    // Node CLI / build scripts print progress to stdout by design.
+    files: ['scripts/**/*.mjs', 'scripts/**/*.cjs', 'scripts/**/*.js'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    // CLI compare harness is intentionally chatty on stdout.
+    files: ['scripts/school-model-compare.mjs'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    // Adversarial XSS / DOM fixtures assert forbidden patterns on purpose.
+    files: [
+      'tests/unit/chat-markdown-xss.spec.ts',
+      'tests/unit/notes-markdown.spec.ts',
+      'tests/e2e/ai-chat-markdown.spec.ts',
+    ],
+    rules: {
+      'no-script-url': 'off',
+      'no-restricted-syntax': 'off',
     },
   },
   {

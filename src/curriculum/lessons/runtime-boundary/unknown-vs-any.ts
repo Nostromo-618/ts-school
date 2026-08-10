@@ -5,7 +5,7 @@ export const lesson: Lesson = {
   title: "unknown against any",
   tier: "beginner",
   track: "runtime-boundary",
-  order: 2,
+  order: 1,
   summary:
     "unknown is the type-safe top type: you must narrow before use. any disables checking. Prefer unknown at boundaries.",
   prerequisites: ["any-and-implicit-any"],

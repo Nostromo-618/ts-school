@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "patch",
   ],
   problem:
-    "A PATCH body where a field is missing means leave it alone, and where it is null means clear it â and one type covers both.",
+    "A PATCH body where a field is missing means leave it alone, and where it is null means clear it — and one type covers both.",
   js: {
     code: `const opts = { timeout: undefined };
 `,

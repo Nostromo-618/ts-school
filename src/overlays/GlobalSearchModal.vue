@@ -37,8 +37,12 @@ const openModal = async (): Promise<void> => {
 };
 
 const onSelect = (route: string): void => {
-  void router.push(route);
+  // Close first so VdModal tears down its focus trap before navigation.
+  // Callers that handle Enter must preventDefault — otherwise restoring
+  // focus to the navbar search button during the same keydown activates it
+  // and immediately reopens the palette.
   search.close();
+  void router.push(route);
 };
 
 const indexOf = (result: SearchResult): number =>
@@ -74,8 +78,13 @@ const onKeydown = (event: KeyboardEvent): void => {
     event.preventDefault();
     search.move(-1);
   } else if (event.key === "Enter") {
+    event.preventDefault();
     const target = search.ordered[search.activeIndex];
-    if (target) onSelect(target.entry.route);
+    if (target) {
+      onSelect(target.entry.route);
+    } else {
+      search.searchNow();
+    }
   }
   // Escape is VdModal's; it closes the dialog and restores focus.
 };
@@ -162,6 +171,13 @@ onUnmounted(() => {
                 </div>
                 <div class="vd-doc-search-result-category">
                   {{ result.entry.category }}
+                  <span class="ts-search-source" :data-source="result.source">{{
+                    result.source === "semantic"
+                      ? "Semantic"
+                      : result.source === "fuzzy"
+                        ? "Fuzzy"
+                        : "Match"
+                  }}</span>
                 </div>
               </div>
             </li>
@@ -196,6 +212,18 @@ onUnmounted(() => {
         </span>
         <span class="vd-doc-search-footer-item"> <kbd>↵</kbd> to open </span>
         <span class="vd-doc-search-footer-item"> <kbd>esc</kbd> to close </span>
+        <span
+          v-if="search.semanticReady"
+          class="vd-doc-search-footer-item ts-search-semantic-ready"
+        >
+          Hybrid ready
+        </span>
+        <span
+          v-else-if="search.statusMessage"
+          class="vd-doc-search-footer-item"
+        >
+          {{ search.statusMessage }}
+        </span>
       </div>
     </template>
   </VdModal>

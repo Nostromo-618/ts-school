@@ -44,4 +44,9 @@ const bad: number = ok;
     "Leave a comment explaining why.",
     "Fix the type instead when you can.",
   ],
+  security: {
+    title: "@ts-ignore can hide trust bugs forever",
+    body: "A suppression on a boundary check (auth role, path traversal, parse result) stays quiet even after the underlying API changes. Prefer @ts-expect-error with a reason, and delete the directive as soon as the real fix lands.",
+    severity: "caution",
+  },
 };

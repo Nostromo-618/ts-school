@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 14,
   summary:
-    "checkJs plus JSDoc annotations gives an existing .js codebase real checking with no build step and no file renames â the cheapest first move in a migration.",
+    "checkJs plus JSDoc annotations gives an existing .js codebase real checking with no build step and no file renames — the cheapest first move in a migration.",
   prerequisites: ["declaration-files-intro", "annotations-vs-inference"],
   keywords: [
     "jsdoc",

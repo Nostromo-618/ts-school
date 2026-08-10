@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 14,
   summary:
-    "A base that cannot be instantiated and members a subclass must supply â the one inheritance feature that carries real checking weight.",
+    "A base that cannot be instantiated and members a subclass must supply — the one inheritance feature that carries real checking weight.",
   prerequisites: ["implements-vs-extends"],
   keywords: [
     "abstract",

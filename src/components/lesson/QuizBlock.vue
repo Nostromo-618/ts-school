@@ -2,6 +2,10 @@
 /**
  * Authored multiple-choice quiz with instant feedback. Scores land in the
  * progress store when every question has been answered.
+ *
+ * Choices stay custom (not `VdRadioGroup`): after answering we need
+ * correct/wrong styling per option while locking further input — radio groups
+ * in vd3 are for live form selection, not one-shot reveal feedback.
  */
 import { computed, ref, watch } from "vue";
 import type { QuizQuestion } from "@/curriculum";

@@ -2,13 +2,11 @@
 
 ## Purpose
 
-Renders every curriculum lesson as a live JS-vs-TS dual pane backed by the
-in-browser typecheck worker, with prerendered diagnostic fallback for SSG and a
-CI compiler-truth suite that refuses authored diagnostic claims the real
-TypeScript 6.0.3 compiler does not produce.
-
+Renders every curriculum lesson as a JS-vs-TS dual pane with static
+build-time Strada diagnostics, editable editors for learning, and a CI
+compiler-truth suite that refuses authored diagnostic claims the Strada
+Compiler API (`typescript-strada@6.0.3`) does not produce.
 ## Requirements
-
 ### Requirement: dual-pane JS and TS editors
 
 The lesson page MUST present the lesson's JavaScript pane and TypeScript pane
@@ -32,22 +30,27 @@ never via `v-html`, `innerHTML`, or equivalent HTML injection.
 - **THEN** JavaScript and TypeScript are available as separate tabs and each
   tab shows the corresponding pane
 
-### Requirement: live diagnostics beneath the TypeScript pane
+### Requirement: static diagnostics beneath the TypeScript pane
 
-While the TypeScript pane is live-checked, the page MUST show the compiler's
-diagnostics beneath that pane. Each entry SHALL display the 1-based line and
-column, the TypeScript error code, and the message. Messages that contain
-newlines MUST preserve those newlines visually (`white-space: pre-wrap` or
-equivalent) and MUST NOT be interpreted as HTML. Selecting an entry SHALL move
-focus into the TypeScript editor at that line. The page MUST NOT invent a
-gutter-marker API that the code editor does not provide.
+The page MUST show diagnostics beneath the TypeScript pane from the generated
+build-time map (`build-time-diagnostics`), falling back to authored
+`expectedDiagnostics` only if a map entry is missing. Each entry SHALL display
+the 1-based line and column, the TypeScript error code, and the message.
+Messages that contain newlines MUST preserve those newlines visually
+(`white-space: pre-wrap` or equivalent) and MUST NOT be interpreted as HTML.
+Selecting an entry SHALL move focus into the TypeScript editor at that line.
+The page MUST NOT invent a gutter-marker API that the code editor does not
+provide. The page MUST NOT construct a Web Worker or call a live typecheck
+client. The UI MUST disclose that the list is a build-time snapshot and that
+editing the pane does not update it.
 
 #### Scenario: a type error appears under the editor
 
-- **GIVEN** an authored lesson whose TS source produces a diagnostic
-- **WHEN** the live checker reports that diagnostic
+- **GIVEN** an authored lesson whose TS source produces a diagnostic in the
+  generated map
+- **WHEN** the learner opens that lesson
 - **THEN** the list beneath the TS pane shows its line, column, code, and
-  message
+  message from the static diagnostics
 
 #### Scenario: jump-to-line focuses the editor
 
@@ -55,40 +58,47 @@ gutter-marker API that the code editor does not provide.
 - **WHEN** the learner activates its jump control
 - **THEN** the TypeScript editor receives focus at the diagnostic's line
 
-### Requirement: prerendered expected diagnostics as fallback
+#### Scenario: editing does not recheck
 
-During SSG prerender and before the first live worker response, the diagnostics
-list MUST be seeded from the lesson's authored `expectedDiagnostics` so the
-page is meaningful without JavaScript. After the worker answers, live
-diagnostics MUST replace that fallback.
+- **GIVEN** a hydrated lesson showing static diagnostics for the authored pane
+- **WHEN** the learner edits the TypeScript pane
+- **THEN** the diagnostics list remains the build-time snapshot for the
+  authored lesson state
+
+### Requirement: prerendered diagnostics from authored expectations
+
+During SSG prerender, the diagnostics list MUST be seeded from the generated
+map or the lesson's authored `expectedDiagnostics` so the page is meaningful
+without JavaScript. Hydration MUST continue to show those static diagnostics;
+it MUST NOT replace them with live worker output.
 
 #### Scenario: SSG page shows authored expectations
 
-- **GIVEN** a lesson with non-empty `expectedDiagnostics`
+- **GIVEN** a lesson with non-empty `expectedDiagnostics` (or a generated map
+  entry)
 - **WHEN** the lesson HTML is prerendered
-- **THEN** those expectations appear in the diagnostics region of the HTML
+- **THEN** those diagnostics appear in the diagnostics region of the HTML
 
-#### Scenario: live results replace the fallback
+#### Scenario: hydration keeps static diagnostics
 
-- **GIVEN** a hydrated lesson whose worker has answered
+- **GIVEN** a hydrated lesson
 - **WHEN** the learner views the diagnostics list
-- **THEN** the entries reflect the worker's `TsDiagnostic`s, not only the
-  prerendered expectations
+- **THEN** the entries reflect the build-time `TsDiagnostic`s (generated map
+  or authored fallback), not a live checker response
 
 ### Requirement: stub lessons render gracefully
 
 A lesson whose TypeScript pane is still a placeholder MUST still render its
 title, tier, track, summary, and problem. Placeholder panes MAY be shown as
-placeholder source. The page MUST NOT start live type checking for a
-placeholder TypeScript pane. The page MUST NOT treat unfinished content as a
-hard error.
+placeholder source. The page MUST NOT treat unfinished content as a hard error.
+Placeholder panes MUST NOT require a generated diagnostics map entry.
 
 #### Scenario: placeholder lesson stays readable
 
 - **GIVEN** a lesson whose TS pane contains the placeholder marker
 - **WHEN** the learner opens that lesson
 - **THEN** title, tier, track, summary, and problem are visible and no live
-  typecheck worker is started for that pane
+  typecheck client or Web Worker is started for that pane
 
 ### Requirement: lesson page composition
 
@@ -120,12 +130,13 @@ without error.
 
 ### Requirement: compiler-truth suite over authored lessons
 
-CI MUST run the real TypeScript 6.0.3 compiler over every lesson whose
-TypeScript pane is authored (not a placeholder) and assert that the compiler's
-diagnostics match that pane's `expectedDiagnostics` via the shared matcher. A
-lesson whose TypeScript pane is a placeholder MUST be skipped by the suite so
-unfinished taxonomy stubs do not fail CI. An authored pane that claims an empty
-diagnostic list MUST pass only when the compiler reports none. After the
+CI MUST run the Strada Compiler API (`typescript-strada@6.0.3`) over every
+lesson whose TypeScript pane is authored (not a placeholder) and assert that
+the compiler's diagnostics match that pane's `expectedDiagnostics` via the
+shared matcher, consistent with `build-time-diagnostics`. A lesson whose
+TypeScript pane is a placeholder MUST be skipped by the suite so unfinished
+taxonomy stubs do not fail CI. An authored pane that claims an empty diagnostic
+list MUST pass only when the compiler reports none. After the
 `author-intermediate-tier` change, every lesson with `tier === "intermediate"`
 MUST be authored (non-placeholder) and MUST be checked by the suite.
 
@@ -154,3 +165,20 @@ MUST be authored (non-placeholder) and MUST be checked by the suite.
 - **GIVEN** the curriculum after intermediate authoring
 - **WHEN** intermediate lessons are inventoried for the compiler-truth suite
 - **THEN** every intermediate lesson is authored (non-placeholder) and checked
+
+### Requirement: Lesson UI discloses static diagnostics and solution-match
+
+Editable TS panes and exercises MUST disclose that diagnostics are static (build-time) and that Check uses solution-match, not live rechecking.
+
+#### Scenario: Diagnostics caption
+- **WHEN** a learner views diagnostics under the TS pane
+- **THEN** a caption states diagnostics were captured at build time and editing does not update the list
+
+### Requirement: Enrichment includes first flowcharts and security notes outside runtime-boundary
+
+At least one lesson MUST gain a flowchart enrichment, async glossary / assignability discoverability MUST improve where called out, and at least one non-runtime-boundary lesson MUST include a concise security note relevant to the concept.
+
+#### Scenario: Flowchart present
+- **WHEN** enrichment wave completes
+- **THEN** at least one lesson body references a flowchart block rendered via vd3-cbun
+

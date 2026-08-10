@@ -1,6 +1,7 @@
 # beginner-curriculum Specification
 
 ## Purpose
+
 Defines the beginner-tier curriculum content contract: every beginner lesson
 MUST ship real JS-vs-TS teaching pairs that the compiler-truth suite can
 validate, with insights and optional security, quiz, and exercise material
@@ -30,16 +31,19 @@ lessons.
 ### Requirement: Compiler-truth for beginner panes and exercise solutions
 
 Every beginner lesson's TypeScript pane MUST declare `expectedDiagnostics` that
-match real TypeScript 6.0.3 output under the site's typecheck host
-(`matchesExpected`: code, line, optional `messageIncludes`). When a beginner
-lesson includes an `exercise` with a `solution`, that solution MUST satisfy the
-exercise `assertion` (`"no-errors"` or an expected diagnostic set) under the
-same host.
+match real TypeScript 6.0.3 (Strada) output under the site's virtual typecheck
+host (`matchesExpected`: code, line, optional `messageIncludes`), consistent
+with `build-time-diagnostics`. When a beginner lesson includes an `exercise`
+with a `solution`, that solution MUST satisfy the exercise `assertion`
+(`"no-errors"` or an expected diagnostic set) under the same host for CI.
+Learner-facing Check MUST use normalized solution-match and MUST NOT imply
+runtime worker verification.
 
 #### Scenario: Authored TS pane matches tsc
 
 - **GIVEN** a beginner lesson with an authored TypeScript pane
-- **WHEN** the compiler-truth suite type-checks that pane with TypeScript 6.0.3
+- **WHEN** the compiler-truth suite type-checks that pane with
+  `typescript-strada@6.0.3`
 - **THEN** `matchesExpected(actual, lesson.ts.expectedDiagnostics)` succeeds
 
 #### Scenario: Exercise solution satisfies assertion
@@ -74,9 +78,10 @@ beginners (Node.js JS-native audience; no advanced type-level machinery).
 
 Beginner lessons MAY include a `security` note when types meet untrusted input
 or when `any` / assertions erase safety. Lessons MAY include a `quiz` and/or an
-`exercise` with `assertion` and `solution`. When present, quiz questions MUST
-have a correct `answerId` among their choices, and exercise starter code MUST
-be plain text suitable for the live editor.
+`exercise` with `assertion`, `solution`, and plain-text `starter` for the
+editable exercise editor. When present, quiz questions MUST have a correct
+`answerId` among their choices. Exercise prompts MUST stay honest that Check
+is solution-match (not live compile).
 
 #### Scenario: Security note on a boundary lesson
 
@@ -91,4 +96,20 @@ be plain text suitable for the live editor.
 - **GIVEN** a beginner lesson with a quiz
 - **WHEN** each question is validated
 - **THEN** `answerId` matches exactly one choice `id`
+
+### Requirement: Meta-lessons match dual-install and build-time diagnostics
+
+Foundations, tooling, and node-migration meta-lessons MUST NOT claim an in-browser TypeScript Web Worker or live `createProgram` from typescript@7. They MUST describe typescript@7 tooling plus typescript-strada@6 (alias of the Strada / TS 6 API line) for build-time diagnostics.
+
+#### Scenario: No live-worker product claim
+- **WHEN** a unit stale-phrase gate scans lesson sources
+- **THEN** banned phrases implying a live browser typecheck worker fail the suite
+
+### Requirement: Runtime-boundary track order puts unknown-vs-any before where-types-end
+
+The runtime-boundary track order MUST teach `unknown-vs-any` before `where-types-end`.
+
+#### Scenario: Prerequisite order
+- **WHEN** the curriculum registry is validated
+- **THEN** `unknown-vs-any` appears before `where-types-end` in track order
 

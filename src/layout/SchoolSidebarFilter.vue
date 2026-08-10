@@ -7,31 +7,30 @@
  * a reader who has filtered to "streams" should not lose it by opening one of
  * the results.
  */
-import { VdIcon } from "@vanduo-oss/vd3";
+import { computed } from "vue";
+import { VdIcon, VdInput } from "@vanduo-oss/vd3";
 import { useNavStore } from "@/stores/nav";
 
 const store = useNavStore();
 
-const onInput = (event: Event): void => {
-  store.setFilter((event.target as HTMLInputElement).value);
-};
+const filter = computed({
+  get: () => store.filter,
+  set: (value: string | number) => store.setFilter(String(value)),
+});
 </script>
 
 <template>
   <div class="ts-sidebar-filter">
-    <label class="vd-visually-hidden" for="ts-sidebar-filter-input">
-      Filter lessons
-    </label>
     <VdIcon name="funnel-simple" size="sm" />
-    <input
+    <VdInput
       id="ts-sidebar-filter-input"
-      :value="store.filter"
+      v-model="filter"
       type="search"
-      class="vd-input"
+      size="sm"
       placeholder="Filter lessons…"
       autocomplete="off"
+      aria-label="Filter lessons"
       data-sidebar-filter
-      @input="onInput"
     />
   </div>
 </template>

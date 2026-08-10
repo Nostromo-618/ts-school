@@ -40,7 +40,7 @@ function handle(res: Result): string {
 
 const bad: Result = { kind: "ok", error: "nope" };
 `,
-    highlights: [{ start: 11, end: 11 }],
+    highlights: [{ start: 10, end: 10 }],
     caption: "Tagged Result forbids mixing ok with error.",
     expectedDiagnostics: [
       {
@@ -54,5 +54,23 @@ const bad: Result = { kind: "ok", error: "nope" };
     "Give every variant a literal tag so the checker can discriminate.",
     "Optional data+error models allow impossible states.",
     "Switch on the tag and exhaustiveness checking becomes possible.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "Why put a literal `kind` (or similar) on every union member?",
+      choices: [
+        { id: "a", text: "It makes the object smaller at runtime" },
+        {
+          id: "b",
+          text: "So the checker can tell variants apart and narrow fields",
+        },
+        { id: "c", text: "It disables excess property checks" },
+        { id: "d", text: "It converts the union into an intersection" },
+      ],
+      answerId: "b",
+      explanation:
+        "A shared discriminant literal lets control-flow analysis pick one member and expose its fields safely.",
+    },
   ],
 };

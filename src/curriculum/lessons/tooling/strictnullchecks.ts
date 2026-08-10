@@ -40,4 +40,24 @@ len(null);
     "It is included in strict: true — keep it on.",
     "Use unions explicitly when absence is allowed.",
   ],
+  security: {
+    title: "null crashes are also auth gaps",
+    body: "Passing null into a string-typed userId or token path often means “no session” at runtime. With the flag off, those calls type-check; with it on, you must model absence and reject unauthenticated requests explicitly.",
+    severity: "caution",
+  },
+  quiz: [
+    {
+      id: "q1",
+      prompt: "With strictNullChecks, is null assignable to string?",
+      choices: [
+        { id: "a", text: "Yes — null is a valid string value" },
+        { id: "b", text: "No — use string | null when absence is allowed" },
+        { id: "c", text: "Only inside classes" },
+        { id: "d", text: "Only for optional properties" },
+      ],
+      answerId: "b",
+      explanation:
+        "Ordinary types exclude null and undefined; write the union when you mean absence.",
+    },
+  ],
 };

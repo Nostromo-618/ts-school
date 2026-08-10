@@ -43,4 +43,20 @@ const bad: number = identity("a");
     "Let inference work — annotate when the relationship matters.",
     "Start with one type parameter before adding constraints.",
   ],
+  quiz: [
+    {
+      id: "q1",
+      prompt:
+        "What does identity<T>(x: T): T preserve that identity(x: any): any loses?",
+      choices: [
+        { id: "a", text: "The caller's concrete type through the call" },
+        { id: "b", text: "Runtime typeof checks" },
+        { id: "c", text: "Promise wrapping" },
+        { id: "d", text: "Private field access" },
+      ],
+      answerId: "a",
+      explanation:
+        "T links the argument type to the return type; any forgets both.",
+    },
+  ],
 };

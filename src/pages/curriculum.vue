@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { computed } from "vue";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 import { VdBadge, VdIcon, VdProgress } from "@vanduo-oss/vd3";
 import {
   TIERS,
@@ -18,8 +18,26 @@ import { useProgressStore } from "@/stores/progress";
 type TierFilter = Tier | "all";
 
 const counts = lessonCounts();
-const filter = ref<TierFilter>("all");
 const progress = useProgressStore();
+const route = useRoute();
+const router = useRouter();
+
+const isTier = (value: unknown): value is Tier =>
+  typeof value === "string" && (TIERS as readonly string[]).includes(value);
+
+/** Tier filter mirrors `?tier=` so home tier cards can deep-link here. */
+const filter = computed<TierFilter>({
+  get() {
+    const raw = route.query.tier;
+    return isTier(raw) ? raw : "all";
+  },
+  set(value) {
+    void router.replace({
+      path: "/curriculum",
+      query: value === "all" ? {} : { tier: value },
+    });
+  },
+});
 
 const filters: { value: TierFilter; label: string; count: number }[] = [
   { value: "all", label: "Everything", count: counts.total },
@@ -55,6 +73,8 @@ const visibleTracks = computed(() =>
         {{ counts.total }} lessons across {{ TRACKS.length }} tracks, each
         pairing the JavaScript that breaks with the TypeScript that fixes it.
         Read a track top to bottom, or take a whole tier across every track.
+        Finish a lesson’s quiz and exercise (when present) to mark progress —
+        exercises pass when your code matches the authored solution.
       </p>
       <dl class="ts-tier-summary">
         <div v-for="tier in TIERS" :key="tier" class="ts-tier-summary-item">

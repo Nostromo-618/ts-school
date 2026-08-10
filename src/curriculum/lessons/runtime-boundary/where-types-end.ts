@@ -5,7 +5,7 @@ export const lesson: Lesson = {
   title: "Where your types stop",
   tier: "beginner",
   track: "runtime-boundary",
-  order: 1,
+  order: 2,
   summary:
     "Types describe your program, not the network — the boundary between trusted and untrusted values is where TypeScript's guarantees end.",
   prerequisites: ["types-are-erased", "unknown-vs-any"],
@@ -34,7 +34,8 @@ const body = JSON.parse('{"id":"1","admin":"true"}') as CreateUser;
 createUser(body);
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "The type ends at the assertion — runtime still lies.",
+    caption:
+      "No TypeScript error here — that's the point: the type ends at the assertion; runtime still lies.",
     expectedDiagnostics: [],
   },
   insight: [

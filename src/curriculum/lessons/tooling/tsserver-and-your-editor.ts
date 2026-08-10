@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["editor-driven-development", "tsc-cli"],
   keywords: ["tsserver", "language service", "workspace TypeScript"],
   problem:
-    "The editor uses a global TypeScript 5.x while CI uses 6.0.3 — errors appear in only one place.",
+    "The editor uses a global TypeScript while CI uses the workspace pin (here typescript@7, with Strada 6 for tools that still need createProgram) — errors appear in only one place.",
   js: {
     code: `function pick(arr) {
   return arr[0];

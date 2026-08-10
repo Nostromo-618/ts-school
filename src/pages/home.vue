@@ -23,9 +23,9 @@ const firstLesson = lessonsByTrack(TRACKS[0].id)[0];
       <h1>Learn TypeScript by fixing JavaScript</h1>
       <p class="ts-lead">
         Every lesson is a pair. On the left, idiomatic JavaScript that is
-        quietly wrong. On the right, the TypeScript that catches it — live
-        against a real compiler running in your browser, not a screenshot of
-        one.
+        quietly wrong. On the right, the TypeScript that catches it — with real
+        Strada diagnostics from build time, not a screenshot or a hand-written
+        error list.
       </p>
       <div class="ts-hero-actions">
         <RouterLink
@@ -49,16 +49,21 @@ const firstLesson = lessonsByTrack(TRACKS[0].id)[0];
         take a whole tier across all {{ TRACKS.length }} of them.
       </p>
       <ul class="ts-tier-cards">
-        <li v-for="tier in TIERS" :key="tier" class="vd-card">
-          <div class="vd-card-body vd-stack" data-gap="fib-5">
-            <h3 class="ts-tier-card-title">
-              <VdIcon :name="TIER_ICONS[tier]" />
-              {{ TIER_LABELS[tier] }}
-            </h3>
-            <p class="vd-text-muted vd-text-sm">
-              {{ counts.byTier[tier] }} lessons
-            </p>
-          </div>
+        <li v-for="tier in TIERS" :key="tier">
+          <RouterLink
+            :to="{ path: '/curriculum', query: { tier } }"
+            class="vd-card ts-tier-card-link"
+          >
+            <div class="vd-card-body vd-stack" data-gap="fib-5">
+              <h3 class="ts-tier-card-title">
+                <VdIcon :name="TIER_ICONS[tier]" />
+                {{ TIER_LABELS[tier] }}
+              </h3>
+              <p class="vd-text-muted vd-text-sm">
+                {{ counts.byTier[tier] }} lessons
+              </p>
+            </div>
+          </RouterLink>
         </li>
       </ul>
     </section>

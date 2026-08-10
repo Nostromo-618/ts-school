@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 5,
   summary:
-    "ReturnType, Parameters, ConstructorParameters, ThisParameterType, Awaited â deriving types from a signature you already have.",
+    "ReturnType, Parameters, ConstructorParameters, ThisParameterType, Awaited — deriving types from a signature you already have.",
   prerequisites: ["utility-types-tour", "function-type-expressions"],
   keywords: ["ReturnType", "Parameters", "Awaited", "signature", "derive"],
   problem:

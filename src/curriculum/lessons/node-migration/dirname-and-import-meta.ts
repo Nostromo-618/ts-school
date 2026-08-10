@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 10,
   summary:
-    "import.meta.url, import.meta.dirname, and fileURLToPath â replacing the CommonJS path globals without breaking either module system.",
+    "import.meta.url, import.meta.dirname, and fileURLToPath — replacing the CommonJS path globals without breaking either module system.",
   prerequisites: ["commonjs-to-esm"],
   keywords: ["__dirname", "import.meta", "fileURLToPath", "path", "esm"],
   problem:

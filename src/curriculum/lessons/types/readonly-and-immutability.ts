@@ -50,4 +50,23 @@ xs.push("b");
     "Return a new array instead of mutating shared state.",
     "Readonly<T> / readonly props document intent at API boundaries.",
   ],
+  quiz: [
+    {
+      id: "q1",
+      prompt:
+        "What does marking an array as `readonly` prevent at the type level?",
+      choices: [
+        { id: "a", text: "Reading length" },
+        {
+          id: "b",
+          text: "Mutating methods like push/splice on that reference",
+        },
+        { id: "c", text: "JSON.stringify" },
+        { id: "d", text: "Importing the array from another module" },
+      ],
+      answerId: "b",
+      explanation:
+        "Readonly arrays expose readers but not mutators, pushing you toward returning new arrays instead of shared mutation.",
+    },
+  ],
 };

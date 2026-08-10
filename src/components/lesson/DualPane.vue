@@ -2,42 +2,46 @@
 /**
  * The JS | TS dual pane.
  *
- * Desktop (≥992px): side-by-side. Mobile: `VdTabs`. The JavaScript pane is
- * always read-only. The TypeScript pane is live-checked only when it is not a
- * placeholder — stubs never construct a Worker.
+ * Desktop (≥992px): side-by-side. Mobile: `VdTabs`. Diagnostics are static
+ * (build-time Strada output), not live-checked.
  */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { VdTabs } from "@vanduo-oss/vd3";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
 import { isPlaceholder, type CodePane, type TsCodePane } from "@/curriculum";
-import type { TypecheckOptions } from "@/typecheck";
+import type { TsDiagnostic } from "@/typecheck";
 import DiagnosticsList from "./DiagnosticsList.vue";
-import LiveTsPane from "./LiveTsPane.vue";
-import { toPrerenderedDiagnostics } from "./prerender";
+import EditableTsPane from "./EditableTsPane.vue";
+import { useLessonEditorStore } from "@/stores/lessonEditor";
 
 const props = defineProps<{
   js: CodePane;
   ts: TsCodePane;
-  options?: TypecheckOptions;
+  diagnostics: readonly TsDiagnostic[];
+  lessonId: string;
 }>();
 
 const MOBILE_QUERY = "(max-width: 991px)";
 
 const isMobile = ref(false);
 const activeTab = ref("ts");
-const tsCode = ref(props.ts.code);
+const editor = useLessonEditorStore();
 
 watch(
-  () => props.ts.code,
-  (next) => {
-    tsCode.value = next;
+  () => props.lessonId,
+  (id) => {
+    editor.bindLesson(id, props.ts.code, editor.exerciseCode);
   },
+  { immediate: true },
 );
 
+const tsCode = computed({
+  get: () => editor.tsCode || props.ts.code,
+  set: (value: string) => editor.setTsCode(value),
+});
+
 const stub = computed(() => isPlaceholder(props.ts));
-const initialDiagnostics = computed(() =>
-  toPrerenderedDiagnostics(props.ts.expectedDiagnostics),
-);
+const paneDiagnostics = computed(() => [...props.diagnostics]);
 
 const tabs = [
   { id: "js", label: "JavaScript" },
@@ -62,7 +66,6 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="ts-dual-pane" aria-label="JavaScript and TypeScript panes">
-    <!-- Mobile: tabbed. Only one layout mounts so the live pane is not doubled. -->
     <VdTabs
       v-if="isMobile"
       v-model="activeTab"
@@ -87,13 +90,12 @@ onBeforeUnmount(() => {
         />
       </div>
 
-      <LiveTsPane
+      <EditableTsPane
         v-if="!stub"
         v-show="activeTab === 'ts'"
         v-model="tsCode"
         :caption="ts.caption"
-        :initial-diagnostics="initialDiagnostics"
-        :options="options"
+        :diagnostics="paneDiagnostics"
       />
       <div
         v-else-if="activeTab === 'ts'"
@@ -111,11 +113,10 @@ onBeforeUnmount(() => {
           :line-numbers="true"
           aria-label="TypeScript lesson source"
         />
-        <DiagnosticsList :diagnostics="initialDiagnostics" />
+        <DiagnosticsList :diagnostics="paneDiagnostics" />
       </div>
     </VdTabs>
 
-    <!-- Desktop: side by side. -->
     <div v-else class="ts-dual-pane-grid">
       <div class="ts-pane ts-pane-js vd-stack" data-gap="fib-5">
         <div class="ts-pane-header">
@@ -131,12 +132,11 @@ onBeforeUnmount(() => {
         />
       </div>
 
-      <LiveTsPane
+      <EditableTsPane
         v-if="!stub"
         v-model="tsCode"
         :caption="ts.caption"
-        :initial-diagnostics="initialDiagnostics"
-        :options="options"
+        :diagnostics="paneDiagnostics"
       />
       <div v-else class="ts-pane ts-pane-ts vd-stack" data-gap="fib-5">
         <div class="ts-pane-header">
@@ -150,7 +150,7 @@ onBeforeUnmount(() => {
           :line-numbers="true"
           aria-label="TypeScript lesson source"
         />
-        <DiagnosticsList :diagnostics="initialDiagnostics" />
+        <DiagnosticsList :diagnostics="paneDiagnostics" />
       </div>
     </div>
   </section>

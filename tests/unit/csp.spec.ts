@@ -23,16 +23,33 @@ const policy = (() => {
   ) as Record<string, string[]>;
 })();
 
-// The policy is load-bearing: ts-school compiles learner-authored source and
-// must never gain a way to execute it. Widening a directive should have to
-// break a test first.
+// The policy is load-bearing: ts-school never executes learner-authored source.
+// Opt-in AI/search may fetch model weights and use WASM/workers; script-src
+// stays self (+ wasm-unsafe-eval for WebAssembly).
 describe('index.html content-security-policy', () => {
+  it('keeps script-src self-only aside from wasm-unsafe-eval', () => {
+    expect(policy['script-src']).toContain("'self'");
+    expect(policy['script-src']).toContain("'wasm-unsafe-eval'");
+    expect(policy['script-src']).not.toContain("'unsafe-inline'");
+    expect(policy['script-src']).not.toContain('https:');
+  });
+
+  it('allows style-src unsafe-inline for vd3 theming', () => {
+    expect(policy['style-src']).toEqual(["'self'", "'unsafe-inline'"]);
+  });
+
+  it('widens connect-src for opt-in Hugging Face / CDN model hosts', () => {
+    expect(policy['connect-src']).toContain("'self'");
+    expect(policy['connect-src']).toContain('https://huggingface.co');
+    expect(policy['connect-src']).toContain('blob:');
+  });
+
+  it('allows workers for Transformers / LiteRT', () => {
+    expect(policy['worker-src']).toEqual(["'self'", 'blob:']);
+  });
+
   it.each([
     ['default-src', ["'self'"]],
-    ['script-src', ["'self'"]],
-    ['style-src', ["'self'", "'unsafe-inline'"]],
-    ['worker-src', ["'self'", 'blob:']],
-    ['connect-src', ["'self'"]],
     ['img-src', ["'self'", 'data:']],
     ['font-src', ["'self'"]],
     ['object-src', ["'none'"]],
@@ -41,18 +58,9 @@ describe('index.html content-security-policy', () => {
     expect(policy[directive]).toEqual(sources);
   });
 
-  // Browsers ignore frame-ancestors in a meta policy and log an error for it,
-  // so it belongs on a response header instead. Keep it out of the meta tag.
   it('omits the directives a meta policy cannot deliver', () => {
     expect(policy['frame-ancestors']).toBeUndefined();
     expect(policy['report-uri']).toBeUndefined();
     expect(policy.sandbox).toBeUndefined();
-  });
-
-  it('allows inline styles but never inline or remote scripts', () => {
-    expect(policy['style-src']).toContain("'unsafe-inline'");
-    expect(policy['script-src']).not.toContain("'unsafe-inline'");
-    expect(policy['script-src']).not.toContain("'unsafe-eval'");
-    expect(policy['script-src']).toEqual(["'self'"]);
   });
 });

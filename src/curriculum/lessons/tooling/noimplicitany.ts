@@ -43,4 +43,22 @@ export const lesson: Lesson = {
     "Annotate or use contextual typing from callers.",
     "Turn this on early in a migration.",
   ],
+  security: {
+    title: "Implicit any skips authorization shapes",
+    body: "An untyped req, user, or payload parameter is any under the hood — roles, ids, and nested objects are never checked. Turn on noImplicitAny so boundary handlers cannot quietly accept attacker-controlled shapes.",
+    severity: "critical",
+  },
+  exercise: {
+    prompt: "Annotate a and b as number so Check matches the solution text.",
+    starter: `function add(a, b) {
+  return a + b;
+}
+`,
+    assertion: "no-errors",
+    hints: ["function add(a: number, b: number): number"],
+    solution: `function add(a: number, b: number): number {
+  return a + b;
+}
+`,
+  },
 };

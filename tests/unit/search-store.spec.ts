@@ -7,6 +7,15 @@ import { useSearchStore } from "@/stores/search";
 // The search index is the second consumer of the derived nav tree, and the one
 // a reader notices first when it is wrong.
 
+async function query(store: ReturnType<typeof useSearchStore>, q: string) {
+  store.query = q;
+  store.searchNow();
+  // Allow the async Neptune / fallback pipeline to settle.
+  await Promise.resolve();
+  await Promise.resolve();
+  await new Promise((r) => setTimeout(r, 0));
+}
+
 describe("search store", () => {
   beforeEach(() => {
     setActivePinia(createPinia());
@@ -25,41 +34,40 @@ describe("search store", () => {
     expect(store.entries.length).toBe(navSections().length + nav.pages.length);
   });
 
-  it("stays quiet below the minimum query length", () => {
+  it("stays quiet below the minimum query length", async () => {
     const store = useSearchStore();
-    store.query = "a";
-
+    await query(store, "a");
     expect(store.results).toEqual([]);
   });
 
-  it("matches titles, keywords, and routes", () => {
+  it("matches titles, keywords, and routes", async () => {
     const store = useSearchStore();
 
-    store.query = "narrowing";
+    await query(store, "narrowing");
     expect(store.results.length).toBeGreaterThan(0);
 
     // "prototype pollution" appears in a lesson's keywords, not its title.
-    store.query = "prototype pollution";
+    await query(store, "prototype pollution");
     const keywordHit = store.results.find((result) =>
       result.entry.id.endsWith("deserialization-attack-surface"),
     );
     expect(keywordHit).toBeDefined();
 
-    store.query = "/lessons/node-migration/";
+    await query(store, "/lessons/node-migration/");
     expect(store.results.length).toBeGreaterThan(0);
   });
 
-  it("ranks title matches above keyword and route matches", () => {
+  it("ranks title matches above keyword and route matches", async () => {
     const store = useSearchStore();
-    store.query = "generics";
+    await query(store, "generics");
     const scores = store.results.map((result) => result.score);
 
     expect(scores).toEqual([...scores].sort((a, b) => b - a));
   });
 
-  it("splits the title so the view can emphasise without markup", () => {
+  it("splits the title so the view can emphasise without markup", async () => {
     const store = useSearchStore();
-    store.query = "generics";
+    await query(store, "generics");
     const hit = store.results.find(
       (result) => result.segments.match.length > 0,
     );
@@ -70,18 +78,18 @@ describe("search store", () => {
     expect(match.toLowerCase()).toBe("generics");
   });
 
-  it("groups results and keeps the keyboard order in step with the render", () => {
+  it("groups results and keeps the keyboard order in step with the render", async () => {
     const store = useSearchStore();
-    store.query = "type";
+    await query(store, "type");
 
     const flattened = store.groups.flatMap((group) => group.results);
     expect(store.ordered).toEqual(flattened);
     expect(store.ordered.length).toBe(store.results.length);
   });
 
-  it("wraps the cursor at both ends", () => {
+  it("wraps the cursor at both ends", async () => {
     const store = useSearchStore();
-    store.query = "type";
+    await query(store, "type");
     const count = store.ordered.length;
     expect(count).toBeGreaterThan(1);
 
@@ -91,10 +99,10 @@ describe("search store", () => {
     expect(store.activeIndex).toBe(0);
   });
 
-  it("clears the query when closed", () => {
+  it("clears the query when closed", async () => {
     const store = useSearchStore();
     store.open();
-    store.query = "unions";
+    await query(store, "unions");
     store.close();
 
     expect(store.isOpen).toBe(false);

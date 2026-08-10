@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 11,
   summary:
-    "pluck, groupBy, keyBy â the small utilities every Node codebase reinvents, typed so they return something more useful than any.",
+    "pluck, groupBy, keyBy — the small utilities every Node codebase reinvents, typed so they return something more useful than any.",
   prerequisites: ["generic-constraints", "inferring-type-arguments"],
   keywords: ["utility", "pluck", "groupBy", "keyof", "generic", "lodash"],
   problem:

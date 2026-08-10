@@ -57,4 +57,22 @@ const v: string = log("x");
     "void means it returns no useful value — callers should not read it.",
     "Use never for exhaustive checks and fail-fast helpers.",
   ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "How do `void` and `never` differ for function return types?",
+      choices: [
+        { id: "a", text: "They are identical aliases" },
+        {
+          id: "b",
+          text: "void means no useful value; never means the function does not return normally",
+        },
+        { id: "c", text: "never is only for async" },
+        { id: "d", text: "void means the process exits" },
+      ],
+      answerId: "b",
+      explanation:
+        "Callers must not read void results. never is for throw/infinite loops and exhaustiveness helpers.",
+    },
+  ],
 };

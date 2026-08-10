@@ -1,5 +1,31 @@
 packages: []
 
+allowBuilds:
+  onnxruntime-node: false
+  protobufjs: false
+  sharp: false
+
+minimumReleaseAgeExclude:
+  - '@vanduo-oss/vd3@1.2.2'
+
+# vue-tsc / @vue/language-core / typescript-eslint still need the Strada
+# Compiler API. Primary `typescript` is 7.0.2 (native CLI); force these tools
+# onto 6.0.3.
+overrides:
+  'vue-tsc>typescript': 'npm:typescript@6.0.3'
+  '@vue/language-core>typescript': 'npm:typescript@6.0.3'
+  '@typescript-eslint/typescript-estree>typescript': 'npm:typescript@6.0.3'
+  '@typescript-eslint/parser>typescript': 'npm:typescript@6.0.3'
+  '@typescript-eslint/project-service>typescript': 'npm:typescript@6.0.3'
+  '@typescript-eslint/tsconfig-utils>typescript': 'npm:typescript@6.0.3'
+  '@typescript-eslint/type-utils>typescript': 'npm:typescript@6.0.3'
+  '@typescript-eslint/utils>typescript': 'npm:typescript@6.0.3'
+  # vite-ssg still declares @unhead/vue ^2; force the whole unhead line to v3
+  # so createHead (v3) and renderDOMHead share one API during SSG prerender.
+  '@unhead/vue': '3.3.1'
+  '@unhead/dom': '3.3.1'
+  unhead: '3.3.1'
+
 # `.npmrc` sets ignore-scripts=true and nothing in the tree needs an exception:
 # vite 8 bundles rolldown (prebuilt platform bindings, no install script) and
 # Playwright fetches browsers on demand via `playwright install`, not from a
@@ -15,6 +41,6 @@ patchedDependencies:
 peerDependencyRules:
   allowedVersions:
     # vite-ssg 28 declares its unhead peer across the 2/3 split; we ship
-    # @unhead/vue 2.1.15 (the line vd3-docs runs), so accept both majors rather
-    # than relaxing strict-peer-dependencies globally.
+    # @unhead/vue 3.x, so accept both majors rather than relaxing
+    # strict-peer-dependencies globally.
     unhead: 2 || 3

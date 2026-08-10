@@ -37,7 +37,7 @@ sendWelcome(raw as User);
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "as User is a compile-time claim. The checker is silent; Node still crashes.",
+      "No TypeScript error here — that's the point: as User is a compile-time claim; Node still crashes.",
     expectedDiagnostics: [],
   },
   insight: [

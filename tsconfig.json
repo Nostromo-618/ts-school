@@ -16,7 +16,9 @@
     "isolatedModules": true,
     "useDefineForClassFields": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "typescript-strada": ["./node_modules/typescript-strada/lib/typescript.d.ts"],
+      "typescript-strada/*": ["./node_modules/typescript-strada/*"]
     },
     "types": ["vite/client", "node"]
   },

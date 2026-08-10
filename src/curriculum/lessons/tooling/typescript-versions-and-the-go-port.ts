@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 22,
   summary:
-    "What the native port changes, what it removes — including the programmatic API this very site runs in a Web Worker — and how to plan for it.",
+    "What the native port changes, what it removes — including the in-browser programmatic API — and how this site dual-installs Strada for build-time diagnostics alongside typescript@7.",
   prerequisites: ["tsc-compiler-pipeline", "bundlers-and-transpile-only"],
   keywords: [
     "typescript 7",
@@ -15,13 +15,14 @@ export const lesson: Lesson = {
     "native",
     "compiler api",
     "tsgo",
+    "strada",
     "migration",
   ],
   problem:
-    "TypeScript 7 is a native binary with no JavaScript API, so every tool built on the compiler has to wait for a new one.",
+    "TypeScript 7 is a native binary with no JavaScript createProgram API yet, so tools that embed the compiler need a dual-install strategy.",
   js: {
     code: `// Native compilers are CLIs — not importable JS libraries.
-// Browser-hosted checkers need a JS API that TS 7 does not ship.
+// Embedding tsc in a browser worker needs a JS API that TS 7 does not ship.
 `,
     highlights: [{ start: 1, end: 2 }],
     caption: "No JS API means no in-browser tsc from the native port.",
@@ -51,7 +52,8 @@ const canWorker: true = ts7.browserWorker;
 void ts6;
 `,
     highlights: [{ start: 20, end: 20 }],
-    caption: "This site pins 6.0.3 because workers need the JS API.",
+    caption:
+      "This site uses typescript@7 for tooling CLI and typescript-strada@6 for build-time diagnostics.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -61,26 +63,30 @@ void ts6;
     ],
   },
   insight: [
-    "TypeScript 6.x remains the last Strada/JS compiler API line for in-process checking.",
-    "Plan editor/CI native speedups separately from tools that embed typescript as a library.",
-    "Pin versions deliberately — “latest” may remove the API your tooling imports.",
+    "TypeScript 7 is the primary package here (native CLI); Strada 6 stays as typescript-strada for createProgram.",
+    "Microsoft publishes the Strada API line as `@typescript/typescript6`; this site aliases it `typescript-strada` for build-time diagnostics.",
+    "Lesson diagnostics are generated at build time — the browser never ships a compiler.",
+    "Plan editor/CI native speedups separately from tools that still need the JS Compiler API.",
   ],
   quiz: [
     {
       id: "go-q",
-      prompt: "Why does ts-school pin typescript@6.0.3?",
+      prompt: "How does ts-school use TypeScript 7 today?",
       choices: [
-        { id: "a", text: "6 is faster than 7 in every benchmark" },
+        {
+          id: "a",
+          text: "It runs createProgram in a Web Worker from typescript@7",
+        },
         {
           id: "b",
-          text: "6 still provides a JS programmatic API for the worker",
+          text: "typescript@7 for tooling; typescript-strada@6 for build-time diagnostics",
         },
-        { id: "c", text: "7 cannot run on macOS" },
-        { id: "d", text: "pnpm forbids 7" },
+        { id: "c", text: "It refuses to install typescript@7" },
+        { id: "d", text: "Only ESLint uses 7; everything else stays on 5" },
       ],
       answerId: "b",
       explanation:
-        "The in-browser worker imports typescript; TS 7’s native port has no such API yet.",
+        "The native package has no browser createProgram API yet, so diagnostics are produced in Node with Strada and shipped as static data.",
     },
   ],
   exercise: {

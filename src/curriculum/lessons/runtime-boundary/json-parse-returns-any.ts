@@ -27,7 +27,8 @@ const n: number = data.n;
 const oops: number = data.missing;
 `,
     highlights: [{ start: 2, end: 4 }],
-    caption: "any accepts everything — including missing.",
+    caption:
+      "No TypeScript error here — that's the point: any accepts everything — including missing.",
     expectedDiagnostics: [],
   },
   insight: [

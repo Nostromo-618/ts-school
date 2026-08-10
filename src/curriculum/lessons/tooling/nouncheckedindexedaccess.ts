@@ -48,4 +48,27 @@ const s: string = first(["a"]);
     "Even without the flag, treat indexes as optional in Node services.",
     "Narrow before use.",
   ],
+  security: {
+    title: "Missing map entries are not “found”",
+    body: "Typing cache[key] or sessions[id] as always present hides cache misses and forged ids. Treat index reads as T | undefined and deny access when the lookup is missing — do not assume the key exists.",
+    severity: "caution",
+  },
+  quiz: [
+    {
+      id: "q1",
+      prompt: "What does `noUncheckedIndexedAccess` change about `arr[i]`?",
+      choices: [
+        { id: "a", text: "It makes indexes return any" },
+        {
+          id: "b",
+          text: "It adds `| undefined` so missing entries must be narrowed",
+        },
+        { id: "c", text: "It forbids all index access" },
+        { id: "d", text: "It only affects Map, not arrays" },
+      ],
+      answerId: "b",
+      explanation:
+        "Index reads become T | undefined, matching real cache misses and forged keys — narrow before use.",
+    },
+  ],
 };

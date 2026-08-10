@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 14,
   summary:
-    "'id' in value narrows a union by property presence â useful when you do not own the shapes and cannot add a tag.",
+    "'id' in value narrows a union by property presence — useful when you do not own the shapes and cannot add a tag.",
   prerequisites: ["discriminated-unions"],
   keywords: ["in operator", "narrowing", "property presence", "duck typing"],
   problem:
@@ -27,20 +27,42 @@ type Cat = { meow(): string };
 
 function label(pet: Dog | Cat): string {
   if ("bark" in pet) return pet.bark();
-  return pet.meow();
+  // Else branch is Cat — bark is gone.
+  return pet.bark();
 }
-
-const weird = { bark: 1, meow: () => "x" };
-const s: string = label(weird);
 `,
-    highlights: [{ start: 10, end: 11 }],
+    highlights: [{ start: 7, end: 7 }],
     caption:
-      "`in` narrows Dog | Cat. A value with both keys may still not match either callable shape.",
-    expectedDiagnostics: [],
+      "`in` narrows the true branch to Dog; the else is Cat, so bark() errors.",
+    expectedDiagnostics: [
+      {
+        code: 2339,
+        line: 7,
+        messageIncludes: "bark",
+      },
+    ],
   },
   insight: [
     "`in` narrows unions when members have distinct keys.",
     "It still follows the prototype chain — pair with untrusted-object lessons.",
     "Prefer discriminated unions when you control the data model.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: 'When is `"bark" in animal` a good narrowing tool?',
+      choices: [
+        { id: "a", text: "Always, even on untrusted JSON" },
+        {
+          id: "b",
+          text: "When union members have distinct keys the checker can use",
+        },
+        { id: "c", text: "Only inside async functions" },
+        { id: "d", text: "It never narrows — it only returns boolean" },
+      ],
+      answerId: "b",
+      explanation:
+        "`in` helps when variants expose different properties. Prefer discriminants for data you model, and be careful with prototype-chain surprises on untrusted objects.",
+    },
   ],
 };

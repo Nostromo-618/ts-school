@@ -36,7 +36,8 @@ label(0);
 export const shown = label(0);
 `,
     highlights: [{ start: 3, end: 5 }],
-    caption: "Prefer != null / !== undefined when 0 is meaningful.",
+    caption:
+      "No TypeScript error here — that's the point: truthiness treats 0 as empty. Prefer != null when 0 is meaningful.",
     expectedDiagnostics: [],
   },
   insight: [

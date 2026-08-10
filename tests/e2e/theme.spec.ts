@@ -1,12 +1,20 @@
-import { expect, test } from "@playwright/test";
-import { THEME_STORAGE_KEY } from "./fixtures";
+import { expect, test, THEME_STORAGE_KEY } from "./fixtures";
 
 test.describe("theme persistence", () => {
   test("theme switch persists across reload", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByRole("button", { name: /^Theme:/ }).click();
-    await page.locator('[data-theme-value="dark"]').click();
+    const themeButton = page.getByRole("button", { name: /^Theme:/ });
+
+    // Click-to-cycle until preference is dark (system → light → dark).
+    for (let i = 0; i < 3; i++) {
+      const pref = await page.evaluate(
+        (key) => localStorage.getItem(key),
+        THEME_STORAGE_KEY,
+      );
+      if (pref === "dark") break;
+      await themeButton.click();
+    }
 
     await expect
       .poll(async () =>

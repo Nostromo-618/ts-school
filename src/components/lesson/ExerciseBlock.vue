@@ -1,23 +1,23 @@
 <script setup lang="ts">
 /**
- * Hands-on exercise checked by the same worker that powers the dual pane.
- * Passes when diagnostics match the authored assertion (`"no-errors"` or an
- * `ExpectedDiagnostic[]` via `matchesExpected`).
+ * Hands-on exercise. Passes when normalized editor text matches the authored
+ * `solution`. Diagnostics are static (starter / solution from the build-time
+ * Strada generator), not live-checked.
  */
 import { computed, ref, watch } from "vue";
+import { VdAlert } from "@vanduo-oss/vd3";
 import { VdCodeEditor } from "@vanduo-oss/vd3-cbun/code-editor";
 import type { Exercise } from "@/curriculum";
-import {
-  formatDiagnosticMatch,
-  matchesExpected,
-  useTypecheck,
-} from "@/typecheck";
+import { normalizeSource, type TsDiagnostic } from "@/typecheck";
 import { useProgressStore } from "@/stores/progress";
+import { useLessonEditorStore } from "@/stores/lessonEditor";
 import DiagnosticsList from "./DiagnosticsList.vue";
 
 const props = defineProps<{
   lessonId: string;
   exercise: Exercise;
+  starterDiagnostics?: readonly TsDiagnostic[];
+  solutionDiagnostics?: readonly TsDiagnostic[];
 }>();
 
 const emit = defineEmits<{
@@ -25,75 +25,61 @@ const emit = defineEmits<{
 }>();
 
 const progress = useProgressStore();
-const code = ref(props.exercise.starter);
+const editor = useLessonEditorStore();
 const showHints = ref(false);
 const showSolution = ref(false);
-const checked = ref(false);
 const passed = ref(false);
 const mismatchMessage = ref<string | null>(null);
 
+const code = computed({
+  get: () => editor.exerciseCode || props.exercise.starter,
+  set: (value: string) => editor.setExerciseCode(value),
+});
+
 watch(
-  () => props.exercise.starter,
-  (next) => {
-    code.value = next;
-    checked.value = false;
+  () => [props.lessonId, props.exercise.starter] as const,
+  ([id, starter]) => {
+    if (editor.lessonId !== id) {
+      editor.bindLesson(id, editor.tsCode, starter);
+    } else {
+      editor.setExerciseCode(starter);
+    }
     passed.value = false;
     mismatchMessage.value = null;
     showHints.value = false;
     showSolution.value = false;
   },
+  { immediate: true },
 );
-
-const { diagnostics, checking, error, checkNow } = useTypecheck(code, {
-  immediate: true,
-});
 
 const alreadyPassed = computed(
   () =>
     passed.value || progress.lessons[props.lessonId]?.exercisePassed === true,
 );
 
-function evaluate(): boolean {
-  const assertion = props.exercise.assertion;
-  if (assertion === "no-errors") {
-    if (diagnostics.value.length === 0) return true;
-    mismatchMessage.value = `expected no diagnostics, got ${diagnostics.value.length}`;
-    return false;
+const displayDiagnostics = computed((): TsDiagnostic[] => {
+  if (showSolution.value && props.solutionDiagnostics) {
+    return [...props.solutionDiagnostics];
   }
-  const match = matchesExpected(diagnostics.value, assertion);
-  if (match.matched) return true;
-  mismatchMessage.value = formatDiagnosticMatch(match);
-  return false;
-}
-
-function check(): void {
-  checkNow();
-  // The worker answer is async; watch diagnostics after requesting a check.
-  // For the immediate path, useTypecheck's checkNow dispatches now — we
-  // evaluate on the next tick via a one-shot watch when checking flips false.
-  checked.value = true;
-  if (!checking.value) {
-    finishEvaluate();
-  }
-}
-
-watch(checking, (isChecking, wasChecking) => {
-  if (wasChecking && !isChecking && checked.value && !passed.value) {
-    finishEvaluate();
-  }
+  return [...(props.starterDiagnostics ?? [])];
 });
 
-function finishEvaluate(): void {
-  if (error.value) {
-    mismatchMessage.value = error.value;
+function check(): void {
+  const solution = props.exercise.solution;
+  if (!solution) {
+    mismatchMessage.value =
+      "This exercise has no authored solution to match against.";
     return;
   }
-  if (evaluate()) {
+  if (normalizeSource(code.value) === normalizeSource(solution)) {
     passed.value = true;
     mismatchMessage.value = null;
     progress.recordExercisePass(props.lessonId);
     emit("pass");
+    return;
   }
+  mismatchMessage.value =
+    "Not a match yet — keep editing toward the solution (or reveal it).";
 }
 
 function revealSolution(): void {
@@ -112,6 +98,11 @@ function revealSolution(): void {
     <header class="vd-stack" data-gap="fib-5">
       <h2 id="lesson-exercise">Exercise</h2>
       <p>{{ exercise.prompt }}</p>
+      <p class="vd-text-muted vd-text-sm">
+        Check compares your code to the authored solution (normalized
+        whitespace), not a live typecheck. Diagnostics below are build-time
+        snapshots.
+      </p>
     </header>
 
     <VdCodeEditor
@@ -122,17 +113,12 @@ function revealSolution(): void {
       aria-label="Exercise editor"
     />
 
-    <DiagnosticsList
-      :diagnostics="diagnostics"
-      :checking="checking"
-      :error="error"
-    />
+    <DiagnosticsList :diagnostics="displayDiagnostics" />
 
     <div class="ts-exercise-actions vd-inline" data-gap="fib-5">
       <button
         type="button"
         class="vd-btn vd-btn-primary vd-btn-sm"
-        :disabled="checking"
         @click="check"
       >
         Check
@@ -155,17 +141,13 @@ function revealSolution(): void {
       </button>
     </div>
 
-    <p v-if="alreadyPassed" class="vd-alert vd-alert-success" role="status">
+    <VdAlert v-if="alreadyPassed" variant="success" role="status">
       Exercise passed.
-    </p>
-    <p
-      v-else-if="mismatchMessage"
-      class="vd-alert vd-alert-warning"
-      role="status"
-    >
+    </VdAlert>
+    <VdAlert v-else-if="mismatchMessage" variant="warning" role="status">
       Not quite yet.
       <span class="ts-exercise-mismatch">{{ mismatchMessage }}</span>
-    </p>
+    </VdAlert>
 
     <ul v-if="showHints && exercise.hints" class="ts-exercise-hints">
       <li v-for="(hint, index) in exercise.hints" :key="index">{{ hint }}</li>

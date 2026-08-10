@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 17,
   summary:
-    "Statics, static blocks, and the type of the class itself â which is what you need when a function takes a class rather than an instance.",
+    "Statics, static blocks, and the type of the class itself — which is what you need when a function takes a class rather than an instance.",
   prerequisites: ["classes-intro", "call-and-construct-signatures"],
   keywords: ["static", "static block", "class type", "typeof class", "factory"],
   problem:

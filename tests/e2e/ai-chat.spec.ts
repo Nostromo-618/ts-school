@@ -1,0 +1,34 @@
+import { expect, FIXTURE_LESSON, test } from "./fixtures";
+
+test.describe("lesson AI chat sidebar", () => {
+  test("opens from the navbar ask control", async ({ page }) => {
+    await page.goto(FIXTURE_LESSON.path);
+    await page.getByTestId("ts-open-ai-chat").click();
+    await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
+    await expect(page.getByTestId("ts-ai-load")).toBeVisible();
+    await expect(page.getByTestId("ts-ai-input")).toBeDisabled();
+  });
+
+  test("pin keeps the pane open across navigation and reload", async ({
+    page,
+  }) => {
+    await page.goto(FIXTURE_LESSON.path);
+    await page.getByTestId("ts-open-ai-chat").click();
+    await page.getByTestId("ts-ai-pin").click();
+    await expect(page.getByTestId("ts-ai-sidebar")).toHaveAttribute(
+      "data-pinned",
+      "true",
+    );
+
+    await page.goto("/curriculum");
+    await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
+    await expect(page.locator(".ts-app-shell")).toHaveClass(/is-ai-chat-pinned/);
+
+    await page.reload();
+    await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
+    await expect(page.getByTestId("ts-ai-sidebar")).toHaveAttribute(
+      "data-pinned",
+      "true",
+    );
+  });
+});

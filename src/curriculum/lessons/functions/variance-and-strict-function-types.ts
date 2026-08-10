@@ -88,18 +88,18 @@ animalHandler({ tag: "animal" });
   ],
   exercise: {
     prompt:
-      "Type a function property onClick: (ev: { x: number }) => void on a Button type, and assign a handler that only reads x.",
+      "Fix onClick so it accepts the Button event shape (or only uses fields that exist on it). Match the solution text.",
     starter: `type Button = { onClick: (ev: { x: number; y: number }) => void };
 
 const b: Button = {
-  onClick: (ev) => {
-    void ev.x;
+  onClick: (ev: { x: number; y: number; z: number }) => {
+    void ev.z;
   },
 };
 `,
     assertion: "no-errors",
     hints: [
-      "A handler accepting a wider event (or only using a subset) is fine when parameters are contravariant — reading x from {x,y} is OK.",
+      "Drop the z requirement — a handler that needs a narrower event is not assignable under contravariance.",
     ],
     solution: `type Button = { onClick: (ev: { x: number; y: number }) => void };
 

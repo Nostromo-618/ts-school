@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "testing",
   order: 4,
   summary:
-    "Structural typing means a fake only needs the parts you use â as long as the type says so rather than a cast.",
+    "Structural typing means a fake only needs the parts you use — as long as the type says so rather than a cast.",
   prerequisites: ["structural-typing", "typed-fixtures-and-factories"],
   keywords: ["mock", "stub", "fake", "interface", "structural", "test double"],
   problem:
@@ -44,4 +44,25 @@ const bad: number = u;
     "async mocks should return Promises.",
     "Avoid any in test doubles.",
   ],
+  exercise: {
+    prompt:
+      "Type db as Db and make get return Promise<User | undefined>. Match the solution text.",
+    starter: `type User = { id: string };
+type Db = { get(id: string): Promise<User | undefined> };
+
+const db = {
+  get: (id) => ({ id }),
+};
+`,
+    assertion: "no-errors",
+    hints: ["const db: Db = { get: async (id) => ({ id }) };"],
+    solution: `type User = { id: string };
+type Db = { get(id: string): Promise<User | undefined> };
+
+const db: Db = {
+  get: async (id) => ({ id }),
+};
+void db;
+`,
+  },
 };

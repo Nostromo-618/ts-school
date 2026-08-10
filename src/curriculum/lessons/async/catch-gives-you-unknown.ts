@@ -57,4 +57,33 @@ export async function main(): Promise<void> {
     body: "Log carefully; do not return raw exception strings to clients.",
     severity: "info",
   },
+  exercise: {
+    prompt:
+      "Narrow e with instanceof Error before reading .message (else String(e)). Match the solution text.",
+    starter: `declare function run(): Promise<void>;
+declare function log(msg: string): void;
+
+export async function main(): Promise<void> {
+  try {
+    await run();
+  } catch (e) {
+    log(e.message);
+  }
+}
+`,
+    assertion: "no-errors",
+    hints: ["if (e instanceof Error) log(e.message); else log(String(e));"],
+    solution: `declare function run(): Promise<void>;
+declare function log(msg: string): void;
+
+export async function main(): Promise<void> {
+  try {
+    await run();
+  } catch (e) {
+    if (e instanceof Error) log(e.message);
+    else log(String(e));
+  }
+}
+`,
+  },
 };

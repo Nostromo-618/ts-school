@@ -8,12 +8,14 @@
  *
  * Messages may contain newlines (flattened compiler chains). They are rendered
  * as plain text with `white-space: pre-wrap` — never as HTML.
+ *
+ * Diagnostics are static (build-time Strada output) — there is no live worker.
  */
+import { VdAlert } from "@vanduo-oss/vd3";
 import type { TsDiagnostic } from "@/typecheck";
 
 defineProps<{
   diagnostics: readonly TsDiagnostic[];
-  checking?: boolean;
   error?: string | null;
 }>();
 
@@ -24,24 +26,22 @@ const emit = defineEmits<{
 
 <template>
   <div class="ts-diagnostics" role="region" aria-label="TypeScript diagnostics">
-    <p v-if="error" class="vd-alert vd-alert-danger" role="alert">
-      {{ error }}
+    <p class="vd-text-muted vd-text-xs ts-diagnostics-caption" role="note">
+      Captured at build time (TypeScript Strada 6.0.3). Editing code does not
+      update this list.
     </p>
 
-    <p
-      v-else-if="checking && diagnostics.length === 0"
-      class="vd-text-muted vd-text-sm"
-      role="status"
-    >
-      Checking…
-    </p>
+    <VdAlert v-if="error" variant="danger" role="alert">
+      {{ error }}
+    </VdAlert>
 
     <p
       v-else-if="diagnostics.length === 0"
       class="vd-text-muted vd-text-sm"
       role="status"
     >
-      No diagnostics.
+      No diagnostics — the authored TypeScript has no errors (that may be the
+      point).
     </p>
 
     <ul v-else class="ts-diagnostics-list">
@@ -70,6 +70,10 @@ const emit = defineEmits<{
 <style scoped>
 .ts-diagnostics {
   margin-top: var(--vd-space-fib-5, 0.5rem);
+}
+
+.ts-diagnostics-caption {
+  margin: 0 0 var(--vd-space-fib-5, 0.5rem);
 }
 
 .ts-diagnostics-list {

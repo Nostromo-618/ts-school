@@ -36,7 +36,7 @@ add(1, "2");
   insight: [
     "Use tsc --noEmit (or -b --pretty false) as the CI type gate.",
     "Prefer project flags via tsconfig over long ad-hoc CLI lists.",
-    "Pin the TypeScript version so local, editor, and CI agree (6.0.3 here).",
+    "Pin TypeScript so local, editor, and CI agree — this site uses typescript@7 for the CLI and typescript-strada@6.0.3 where createProgram is required.",
   ],
   quiz: [
     {

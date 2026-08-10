@@ -68,6 +68,7 @@ describe("derived navigation tree", () => {
     expect(routes).toContain("/glossary");
     expect(routes).toContain("/history");
     expect(routes).toContain("/about");
+    expect(routes).toContain("/terms");
   });
 
   it("maps a lesson route back to its tier tab", () => {

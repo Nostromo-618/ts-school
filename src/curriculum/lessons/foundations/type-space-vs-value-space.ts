@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "Cannot find name X â used as a value â appears when you reference a type where a value was needed, and the message never says which space it looked in.",
+    "Cannot find name X — used as a value — appears when you reference a type where a value was needed, and the message never says which space it looked in.",
   js: {
     code: `const User = { id: 1 };
 `,

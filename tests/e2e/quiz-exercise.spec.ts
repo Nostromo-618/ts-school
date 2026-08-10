@@ -1,8 +1,9 @@
-import { expect, test } from "@playwright/test";
-import { EXERCISE_SOLUTION, FIXTURE_LESSON } from "./fixtures";
+import { expect, EXERCISE_SOLUTION, FIXTURE_LESSON, test } from "./fixtures";
 
 test.describe("quiz and exercise flows", () => {
-  test("quiz feedback and exercise pass", async ({ page }) => {
+  test("quiz feedback and exercise pass via solution-match", async ({
+    page,
+  }) => {
     await page.goto(FIXTURE_LESSON.path);
 
     await expect(page.getByRole("heading", { name: "Quiz" })).toBeVisible();
@@ -21,15 +22,20 @@ test.describe("quiz and exercise flows", () => {
     const exerciseEditor = page.getByLabel("Exercise editor");
     await exerciseEditor.fill(EXERCISE_SOLUTION);
 
-    await expect(
-      page
-        .locator(".ts-exercise")
-        .getByRole("region", { name: "TypeScript diagnostics" })
-        .getByText("No diagnostics."),
-    ).toBeVisible({ timeout: 15_000 });
-
     await page.getByRole("button", { name: "Check" }).click();
     await expect(page.getByText("Exercise passed.")).toBeVisible({
+      timeout: 10_000,
+    });
+  });
+
+  test("exercise Check fails when code does not match the solution", async ({
+    page,
+  }) => {
+    await page.goto(FIXTURE_LESSON.path);
+    const exerciseEditor = page.getByLabel("Exercise editor");
+    await exerciseEditor.fill("function nope() {}\n");
+    await page.getByRole("button", { name: "Check" }).click();
+    await expect(page.getByText(/Not a match yet/i)).toBeVisible({
       timeout: 10_000,
     });
   });

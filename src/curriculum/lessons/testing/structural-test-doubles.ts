@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "testing",
   order: 8,
   summary:
-    "Structural typing means no interface declaration, no implements, and no framework â a plain object is a valid double if its shape matches.",
+    "Structural typing means no interface declaration, no implements, and no framework — a plain object is a valid double if its shape matches.",
   prerequisites: ["typing-mocks-and-stubs", "interface-vs-type-alias"],
   keywords: [
     "test double",

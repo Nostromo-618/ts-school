@@ -1,36 +1,21 @@
 /**
- * The type-check engine's public surface.
+ * The type-check contract's public surface for the app and curriculum.
  *
- * Components should import from here rather than reaching into the modules
- * below it — in particular, importing `./worker` or `./host` from the main
- * thread is how the compiler would end up in the main bundle.
+ * Browser code imports types + match helpers only. The Strada Compiler API
+ * host lives in `./host` and is Node-only (diagnostic generator + CI truth).
  */
 
 export type {
   ExpectedDiagnostic,
   TsDiagnostic,
   TsDiagnosticCategory,
-  TypecheckErrorResponse,
   TypecheckOptions,
-  TypecheckRequest,
-  TypecheckResponse,
 } from "./types";
-
-export {
-  createTypecheckClient,
-  useTypecheck,
-  DEFAULT_DEBOUNCE_MS,
-} from "./client";
-export type {
-  TypecheckClient,
-  TypecheckClientOptions,
-  TypecheckWorkerLike,
-  UseTypecheck,
-  UseTypecheckOptions,
-} from "./client";
 
 export { formatDiagnosticMatch, matchesExpected } from "./match";
 export type { DiagnosticMatch, DiagnosticPair } from "./match";
 
-export { tsLibUrl, TS_LIB_DIRECTORY, TS_LIB_MANIFEST } from "./libs";
-export type { TsLibManifest } from "./libs";
+/** Normalize source for exercise solution-match checks. */
+export function normalizeSource(code: string): string {
+  return code.replace(/\r\n/g, "\n").trim();
+}

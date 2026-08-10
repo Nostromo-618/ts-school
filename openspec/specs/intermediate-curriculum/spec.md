@@ -5,9 +5,7 @@
 Defines the authored intermediate-tier curriculum: every lesson with
 `tier === "intermediate"` MUST ship real JS/TS panes, accurate compiler
 diagnostics, and security-aware runtime-boundary teaching for Node developers.
-
 ## Requirements
-
 ### Requirement: every intermediate lesson is authored
 
 Every curriculum lesson whose `tier` is `"intermediate"` MUST replace
@@ -30,15 +28,17 @@ title, tier, track, order, summary, prerequisites, and keywords.
 ### Requirement: compiler-truth for intermediate panes
 
 Each authored intermediate TypeScript pane MUST declare `expectedDiagnostics`
-that match real TypeScript 6.0.3 output under the project's typecheck host
-baseline. An empty `expectedDiagnostics` array MUST mean the compiler is
-silent on that pane. When an exercise solution is present, it MUST satisfy the
-exercise assertion under the same host.
+that match real TypeScript 6.0.3 (Strada) output under the project's virtual
+typecheck host baseline, consistent with `build-time-diagnostics`. An empty
+`expectedDiagnostics` array MUST mean the compiler is silent on that pane.
+When an exercise solution is present, it MUST satisfy the exercise assertion
+under the same host (CI / compiler-truth). Learner-facing Check remains
+solution-match and MUST NOT be described as live worker verification.
 
 #### Scenario: intermediate panes pass compiler-truth
 
 - **GIVEN** every intermediate lesson's TypeScript pane
-- **WHEN** the compiler-truth suite runs real TypeScript 6.0.3
+- **WHEN** the compiler-truth suite runs Strada (`typescript-strada@6.0.3`)
 - **THEN** each pane's diagnostics match its `expectedDiagnostics`
 
 #### Scenario: exercise solutions satisfy assertions
@@ -79,10 +79,10 @@ note when the topic involves untrusted data.
 
 Intermediate `node-migration` lessons MUST teach Node patterns (CJS→ESM,
 `node:*`, env, streams, fs, HTTP, CLI, buffers, event emitters) using
-self-contained snippets. Because the in-browser host has no `@types/node`,
-lessons MUST supply minimal ambient declarations or declare modules inside the
-snippet when Node APIs are referenced, rather than importing real Node types
-from the filesystem.
+self-contained snippets. Because the Strada build-time / compiler-truth host
+has no `@types/node`, lessons MUST supply minimal ambient declarations or
+declare modules inside the snippet when Node APIs are referenced, rather than
+importing real Node types from the filesystem.
 
 #### Scenario: node snippet typechecks without @types/node
 
@@ -96,9 +96,10 @@ from the filesystem.
 
 Intermediate lessons SHOULD include a quiz and/or exercise when the concept
 benefits from active practice. Quizzes MUST use single-answer multiple choice
-with explanations. Exercises MUST provide starter code and an assertion the
-worker can verify. Lessons MAY omit quiz/exercise when the dual-pane pair is
-sufficient.
+with explanations. Exercises MUST provide starter code and an authored
+`solution` for learner solution-match Check, plus an `assertion` the
+compiler-truth suite can verify against that solution. Lessons MAY omit
+quiz/exercise when the dual-pane pair is sufficient.
 
 #### Scenario: quiz has one correct answer and explanation
 
@@ -109,6 +110,29 @@ sufficient.
 #### Scenario: exercise starter is intentionally incomplete
 
 - **GIVEN** an intermediate lesson with an exercise
-- **WHEN** the starter is typechecked
+- **WHEN** the starter is typechecked under Strada
 - **THEN** it does not already satisfy a `"no-errors"` assertion unless the
   exercise is specifically about confirming silence
+
+#### Scenario: learner Check uses solution-match
+
+- **GIVEN** an intermediate lesson with an exercise and solution
+- **WHEN** the learner activates Check after matching the solution text
+- **THEN** the exercise passes without requiring a live in-browser typecheck
+
+### Requirement: First batch of twelve intermediate lessons gain quiz or exercise
+
+Twelve high-leverage intermediate lessons that previously lacked interactivity MUST each gain a quiz and/or exercise with a solution suitable for solution-match Check and compiler-truth.
+
+#### Scenario: Batch completeness
+- **WHEN** the intermediate interactivity batch is complete
+- **THEN** each of the twelve targeted lessons has at least one quiz or exercise with solution
+
+### Requirement: Remaining intermediate gaps are documented as later milestones
+
+Lessons outside the first batch of twelve that still lack quiz/exercise MUST be documented in README / OpenSpec as a later milestone — not claimed complete.
+
+#### Scenario: Milestone documentation
+- **WHEN** a maintainer reads the release README section
+- **THEN** remaining intermediate interactivity gaps are explicitly deferred
+

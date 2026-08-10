@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 15,
   summary:
-    "constructor(private readonly db: Db) declares and assigns in one place â and emits real JavaScript, so it cannot be type-stripped.",
+    "constructor(private readonly db: Db) declares and assigns in one place — and emits real JavaScript, so it cannot be type-stripped.",
   prerequisites: [
     "class-member-visibility",
     "erasable-syntax-and-type-stripping",

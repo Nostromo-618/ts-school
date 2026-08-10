@@ -1,11 +1,12 @@
 <script setup lang="ts">
 /**
- * Site footer. `VdFooter` from the package supplies the container, the columns,
- * and the copyright row; this component supplies the content.
+ * Site footer. `VdFooter` supplies the shell and copyright row; sections are
+ * laid out with `vd-footer-3col` on an inner wrapper (not the `:columns` prop).
+ * The prop puts the grid on `<footer>`, which only has one child — the
+ * container — so three tracks collapse the content into a third of the width.
  *
- * The "Start here" column is derived rather than typed out: it links the first
- * beginner lesson of the first three tracks, so it follows the curriculum
- * instead of going stale beside it.
+ * The "Start here" column is derived: first beginner lesson of the first three
+ * tracks, so it follows the curriculum instead of going stale beside it.
  */
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
@@ -27,66 +28,77 @@ const siteLinks = [
   { label: "Glossary", to: "/glossary" },
   { label: "History", to: "/history" },
   { label: "About", to: "/about" },
+  { label: "Terms", to: "/terms" },
 ];
 </script>
 
 <template>
-  <VdFooter :columns="3">
-    <div class="vd-row">
-      <div class="vd-col-12 vd-col-md-4">
-        <section class="vd-footer-section">
-          <div class="ts-footer-brand">
-            <SchoolBrandMark size="2.5rem" />
-            <span class="ts-brand-text">
-              <span class="ts-brand-name">TypeScript</span>
-              <span class="ts-brand-word">School</span>
-            </span>
-          </div>
-          <p class="vd-text-muted vd-text-sm">
-            Every lesson is a pair: the JavaScript that breaks, and the
-            TypeScript that catches it — checked by the real compiler.
-          </p>
-        </section>
-      </div>
+  <VdFooter>
+    <div class="vd-footer-3col ts-footer-columns">
+      <section class="vd-footer-section">
+        <div class="ts-footer-brand">
+          <SchoolBrandMark size="2.5rem" />
+          <span class="ts-brand-text">
+            <span class="ts-brand-name">TypeScript</span>
+            <span class="ts-brand-word">School</span>
+          </span>
+        </div>
+        <p class="vd-text-muted vd-text-sm ts-footer-blurb">
+          Every lesson is a pair: the JavaScript that breaks, and the TypeScript
+          that catches it — diagnostics from the real compiler, generated at
+          build time and verified in CI.
+        </p>
+      </section>
 
-      <div class="vd-col-12 vd-col-md-4">
-        <section class="vd-footer-section">
-          <h2 class="vd-footer-heading">The site</h2>
-          <ul class="vd-footer-list">
-            <li
-              v-for="link in siteLinks"
-              :key="link.to"
-              class="vd-footer-list-item"
-            >
-              <RouterLink :to="link.to" class="vd-footer-link">
-                {{ link.label }}
-              </RouterLink>
-            </li>
-          </ul>
-        </section>
-      </div>
+      <section class="vd-footer-section">
+        <h2 class="vd-footer-heading">The site</h2>
+        <ul class="vd-footer-list">
+          <li
+            v-for="link in siteLinks"
+            :key="link.to"
+            class="vd-footer-list-item"
+          >
+            <RouterLink :to="link.to" class="vd-footer-link">
+              {{ link.label }}
+            </RouterLink>
+          </li>
+        </ul>
+      </section>
 
-      <div class="vd-col-12 vd-col-md-4">
-        <section class="vd-footer-section">
-          <h2 class="vd-footer-heading">Start here</h2>
-          <ul class="vd-footer-list">
-            <li
-              v-for="link in startHere"
-              :key="link.to"
-              class="vd-footer-list-item"
-            >
-              <RouterLink :to="link.to" class="vd-footer-link">
-                {{ link.label }}
-              </RouterLink>
-            </li>
-          </ul>
-        </section>
-      </div>
+      <section class="vd-footer-section">
+        <h2 class="vd-footer-heading">Start here</h2>
+        <ul class="vd-footer-list">
+          <li
+            v-for="link in startHere"
+            :key="link.to"
+            class="vd-footer-list-item"
+          >
+            <RouterLink :to="link.to" class="vd-footer-link">
+              {{ link.label }}
+            </RouterLink>
+          </li>
+        </ul>
+      </section>
     </div>
 
     <template #copyright>
       <p class="vd-text-center vd-text-muted vd-text-sm">
-        {{ year }} TypeScript School. Built on Vanduo UI.
+        {{ year }} TypeScript School. Built on
+        <a
+          href="https://github.com/vanduo-oss/vd3"
+          class="vd-footer-link"
+          rel="noopener noreferrer"
+          target="_blank"
+          >vd3</a
+        >
+        and
+        <a
+          href="https://github.com/vanduo-oss/vd3-cbun"
+          class="vd-footer-link"
+          rel="noopener noreferrer"
+          target="_blank"
+          >vd3-cbun</a
+        >.
       </p>
     </template>
   </VdFooter>

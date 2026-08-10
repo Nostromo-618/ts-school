@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 8,
   summary:
-    "{ [K in keyof T]: â¦ } transforms every property of a type. This is how Partial, Readonly, and Record are actually defined.",
+    "{ [K in keyof T]: … } transforms every property of a type. This is how Partial, Readonly, and Record are actually defined.",
   prerequisites: ["keyof-operator", "indexed-access-types"],
   keywords: ["mapped type", "in keyof", "transform", "Partial", "homomorphic"],
   problem:
@@ -39,5 +39,23 @@ u.name = "Bob";
     "Mapped types transform each property via [K in keyof T].",
     "Readonly<T> and Partial<T> are mapped types.",
     "Start here before conditional types.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "What is the core pattern of a mapped type?",
+      choices: [
+        { id: "a", text: "extends infer on a function" },
+        {
+          id: "b",
+          text: "Transform each property via `[K in keyof T]`",
+        },
+        { id: "c", text: "A runtime Object.keys loop" },
+        { id: "d", text: "Only works on arrays" },
+      ],
+      answerId: "b",
+      explanation:
+        "Mapped types rebuild object types property-by-property; Readonly and Partial are the familiar built-ins.",
+    },
   ],
 };

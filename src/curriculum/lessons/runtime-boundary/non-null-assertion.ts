@@ -29,7 +29,8 @@ users.set("1", { name: "Ada" });
 users.get("missing")!.name;
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Prefer an explicit check or a throw with context.",
+    caption:
+      "No TypeScript error here — that's the point: ! removes | undefined from the type, not from reality. Prefer an explicit check.",
     expectedDiagnostics: [],
   },
   insight: [

@@ -70,7 +70,8 @@ handle({ userId: 42 });
     },
   ],
   exercise: {
-    prompt: "Type body so handle compiles and rejects a numeric userId.",
+    prompt:
+      "Annotate body as { userId: string } and leave handle({ userId: 42 }) so Check matches the authored solution (that call is the remaining diagnostic).",
     starter: `function handle(body) {
   return body.userId.toUpperCase();
 }

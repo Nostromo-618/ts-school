@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 4,
   summary:
-    "Partial, Required, Readonly, Pick, Omit, Record, Exclude, Extract, NonNullable â what each one does and, more usefully, which one you actually meant.",
+    "Partial, Required, Readonly, Pick, Omit, Record, Exclude, Extract, NonNullable — what each one does and, more usefully, which one you actually meant.",
   prerequisites: ["indexed-access-types", "optional-and-readonly-properties"],
   keywords: ["Partial", "Pick", "Omit", "Record", "Exclude", "utility types"],
   problem:
@@ -41,5 +41,20 @@ const bad = update(u, { id: "2" });
     "Partial, Pick, Omit, Required cover most object transforms.",
     "Compose utilities instead of hand-rolling mapped types first.",
     "Readonly and Record round out the everyday set.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "Which utility makes every property optional?",
+      choices: [
+        { id: "a", text: "Required<T>" },
+        { id: "b", text: "Partial<T>" },
+        { id: "c", text: "Record<string, T>" },
+        { id: "d", text: "Exclude<T, U>" },
+      ],
+      answerId: "b",
+      explanation:
+        "Partial<T> maps each property to optional — useful for patches when composed with Pick/Omit.",
+    },
   ],
 };

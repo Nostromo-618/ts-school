@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
-import { VdBadge, VdIcon } from "@vanduo-oss/vd3";
+import { VdBadge, VdIcon, VdInput } from "@vanduo-oss/vd3";
 import {
   TIERS,
   TIER_BADGE_VARIANTS,
@@ -59,10 +59,9 @@ const lessonsFor = (ids: readonly string[]) =>
       <label class="ts-filter-search">
         <span class="vd-visually-hidden">Search the glossary</span>
         <VdIcon name="magnifying-glass" size="sm" />
-        <input
+        <VdInput
           v-model="query"
           type="search"
-          class="vd-input"
           placeholder="Search terms and definitions…"
           autocomplete="off"
         />

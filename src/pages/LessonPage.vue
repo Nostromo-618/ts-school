@@ -20,6 +20,8 @@ import {
   trackById,
   type SecurityNote,
 } from "@/curriculum";
+import { LESSON_DIAGNOSTICS } from "@/curriculum/generated/diagnostics";
+import { toPrerenderedDiagnostics } from "@/components/lesson/prerender";
 import { useProgressStore } from "@/stores/progress";
 
 const props = defineProps<{ lessonId: string }>();
@@ -29,6 +31,14 @@ const quizDone = ref(false);
 const exerciseDone = ref(false);
 
 const lesson = computed(() => lessonById(props.lessonId));
+const lessonDiagnostics = computed(() => LESSON_DIAGNOSTICS[props.lessonId]);
+const paneDiagnostics = computed(() => {
+  const generated = lessonDiagnostics.value?.pane;
+  if (generated) return [...generated];
+  const current = lesson.value;
+  if (!current) return [];
+  return toPrerenderedDiagnostics(current.ts.expectedDiagnostics);
+});
 const track = computed(() =>
   lesson.value ? trackById(lesson.value.track) : undefined,
 );
@@ -159,12 +169,17 @@ const SECURITY_VARIANTS: Record<
       </ul>
     </section>
 
-    <p v-if="isUnwritten" class="vd-alert vd-alert-info" role="status">
+    <VdAlert v-if="isUnwritten" variant="info" role="status">
       This lesson is on the map but not written yet. Its JavaScript and
       TypeScript panes, insights, and exercise arrive with the content tiers.
-    </p>
+    </VdAlert>
 
-    <DualPane :js="lesson.js" :ts="lesson.ts" />
+    <DualPane
+      :lesson-id="lesson.id"
+      :js="lesson.js"
+      :ts="lesson.ts"
+      :diagnostics="paneDiagnostics"
+    />
 
     <section
       v-if="lesson.insight.length > 0"
@@ -209,6 +224,8 @@ const SECURITY_VARIANTS: Record<
       v-if="lesson.exercise"
       :lesson-id="lesson.id"
       :exercise="lesson.exercise"
+      :starter-diagnostics="lessonDiagnostics?.starter"
+      :solution-diagnostics="lessonDiagnostics?.solution"
       @pass="onExercisePass"
     />
 

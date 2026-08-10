@@ -12,9 +12,9 @@
  *    text node in a `<textarea>` or `<pre>`, never as HTML, so the model
  *    deliberately offers no field that could carry markup.
  * 2. The diagnostic contract lives in `@/typecheck/types` and is imported, not
- *    restated. Lessons author `ExpectedDiagnostic`s, the worker produces
- *    `TsDiagnostic`s, and the compiler-truth suite asserts the first predicts
- *    the second.
+ *    restated. Lessons author `ExpectedDiagnostic`s; build-time Strada output
+ *    produces `TsDiagnostic`s; the compiler-truth suite asserts the first
+ *    predicts the second.
  */
 
 import type { VdFlowchartDocument } from "@vanduo-oss/vd3-cbun/flowchart";
@@ -98,19 +98,25 @@ export interface QuizQuestion {
 }
 
 /**
- * What the learner's attempt has to achieve. `"no-errors"` means the compiler
- * must be silent; a list means it must report exactly those diagnostics.
+ * What the compiler-truth suite expects for the exercise solution.
+ * `"no-errors"` means Strada must be silent; a list means it must report
+ * those diagnostics. Learner pass/fail on the site is solution-match
+ * (normalized text), not this assertion.
  */
 export type ExerciseAssertion = "no-errors" | ExpectedDiagnostic[];
 
-/** A hands-on task checked by the same worker that powers the lesson pane. */
+/** A hands-on task. Check passes when normalized editor text matches `solution`. */
 export interface Exercise {
   prompt: string;
   /** Code the editor opens with. Plain text. */
   starter: string;
+  /**
+   * CI / compiler-truth expectation for `solution`. Not used by the Check
+   * button — Check compares normalized editor text to `solution`.
+   */
   assertion: ExerciseAssertion;
   hints?: string[];
-  /** Revealed on request; must itself satisfy `assertion`. */
+  /** Revealed on request; Check compares normalized text to this string. */
   solution?: string;
 }
 

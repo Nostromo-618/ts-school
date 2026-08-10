@@ -55,4 +55,27 @@ const asString: string = bytes;
     body: "Resolve user-supplied paths and ensure the result stays under an allowed root before reading or writing.",
     severity: "critical",
   },
+  exercise: {
+    prompt:
+      'Pass "utf8" to readFileSync so asString is a string. Match the solution text.',
+    starter: `type Fs = {
+  readFileSync(path: string, encoding: "utf8"): string;
+  readFileSync(path: string): Uint8Array;
+};
+declare const fs: Fs;
+
+const asString: string = fs.readFileSync("/tmp/x");
+`,
+    assertion: "no-errors",
+    hints: ['fs.readFileSync("/tmp/x", "utf8")'],
+    solution: `type Fs = {
+  readFileSync(path: string, encoding: "utf8"): string;
+  readFileSync(path: string): Uint8Array;
+};
+declare const fs: Fs;
+
+const asString: string = fs.readFileSync("/tmp/x", "utf8");
+void asString;
+`,
+  },
 };

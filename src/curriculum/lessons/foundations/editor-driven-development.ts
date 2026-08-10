@@ -45,7 +45,7 @@ renameField({ userId: "u_1" });
   },
   insight: [
     "Your editor speaks to tsserver using the same TypeScript version and tsconfig as CI when configured correctly.",
-    "Prefer workspace TypeScript over a global install so local and CI stay aligned (this project pins 6.0.3).",
+    "Prefer workspace TypeScript over a global install so local and CI stay aligned (this repo dual-installs typescript@7 for tooling and typescript-strada@6.0.3 for createProgram).",
     "Use rename symbol and find references — they are type-aware, unlike text search.",
   ],
   quiz: [

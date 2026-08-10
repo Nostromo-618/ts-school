@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 14,
   summary:
-    "import type, inline type specifiers, side-effect imports, and importsNotUsedAsValues' successor â controlling exactly what survives compilation.",
+    "import type, inline type specifiers, side-effect imports, and importsNotUsedAsValues' successor — controlling exactly what survives compilation.",
   prerequisites: ["isolatedmodules-and-verbatimmodulesyntax"],
   keywords: ["import type", "side effect", "elision", "bundle", "tree shaking"],
   problem:
@@ -45,5 +45,23 @@ const bad: number = u.id;
     "import type / export type erase at emit.",
     "Mixing type and value from one module is fine with inline type modifiers.",
     "verbatimModuleSyntax makes mistakes loud.",
+  ],
+  quiz: [
+    {
+      id: "q1",
+      prompt: "Why prefer `import type` for type-only symbols?",
+      choices: [
+        { id: "a", text: "It loads the module twice" },
+        {
+          id: "b",
+          text: "Those imports erase at emit and avoid accidental runtime deps",
+        },
+        { id: "c", text: "It disables type checking" },
+        { id: "d", text: "It is required for every import in TS 7" },
+      ],
+      answerId: "b",
+      explanation:
+        "Type-only imports are erased. verbatimModuleSyntax makes mixing type/value mistakes loud.",
+    },
   ],
 };

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 15,
   summary:
-    "Node can now run .ts files by deleting the types. What that rules out â enums, parameter properties, namespaces â and why erasableSyntaxOnly exists.",
+    "Node can now run .ts files by deleting the types. What that rules out — enums, parameter properties, namespaces — and why erasableSyntaxOnly exists.",
   prerequisites: ["types-are-erased", "tsconfig-essentials"],
   keywords: [
     "type stripping",

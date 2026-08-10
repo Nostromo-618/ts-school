@@ -1,5 +1,4 @@
-import { expect, test } from "@playwright/test";
-import { FIXTURE_LESSON, PROGRESS_STORAGE_KEY } from "./fixtures";
+import { expect, FIXTURE_LESSON, PROGRESS_STORAGE_KEY, test } from "./fixtures";
 
 test.describe("progress persistence", () => {
   test("quiz progress survives reload via ts-school-progress", async ({

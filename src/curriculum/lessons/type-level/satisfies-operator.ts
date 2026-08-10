@@ -46,4 +46,20 @@ const bad: number = palette.danger;
     "Preserves literal inference for keys/values.",
     "Prefer it over as when you want both check and inference.",
   ],
+  quiz: [
+    {
+      id: "q1",
+      prompt:
+        "Compared to `const x: Palette = {...}`, what does `satisfies Palette` keep?",
+      choices: [
+        { id: "a", text: "A narrower inferred type (literals / keys)" },
+        { id: "b", text: "Runtime validation of hex codes" },
+        { id: "c", text: "Automatic as const on every nested value only" },
+        { id: "d", text: "Exemption from excess property checks" },
+      ],
+      answerId: "a",
+      explanation:
+        "satisfies verifies assignability while leaving the expression's inferred type in place.",
+    },
+  ],
 };

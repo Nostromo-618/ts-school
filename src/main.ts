@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { VanduoVue } from "@vanduo-oss/vd3";
 import App from "./App.vue";
 import { buildRoutes } from "./router";
+import { hasDeclinedDisclaimer } from "./lib/disclaimer";
 import "@vanduo-oss/vd3/css";
 // Only the cbun bundles ts-school actually renders: charts on the adoption
 // pages, the code editor in both lesson panes, flowcharts for narrowing and
@@ -34,12 +35,22 @@ export const createApp = ViteSSG(
       return { top: 0, behavior: "instant" };
     },
   },
-  ({ app }) => {
+  ({ app, router }) => {
     app.use(createPinia());
     // TypeScript blue as the light-mode primary, sky in dark where the deeper
     // blue loses contrast. vd3 ships amber/black as its generic baseline.
     app.use(VanduoVue, {
       themeDefaults: { PRIMARY_LIGHT: "blue", PRIMARY_DARK: "sky" },
+    });
+
+    // Client-only: session farewell flag must keep declined visitors on
+    // /farewell. SSR/prerender never sees sessionStorage.
+    router.beforeEach((to) => {
+      if (typeof sessionStorage === "undefined") return true;
+      if (hasDeclinedDisclaimer() && to.name !== "farewell") {
+        return { name: "farewell" };
+      }
+      return true;
     });
 
     // Deliberately no `initialState`: vite-ssg serializes any non-empty state

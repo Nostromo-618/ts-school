@@ -8,18 +8,38 @@ import { RouterLink } from "vue-router";
       <h1>About TypeScript School</h1>
       <p class="ts-lead">
         A static teaching site whose every lesson is a pair: the JavaScript that
-        quietly breaks, and the TypeScript that catches it — checked live by a
-        real compiler in your browser.
+        quietly breaks, and the TypeScript that catches it — with diagnostics
+        generated at build time by the same Strada compiler this repo verifies
+        in CI.
       </p>
     </header>
 
     <section class="vd-stack" data-gap="fib-8" aria-labelledby="about-promise">
       <h2 id="about-promise">The promise</h2>
       <p>
-        Nothing is hand-waved. The TypeScript pane is editable. A Web Worker
-        runs the same TypeScript compiler this repo pins for
-        <code>vue-tsc</code>, ESLint, and CI. A lesson cannot claim “TypeScript
-        catches this” unless the compiler actually says so.
+        Nothing is hand-waved. Each lesson’s diagnostic list comes from
+        <code>typescript-strada@6.0.3</code> at build time; the compiler-truth
+        suite re-runs that checker in CI. A lesson cannot claim “TypeScript
+        catches this” unless the compiler actually says so. The TypeScript pane
+        is editable for practice, but the list shows the
+        <strong>authored lesson state</strong> — it does not re-check as you
+        type.
+      </p>
+    </section>
+
+    <section class="vd-stack" data-gap="fib-8" aria-labelledby="about-checking">
+      <h2 id="about-checking">How checking works</h2>
+      <p>
+        Lesson diagnostics are frozen snapshots from build-time Strada output
+        for the authored TypeScript. You can edit the pane to experiment; the
+        list stays on the lesson’s starting code until content updates.
+        Exercises use <strong>Check</strong> to compare your code to the
+        authored solution (normalized whitespace). Live typechecking belongs in
+        your editor and CI — not in this static site. See
+        <RouterLink to="/lessons/tooling/typescript-versions-and-the-go-port"
+          >TypeScript 6, 7, and the Go port</RouterLink
+        >
+        for the dual-install story.
       </p>
     </section>
 
@@ -34,15 +54,15 @@ import { RouterLink } from "vue-router";
     </section>
 
     <section class="vd-stack" data-gap="fib-8" aria-labelledby="about-checker">
-      <h2 id="about-checker">Why TypeScript 6.0.3, not 7</h2>
+      <h2 id="about-checker">TypeScript 7 + Strada for diagnostics</h2>
       <p>
         TypeScript 7 is a Go native rewrite aimed at CLI speed. It ships
-        <strong>no programmatic API</strong> you can embed in a browser, so it
-        cannot power live lesson diagnostics. This site therefore pins
-        <code>typescript@6.0.3</code> — the last JavaScript-hosted (Strada)
-        compiler — for the in-browser worker and for every CI gate that must
-        agree with what the learner sees. That constraint is a teaching point,
-        not a temporary oversight; see the
+        <strong>no programmatic createProgram API</strong> you can embed in a
+        browser, so in-worker checking is gone. This site installs
+        <code>typescript@7</code> for tooling and
+        <code>typescript-strada@6.0.3</code> (the last JavaScript-hosted Strada
+        compiler) to generate lesson diagnostics at build time and to power the
+        compiler-truth suite. The browser never downloads a compiler; see the
         <RouterLink to="/history">history timeline</RouterLink>.
       </p>
     </section>
@@ -52,9 +72,24 @@ import { RouterLink } from "vue-router";
       <p>
         Vue 3, Vite, and vite-ssg (every route prerendered), dogfooding
         <code>@vanduo-oss/vd3</code> and <code>@vanduo-oss/vd3-cbun</code>. No
-        CDN fonts or scripts at runtime; libs for the worker are same-origin.
-        Progress, when enabled, lives in versioned localStorage — never trusted
-        blindly.
+        CDN fonts or scripts at runtime. Progress, when enabled, lives in
+        versioned localStorage — never trusted blindly.
+      </p>
+    </section>
+
+    <section class="vd-stack" data-gap="fib-8" aria-labelledby="about-terms">
+      <h2 id="about-terms">Terms &amp; disclaimer</h2>
+      <p>
+        TypeScript School is a hobby educational project. Use requires accepting
+        a short disclaimer covering liability, AI-assisted content transparency,
+        and the MIT license for the code. You can re-read it anytime on the
+        <RouterLink to="/terms">Terms</RouterLink> page. Opening the Ask
+        assistant shows an additional mandatory AI risk notice (local model
+        resources, hallucinations, and edit Accept). Source license:
+        <a href="/LICENSE" rel="noopener">MIT LICENSE</a>
+        ·
+        <a href="/THIRD-PARTY-NOTICES.md" rel="noopener">third-party notices</a>
+        (also in the repository root).
       </p>
     </section>
 
@@ -64,6 +99,9 @@ import { RouterLink } from "vue-router";
       </RouterLink>
       <RouterLink to="/history" class="vd-btn vd-btn-secondary">
         Read the history
+      </RouterLink>
+      <RouterLink to="/terms" class="vd-btn vd-btn-ghost-primary">
+        Read the terms
       </RouterLink>
     </p>
   </section>

@@ -33,7 +33,8 @@ function load(): User {
 load().email.toLowerCase();
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "Compiles. Crashes. The assertion skipped the check.",
+    caption:
+      "No TypeScript error here — that's the point: the assertion skipped the check. Compiles. Crashes.",
     expectedDiagnostics: [],
   },
   insight: [

@@ -52,37 +52,39 @@ allowlisted individually rather than by relaxing `ignore-scripts`.
 - **THEN** the install accepts it, because the `@vanduo-oss/*` scope is excluded
   from the delay
 
-### Requirement: TypeScript pinned to the last programmatic-API compiler
+### Requirement: TypeScript dual install (7 + Strada 6)
 
-`typescript` MUST be pinned to exactly `6.0.3` — no caret, no tilde — and the
-repository MUST NOT depend on TypeScript 7 or `@typescript/native-preview`. The
-reason SHALL be recorded where a maintainer will see it before upgrading.
+`typescript` MUST be pinned to exactly `7.0.2`. The repository MUST also
+declare `typescript-strada` as `npm:typescript@6.0.3` for the programmatic
+Compiler API used by diagnostic generation, compiler-truth, and `vue-tsc`.
+Browser source MUST NOT value-import either package. The dual-install rationale
+SHALL be recorded in README and `openspec/config.yaml`.
 
-#### Scenario: a maintainer considers upgrading TypeScript
+#### Scenario: a maintainer inspects the TypeScript pins
 
-- **GIVEN** a maintainer who sees that a newer major of `typescript` exists
-- **WHEN** they inspect `package.json` and `openspec/config.yaml`
-- **THEN** both state that TypeScript 7 is a Go native binary with no
-  programmatic API that cannot type-check in a browser, and that ts-school's
-  in-browser checker therefore requires the 6.x JS compiler
+- **GIVEN** a maintainer who opens `package.json` and the README
+- **WHEN** they read the TypeScript dual-install section
+- **THEN** they see `typescript@7.0.2` as the primary package and
+  `typescript-strada@6.0.3` as the Strada API used at build/CI time — not in
+  the browser
 
-#### Scenario: one compiler serves every consumer
+#### Scenario: vue-tsc still typechecks Vue SFCs
 
 - **GIVEN** the installed dependency tree
-- **WHEN** `vue-tsc`, the ESLint TypeScript parser, and (in a later change) the
-  in-browser worker each resolve `typescript`
-- **THEN** all of them resolve the same `6.0.3` installation
+- **WHEN** `pnpm typecheck` runs
+- **THEN** it succeeds via the Strada-backed vue-tsc wrapper
 
 ### Requirement: strict Content-Security-Policy on the HTML entry
 
 `index.html` MUST carry a Content-Security-Policy `<meta>` tag that at minimum
-sets `default-src 'self'`, `script-src 'self'`, `worker-src 'self' blob:`,
+sets `default-src 'self'`, `script-src 'self'`,
 `connect-src 'self'`, `img-src 'self' data:`, `font-src 'self'`,
 `object-src 'none'`, and `base-uri 'none'`. The policy SHALL be the narrowest
 one under which both the dev server and the prerendered production build
 actually run, and SHALL NOT declare directives a `<meta>` policy cannot deliver
 (`frame-ancestors`, `report-uri`, `sandbox`) — those SHALL be documented as
-response headers for any server that later fronts the built files.
+response headers for any server that later fronts the built files. The policy
+SHALL NOT require `worker-src` now that the in-browser checker is gone.
 
 #### Scenario: the built site loads with no CSP violation
 

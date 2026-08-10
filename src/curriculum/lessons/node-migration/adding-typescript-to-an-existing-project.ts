@@ -37,11 +37,12 @@ if (Number.isNaN(port)) {
 }
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "Even early TS catches domain mistakes once Env is named.",
+    caption:
+      "No TypeScript error here — that's the point: naming Env still leaves Number(undefined) as a runtime NaN risk.",
     expectedDiagnostics: [],
   },
   insight: [
-    "Add typescript as a devDependency pinned (this site uses 6.0.3).",
+    "Add typescript as a pinned devDependency (this site dual-installs typescript@7 plus typescript-strada@6.0.3 for createProgram).",
     "Commit a minimal strict tsconfig before mass renames.",
     "Keep node running compiled or tsx/ts-node only in trusted local/dev paths.",
   ],

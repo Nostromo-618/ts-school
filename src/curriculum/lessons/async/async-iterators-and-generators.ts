@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 11,
   summary:
-    "AsyncIterable<T>, for await, and the three type parameters of a generator â the shape behind every streaming API in Node.",
+    "AsyncIterable<T>, for await, and the three type parameters of a generator — the shape behind every streaming API in Node.",
   prerequisites: ["async-await-typing", "generics-intro"],
   keywords: ["async iterator", "generator", "for await", "yield", "streaming"],
   problem:
