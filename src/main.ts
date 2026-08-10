@@ -37,10 +37,16 @@ export const createApp = ViteSSG(
   },
   ({ app, router }) => {
     app.use(createPinia());
-    // TypeScript blue as the light-mode primary, sky in dark where the deeper
-    // blue loses contrast. vd3 ships amber/black as its generic baseline.
+    // Site defaults for new visitors (no vanduo-* localStorage prefs yet).
+    // Stored prefs always win — vd3 loadPreference uses getItem ?? default.
+    // Lato is self-hosted in vd3 (font-src 'self'); radius is rem without unit.
     app.use(VanduoVue, {
-      themeDefaults: { PRIMARY_LIGHT: "blue", PRIMARY_DARK: "sky" },
+      themeDefaults: {
+        PRIMARY_LIGHT: "violet",
+        PRIMARY_DARK: "violet",
+        RADIUS: "0.375",
+        FONT: "lato",
+      },
     });
 
     // Client-only: session farewell flag must keep declined visitors on

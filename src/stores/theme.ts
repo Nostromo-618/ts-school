@@ -23,9 +23,9 @@ import {
  *
  * The one policy the site adds is a per-mode default neutral: warm in light,
  * near-black in dark, following the mode while the neutral is still one of
- * those two defaults. An explicit pick sticks across mode changes. The default
- * *primary* is not this store's business — `main.ts` registers TypeScript blue
- * and sky through `VanduoVue`'s `themeDefaults`.
+ * those two defaults. An explicit pick sticks across mode changes. Default
+ * primary, radius, and font are not this store's business — `main.ts`
+ * registers them through `VanduoVue`'s `themeDefaults`.
  */
 
 /** Site defaults, tracked per scheme because the engine has a single NEUTRAL. */

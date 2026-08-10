@@ -15,6 +15,15 @@ const counts = lessonCounts();
 
 /** The literal first lesson of the curriculum, so the CTA never goes stale. */
 const firstLesson = lessonsByTrack(TRACKS[0].id)[0];
+
+/** Track overview tiles deep-link to the first lesson of each track. */
+const trackEntries = TRACKS.map((track) => {
+  const first = lessonsByTrack(track.id)[0];
+  return {
+    track,
+    to: first ? lessonRoute(first) : undefined,
+  };
+});
 </script>
 
 <template>
@@ -71,11 +80,28 @@ const firstLesson = lessonsByTrack(TRACKS[0].id)[0];
     <section class="vd-stack" data-gap="fib-13" aria-labelledby="home-tracks">
       <h2 id="home-tracks">The tracks</h2>
       <ul class="ts-track-grid">
-        <li v-for="track in TRACKS" :key="track.id" class="ts-track-grid-item">
-          <VdIcon :name="track.icon" />
-          <div>
-            <p class="ts-track-grid-title">{{ track.title }}</p>
-            <p class="vd-text-muted vd-text-sm">{{ track.description }}</p>
+        <li v-for="entry in trackEntries" :key="entry.track.id">
+          <RouterLink
+            v-if="entry.to"
+            :to="entry.to"
+            class="ts-track-grid-item ts-track-grid-link"
+          >
+            <VdIcon :name="entry.track.icon" />
+            <div>
+              <p class="ts-track-grid-title">{{ entry.track.title }}</p>
+              <p class="vd-text-muted vd-text-sm">
+                {{ entry.track.description }}
+              </p>
+            </div>
+          </RouterLink>
+          <div v-else class="ts-track-grid-item">
+            <VdIcon :name="entry.track.icon" />
+            <div>
+              <p class="ts-track-grid-title">{{ entry.track.title }}</p>
+              <p class="vd-text-muted vd-text-sm">
+                {{ entry.track.description }}
+              </p>
+            </div>
           </div>
         </li>
       </ul>
