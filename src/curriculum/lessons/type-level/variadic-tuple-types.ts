@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["rest-parameters", "infer-keyword"],
   keywords: ["variadic tuple", "spread", "tuple", "compose", "Promise.all"],
   problem:
-    "A function that appends an argument to another function's parameter list cannot be typed without tuple manipulation. Wrappers without tuple types erase the wrapped signature.",
+    "Wrappers without tuple types erase the wrapped signature. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "Variadic [...P, A] extends the parameter tuple. When the types name the contract, a quiet ship becomes a red squiggle at the call site instead. Keep the TypeScript types in view — they are the fix for the failure mode above.",
+    "Variadic [.P, A] extends the parameter tuple. Hold the dual panes together: the left is the failure mode, the right is the contract that prevents it. Apply the same contract at the next boundary you own.",
   js: {
     code: `// JS: wrap a function and lose parameter types.
 function withLogger(fn) {

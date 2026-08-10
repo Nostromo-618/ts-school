@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsc-cli", "module-resolution-explained"],
   keywords: ["incremental", "tsbuildinfo", "composite", "cache", "build"],
   problem:
-    "A stale tsbuildinfo makes `tsc` report success on code it did not check, which is worse than being slow. No composite/incremental cache. Incremental and tsBuildInfoFile speed rebuilds.",
+    'No composite/incremental cache. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "Incremental builds" as a CI gate, not a personal preference.',
   solution:
-    "incremental mode reports cacheHits as number. incremental and tsBuildInfoFile speed rebuilds. composite + project references scale monorepos. CI can still warm caches carefully.",
+    "incremental mode reports cacheHits as number. incremental and tsBuildInfoFile speed rebuilds. composite + project references scale monorepos. CI can still warm caches carefully. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// tsc runs cold every CI job
 `,

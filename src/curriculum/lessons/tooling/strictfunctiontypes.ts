@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "method",
   ],
   problem:
-    "The flag is on, the check still does not apply to methods, and nothing explains why one of your two handlers is checked. Assuming a Dog handler can accept `any` Animal.",
+    'Assuming a Dog handler can accept `any` Animal. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "strictFunctionTypes" as a CI gate, not a personal preference.',
   solution:
-    "Under `strictFunctionTypes`, parameter positions are checked contravariantly. Function parameters are checked more strictly under this flag. A Dog=>`void` is not an Animal=>`void`. This prevents barking on plain Animals.",
+    "Under `strictFunctionTypes`, parameter positions are checked contravariantly. Function parameters are checked more strictly under this flag. A Dog=>`void` is not an Animal=>`void`. This prevents barking on plain Animals. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `const handler = (dog) => dog.bark();
 acceptAnimal(handler);

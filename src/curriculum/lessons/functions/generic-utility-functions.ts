@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "inferring-type-arguments"],
   keywords: ["utility", "pluck", "groupBy", "keyof", "generic", "lodash"],
   problem:
-    "The hand-rolled groupBy at the bottom of utils.js returns an object of arrays of anything, forever. pick returns a plain object with no key relationship. `keyof` + generics model dictionary utilities safely.",
+    "pick returns a plain object with no key relationship. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "`Pick<T,K>` only has selected keys — age is gone. `keyof` + generics model dictionary utilities safely. Return `Pick`/`Omit` rather than a loose record. This is how lodash-style helpers become honest.",
+    "`Pick<T,K>` only has selected keys — age is gone. `keyof` + generics model dictionary utilities safely. Return `Pick`/`Omit` rather than a loose record. This is how lodash-style helpers become honest. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `function pick(obj, keys) {
   const out = {};

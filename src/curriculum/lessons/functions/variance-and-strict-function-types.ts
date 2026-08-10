@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "strictFunctionTypes",
   ],
   problem:
-    "A handler that accepts a narrower event than it was registered for is accepted by the checker and crashes at runtime. JS will call whatever you register; wrong assumptions crash later.",
+    "JS will call whatever you register; wrong assumptions crash later. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Assigning a narrower-parameter handler is rejected under `strictFunctionTypes`. Return types are covariant: a function returning Dog may stand in for one returning Animal. Parameter types are contravariant for function types when `strictFunctionTypes` is on. Methods stay bivariant for DOM/framework ergonomics — prefer function-typed properties for safety.",
+    "Assigning a narrower-parameter handler is rejected under `strictFunctionTypes`. Return types are covariant: a function returning Dog may stand in for one returning Animal. Parameter types are contravariant for function types when `strictFunctionTypes` is on. Methods stay bivariant for DOM/framework ergonomics — prefer function-typed properties for safety. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `// JS: any callback is fine — until the event shape differs.
 function on(handler) {

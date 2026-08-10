@@ -7,18 +7,19 @@ export const lesson: Lesson = {
   track: "async",
   order: 11,
   summary:
-    "AsyncIterable<T>, for await, and the three type parameters of a generator — the shape behind every streaming API in Node.",
+    "`AsyncIterable<T>`, `for await`, and `AsyncGenerator`'s type parameters — the shape behind streaming APIs in Node.",
   prerequisites: ["async-await-typing", "generics-intro"],
   keywords: ["async iterator", "generator", "for await", "yield", "streaming"],
   problem:
-    "Generator<T, TReturn, TNext> has three parameters and almost every example on the internet uses only the first. Async iteration without element types. AsyncGenerator<T> types yielded values.",
+    "A streaming helper yields values with no element type, so consumers treat every chunk as `any` and only discover shape bugs deep in a pipeline. Separately, authors copy `Generator<T>` examples that ignore `TReturn`/`TNext` and then wonder why `next(value)` typing feels wrong. Untyped async iteration hides backpressure and shape mistakes until production volume arrives.",
   solution:
-    "AsyncGenerator yields number. sum returns number. AsyncGenerator<T> types yielded values. for-await works on async iterables. Prefer streams for large IO; generators for composed async sequences.",
+    "Type yielded values with `AsyncGenerator<T>` (or `AsyncIterable<T>`) so `for await` narrows each element. Learn the three generator parameters when you push values back in; most readers only need the first. Prefer streams for large IO and generators for composed async sequences you control. The TypeScript pane keeps yields as `number` and `sum` as `number` — the relationship is the teaching point.",
   js: {
     code: `for await (const chunk of stream) { sink(chunk); }
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "Async iteration without element types.",
+    caption:
+      "Async iteration without element types leaks `any` through the pipeline.",
   },
   ts: {
     code: `async function* ticks(n: number): AsyncGenerator<number, void, void> {
@@ -34,7 +35,8 @@ export async function sum(n: number): Promise<number> {
 const bad: string = await sum(3);
 `,
     highlights: [{ start: 11, end: 11 }],
-    caption: "AsyncGenerator yields number. sum returns number.",
+    caption:
+      "`AsyncGenerator` yields `number`; consumers see that type in `for await`.",
     expectedDiagnostics: [
       {
         code: 2322,

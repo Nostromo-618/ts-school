@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsconfig-essentials"],
   keywords: [".d.ts", "ambient", "@types", "DefinitelyTyped", "declare"],
   problem:
-    "A missing or wrong `.d.ts` makes a working library look untyped — or worse, typed incorrectly. Ambient declarations are promises about runtime; broken promises become `any` or false confidence.",
+    "JavaScript packages often ship without type information. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Read `.d.ts` as a contract: exports, optionality, overloads. Prefer shipping types with the package. When you author ambient modules, keep them minimal and aligned with real runtime behavior — not an aspirational API.",
+    "`TS2307` until the package ships types or you add @types/slugify. .d.ts files are TypeScript's description of existing JavaScript — they emit nothing. Prefer packages with bundled types; otherwise install @types/name from DefinitelyTyped. You can `declare` a minimal ambient module locally when upstream types are missing. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// Runtime works; editors know nothing about slugify's API.
 const slugify = require("slugify");
@@ -29,7 +29,8 @@ import slugify from "slugify";
 export const path = slugify("Hello World", { lower: true });
 `,
     highlights: [{ start: 2, end: 2 }],
-    caption: "`TS2307` until the package ships types or you add @types/slugify.",
+    caption:
+      "`TS2307` until the package ships types or you add @types/slugify.",
     expectedDiagnostics: [
       {
         code: 2307,

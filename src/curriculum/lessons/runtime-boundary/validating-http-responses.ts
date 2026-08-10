@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "boundary",
   ],
   problem:
-    "An upstream service renames a field and your typed client keeps compiling, all the way to the `undefined` that reaches the user. json() is unchecked — a renamed field becomes a runtime TypeError.",
+    "json() is unchecked — a renamed field becomes a runtime TypeError. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Parse the body before reading fields. Casting unknown to UserDto still leaves name as string — number assign fails. Wire types (DTO) are untrusted even when 'our' service produced them — deploys drift. Put parseUserDto (or schema.parse) immediately after `JSON.parse` / res.json(). `as UserDto` on a response compiles forever and fails at the worst time.",
+    "Parse the body before reading fields. Casting `unknown` to UserDto still leaves name as string — number assign fails. Wire types (DTO) are untrusted even when 'our' service produced them — deploys drift. Put parseUserDto (or schema.parse) immediately after `JSON.parse` / res.json(). `as UserDto` on a response compiles forever and fails at the worst time. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `async function getUser(id) {
   const res = await fetch("/api/users/" + id);
@@ -77,7 +77,7 @@ const n: number = (maybe as UserDto).name;
       { start: 38, end: 38 },
     ],
     caption:
-      "Parse the body before reading fields. Casting unknown to UserDto still leaves name as string — number assign fails.",
+      "Parse the body before reading fields. Casting `unknown` to UserDto still leaves name as string — number assign fails.",
     expectedDiagnostics: [
       {
         code: 2322,

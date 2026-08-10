@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["allowjs-and-checkjs", "running-typescript-in-node"],
   keywords: ["rename", ".ts", "incremental", "imports"],
   problem:
-    "Renaming a leaf file reveals that callers passed the wrong shapes all along — and that is the point, not a reason to stop. A typo like `yrs` vs `years` stays hidden until the file is checked. The first rename teaches more than a week of planning meetings.",
+    'yrs vs years — hidden until the file is checked. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Renaming your first file" names before you rename the next hundred files.',
   solution:
-    "Rename leaves first (utils), then move inward toward HTTP entrypoints. Fix import paths and extensions for your module setting (`nodenext` cares). One file green is progress — do not batch-rename hundreds at once and drown in noise.",
+    "The first rename teaches more than a week of planning. Rename leaves first (utils), then move inward toward HTTP entrypoints. Fix import paths/extensions according to your module setting (nodenext cares). One file green is progress — do not batch-rename hundreds at once. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// users.js
 export function age(user) {

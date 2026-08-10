@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "constructor",
   ],
   problem:
-    "A field initialised in an async init method is `undefined` for every call that arrives before it, and the type says otherwise. Fields used before assigned. Definite assignment analysis catches uninitialised fields.",
+    'Fields used before assigned. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "strictPropertyInitialization" as a CI gate, not a personal preference.',
   solution:
-    "Strict property initialization requires assigning name. Definite assignment analysis catches uninitialised fields. Use definite assignment assertions sparingly (!). Constructor parameter properties satisfy the check.",
+    "Strict property initialization requires assigning name. Definite assignment analysis catches uninitialised fields. Use definite assignment assertions sparingly (!). Constructor parameter properties satisfy the check. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `class User { name; constructor() {} }
 `,

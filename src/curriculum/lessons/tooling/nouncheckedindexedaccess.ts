@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "record",
   ],
   problem:
-    "map[key] is typed as present for every key, so a cache miss is typed identically to a cache hit. Indexing assumed defined. `noUncheckedIndexedAccess` adds | `undefined` to index reads.",
+    'Indexing assumed defined. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "noUncheckedIndexedAccess" as a CI gate, not a personal preference.',
   solution:
-    "Model index access as T | `undefined`. Assignment to string fails. `noUncheckedIndexedAccess` adds | `undefined` to index reads. Even without the flag, treat indexes as optional in Node services. Narrow before use.",
+    "Model index access as T | `undefined`. Assignment to string fails. `noUncheckedIndexedAccess` adds | `undefined` to index reads. Even without the flag, treat indexes as optional in Node services. Narrow before use. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `const first = arr[0];
 first.toUpperCase();
@@ -36,7 +36,8 @@ function first(arr: string[]): string | undefined {
 const s: string = first(["a"]);
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Model index access as T | `undefined`. Assignment to string fails.",
+    caption:
+      "Model index access as T | `undefined`. Assignment to string fails.",
     expectedDiagnostics: [
       {
         code: 2322,

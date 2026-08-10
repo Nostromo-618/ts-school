@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["inferring-type-arguments", "assignability-rules"],
   keywords: ["inference", "candidate", "priority", "supertype", "generic"],
   problem:
-    "Reordering two parameters changes the inferred type, and nothing in the signature says it should. Without inference rules, paired values share no declared relationship.",
+    "Without inference rules, paired values share no declared relationship. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "An explicit T checks arguments; inferred unions must be stated or formed carefully. Each argument position that mentions T is an inference site; candidates are collected then combined. When candidates disagree, TypeScript often takes a common supertype (a union), not the first argument alone. An explicit type argument disables inference for that parameter and checks arguments against it.",
+    "An explicit T checks arguments; inferred unions must be stated or formed carefully. Each argument position that mentions T is an inference site; candidates are collected then combined. When candidates disagree, TypeScript often takes a common supertype (a union), not the first argument alone. An explicit type argument disables inference for that parameter and checks arguments against it. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// JS: "identity" helpers just return what you pass — no shared T.
 function pair(a, b) {

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["string", "number", "boolean", "bigint", "String object"],
   problem:
-    "JavaScript has one number type and seven falsy values, and a codebase that never says which it means ends up with '1' + 1 in production. Primitives mix silently; the bug is often string vs number.",
+    "Primitives mix silently; the bug is often string vs number. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "number is not `String`, and it is not the string \"7\". Prefer lowercase primitives: string, number, boolean — not `String`, Number, Boolean wrappers. `bigint` is a separate type; you cannot mix it with number without an explicit conversion. At HTTP boundaries, parse strings into the primitive you mean before calling domain functions.",
+    'Name the primitive you mean — `string`, `number`, `boolean`, `bigint`, `symbol`, `null`, `undefined` — instead of hoping a value "looks right." The TypeScript pane catches assigning the wrong primitive at the call site. Prefer precise primitives on public APIs; reach for unions only when more than one is truly allowed.',
   js: {
     code: `function addDays(start, days) {
   return start + days * 86400000;

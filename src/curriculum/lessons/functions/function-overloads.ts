@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "api design",
   ],
   problem:
-    "readFile returns a Buffer or a string depending on an options field, and one signature cannot say that honestly. One function, two call shapes, no guidance. List public overload signatures, then one implementation signature.",
+    "One function, two call shapes, no guidance. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Overload signatures document call forms. boolean is not accepted. Keep overloads minimal — unions often suffice. Implementation signature must accept every overload input.",
+    "Overload signatures document call forms. boolean is not accepted. List public overload signatures, then one implementation signature. Keep overloads minimal — unions often suffice. Implementation signature must accept every overload input. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `function read(x) {
   if (typeof x === 'number') return items[x];

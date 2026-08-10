@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "portability",
   ],
   problem:
-    "A type that compiles fine cannot be written into a declaration file, and the error names a file you have `never` opened. Without .d.ts, the public API is whatever you export in JS.",
+    'Without .d.ts, the public API is whatever you export in JS. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "Declaration emit" as a CI gate, not a personal preference.',
   solution:
-    "Explicit Public return types keep .d.ts self-contained. declaration: true writes .d.ts; `declarationMap` helps editors jump to source. isolatedDeclarations requires enough annotations for emit without typechecking inference. Export the types you return — do not leak private aliases into public signatures.",
+    "Explicit Public return types keep .d.ts self-contained. declaration: true writes .d.ts; `declarationMap` helps editors jump to source. isolatedDeclarations requires enough annotations for emit without typechecking inference. Export the types you return — do not leak `private` aliases into public signatures. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// JS has no declaration emit — consumers read the source or nothing.
 export function make() {

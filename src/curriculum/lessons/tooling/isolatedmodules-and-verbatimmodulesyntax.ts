@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "esbuild",
   ],
   problem:
-    "A re-exported type compiles under `tsc` and produces a runtime import of something that does not exist under esbuild. Type and value imports look the same. `isolatedModules` assumes each file is transpiled alone.",
+    'Type and value imports look the same. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "isolatedModules and verbatimModuleSyntax" as a CI gate, not a personal preference.',
   solution:
-    "Cannot resolve ./user — illustrates why type-only imports must be marked for isolated transpile. `isolatedModules` assumes each file is transpiled alone. `verbatimModuleSyntax` forces type/value import honesty. Prefer import type for types-only bindings.",
+    "Cannot resolve ./user — illustrates why type-only imports must be marked for isolated transpile. `isolatedModules` assumes each file is transpiled alone. `verbatimModuleSyntax` forces type/value import honesty. Prefer import type for types-only bindings. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `export { type User } from './user';
 `,

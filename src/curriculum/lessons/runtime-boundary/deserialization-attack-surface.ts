@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "security",
   ],
   problem:
-    "A deep-merge helper applied to a request body can rewrite `Object.prototype` for the whole process. Merging untrusted keys can pollute `Object.prototype`. Never deep-merge untrusted objects onto prototypes or shared config.",
+    "Merging untrusted keys can pollute `Object.prototype`. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Allowlists + skipped proto keys; name is still string | `undefined`. Never deep-merge untrusted objects onto prototypes or shared config. Allowlist keys; reject __proto__, prototype, and constructor. Types describe intent after a safe parse — they do not make merge safe.",
+    "Allowlists + skipped proto keys; name is still string | `undefined`. Never deep-merge untrusted objects onto prototypes or shared config. Allowlist keys; reject __proto__, prototype, and constructor. Types describe intent after a safe parse — they do not make merge safe. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// JS: recursive merge trusts keys like __proto__.
 function merge(target, source) {

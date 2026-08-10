@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["classes-intro", "call-and-construct-signatures"],
   keywords: ["static", "static block", "class type", "typeof class", "factory"],
   problem:
-    "`typeof` MyClass and MyClass are different types, and the error message uses both words without distinguishing them. Static mutable state with no types. Static blocks initialize per class evaluation.",
+    "Static mutable state with no types. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Static bump returns number. Static blocks initialize per class evaluation. Private static fields keep counters encapsulated. Prefer modules for singletons when inheritance is not required.",
+    "Static bump returns number. Static blocks initialize per class evaluation. Private static fields keep counters encapsulated. Prefer modules for singletons when inheritance is not required. Apply the same refusal at the next boundary you own.",
   js: {
     code: `class Counter { static n = 0; static bump() { Counter.n++; } }
 `,

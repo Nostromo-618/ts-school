@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "untrusted",
   ],
   problem:
-    "'toString' in payload is true for every object ever created, which makes the obvious presence check useless as a validator. `in` walks the prototype chain — inherited keys look like own data.",
+    "`in` walks the prototype chain — inherited keys look like own data. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Prefer `Object.hasOwn` for untrusted keys. The deliberate assign shows a bad `in`-based guard still leaves a string, not a number. `key in obj` is true for inherited properties — useless as an allowlist for JSON payloads. `Object.hasOwn(obj, key)` (or `Object.prototype`.hasOwnProperty.call) checks own keys only. Reject `__proto__`, `constructor`, and `prototype` keys before merging untrusted objects into config.",
+    "Prefer `Object.hasOwn` for untrusted keys. The deliberate assign shows a bad `in`-based guard still leaves a string, not a number. `key in obj` is true for inherited properties — useless as an allowlist for JSON payloads. `Object.hasOwn(obj, key)` (or `Object.prototype`.hasOwnProperty.call) checks own keys only. Reject `__proto__`, `constructor`, and `prototype` keys before merging untrusted objects into config. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function looksLikeConfig(payload) {
   // True for {}, and for anything that inherits Object.prototype.

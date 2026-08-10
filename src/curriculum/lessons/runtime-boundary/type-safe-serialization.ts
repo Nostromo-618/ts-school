@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generated-types-from-contracts", "utility-types-tour"],
   keywords: ["serialization", "JSON", "Date", "round trip", "Jsonify"],
   problem:
-    "A field typed Date is a string by the time it reaches the client, and the type says otherwise on both sides. The wire shape is not the in-memory shape. Model wire types separately from domain types when JSON is involved.",
+    "The wire shape is not the in-memory shape. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Jsonify maps Date to string — assigning a Date fails. Model wire types separately from domain types when JSON is involved. `undefined` keys disappear; Date becomes string; Map/Set become objects/arrays or fail. Revivers and custom serializers must stay in sync with Jsonify-like types.",
+    "Jsonify maps Date to string — assigning a Date fails. Model wire types separately from domain types when JSON is involved. `undefined` keys disappear; Date becomes string; Map/Set become objects/arrays or fail. Revivers and custom serializers must stay in sync with Jsonify-like types. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `// JS: JSON.stringify drops undefined and turns Date into a string.
 const payload = { at: new Date(), note: undefined };

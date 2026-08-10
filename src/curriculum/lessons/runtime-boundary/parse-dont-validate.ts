@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "design",
   ],
   problem:
-    "isValid(input) checks the data and returns nothing about it, so the next line still handles a type that includes the invalid case. Boolean validation — the proof does not travel with the value.",
+    "Boolean validation — the proof does not travel with the value. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Parsing returns Email | `null`. Passing a plain string to send is a type error. Validation asks a question; parsing produces a value whose type encodes the answer. Branded types (or dedicated interfaces) stop raw strings from entering privileged APIs. Prefer `parseX(unknown): X | error` over `isX` + unchecked use at every call site.",
+    "Parsing returns Email | `null`. Passing a plain string to send is a type error. Validation asks a question; parsing produces a value whose type encodes the answer. Branded types (or dedicated interfaces) stop raw strings from entering privileged APIs. Prefer `parseX(`unknown`): X | error` over `isX` + unchecked use at every call site. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `function isEmail(value) {
   return typeof value === "string" && value.includes("@");

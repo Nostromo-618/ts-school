@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["classes-intro", "tsconfig-essentials"],
   keywords: ["esm", "import type", "export", "modules"],
   problem:
-    "A value import of a type-only symbol breaks emit under `isolatedModules` / `verbatimModuleSyntax`. Module format mismatches fail at runtime, not design time. Prefer named ESM exports over default for tree-shaking clarity.",
+    "Module format mismatches fail at runtime, not design time. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise.",
   solution:
-    "Real projects resolve this via relative ESM paths + types. Prefer named ESM exports over default for tree-shaking clarity. import type { User } makes the import type-only — erased, safe with `isolatedModules`. Keep runtime values and types distinguished when `verbatimModuleSyntax` is on.",
+    "Real projects resolve this via relative ESM paths + types. Prefer named ESM exports over default for tree-shaking clarity. import type { User } makes the import type-only — erased, safe with `isolatedModules`. Keep runtime values and types distinguished when `verbatimModuleSyntax` is on. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// CJS leaking into an ESM package — runtime ERR_REQUIRE_ESM.
 const { User } = require("./user");

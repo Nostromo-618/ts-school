@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["first-type-error"],
   keywords: ["erasure", "compile time", "runtime", "emit", "no runtime cost"],
   problem:
-    "People ship `if (value is string)` style thinking into runtime, or expect interfaces to exist in the bundle. Types are erased: they do not survive compilation, and they cannot protect you after the JS is running.",
+    "`JSON.parse` returns whatever the wire sent — no shape check. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Remember the split: type-space for the checker, value-space for the CPU. When you need a runtime check, write a real one (`typeof`, `instanceof`, a validator). Interfaces and type aliases leave no residue in emit — by design.",
+    "No TypeScript error here — that's the point: `as User` is a compile-time claim; Node still crashes. TypeScript erases types: the emitted JavaScript has no `User`, no annotations, no assertions. A type annotation documents intent for the checker; it `never` validates bytes from the network. At trust boundaries use `unknown` + narrowing (or a schema library) — covered in the runtime-boundary track. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// "Validated" only by hope and a comment.
 function sendWelcome(user) {

@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "error message",
   ],
   problem:
-    "Every codebase writes this eventually, and the version written in a hurry checks the happy path only. Happy-path mapping with no checks — missing roles blows up later.",
+    "Happy-path mapping with no checks — missing roles blows up later. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Return a result, not a cast. The deliberate lines show that forcing User still leaves id as string — assigning to number fails. Validate every field you will read; skip nothing because 'the client is ours'. Return `{ ok, value } | { ok, error }` (or throw) so failure cannot be ignored as silently as a boolean. Build the output object from checked primitives — do not return the original `unknown` reference.",
+    "Return a result, not a cast. The deliberate lines show that forcing User still leaves id as string — assigning to number fails. Validate every field you will read; skip nothing because 'the client is ours'. Return `{ ok, value } | { ok, error }` (or throw) so failure cannot be ignored as silently as a boolean. Build the output object from checked primitives — do not return the original `unknown` reference. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function parseUser(input) {
   return {

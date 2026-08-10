@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["structural-typing"],
   keywords: ["diagnostics", "error codes", "Did you mean", "assignability"],
   problem:
-    "Long error messages get skimmed, then silenced. The useful part is usually near the top: the property that failed assignability, or the overload that did not match. Learning to read them is faster than learning to disable them.",
+    "A casing typo becomes '`undefined` Lovelace' at runtime. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Start from the first line and the highlighted span. Expand 'excess property' and 'not assignable' into a concrete field mismatch. When the message cites an overload list, match your call arguments to each signature in order. Prefer fixing the types that describe intent over suppressing the noise.",
+    "`TS2345` spells out the missing property — firstName vs firstname. Start at the last line of the message: it names the expression TypeScript rejected. Work upward: required property, expected type, actual type. Error codes are searchable; 'Did you mean' hints often expose typos like nam vs name. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function fullName(user) {
   return user.firstName + " " + user.lastName;
@@ -36,7 +36,8 @@ const user = { firstname: "Ada", lastName: "Lovelace" };
 fullName(user);
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "`TS2345` spells out the missing property — firstName vs firstname.",
+    caption:
+      "`TS2345` spells out the missing property — firstName vs firstname.",
     expectedDiagnostics: [
       {
         code: 2345,

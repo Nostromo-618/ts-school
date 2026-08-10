@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["union-types"],
   keywords: ["typeof", "narrowing", "type guard", "null"],
   problem:
-    "You checked the type on line 3, but on line 7 the value is still a union as far as anything reading the code can tell. Number(true) is 1 — `typeof` would have rejected the boolean path.",
+    "Number(true) is 1 — `typeof` would have rejected the boolean path. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "Multiply is not valid on string | number until you narrow. string. object. After an early return in the number branch, the rest of the function sees the remaining union members.",
+    "Multiply is not valid on string | number until you narrow. object, and after an early return in the number branch, the rest of the function sees the remaining union members. Keep both in view when you change the API.",
   js: {
     code: `function asNumber(value) {
   if (typeof value === "number") return value;
@@ -23,7 +23,8 @@ export const lesson: Lesson = {
 asNumber(true).toFixed(2);
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "Number(true) is 1 — `typeof` would have rejected the boolean path.",
+    caption:
+      "Number(true) is 1 — `typeof` would have rejected the boolean path.",
   },
   ts: {
     code: `function double(value: string | number): number {

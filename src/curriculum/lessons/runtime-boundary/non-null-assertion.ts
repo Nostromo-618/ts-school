@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["null-and-undefined", "type-assertions-are-claims"],
   keywords: ["non-null assertion", "!", "definite assignment"],
   problem:
-    "map.get(key)! crashes when the key is missing — the bang only silenced the checker. Map.get returns `undefined` when absent. X! is shorthand for 'I promise x is not nullish' — same family as as.",
+    "Map.get returns `undefined` when absent. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "No TypeScript error here — that's the point: ! removes | `undefined` from the type, not from reality. Prefer an explicit check. x! is shorthand for 'I promise x is not nullish' — same family as as. Use if (!x) throw new Error(...) when absence is a bug you want to see. Ban ! in lint for app code if your team keeps foot-gunning with it.",
+    "No TypeScript error here — that's the point: ! removes | `undefined` from the type, not from reality. Prefer an explicit check. is shorthand for 'I promise x is not nullish' — same family as as. Use if (!x) throw new Error(.) when absence is a bug you want to see. in lint for app code if your team keeps foot-gunning with it. Apply the same refusal at the next boundary you own.",
   js: {
     code: `const users = new Map();
 users.set("1", { name: "Ada" });

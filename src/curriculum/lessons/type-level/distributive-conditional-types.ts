@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "Exclude",
   ],
   problem:
-    "The same conditional type returns a different answer for a union than for each of its members, and nothing in the syntax hints at it. Runtime filtering does not change how callers type the result.",
+    "Runtime filtering does not change how callers type the result. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases.",
   solution:
-    "Naked parameters distribute; wrapping in a tuple disables it. Distribution happens when the checked type is a naked type parameter (not wrapped in another type constructor). `Exclude<T, U>` and `Extract<T, U>` rely on distribution: each union member is tested separately.",
+    "Naked parameters distribute; wrapping in a tuple disables it. Distribution happens when the checked type is a naked type parameter (not wrapped in another type constructor), and `Exclude<T, U>` and `Extract<T, U>` rely on distribution: each union member is tested separately. Keep both in view when you change the API.",
   js: {
     code: `// JS mental model: "filter the union" is a loop you invent.
 function excludeNulls(values) {

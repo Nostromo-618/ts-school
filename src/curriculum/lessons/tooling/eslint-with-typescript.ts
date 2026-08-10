@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsc-cli", "any-and-implicit-any"],
   keywords: ["eslint", "typescript-eslint", "lint", "floating promises"],
   problem:
-    "`tsc` is green but someone left an awaited promise floating and an eslint-disable for no-explicit-`any` on every file. Unhandled rejection risk — lint can require await/`void`.",
+    'Unhandled rejection risk — lint can require await/`void`. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "ESLint and TypeScript together" as a CI gate, not a personal preference.',
   solution:
-    "Types alone do not enforce that you await; lint complements `tsc`. Let `tsc` own type correctness; let typescript-eslint own footguns like floating promises. Prefer @typescript-eslint/no-explicit-`any` with disciplined exceptions. Do not disable entire rule sets to silence one file — fix or narrow the disable.",
+    "Types alone do not enforce that you await; lint complements `tsc`. Let `tsc` own type correctness; let typescript-eslint own footguns like floating promises. Prefer @typescript-eslint/no-explicit-`any` with disciplined exceptions. Do not disable entire rule sets to silence one file — fix or narrow the disable. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `async function save(row) {
   await dbWrite(row);
@@ -37,7 +37,8 @@ save({ id: 1 }); // fire-and-forget in a route handler
 export const ignored: void = save({ id: 1 });
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Types alone do not enforce that you await; lint complements `tsc`.",
+    caption:
+      "Types alone do not enforce that you await; lint complements `tsc`.",
     expectedDiagnostics: [{ code: 2322, line: 6, messageIncludes: "Promise" }],
   },
   insight: [

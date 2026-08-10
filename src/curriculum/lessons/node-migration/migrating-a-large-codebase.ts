@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "legacy",
   ],
   problem:
-    "A migration that has to finish before it delivers value is a migration that gets cancelled at the halfway point. All-or-nothing rewrites rarely finish. Without a ratchet, the half-typed tree either blocks every PR or silently grows `any`.",
+    'All-or-nothing migrations rarely finish. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Migrating something large" names before you rename the next hundred files.',
   solution:
-    "Ship value continuously: `strict` islands expand while legacy shrinks. CI ratchets (error count / `any` count) beat a binary pass/fail on a half-migrated tree. Codemods plus `allowJs` get files into the graph; types follow folder by folder. Track a numeric budget — not a slogan.",
+    "Ratchets track counts — the budget is a number, not a string. Ship value continuously: `strict` islands expand; legacy shrinks. CI ratchets (error count / `any` count) beat a binary pass/fail on a half-migrated tree. Codemods + `allowJs` get files into the graph; types follow folder by folder. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// JS big-bang rewrite: replace everything, ship nothing for months.
 function migrateAll() {

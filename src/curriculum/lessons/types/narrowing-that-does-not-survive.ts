@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["control-flow-analysis"],
   keywords: ["narrowing", "closure", "mutation", "callback", "invalidation"],
   problem:
-    "The value is definitely not `null` on line 4 and possibly `null` again on line 6, and the only thing between them is a callback. Closures capture values; JS `never` re-checks assumptions.",
+    "Closures capture values; JS `never` re-checks assumptions. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "Capture a local const after the `null` check to keep a stable narrow across the callback. Store the narrowed value in a const local (`const u = user`) before async boundaries. Mutable properties are invalidated aggressively — narrow the field into a local. Assertion functions and type guards re-establish facts the checker will not assume across calls.",
+    "Capture a local const after the `null` check to keep a stable narrow across the callback. Store the narrowed value in a const local (`const u = user`) before async boundaries. Mutable properties are invalidated aggressively — narrow the field into a local. Assertion functions and type guards re-establish facts the checker will not assume across calls. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `// JS: nothing tracks nullability across callbacks.
 function load(user, cb) {

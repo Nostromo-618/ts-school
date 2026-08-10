@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["the-strictness-ladder", "null-and-undefined"],
   keywords: ["strictNullChecks", "null", "undefined", "flag", "migration"],
   problem:
-    "Cannot read properties of `undefined` is the most common runtime error in Node, and this is the flag that finds it. `null` slides into string APIs. `strictNullChecks` makes `null`/`undefined` illicit for ordinary types.",
+    "`len(null)` reads `.length` and crashes — or, with coerced values, corrupts a downstream string API. Without `strictNullChecks`, `null` and `undefined` slide into ordinary types and the checker stays quiet until runtime. Keep the flag in CI so new files cannot regress the guarantee.",
   solution:
-    "With `strictNullChecks`, `null` is not string. `strictNullChecks` makes `null`/`undefined` illicit for ordinary types. It is included in `strict`: true — keep it on. Use unions explicitly when absence is allowed.",
+    "With `strictNullChecks` (included in `strict: true`), `null` is not a `string` — the TypeScript pane rejects `len(null)`. Write unions explicitly when absence is allowed (`string | null`) and narrow before use. Turn the flag on as a CI gate: the error count is front-loaded; leaving it off reintroduces the same crashes in every new file.",
   js: {
     code: `function len(s) { return s.length; }
 len(null);

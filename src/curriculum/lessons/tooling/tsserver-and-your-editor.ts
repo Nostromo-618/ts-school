@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["editor-driven-development", "tsc-cli"],
   keywords: ["tsserver", "language service", "workspace TypeScript"],
   problem:
-    "The editor uses a global TypeScript while CI uses the workspace pin (here typescript@7, with Strada 6 for tools that still need createProgram) — errors appear in only one place. Without a project version, every machine invents its own truth.",
+    'Without a project version, every machine invents its own truth. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "tsserver and your editor" as a CI gate, not a personal preference.',
   solution:
-    "Same checker as CI once the workspace TS version is selected. TypeScript: Select Workspace Version. Restart `tsserver` after `tsconfig` changes if diagnostics look stale. Huge monorepos may need project references so `tsserver` stays responsive.",
+    "Same checker as CI once the workspace TS version is selected. TypeScript: Select Workspace Version. Restart `tsserver` after `tsconfig` changes if diagnostics look stale. Huge monorepos may need project references so `tsserver` stays responsive. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `function pick(arr) {
   return arr[0];

@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "amaro",
   ],
   problem:
-    "Some TypeScript syntax emits runtime code (enums, namespaces, parameter properties in older modes); other syntax is erasable. Mixing them without knowing which is which surprises Node's type-stripping workflows.",
+    "Enums/namespaces need transform — not erasable. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Prefer erasable constructs when you want type-stripping or `isolatedModules`-friendly code. Know what your emitter or stripper leaves behind. If runtime behavior depends on a TS-only feature, that is a deliberate dependency — document it.",
+    "Annotations strip cleanly. length returns number. Type-only syntax can be stripped without a full emit pipeline. Enums, namespaces, and parameter properties may need transformation. Prefer erasable forms when targeting Node type stripping. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// Node type stripping runs without emit
 `,

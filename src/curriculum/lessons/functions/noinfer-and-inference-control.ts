@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-inference-internals"],
   keywords: ["NoInfer", "inference", "candidate", "default", "generic"],
   problem:
-    "One extra argument silently widens T, so an API that validated its input yesterday accepts anything today. Defaults participate in the same untyped soup as other arguments.",
+    "Defaults participate in the same untyped soup as other arguments. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "`NoInfer` blocks candidates from fallback; mismatched literals error. Inference sites that should only *check* against T, not *define* T, should be wrapped in `NoInfer<T>`. Classic cases: default values, secondary arguments, and context that must follow a primary source of truth. Before `NoInfer`, libraries used crazy double-generic tricks; prefer the built-in now.",
+    "`NoInfer` blocks candidates from fallback; mismatched literals error. Inference sites that should only *check* against T, not *define* T, should be wrapped in `NoInfer<T>`. Classic cases: default values, secondary arguments, and context that must follow a primary source of truth. Before `NoInfer`, libraries used crazy double-generic tricks; prefer the built-in now. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// JS: defaults just fill in — they also "teach" the type if you imagine one.
 function createRoute(path, fallback = "/") {

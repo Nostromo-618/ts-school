@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["why-types", "types-are-erased"],
   keywords: ["migration", "Node", "incremental", "adopt"],
   problem:
-    "Teams rewrite everything in one PR, break production, and blame TypeScript instead of the big-bang process. In real Node, `id` may already be `string | string[] | undefined` — edit-time tools that never ran simply never told you.",
+    'id may be string | string[] | `undefined` in real Node. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Migrating a Node service: what changes" names before you rename the next hundred files.',
   solution:
-    "Migration surfaces the union you already had to handle. Move incrementally: `allowJs`, then `checkJs`, then rename files. Runtime behavior stays JavaScript — types do not deploy a new Node. Start with boundary modules (HTTP, env, DB rows) where bugs cluster.",
+    "Migration surfaces the union you already had to handle. Migrate incrementally: `allowJs`, then `checkJs`, then rename files. Runtime behavior stays JavaScript — types do not deploy a new Node. Start with boundary modules (HTTP, env, DB rows) where bugs cluster. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `// The service already works. The risk is untyped boundaries.
 function handler(req, res) {

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["function-overloads", "assignability-rules"],
   keywords: ["overload", "resolution", "order", "arity", "declaration"],
   problem:
-    "Adding a convenience overload at the top of the list quietly captures calls that were meant for the one below it. JS overloads are comments; `any` call shape is allowed.",
+    "JS overloads are comments; `any` call shape is allowed. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Declaration order picks the fd overload; assigning to string fails. Overloads are tried top-to-bottom; put more specific signatures first. The implementation signature is not visible to callers — only the overload list is. Generic overloads are easy to get wrong; prefer unions or separate functions when possible.",
+    "Declaration order picks the fd overload; assigning to string fails. Overloads are tried top-to-bottom; put more specific signatures first. The implementation signature is not visible to callers — only the overload list is. Generic overloads are easy to get wrong; prefer unions or separate functions when possible. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// JS: one function, many call shapes — documentation only.
 function read(source, encoding) {

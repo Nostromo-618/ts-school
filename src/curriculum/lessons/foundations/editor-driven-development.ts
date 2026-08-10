@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["declaration-files-intro"],
   keywords: ["tsserver", "IDE", "completions", "refactor", "language service"],
   problem:
-    "Fighting the editor — ignoring squiggles, overusing suppressions — turns TypeScript into a CI-only tax. The feedback loop only works if you read diagnostics while you type.",
+    "Without a project-wide checker, renames are search-and-hope. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Treat the language service as part of the workflow: jump to definitions, inspect inferred types, fix errors before commit. Configure the workspace TypeScript version so the editor matches CI. Speed comes from trust in the squiggle, not from silencing it.",
+    "The editor error is `tsc`'s error — fix it before you push. Your editor speaks to `tsserver` using the same TypeScript version and `tsconfig` as CI when configured correctly. Prefer workspace TypeScript over a global install so local and CI stay aligned (this repo dual-installs `typescript@7` for tooling and `typescript-strada@6.0.3` for `createProgram`). Use rename symbol and find references — they are type-aware, unlike text search. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `function renameField(row) {
   return { user_id: row.userId };

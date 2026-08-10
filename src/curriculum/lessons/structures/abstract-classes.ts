@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "override",
   ],
   problem:
-    "A base class with a method that throws 'not implemented' pushes a compile-time contract into a runtime failure. Base class constructed directly. Abstract forces subclasses to implement members.",
+    "Base class constructed directly. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "abstract classes cannot be instantiated. abstract forces subclasses to implement members. Prefer interfaces when you only need a shape. Use abstract classes when you share implementation.",
+    "abstract classes cannot be instantiated. abstract forces subclasses to implement members. Prefer interfaces when you only need a shape. Use abstract classes when you share implementation. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `class Animal { speak() {} }
 new Animal();

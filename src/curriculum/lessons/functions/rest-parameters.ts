@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns", "arrays-and-tuples"],
   keywords: ["rest", "spread", "...", "variadic"],
   problem:
-    "A logger that takes 'any number of values' eventually receives an options object in the middle of the list. arguments is untyped; string sneaks into numeric reduce.",
+    "arguments is untyped; string sneaks into numeric reduce. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Rest element types apply to every variadic argument. Aim for a shape where the bad state is unrepresentable — or at least loudly illegal before it runs. Keep the TypeScript types in view — they are the fix for the failure mode above.",
+    "Rest element types apply to every variadic argument. Hold the dual panes together: the left is the failure mode, the right is the contract that prevents it. Apply the same contract at the next boundary you own.",
   js: {
     code: `function sum() {
   return [...arguments].reduce((a, b) => a + b, 0);

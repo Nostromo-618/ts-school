@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["utility-types-tour", "function-type-expressions"],
   keywords: ["ReturnType", "Parameters", "Awaited", "signature", "derive"],
   problem:
-    "A wrapper around someone else's function restates its argument list, and the restatement is wrong within a release. Extracting callback shapes by hand. `Parameters` and `ReturnType` extract call signatures.",
+    "Extracting callback shapes by hand. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "`Parameters<Fn>`[0] is number, not string. `Parameters` and `ReturnType` extract call signatures. `ConstructorParameters` / `InstanceType` do the same for classes. Use them to stay DRY with third-party function types.",
+    "`Parameters<Fn>`[0] is number, not string. `Parameters` and `ReturnType` extract call signatures. `ConstructorParameters` / `InstanceType` do the same for classes. Use them to stay DRY with third-party function types. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function call(fn, arg) { return fn(arg); }
 `,

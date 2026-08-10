@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "state machine",
   ],
   problem:
-    "A result object with optional data and optional error lets you construct the impossible state where both are present. Optional fields allow both data and error at once.",
+    "A result object with optional `data` and optional `error` lets you construct the impossible state where both are present — and callers that check `if (res.error)` still read `res.data` on the other path. Optional fields model the wrong thing: they allow mixes the domain never meant.",
   solution:
-    "Tagged Result forbids mixing ok with error. Give every variant a literal tag so the checker can discriminate. Optional data+error models allow impossible states. Switch on the tag and exhaustiveness checking becomes possible.",
+    'Give every variant a literal tag (`kind: "ok" | "err"`) so the checker can discriminate and expose only the fields that belong. The TypeScript pane rejects mixing `kind: "ok"` with an `error` property. Switch on the tag; with a finite set, exhaustiveness checking becomes possible. Prefer tagged unions over optional pairs whenever states are mutually exclusive.',
   js: {
     code: `function handle(res) {
   if (res.error) return res.error;

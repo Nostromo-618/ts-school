@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 15,
   summary:
-    "constructor(private `readonly` db: Db) declares and assigns in one place — and emits real JavaScript, so it cannot be type-stripped.",
+    "constructor(`private` `readonly` db: Db) declares and assigns in one place — and emits real JavaScript, so it cannot be type-stripped.",
   prerequisites: [
     "class-member-visibility",
     "erasable-syntax-and-type-stripping",
@@ -20,9 +20,9 @@ export const lesson: Lesson = {
     "di",
   ],
   problem:
-    "The most convenient class syntax in TypeScript is one of the few that Node's native type stripping refuses to run. Manual field assignment in constructors. `readonly`/public/private on ctor params create fields.",
+    "Manual field assignment in constructors. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Parameter properties `declare` and assign. name is string. `readonly`/public/private on ctor params create fields. Keep them for simple data holders; prefer explicit fields when logic grows. `erasableSyntaxOnly` may restrict some parameter property forms.",
+    "Parameter properties `declare` and assign. name is string. `readonly`/public/`private` on ctor params create fields. Keep them for simple data holders; prefer explicit fields when logic grows. `erasableSyntaxOnly` may restrict some parameter property forms. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `class User {
   constructor(name) { this.name = name; }

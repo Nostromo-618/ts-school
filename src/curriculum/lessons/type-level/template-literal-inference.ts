@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["template-literal-types-intro", "infer-keyword"],
   keywords: ["template literal", "infer", "parse", "route params", "string"],
   problem:
-    "\"/users/:id/posts/:postId\" contains two parameter names that no framework can check unless the type system reads the string. Parameter names are untyped strings in plain JS routers.",
+    "Parameter names are untyped strings in plain JS routers. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "`infer walks` the template; wrong param names are not assignable. Template literal types + `infer are` a parser: match a prefix, bind a piece, recurse on the rest. Keep grammars small — string parsers explode compile time quickly. Frameworks use this for typed routes; prefer codegen when the string language gets rich.",
+    "`infer walks` the template; wrong param names are not assignable. Template literal types + `infer are` a parser: match a prefix, bind a piece, recurse on the rest. Keep grammars small — string parsers explode compile time quickly. Frameworks use this for typed routes; prefer codegen when the string language gets rich. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// JS: route params are strings looked up by name — typos are runtime 404s.
 function param(path, name) {
@@ -44,7 +44,8 @@ const need: Params = "userId";
       { start: 1, end: 6 },
       { start: 11, end: 11 },
     ],
-    caption: "`infer walks` the template; wrong param names are not assignable.",
+    caption:
+      "`infer walks` the template; wrong param names are not assignable.",
     expectedDiagnostics: [
       {
         code: 2322,

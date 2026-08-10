@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["tsconfig-essentials"],
   keywords: ["tsc", "CLI", "noEmit", "CI"],
   problem:
-    "CI runs `tsc` with different flags than developers, so the same PR is green locally and red in pipeline. Without `tsc` in CI, string concatenation ships. Use `tsc` --`noEmit` (or -b --pretty false) as the CI type gate.",
+    'Without `tsc` in CI, string concatenation ships. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "The tsc command line" as a CI gate, not a personal preference.',
   solution:
-    "What `tsc -p . --noEmit` should fail on in CI. Use `tsc` --`noEmit` (or -b --pretty false) as the CI type gate. Prefer project flags via `tsconfig` over long ad-hoc CLI lists. Pin TypeScript so local, editor, and CI agree — this site uses typescript@7 for the CLI and typescript-strada@6.0.3 where createProgram is required.",
+    "What `tsc -p . --noEmit` should fail on in CI. Use `tsc` --`noEmit` (or -b --pretty false) as the CI type gate. Prefer project flags via `tsconfig` over long ad-hoc CLI lists. Pin TypeScript so local, editor, and CI agree — this site uses typescript@7 for the CLI and typescript-strada@6.0.3 where createProgram is required. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// "It works when I run node" is not a typecheck.
 function add(a, b) {

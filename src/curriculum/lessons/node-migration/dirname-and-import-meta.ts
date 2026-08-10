@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["commonjs-to-esm"],
   keywords: ["__dirname", "import.meta", "fileURLToPath", "path", "esm"],
   problem:
-    "Nearly every file-reading helper in a Node codebase reaches for `__dirname`, and that binding simply does not exist in an ES module. The helper still 'looks right' until the first ESM entrypoint loads it and throws. Path math becomes a module-system problem, not a filesystem one.",
+    '__dirname in a CJS file. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "__dirname is gone" names before you rename the next hundred files.',
   solution:
-    "In ESM, build directory paths from `import.meta.url` via `fileURLToPath`. `__dirname` and `__filename` are CJS-only. Keep a tiny shared helper so every file does not re-implement the URL dance. Treating `__dirname` as `undefined` (or as a string it is not) is how the typechecker catches the mix-up early.",
+    "ESM uses a helper from `import.meta`.url. __dirname typed as `undefined` is not a string. In ESM, build directory paths from `import.meta`.url via fileURLToPath. __dirname and __filename are CJS-only bindings. Keep a small helper so every file does not re-implement the URL dance. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `const configPath = path.join(__dirname, "config.json");
 `,

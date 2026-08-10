@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["the-strictness-ladder", "any-and-implicit-any"],
   keywords: ["noImplicitAny", "implicit any", "parameters", "strict", "flag"],
   problem:
-    "Without it, every unannotated parameter is `any`, and a file can be fully typed on paper and unchecked in practice. `Parameters` silently become `any`. Untyped parameters become implicit `any` without the flag.",
+    '`Parameters` silently become `any`. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "noImplicitAny" as a CI gate, not a personal preference.',
   solution:
-    "`noImplicitAny` (via `strict`) errors on untyped parameters. Untyped parameters become implicit `any` without the flag. Annotate or use contextual typing from callers. Turn this on early in a migration.",
+    "`noImplicitAny` (via `strict`) errors on untyped parameters. Untyped parameters become implicit `any` without the flag. Annotate or use contextual typing from callers. Turn this on early in a migration. Apply the same refusal at the next boundary you own.",
   js: {
     code: `function add(a, b) { return a + b; }
 `,

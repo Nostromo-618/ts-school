@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "seam",
   ],
   problem:
-    "Mocking frameworks exist to solve a nominal-typing problem that TypeScript does not have. Duck-typed logger with no contract. Structural typing makes lightweight stubs easy.",
+    "Duck-typed logger with no contract. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Structural typing accepts matching shapes; debug-only object fails. Export small interfaces for dependencies. Avoid relying on excess fields in doubles. Aim for a shape where the bad state is unrepresentable — or at least loudly illegal before it runs.",
+    "Structural typing accepts matching shapes; debug-only object fails. Structural typing makes lightweight stubs easy. Export small interfaces for dependencies. Avoid relying on excess fields in doubles. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function greet(logger) { logger.info('hi'); }
 `,

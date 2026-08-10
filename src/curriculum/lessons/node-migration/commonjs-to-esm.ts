@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["esm-imports-and-exports", "renaming-your-first-file"],
   keywords: ["commonjs", "esm", "nodenext", "type module", "extensions"],
   problem:
-    "`ERR_MODULE_NOT_FOUND` for a file that plainly exists is usually the ESM extension rule — and the error message almost never says so. CommonJS `require` forgives bare relative paths; ESM does not. Migrations stall on this one surprise more than on type errors.",
+    'CommonJS `require("./config")` forgives missing extensions; ESM under `nodenext` does not. Teams flip `"type": "module"` and suddenly relative imports fail at runtime while TypeScript still looks fine if the specifier types are sloppy.',
   solution:
-    "Under ESM / `nodenext`, relative imports need an explicit `.js` extension (even from `.ts` sources). Replace `require` / `module.exports` with `import` / `export` and `node:` builtins. Derive directory paths from `import.meta.url` instead of `__dirname`. Fix the resolution story first; the types will follow the real module graph.",
+    "Under ESM / `nodenext`, relative imports need an explicit `.js` extension even from `.ts` sources — model that rule in types so extensionless paths fail early. Replace `require` / `module.exports` with `import` / `export` and `node:` builtins. Derive paths from `import.meta.url` instead of `__dirname`.",
   js: {
     code: `const readConfig = require("./config");
 module.exports = { readConfig };

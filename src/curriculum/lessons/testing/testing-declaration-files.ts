@@ -9,11 +9,17 @@ export const lesson: Lesson = {
   summary:
     "Checking the emitted .d.ts rather than the source: resolution under each module mode, and what consumers actually see.",
   prerequisites: ["publishing-types", "type-level-tests"],
-  keywords: ["d.ts", "public api", "@arethetypeswrong", "resolution", "package"],
+  keywords: [
+    "d.ts",
+    "public api",
+    "@arethetypeswrong",
+    "resolution",
+    "package",
+  ],
   problem:
-    "The types you tested are the source's; the types you shipped are the emitted ones, and they are not always the same. Without .d.ts, consumers only have runtime discovery.",
+    "Without .d.ts, consumers only have runtime discovery. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Tests against the public `declare` surface catch return-type drift. Run type tests against packed output or emitted .d.ts, not only src/. @@arethetypeswrong checks export maps across module resolutions. Breakages in declaration emit (cannot be named) show up here first.",
+    "Tests against the public `declare` surface catch return-type drift. Run type tests against packed output or emitted .d.ts, not only src/. @arethetypeswrong checks export maps across module resolutions. Breakages in declaration emit (cannot be named) show up here first. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `// JS: there is no declaration file to test — the .js is the API.
 export function api() {

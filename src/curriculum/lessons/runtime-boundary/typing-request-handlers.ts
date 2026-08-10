@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "validation",
   ],
   problem:
-    "Express types req.body as `any`, so the most attacker-controlled value in the process is the least checked one. Destructuring req.body with no checks — role can be anything.",
+    "Destructuring req.body with no checks — role can be anything. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Parse body into CreateUserBody before insert. A cast still yields a string role — assigning to number fails. Type the framework request body as `unknown` (or leave it untyped) and parse in the handler or a middleware. admin. Generics on Express handlers are only as honest as the middleware that populated them.",
+    "Parse body into CreateUserBody before insert. A cast still yields a string role — assigning to number fails. Type the framework request body as `unknown` (or leave it untyped) and parse in the handler or a middleware. Generics on Express handlers are only as honest as the middleware that populated them. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `function createUser(req, res) {
   const { email, role } = req.body;

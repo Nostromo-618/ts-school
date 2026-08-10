@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["types-are-erased"],
   keywords: ["inference", "annotation", "let", "const", "explicit types"],
   problem:
-    "Annotating everything makes noise; annotating nothing hides intent at API boundaries. The skill is knowing where inference is enough and where a written type is documentation and a contract.",
+    "Without types, string | number collapses into 'whatever'. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Prefer inference for local variables; annotate exported functions, public API props, and tricky returns. If inference produces `any` or a useless wide type, that is a signal to annotate or redesign. Do not silence a hard error with `any` — fix the annotation.",
+    "Annotate or parse when inference widens past the API. Prefer inference for locals whose initializer already states the type clearly. Annotate function parameters, public returns, and values that cross module boundaries. When inference produces a union you did not want, fix the initializer or add an annotation — do not silence with `any`. Apply the same refusal at the next boundary you own.",
   js: {
     code: `function createServer(port) {
   return { listen: () => port };

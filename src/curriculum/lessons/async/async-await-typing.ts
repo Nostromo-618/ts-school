@@ -7,13 +7,13 @@ export const lesson: Lesson = {
   track: "async",
   order: 2,
   summary:
-    "async functions always return `Promise<T>`; await unwraps Promise and propagates the inner type — including unions.",
+    "`async` functions always return `Promise<T>`; `await` unwraps that promise — including unions — into the caller's type.",
   prerequisites: ["promise-types"],
   keywords: ["async", "await", "Promise", "return type"],
   problem:
-    "An async function forgets to return on one branch; callers await `undefined` and crash. Implicit `undefined` return becomes a resolved `undefined`. Async function f(): `Promise<T>` means every return path must produce T (or throw).",
+    "An `async` function returns a user on the happy path and accidentally falls off the end on an error branch. Callers `await` what they believe is a `User` and then read `.id` — but the missing return resolved to `undefined`. JavaScript will run that. The failure mode is a silent `Promise<undefined>` where every call site assumed a complete object.",
   solution:
-    "`Promise<User>` rejects a bare return (`undefined`). async function f(): `Promise<T>` means every return path must produce T (or throw). await expression has the inner type of the `Promise`. Try/catch around await still types the caught value as `unknown` under useUnknownInCatchVariables.",
+    "Declare `async function f(): Promise<User>` so every return path must produce a `User` (or throw). The TypeScript pane rejects a bare `return` because it would resolve to `undefined`. `await` then gives you the inner type — including unions — so you still narrow when the promise can resolve to more than one shape. Keep try/catch honest too: under `useUnknownInCatchVariables`, the caught value is still `unknown` even inside an `async` function.",
   js: {
     code: `async function loadName(id) {
   if (id === "missing") return;
@@ -24,7 +24,8 @@ const user = await loadName("missing");
 user.name;
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "Implicit `undefined` return becomes a resolved `undefined`.",
+    caption:
+      "A forgotten return becomes a resolved `undefined` that callers treat as a user.",
   },
   ts: {
     code: `type User = { name: string };
@@ -35,7 +36,8 @@ async function loadName(id: string): Promise<User> {
 }
 `,
     highlights: [{ start: 4, end: 4 }],
-    caption: "`Promise<User>` rejects a bare return (`undefined`).",
+    caption:
+      "`Promise<User>` rejects a bare return that would resolve to `undefined`.",
     expectedDiagnostics: [
       { code: 2322, line: 4, messageIncludes: "undefined" },
     ],

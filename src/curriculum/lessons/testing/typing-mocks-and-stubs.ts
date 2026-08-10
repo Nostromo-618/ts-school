@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["structural-typing", "typed-fixtures-and-factories"],
   keywords: ["mock", "stub", "fake", "interface", "structural", "test double"],
   problem:
-    "A mock cast to the full interface compiles today and silently misses the method added tomorrow. Mock returns a wrong-shaped user. Type mocks as the real dependency interface.",
+    "Mock returns a wrong-shaped user. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Mock must satisfy Db. u is User | `undefined`, not number. Type mocks as the real dependency interface. async mocks should return Promises. Avoid `any` in test doubles.",
+    "Mock must satisfy Db. u is User | `undefined`, not number. Type mocks as the real dependency interface. async mocks should return Promises. Avoid `any` in test doubles. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `const db = { get: () => ({ id: 1 }) };
 `,

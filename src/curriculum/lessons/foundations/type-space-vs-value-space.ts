@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "The same name can mean a type and a value (`Null` vs `null`, class shapes, `typeof` confusion). Mixing the spaces produces errors that look mystical until you ask which world a name lives in.",
+    "One name, no type/value distinction. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Types are erased; values exist at runtime. `typeof` in type position queries a value's type; `typeof` in value position is JavaScript. Classes contribute both. When an error mentions 'used as a type' or 'used as a value,' you crossed the boundary.",
+    "Types and values inhabit different spaces; same name can coexist. id is string. type/interface live in type space; const/function in value space. `typeof` bridges value to type. Confusion here causes 'used as a value' errors. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `const User = { id: 1 };
 `,

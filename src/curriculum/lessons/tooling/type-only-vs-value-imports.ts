@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["isolatedmodules-and-verbatimmodulesyntax"],
   keywords: ["import type", "side effect", "elision", "bundle", "tree shaking"],
   problem:
-    "An import used only as a type is usually erased, and the one time it is not, a server module ends up in a client bundle. Importing a type as if it were a runtime value.",
+    'Importing a type as if it were a runtime value. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "Type imports and what ends up in the bundle" as a CI gate, not a personal preference.',
   solution:
-    "import type is erased. User.id is string. import type / export type erase at emit. Mixing type and value from one module is fine with inline type modifiers. `verbatimModuleSyntax` makes mistakes loud.",
+    "import type is erased. User.id is string. import type / export type erase at emit. Mixing type and value from one module is fine with inline type modifiers. `verbatimModuleSyntax` makes mistakes loud. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `import { User } from './user';
 `,

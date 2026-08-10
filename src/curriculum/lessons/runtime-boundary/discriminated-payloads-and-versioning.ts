@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["exhaustiveness-checking", "parse-dont-validate"],
   keywords: ["versioning", "wire format", "message", "compatibility", "queue"],
   problem:
-    "A queue holds messages written by three versions of the producer, and the consumer's type describes only the newest. Missing version branches fail open in JS. Version discriminants belong on the wire; exhaustiveness forces consumer updates.",
+    "Missing version branches fail open in JS. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Passing a wider union into an older handler fails the build. Version discriminants belong on the wire; exhaustiveness forces consumer updates. Keep old versions in the union until the queue is drained — do not delete early. Parse `unknown` JSON into the versioned union before switching.",
+    "Passing a wider union into an older handler fails the build. Version discriminants belong on the wire; exhaustiveness forces consumer updates. Keep old versions in the union until the queue is drained — do not delete early. Parse `unknown` JSON into the versioned union before switching. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// JS: consumers switch on version — miss a case, silent drop.
 function handle(msg) {

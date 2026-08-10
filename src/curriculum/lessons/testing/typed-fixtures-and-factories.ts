@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-your-test-files", "object-type-literals"],
   keywords: ["factory", "fixture", "satisfies", "test data"],
   problem:
-    "A shared fixture object is missing a new required field; half the suite still passes with partial data. Overrides are unchecked; email becomes a number. Type factories as returning the production type, not a looser blob.",
+    "Overrides are unchecked; email becomes a number. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "`Partial<User>` still requires override values to match field types. Type factories as returning the production type, not a looser blob. `Partial<T>` is ideal for overrides — values remain checked. `satisfies` User on literal fixtures also catches missing fields without widening.",
+    "`Partial<User>` still requires override values to match field types. Type factories as returning the production type, not a looser blob. `Partial<T>` is ideal for overrides — values remain checked. `satisfies` User on literal fixtures also catches missing fields without widening. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `function userFixture(overrides) {
   return { id: "1", email: "a@b.co", ...overrides };

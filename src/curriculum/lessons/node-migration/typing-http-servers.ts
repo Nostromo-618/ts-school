@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "generics",
   ],
   problem:
-    "HTTP handlers read `req.url` and body fields as if they were trusted structured data. Query params may be `string | string[] | undefined`; bodies are bytes until you parse them. Untyped handlers are where Node services leak.",
+    'Indexing db with a URL segment and assuming the row exists. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "HTTP servers" names before you rename the next hundred files.',
   solution:
-    "Type request/response boundaries explicitly — including unions for query values. Parse and validate bodies before business logic. Keep Node's `IncomingMessage` / `ServerResponse` (or your framework's types) at the edge; do not let raw request objects permeate the domain.",
+    "url is optional. Assigning string | `undefined` to string fails. HTTP request fields are often optional — narrow before parsing. Framework generics only help if you parse params/body. Keep handlers thin: parse, domain logic, encode. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `http.createServer((req, res) => {
   const id = req.url.split("/")[2];

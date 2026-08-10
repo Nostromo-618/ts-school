@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "ReturnType",
   ],
   problem:
-    "Reading a type argument back out of a generic type has no syntax at all until you reach for `infer`. JavaScript has no way to name “whatever getUser returns”. `infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator.",
+    "JavaScript has no way to name “whatever getUser returns”. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases.",
   solution:
-    "`infer R` binds the return type inside the match; wrong assignments fail. `infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator. Multiple `infer` positions can bind several type variables in one match (e.g. parameters and return together). `ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism.",
+    "`infer R` binds the return type inside the match; wrong assignments fail. `infer` only works inside the extends clause of a conditional type — it is pattern-matching, not a free-standing operator. Multiple `infer` positions can bind several type variables in one match (e.g. parameters and return together). `ReturnType`, `Parameters`, and `Awaited` in lib.es5 / es2022 are built from `infer`; writing your own is the same mechanism. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// JS: "return type of fn" is a comment, not a check.
 function getUser() {

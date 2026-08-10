@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["where-types-end", "unknown-vs-any"],
   keywords: ["assertion", "as", "angle-bracket", "cast"],
   problem:
-    "Developers 'fix' a type error with as Type and ship a value that never matched Type. A mental cast does nothing at runtime. As Type is a compile-time claim; prefer narrowing that the checker can verify.",
+    "A mental cast does nothing at runtime. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "No TypeScript error here — that's the point: the assertion skipped the check. Compiles. Crashes. as Type is a compile-time claim; prefer narrowing that the checker can verify. Double assertions (as `unknown` as T) are a smell — usually a wrong model. Use assertions for DOM/legacy interop after you have a real reason, not to silence errors.",
+    "No TypeScript error here — that's the point: the assertion skipped the check. as Type is a compile-time claim; prefer narrowing that the checker can verify. Double assertions (as `unknown` as T) are a smell — usually a wrong model. Use assertions for DOM/legacy interop after you have a real reason, not to silence errors. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function asUser(value) {
   return value; // "trust me"

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["reading-type-errors", "eslint-with-typescript"],
   keywords: ["ts-expect-error", "ts-ignore", "suppression", "debt", "review"],
   problem:
-    "@ts-ignore stays silent forever, including after the underlying problem is fixed and the suppression is hiding a new one. @ts-ignore hiding a landmine. Prefer @ts-expect-error over @ts-ignore — it fails when the error disappears.",
+    '@ts-ignore hiding a landmine. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "Suppressing an error honestly" as a CI gate, not a personal preference.',
   solution:
-    "Suppressions are last resort. Final line shows a real error still caught. Prefer @ts-expect-error over @ts-ignore — it fails when the error disappears. Leave a comment explaining why. Fix the type instead when you can.",
+    "Suppressions are last resort. Final line shows a real error still caught. Prefer @ts-expect-error over @ts-ignore — it fails when the error disappears. Leave a comment explaining why. Fix the type instead when you can. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// @ts-ignore
 const n = null.length;

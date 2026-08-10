@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["function-type-expressions", "void-and-never"],
   keywords: ["void", "callback", "return value", "forEach", "assignability"],
   problem:
-    "arr.forEach(async item => ...) type-checks and the promises are dropped on the floor. forEach callback return values are ignored. `void` in callback positions is special — returned values are ignored.",
+    "forEach callback return values are ignored. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "`void` callbacks may return values, but forEachNumber itself returns `void`. `void` in callback positions is special — returned values are ignored. Do not use forEach when you need a mapped array. Match callback return types to the combinator's contract.",
+    "`void` callbacks may return values, but forEachNumber itself returns `void`. `void` in callback positions is special — returned values are ignored. Do not use forEach when you need a mapped array. Match callback return types to the combinator's contract. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `[1,2].forEach(n => { return n * 2; });
 `,

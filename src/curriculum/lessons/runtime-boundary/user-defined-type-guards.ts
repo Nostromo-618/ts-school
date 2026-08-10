@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["unknown-vs-any", "narrowing-with-typeof"],
   keywords: ["type guard", "is", "predicate", "narrowing", "unknown"],
   problem:
-    "After `typeof x === 'string'` you know it is a string; after a custom `isUser(x)` check JavaScript still treats x as `unknown` unless you tell TypeScript. A runtime check with no type predicate — the body still trusts shape by faith.",
+    "A runtime check with no type predicate — the body still trusts shape by faith. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "`value is User` narrows inside the `if`. Accessing a non-existent field on a claimed User still fails. `value is T` is a contract: if the function returns true, the checker treats the argument as T in that branch. The guard body must actually check what T requires — a lying predicate is a security bug dressed as a type. Prefer guards over `as T` at trust boundaries; casts skip the proof.",
+    "`value is User` narrows inside the `if`. Accessing a non-existent field on a claimed User still fails. `value is T` is a contract: if the function returns true, the checker treats the argument as T in that branch. The guard body must actually check what T requires — a lying predicate is a security bug dressed as a type. Prefer guards over `as T` at trust boundaries; casts skip the proof. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function isUser(value) {
   return (

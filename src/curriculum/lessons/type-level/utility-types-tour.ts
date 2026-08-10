@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["indexed-access-types", "optional-and-readonly-properties"],
   keywords: ["Partial", "Pick", "Omit", "Record", "Exclude", "utility types"],
   problem:
-    "`Omit` does not check that the key exists, so removing a field that was already renamed silently does nothing. Patch can overwrite id. `Partial`, `Pick`, `Omit`, `Required` cover most object transforms.",
+    "Patch can overwrite id. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "`Partial<Pick<...>>` forbids patching id. `Partial`, `Pick`, `Omit`, `Required` cover most object transforms. Compose utilities instead of hand-rolling mapped types first. `Readonly` and `Record` round out the everyday set.",
+    "`Partial<Pick<.>>` forbids patching id. `Partial`, `Pick`, `Omit`, `Required` cover most object transforms. Compose utilities instead of hand-rolling mapped types first. `Readonly` and `Record` round out the everyday set. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function update(user, patch) { return Object.assign({}, user, patch); }
 `,

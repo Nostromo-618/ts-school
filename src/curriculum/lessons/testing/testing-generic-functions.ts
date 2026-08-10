@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "typing-your-test-files"],
   keywords: ["generic", "instantiation", "constraint", "coverage", "test"],
   problem:
-    "Testing a generic helper with one type argument tests one instantiation and tells you nothing about the rest. Only runtime equality checked. Test generics at the type level as well as runtime.",
+    "Only runtime equality checked. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Type-level Equal `asserts` inference. false is not true. Test generics at the type level as well as runtime. Helpers like Expect/Equal catch inference regressions. Keep type tests in `.ts` files checked by `tsc`.",
+    "Type-level Equal `asserts` inference. false is not true. Test generics at the type level as well as runtime. Helpers like Expect/Equal catch inference regressions. Keep type tests in `.ts` files checked by `tsc`. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `expect(identity(1)).toBe(1);
 `,

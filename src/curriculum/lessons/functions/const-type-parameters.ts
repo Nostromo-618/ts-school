@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "api design",
   ],
   problem:
-    "Every user of your builder API has to remember `as const`, and the ones who forget get string instead of their route names. Without literal inference, route names widen immediately.",
+    "Without literal inference, route names widen immediately. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "<const T> preserves literal tuple types from the call site. const type parameters apply a const assertion to the inferred argument type. Library authors use them so callers need not write `as const` at every call. Combine with `readonly` arrays/tuples when you want immutable literal tables.",
+    "<const T> preserves literal tuple types from the call site. const type parameters apply a const assertion to the inferred argument type. Library authors use them so callers need not write `as const` at every call. Combine with `readonly` arrays/tuples when you want immutable literal tables. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// JS: route tables are plain arrays of strings.
 function routes(names) {

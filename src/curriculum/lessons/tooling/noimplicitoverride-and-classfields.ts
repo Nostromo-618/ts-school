@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "emit",
   ],
   problem:
-    "Renaming a base-class method leaves the subclass with a method that overrides nothing and is `never` called. Overrides with no marker. NoImplicitOverride requires the override keyword.",
+    'Overrides with no marker. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "noImplicitOverride and useDefineForClassFields" as a CI gate, not a personal preference.',
   solution:
-    "override documents intent. speak returns string. noImplicitOverride requires the override keyword. It catches renames on the base class. Use with useDefineForClassFields awareness.",
+    "override documents intent. speak returns string. noImplicitOverride requires the override keyword. It catches renames on the base class. Use with useDefineForClassFields awareness. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `class Dog extends Animal { speak() { return 'woof'; } }
 `,

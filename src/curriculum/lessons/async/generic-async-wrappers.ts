@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 14,
   summary:
-    "withRetry, withTimeout, withSpan — decorating an async function so the wrapped signature, including its generics, survives intact.",
+    "Write `withRetry` / `withTimeout` so variadic generics preserve the wrapped function's parameters and return type.",
   prerequisites: ["variadic-tuple-types", "abortsignal-and-cancellation"],
   keywords: [
     "retry",
@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "generic",
   ],
   problem:
-    "A retry helper typed with (...args: `any`[]) => `any` turns every wrapped function into an untyped one. Untyped wrappers erase parameter and return information.",
+    "A retry helper is typed as `(...args: any[]) => any`. Every function you wrap becomes untyped at the call site — parameters, return promise, and generics all erased. One utility then undoes careful signatures across the codebase. Untyped wrappers are the failure mode; the runtime retry logic can be fine while the types are not.",
   solution:
-    "Variadic A and R keep the wrapped async signature. Pair the diagnostic on the right with the failure mode above — that contrast is the point of the lesson. Keep the TypeScript types in view — they are the fix for the failure mode above.",
+    "Capture parameters and return type with variadic generics (`A extends any[]`, `R`) so the wrapped async signature survives. Inference should let callers keep autocomplete and checking as if they called the original function. The dual panes exist to contrast erasure with preservation — keep that contrast sharp. Start with one wrapper done right before adding timeout, span, and logging variants.",
   js: {
     code: `// JS: wrap and hope.
 function withRetry(fn) {
@@ -34,7 +34,8 @@ function withRetry(fn) {
 }
 `,
     highlights: [{ start: 2, end: 10 }],
-    caption: "Untyped wrappers erase parameter and return information.",
+    caption:
+      "An `(...args: any[]) => any` wrapper erases every wrapped signature.",
   },
   ts: {
     code: `function withRetry<A extends unknown[], R>(
@@ -58,7 +59,8 @@ const user = await load("u1");
 const bad: number = user.id;
 `,
     highlights: [{ start: 19, end: 19 }],
-    caption: "Variadic A and R keep the wrapped async signature.",
+    caption:
+      "Variadic type parameters keep the wrapped async signature intact.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -75,7 +77,8 @@ const bad: number = user.id;
   quiz: [
     {
       id: "wrap-q",
-      prompt: "Why use A extends `unknown`[] instead of `any`[] for wrapper args?",
+      prompt:
+        "Why use A extends `unknown`[] instead of `any`[] for wrapper args?",
       choices: [
         { id: "a", text: "`any`[] is a syntax error" },
         { id: "b", text: "Tuple inference preserves each parameter’s type" },

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["union-types", "strict-mode"],
   keywords: ["null", "undefined", "strictNullChecks", "optional"],
   problem:
-    "Without `strictNullChecks` every type silently includes `null` and `undefined`, so the most common runtime crash in Node is invisible to the checker. `undefined`.trim is a classic production TypeError.",
+    "`undefined`.trim is a classic production TypeError. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "`undefined` is not assignable to string under `strictNullChecks`. `null` is often an intentional empty; `undefined` often means 'not provided' — pick a convention and stick to it. `strictNullChecks` makes both absences visible in the type system. Prefer T | `undefined` for optional params and T | `null` when a search can miss.",
+    "`undefined` is not assignable to string under `strictNullChecks`. `null` is often an intentional empty; `undefined` often means 'not provided' — pick a convention and stick to it. `strictNullChecks` makes both absences visible in the type system. Prefer T | `undefined` for optional params and T | `null` when a search can miss. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `function header(name) {
   return name.trim().toUpperCase();
@@ -32,7 +32,8 @@ header(undefined);
 header(undefined);
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "`undefined` is not assignable to string under `strictNullChecks`.",
+    caption:
+      "`undefined` is not assignable to string under `strictNullChecks`.",
     expectedDiagnostics: [
       { code: 2345, line: 5, messageIncludes: "undefined" },
     ],

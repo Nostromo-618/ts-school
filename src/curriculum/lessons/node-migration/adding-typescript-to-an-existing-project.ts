@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["why-migrate-a-node-service", "tsconfig-essentials"],
   keywords: ["adopt", "tsconfig", "incremental", "devDependency"],
   problem:
-    "Teams often treat adopting TypeScript as a big-bang rename: every file must become `.ts` before anyone gets value. That belief blocks the first win. You can keep the runtime entry in JavaScript, add a pinned `typescript` (and a minimal `strict` `tsconfig`), and start checking beside the code that already works — without freezing the roadmap for a month.",
+    'Keep the runtime entry; add checking beside it. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Adding TypeScript to a project that works" names before you rename the next hundred files.',
   solution:
-    "Add TypeScript as a pinned devDependency and commit a small `strict` `tsconfig` before mass renames. Keep Node running compiled output (or `tsx` only in trusted local/dev paths). Naming an `Env` type still leaves `Number(undefined)` as a runtime `NaN` risk — types do not replace validating process boundaries. The point of the right-hand pane is that green types are not the same as safe runtime values.",
+    "No TypeScript error here — that's the point: naming Env still leaves Number(`undefined`) as a runtime NaN risk. Add typescript as a pinned devDependency (this site dual-installs typescript@7 plus typescript-strada@6.0.3 for createProgram). Commit a minimal `strict` `tsconfig` before mass renames. Keep node running compiled or tsx/ts-node only in trusted local/dev paths. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// package.json scripts still run node on .js entrypoints.
 function boot(env) {

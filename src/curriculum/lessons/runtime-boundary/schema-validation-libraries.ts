@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "standard schema",
   ],
   problem:
-    "A hand-written interface and a hand-written validator describe the same shape twice, and only one of them gets updated. Two sources of truth — the typedef and the runtime checks — drift apart.",
+    "Two sources of truth — the typedef and the runtime checks — drift apart. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "User is inferred from the schema object. Assigning age (number) to string fails. One schema → inferred static type + runtime parse. Invert that and drift returns. Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson. At trust boundaries, call `.parse` / safeParse — never `as User` on JSON.",
+    "User is inferred from the schema object. Assigning age (number) to string fails. One schema → inferred static type + runtime parse. Invert that and drift returns. Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson. At trust boundaries, call `.parse` / safeParse — `never` `as User` on JSON. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// types.js — hope someone updates this when the validator changes
 /** @typedef {{ id: string, age: number }} User */

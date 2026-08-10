@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns"],
   keywords: ["callback", "function type", "=>", "higher-order"],
   problem:
-    "A callback that was supposed to return a boolean returns a string; Array.prototype.filter still 'works' with surprising results. Truthy strings keep everything — not what you meant.",
+    "Truthy strings keep everything Ã¢ÂÂ not what you meant. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "The callback must return boolean, not string. Function type expressions describe parameters and return without naming an implementation. Generics on the helper (keep<T>) tie the callback's value type to the array element type. Prefer named alias types for callbacks you reuse across modules.",
+    "The callback must return boolean, not string. Function type expressions describe parameters and return without naming an implementation. Generics on the helper (keep<T>) tie the callback's value type to the array element type. Prefer named alias types for callbacks you reuse across modules. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function keep(items, predicate) {
   return items.filter(predicate);

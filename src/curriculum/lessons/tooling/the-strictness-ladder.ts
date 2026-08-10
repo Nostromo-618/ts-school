@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["strict-mode", "tsc-cli"],
   keywords: ["strict", "noImplicitAny", "strictNullChecks", "migration"],
   problem:
-    "Enabling \"`strict`\": true on a million-line repo produces 40k errors and a revert by Friday. Each `strict` flag targets a class of this bug. Suggested order: `noImplicitAny` → `strictNullChecks` → `strictFunctionTypes` → full `strict`.",
+    'Each `strict` flag targets a class of this bug. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "The strictness ladder" as a CI gate, not a personal preference.',
   solution:
-    "`strictNullChecks` is usually the highest-value early climb. Track error counts per flag in CI so progress is visible. fix. Re-read the right-hand types once; the takeaways below compress what should stick.",
+    "`strictNullChecks` is usually the highest-value early climb. Suggested order: `noImplicitAny` → `strictNullChecks` → `strictFunctionTypes` → full `strict`. Track error counts per flag in CI so progress is visible. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function len(s) {
   return s.length;

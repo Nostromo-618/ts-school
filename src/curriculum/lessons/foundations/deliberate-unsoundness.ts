@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["structural-typing", "type-space-vs-value-space"],
   keywords: ["soundness", "bivariance", "covariance", "assertion", "trade-off"],
   problem:
-    "TypeScript sometimes allows operations that are not fully sound — by design, for pragmatism. Treating the type system as a proof assistant leads to confusion when those holes show up.",
+    "Array aliasing is the classic covariance hole — JS has it raw. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Learn the common holes (e.g. mutating arrays through wider aliases, some assertion patterns) so you do not mistake them for safety guarantees. Prefer patterns that close holes at boundaries: `unknown`, readonly, discriminated unions. Soundness is a spectrum here; engineering judgment still matters.",
+    "Double assertions bypass the checker — know when you opted out. Soundness holes are documented trade-offs, not bugs — treat them as places needing human review. That is the habit to take beyond this lesson — not a one-off fix in the sample.",
   js: {
     code: `// JS is unsound by default — types do not exist.
 const dogs = [{ bark() {} }];

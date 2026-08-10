@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "union-types"],
   keywords: ["keyof", "keys", "union", "operator", "type query"],
   problem:
-    "A helper that takes a property name accepts `any` string, so a renamed field breaks at runtime instead of at build time. Dynamic key access with no key constraint.",
+    "Dynamic key access with no key constraint. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "`keyof` User forbids `unknown` keys. `keyof` T is the union of keys of T. Aim for a shape where the bad state is unrepresentable — or at least loudly illegal before it runs.",
+    "`keyof T` produces the union of known keys, so `obj[key]` stays checked when `key` is typed as `keyof T`. Indexing with a plain `string` reopens `any`-like holes under default settings. Prefer `keyof` (and mapped types) when you walk an object's properties; widen to `string` only when the key truly comes from outside the type.",
   js: {
     code: `function get(obj, key) { return obj[key]; }
 `,

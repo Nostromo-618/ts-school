@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "inference",
   ],
   problem:
-    "Extracting an object literal into a variable turns a compile error into silence, or silence into a compile error, with no other change. mode silently becomes a general string.",
+    "mode silently becomes a general string. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "string is not assignable to 'read' | 'write'. let often widens literals to string; const preserves them. Fresh object literals get excess property checks; variables do not. Annotate let when you need a literal union.",
+    "string is not assignable to 'read' | 'write'. let often widens literals to string; const preserves them. Fresh object literals get excess property checks; variables do not. Annotate let when you need a literal union. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `let mode = "read";
 setMode(mode);

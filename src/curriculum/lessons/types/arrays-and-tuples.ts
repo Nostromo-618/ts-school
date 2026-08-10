@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["primitive-types"],
   keywords: ["array", "tuple", "readonly", "destructuring"],
   problem:
-    "An array of anything is an array of nothing in particular, so a list of pairs and a list of strings type-check identically. Destructuring assumes numbers; strings still 'work' until toFixed.",
+    "Destructuring assumes numbers; strings still 'work' until toFixed. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "A tuple fixes length and element types; string[] will not do. Check the TypeScript example for the concrete refusal, then keep the takeaways as reusable rules. Keep the TypeScript types in view — they are the fix for the failure mode above.",
+    "A tuple fixes length and element types; string[] will not do. Hold the dual panes together: the left is the failure mode, the right is the contract that prevents it. Apply the same contract at the next boundary you own.",
   js: {
     code: `function pointLabel(pair) {
   const [x, y] = pair;

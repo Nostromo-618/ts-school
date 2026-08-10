@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "keyof",
   ],
   problem:
-    "Duplicating a nested field's type gives you two declarations to keep in step and no error when they drift. Nested field access without a named nested type. Until that contract is checkable, “Indexed access types” stays a runtime surprise.",
+    "Nested field access without a named nested type. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "Indexed access digs out number. string fails. When the types name the contract, a quiet ship becomes a red squiggle at the call site instead. Keep the TypeScript types in view — they are the fix for the failure mode above.",
+    "Indexed access digs out number. string fails. Hold the dual panes together: the left is the failure mode, the right is the contract that prevents it. Apply the same contract at the next boundary you own.",
   js: {
     code: `function ageOf(user) {
   return user.age;

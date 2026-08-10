@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["widening", "literal types", "const", "let", "fresh literals"],
   problem:
-    "A variable initialized as `\"ready\"` can silently widen to `string`, so typos like `\"redy\"` compile until a comparison fails at runtime. Inference is helpful until widening erases the literal you cared about.",
+    "JavaScript has no notion of 'only these strings'. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Use `as const` or a literal type annotation when the exact string/number matters. Let context (arguments, return positions) pin literals when you can. Widening is not a bug in TypeScript — it is a default; override it where the domain needs precision.",
+    'A mutable `let` binding widens a literal to its base type — `let x = "hi"` becomes `string`, so later you can assign any string and lose the closed set you thought you had. Fresh literals in `const` or `as const` keep the precise type; mutable bindings invite widening. Prefer `const` when the value should stay a literal; annotate or assert when you need a wider type on purpose.',
   js: {
     code: `function setStatus(status) {
   return status;

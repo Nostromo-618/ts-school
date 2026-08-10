@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "type-aliases-intro"],
   keywords: ["interface vs type", "declaration merging", "style"],
   problem:
-    "A codebase mixes interface and type for the same kind of shape, so newcomers cannot tell which rules apply. Without a convention, shapes drift between modules. Use type for unions, tuples, and mapped/conditional results.",
+    "Without a convention, shapes drift between modules. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Behavior for object shapes is nearly identical; unions need type. Use type for unions, tuples, and mapped/conditional results. Use interface when you want extends and are modeling an object contract. Avoid declaration merging in app code — it surprises readers; keep ambient merges in .d.ts.",
+    "Behavior for object shapes is nearly identical; unions need type. Use type for unions, tuples, and mapped/conditional results. Use interface when you want extends and are modeling an object contract. Avoid declaration merging in app code — it surprises readers; keep ambient merges in .d.ts. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `// Two docs, two styles, one runtime shape — no single source of truth.
 function area(box) {

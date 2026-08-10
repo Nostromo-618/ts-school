@@ -7,13 +7,13 @@ export const lesson: Lesson = {
   track: "async",
   order: 3,
   summary:
-    "Node-style (err, value) callbacks become `Promise<T>` with explicit error rejection — type both sides of the bridge.",
+    "Promisify Node-style callbacks without collapsing error and value into `any` — generics must track both channels.",
   prerequisites: ["async-await-typing", "function-type-expressions"],
   keywords: ["callback", "promisify", "errback", "Node"],
   problem:
-    "A callback forgets to check err and reads value; TypeScript can make that mistake harder when you model the pair. Ignoring err is a classic Node footgun. Model err-first callbacks as (err: Error | `null`, value?: T) => `void`.",
+    "A hand-rolled promisify types the callback as `(err, value) => void` with `any`, so the promise resolves to `any` and error handling is unchecked. Callers regain the worst of callbacks: no autocomplete, no rejection typing, and easy swaps of error and value. The failure mode is a wrapper that hides the callback style without recovering its information.",
   solution:
-    "Optional value on the success path must be narrowed. Model err-first callbacks as (err: Error | `null`, value?: T) => `void`. Promisify by rejecting on err and resolving only when value is present. Prefer native promise APIs (fs/promises) over hand-rolled wrappers when available.",
+    "Parameterize error and value types so `promisify` returns `Promise<T>` and rejects with a known error shape. Prefer `util.promisify` with correct `@types` when available; when you write your own, keep the err-first convention in the type. The TypeScript pane should show a concrete resolved type, not `any`. Treat the callback boundary as a runtime contract you encode once.",
   js: {
     code: `function readConfig(cb) {
   cb(null, { port: 3000 });
@@ -24,7 +24,8 @@ readConfig((err, config) => {
 });
 `,
     highlights: [{ start: 5, end: 6 }],
-    caption: "Ignoring err is a classic Node footgun.",
+    caption:
+      "Callback APIs bury errors in arguments — easy to ignore, hard to type.",
   },
   ts: {
     code: `type Config = { port: number };
@@ -51,7 +52,7 @@ readConfig((err, value) => {
 });
 `,
     highlights: [{ start: 20, end: 20 }],
-    caption: "Optional value on the success path must be narrowed.",
+    caption: "A typed promisify recovers `Promise<T>` instead of `any`.",
     expectedDiagnostics: [{ code: 18048, line: 19, messageIncludes: "value" }],
   },
   insight: [

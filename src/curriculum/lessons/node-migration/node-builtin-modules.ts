@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["installing-types"],
   keywords: ["node:", "@types/node", "fs", "builtins"],
   problem:
-    "Code imports `'fs'` without types; path methods accept anything and fail when a `Buffer` was expected. Wrong path types become runtime `TypeError`s long after the call site was written. Builtin modules deserve the same care as your own packages.",
+    'Wrong path type is a runtime TypeError. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "node: builtins and @types/node" names before you rename the next hundred files.',
   solution:
-    "Use `node:fs` (and friends) so builtin imports are explicit and cannot clash with npm names. Keep `@types/node` aligned with your `engines.node` range. Until types are installed, stub only what you need — do not invent a fake full `fs`. Real projects install `@types/node` and mean it.",
+    "Install @types/node (and use node: specifiers) in real projects. node:fs makes builtin imports explicit and avoids npm package name clashes. @types/node versions should track your engines.node range. Until types are installed, stub only what you need — don't invent a fake full fs. Apply the same refusal at the next boundary you own.",
   js: {
     code: `const fs = require("fs");
 fs.readFileSync(42, "utf8");

@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "judgement",
   ],
   problem:
-    "The most impressive type in a codebase is often the one nobody else can change, which makes it a liability rather than an asset. Simple runtime helpers stay readable; types should not obscure them.",
+    "Simple runtime helpers stay readable; types should not obscure them. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases.",
   solution:
-    "Wrong keys produce opaque errors; fixed interfaces stay clear. Type-level code is code — it needs readers, tests, and an exit strategy. If a runtime parse already exists, duplicating the grammar in types may be redundant. Ship the simplest type that prevents the bug class you care about; deepen only when bugs demand it.",
+    "Wrong keys produce opaque errors; fixed interfaces stay clear. Type-level code is code — it needs readers, tests, and an exit strategy. If a runtime parse already exists, duplicating the grammar in types may be redundant. Ship the simplest type that prevents the bug class you care about; deepen only when bugs demand it. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `// JS: a one-liner everyone understands.
 function pick(obj, keys) {

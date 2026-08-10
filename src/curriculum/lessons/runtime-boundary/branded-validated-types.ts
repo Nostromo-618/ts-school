@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "opaque",
   ],
   problem:
-    "Validation happens at the edge and the value travels for another twenty functions, any of which may construct a fresh unvalidated one. Nothing stops calling send with an unchecked string.",
+    "Nothing stops calling send with an unchecked string. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Only parseEmail mints Email — raw strings are rejected. Smart constructors return branded types; public APIs accept only the brand. Keep the brand key unexported so callers cannot forge values with object literals easily. Pair with runtime parsing — the brand is a compile-time receipt for a check that already ran.",
+    "Only parseEmail mints Email — raw strings are rejected. Smart constructors return branded types; public APIs accept only the brand. Keep the brand key unexported so callers cannot forge values with object literals easily. Pair with runtime parsing — the brand is a compile-time receipt for a check that already ran. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `// JS: validate once, then pass raw strings everywhere.
 function isEmail(s) {

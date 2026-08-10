@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "Object.freeze",
   ],
   problem:
-    "Passing an array to a helper and getting it back sorted in place is a bug the type system will happily allow. Mutating the caller's array. `readonly` arrays forbid mutating methods like push.",
+    "Mutating the caller's array. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "push does not exist on `readonly` string[]. `readonly` arrays forbid mutating methods like push. Return a new array instead of mutating shared state. `Readonly<T>` / `readonly` props document intent at API boundaries.",
+    "push does not exist on `readonly` string[]. `readonly` arrays forbid mutating methods like push. Return a new array instead of mutating shared state. `Readonly<T>` / `readonly` props document intent at API boundaries. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function add(list, item) {
   list.push(item);

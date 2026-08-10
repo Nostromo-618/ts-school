@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "patch",
   ],
   problem:
-    "A PATCH body where a field is missing means leave it alone, and where it is `null` means clear it — and one type covers both. `undefined` written into optional fields casually.",
+    '`undefined` written into optional fields casually. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "exactOptionalPropertyTypes" as a CI gate, not a personal preference.',
   solution:
-    "Options.timeout?: number is not number | `undefined` for fresh calls under `exactOptionalPropertyTypes` — modeled here as a mismatch. `exactOptionalPropertyTypes` distinguishes missing from `undefined`. Useful for APIs where `undefined` means something different. Enable carefully — it is not part of `strict`.",
+    "Options.timeout?: number is not number | `undefined` for fresh calls under `exactOptionalPropertyTypes` — modeled here as a mismatch. `exactOptionalPropertyTypes` distinguishes missing from `undefined`. Useful for APIs where `undefined` means something different. Enable carefully — it is not part of `strict`. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `const opts = { timeout: undefined };
 `,

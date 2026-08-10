@@ -14,9 +14,9 @@ export const lesson: Lesson = {
   ],
   keywords: ["expectTypeOf", "tsd", "Equal", "type test", "assertType"],
   problem:
-    "A refactor that changes an exported type breaks nothing in the test suite, because no test ever looked at a type. Runtime tests cannot see TypeScript signatures.",
+    "Runtime tests cannot see TypeScript signatures. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Type-level Expect<Equal<…>> fails the build when signatures drift. Colocate type tests with the API they protect — they are regression tests. Libraries like expectTypeOf integrate with Vitest; Equal/Expect work without deps. Test the public exported types, not incidental inference inside implementations.",
+    "Type-level Expect<Equal<…>> fails the build when signatures drift. Colocate type tests with the API they protect — they are regression tests. Libraries like expectTypeOf integrate with Vitest; Equal/Expect work without deps. Test the public exported types, not incidental inference inside implementations. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// JS tests assert runtime values — signatures are undocumented.
 function add(a, b) {

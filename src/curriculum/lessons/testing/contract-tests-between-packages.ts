@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["testing-declaration-files", "ci-gates-for-types"],
   keywords: ["contract test", "api surface", "breaking change", "semver", "ci"],
   problem:
-    "Semver says a type change is breaking, and nothing in the release process can tell whether one happened. Without type contracts, breakages arrive as production errors.",
+    "Without type contracts, breakages arrive as production errors. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Consumer assignments fail when the contract params drift. Keep a tiny consumer package or type tests that import the public API in CI. API Extractor / attw / semver-check tools snapshot the surface. Treat type-only breaks as major versions when you publish libraries.",
+    "Consumer assignments fail when the contract params drift. Keep a tiny consumer package or type tests that import the public API in CI. API Extractor / attw / semver-check tools snapshot the surface. Treat type-only breaks as major versions when you publish libraries. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `// JS breaking changes are runtime surprises for callers.
 function greet(name) {

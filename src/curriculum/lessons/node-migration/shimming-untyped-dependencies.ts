@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["module-augmentation", "installing-types"],
   keywords: ["declare module", "shim", "ambient", "DefinitelyTyped", "untyped"],
   problem:
-    "One untyped dependency turns a whole call graph into `any`, and `noImplicitAny` cannot see through it. Teams either abandon the library or sprinkle casts until the checker is decorative.",
+    'Untyped deps accept anything and return anything. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Dependencies with no types" names before you rename the next hundred files.',
   solution:
-    "Write a minimal ambient module declaration for the surface you actually call — not a fake full API. Prefer upstream types or a thin typed wrapper you control. Keep the shim honest: if the runtime can return `null`, the declaration must say so. Expand the `.d.ts` only as you touch more of the library.",
+    "A minimal shim restores checking at the boundary. Start with a narrow shim of the functions you call — not a full fictional API. Prefer @types from DefinitelyTyped when available; contribute improvements upstream. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// JS: require an untyped helper and pass anything.
 const slugify = require("legacy-slugify");
@@ -56,7 +56,10 @@ void s;
       id: "shim-q",
       prompt: "Best first shim for a single function dependency?",
       choices: [
-        { id: "a", text: '`declare` module "pkg" { const x: `any`; export = x }' },
+        {
+          id: "a",
+          text: '`declare` module "pkg" { const x: `any`; export = x }',
+        },
         {
           id: "b",
           text: '`declare` module "pkg" { export function fn(/* real args */): /* real return */ }',

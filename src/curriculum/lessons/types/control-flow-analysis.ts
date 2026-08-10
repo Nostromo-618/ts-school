@@ -21,9 +21,9 @@ export const lesson: Lesson = {
     "aliased condition",
   ],
   problem:
-    "Narrowing looks like magic until it stops working, and then there is nothing to reason about unless you know what it is actually doing. Control flow in JS does not refine declared types — there are none.",
+    "Control flow in JS does not refine declared types — there are none. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "CFA narrows in branches; wrong assignments still fail outside them. Each reference gets a type from reaching definitions along the control-flow graph. Discriminant checks, `typeof`, and equality create edges that refine types in true/false successors. When CFA “fails,” ask what assignment or call could have invalidated the predicate since it was proven.",
+    "CFA narrows in branches; wrong assignments still fail outside them. Each reference gets a type from reaching definitions along the control-flow graph. Discriminant checks, `typeof`, and equality create edges that refine types in true/false successors. When CFA “fails,” ask what assignment or call could have invalidated the predicate since it was proven. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// JS: if-checks are just branches — no type changes.
 function len(x) {

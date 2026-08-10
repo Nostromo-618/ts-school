@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-process-env"],
   keywords: ["argv", "parseArgs", "cli", "commander", "options"],
   problem:
-    "`process.argv` is `string[]` with no structure — flags, positionals, and values are all the same. Parsers that return loose objects recreate the same ambiguity one layer up.",
+    'Trusting argv[2] without checking it exists. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Command-line arguments" names before you rename the next hundred files.',
   solution:
-    "Parse once into a typed options object (hand-rolled or via a library with good types). Reject unknown flags at the boundary. Keep raw `argv` out of business logic. The checker can only protect the shape you parse into — not the argv array itself.",
+    "Parse into CliOptions. A raw argv string is not a number. Parse argv into a dedicated options type early. Prefer parseArgs helpers, then validate business rules. Fail with a usage message when operands are missing. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `const file = process.argv[2];
 doWork(file);

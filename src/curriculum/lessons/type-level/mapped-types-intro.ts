@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["keyof-operator", "indexed-access-types"],
   keywords: ["mapped type", "in keyof", "transform", "Partial", "homomorphic"],
   problem:
-    "Hand-writing the nullable version of a twenty-field interface produces a second twenty-field interface to maintain. Shallow freeze with no type change. Name the shape so the broken call cannot compile quietly.",
+    "Shallow freeze with no type change. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "Mapped `readonly` fields reject assignment. Check the TypeScript example for the concrete refusal, then keep the takeaways as reusable rules. Keep the TypeScript types in view — they are the fix for the failure mode above.",
+    "Mapped `readonly` fields reject assignment. Hold the dual panes together: the left is the failure mode, the right is the contract that prevents it. Apply the same contract at the next boundary you own.",
   js: {
     code: `function freeze(obj) { return obj; }
 `,

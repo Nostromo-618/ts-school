@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["first-type-error", "annotations-vs-inference"],
   keywords: ["tests", "vitest", "expect", "types in tests"],
   problem:
-    "Test helpers take `any` and return `any`, so a renamed production field only fails in production. The helper 'passed' a bad fixture into a string API. Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI.",
+    "The helper 'passed' a bad fixture into a string API. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Typed fixtures refuse the bad id at compile time. Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI. Prefer `unknown` + narrowing helpers over `any` in test utils. When production types change, failing tests should be type errors first.",
+    "Typed fixtures refuse the bad id at compile time. Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI. Prefer `unknown` + narrowing helpers over `any` in test utils. When production types change, failing tests should be type errors first. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `function expectUser(value) {
   if (!value || typeof value.id !== "string") throw new Error("bad");

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["types-are-erased", "unknown-vs-any"],
   keywords: ["boundary", "untrusted input", "IO", "validation"],
   problem:
-    "A request handler types req.body as a rich interface and then trusts every field without checking. No TypeScript error here — that's the point: the type ends at the assertion; runtime still lies.",
+    "No TypeScript error here — that's the point: the type ends at the assertion; runtime still lies. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "No TypeScript error here — that's the point: the type ends at the assertion; runtime still lies. Everything that crosses IO (HTTP, disk, env, queues) starts as untrusted. Types inside your process are only as true as the validations at the edge. Treat as Model and `any` as 'I stopped checking' — prefer `unknown` + parse.",
+    "No TypeScript error here — that's the point: the type ends at the assertion; runtime still lies. Everything that crosses IO (HTTP, disk, env, queues) starts as untrusted. Types inside your process are only as true as the validations at the edge. Treat as Model and `any` as 'I stopped checking' — prefer `unknown` + parse. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function createUser(body) {
   return { id: body.id, admin: body.admin === true };

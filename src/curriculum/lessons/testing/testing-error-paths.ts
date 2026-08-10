@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["result-types", "assertions-and-narrowing-in-tests"],
   keywords: ["error", "Result", "rejects", "throws", "unknown", "catch"],
   problem:
-    "expect(fn).toThrow() passes for the wrong error, and a caught value in a test is `unknown` just as it is everywhere else. Reading .code on `unknown` catch values.",
+    "Reading .code on `unknown` catch values. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Narrow in tests too. test404 returns number. Error path tests should narrow `unknown` catches. Assert on discriminant fields of custom errors. Do not use `any` to reach .code.",
+    "Narrow in tests too. test404 returns number. Error path tests should narrow `unknown` catches. Assert on discriminant fields of custom errors. Do not use `any` to reach .code. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `try { await fn(); } catch (e) { expect(e.code).toBe(404); }
 `,

@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "augmentation",
   ],
   problem:
-    "A declaration file that gains a single import stops being ambient, and every `declare global` augmentation in it silently stops applying. Teams stash state on `global` without declaring it, then wonder why the editor and `tsc` disagree about what exists.",
+    'Stashing state on global without declaring it. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Augmenting globals" names before you rename the next hundred files.',
   solution:
-    "Augment globals from a module file (`export {}` if you need to force module mode). Prefer explicit imports over ambient globals for app state. Keep augmentations minimal — they apply everywhere. `declare global` can add something like `appCache`, but a `Map` is still not a number at the use site.",
+    "`declare` global adds appCache. A Map is not a number. Augment globals from a module file (export {} if needed). Prefer explicit imports over ambient globals for app state. Keep augmentations minimal — they apply everywhere. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `global.cache = new Map();
 `,

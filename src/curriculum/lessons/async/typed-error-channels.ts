@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 16,
   summary:
-    "Effect, neverthrow, and friends put the error type in the signature. What that buys, what it costs in interop, and how to decide.",
+    "Separate typed success data from typed error channels — do not overload one field to mean both.",
   prerequisites: [
     "discriminated-results-in-practice",
     "higher-order-generic-signatures",
@@ -20,9 +20,9 @@ export const lesson: Lesson = {
     "interop",
   ],
   problem:
-    "A typed-error library is all-or-nothing at a boundary, and half-adopted it produces two error models in one codebase. Thrown errors have no channel in the type system.",
+    "An API response type uses one `data` field that is either the payload or an error string depending on status. Callers read `data.name` on error responses and ship nonsense or crash. Overloading a single channel to carry two meanings is the failure mode — the type lies about what is present.",
   solution:
-    "Result puts errors in the return type — success fields stay narrow. Typed error channels make failure part of the signature — callers must handle or propagate E. Interop cost: thrown exceptions and Result styles do not mix cleanly at boundaries. Adopt at module borders first; avoid dual styles inside one feature.",
+    "Give success and failure distinct fields (or distinct union members) so the checker can see which channel is live. Discriminate on status or `ok`, then read only the fields that belong to that branch. The TypeScript pane should make the illegal mix a diagnostic, not a production surprise. Keep error channels structured and boring; do not reuse payload property names for diagnostics.",
   js: {
     code: `// JS: errors are thrown values — catch whatever.
 async function load() {
@@ -35,7 +35,7 @@ try {
 }
 `,
     highlights: [{ start: 5, end: 8 }],
-    caption: "Thrown errors have no channel in the type system.",
+    caption: "One overloaded field cannot safely mean both payload and error.",
   },
   ts: {
     code: `type Result<T, E> =
@@ -58,8 +58,7 @@ if (!r.ok) {
 }
 `,
     highlights: [{ start: 16, end: 16 }],
-    caption:
-      "Result puts errors in the return type — success fields stay narrow.",
+    caption: "Separate channels make illegal mixes a type error.",
     expectedDiagnostics: [
       {
         code: 2322,

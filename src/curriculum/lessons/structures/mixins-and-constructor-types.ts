@@ -19,9 +19,9 @@ export const lesson: Lesson = {
     "composition",
   ],
   problem:
-    "Two orthogonal behaviours both want to be a base class, and JavaScript gives you one prototype chain. JS mixins work; typing the constructor parameter is the hard part.",
+    "JS mixins work; typing the constructor parameter is the hard part. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise.",
   solution:
-    "Mixin constructors use `any`[] rest; instance fields compose. Aim for a shape where the bad state is unrepresentable — or at least loudly illegal before it runs.",
+    "Mixin constructors use `any`[] rest; instance fields compose. Hold the dual panes together: the left is the failure mode, the right is the contract that prevents it. Apply the same contract at the next boundary you own.",
   js: {
     code: `// JS: mixins are functions that extend a class.
 function Timestamped(Base) {

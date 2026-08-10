@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["literal-types"],
   keywords: ["enum", "literal union", "const enum", "erasable"],
   problem:
-    "enum is the feature that looks most familiar to developers arriving from other languages, and it is the one that behaves least like they expect. Object maps still accept `any` string at the call site.",
+    "Object maps still accept `any` string at the call site. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "Prefer type Role = \"admin\" | \"user\" for erasable string sets. Numeric enums are bidirectional and surprisingly assignable from number — a frequent footgun. `String` enums require the enum member; bare strings are rejected (as shown). For most Node apps, a union of string literals (or `as const` objects) is simpler and erases cleanly.",
+    "Prefer a union of string literals for closed vocabularies unless you need an enum's runtime object. Literal unions erase cleanly and exhaust well; numeric enums can be surprising under reverse mapping. The TypeScript pane shows which values are actually assignable — pick the model that matches how you serialize and compare.",
   js: {
     code: `const Role = { Admin: "admin", User: "user" };
 

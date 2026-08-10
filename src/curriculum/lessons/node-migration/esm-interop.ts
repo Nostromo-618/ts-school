@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "The same import statement can resolve to the module namespace or to its default export depending on flags set three configs away. Calling a CJS helper 'directly' works in one setup and yields `… is not a function` in another. Interop bugs feel random until you normalize the boundary once.",
+    'require a CJS helper and call it directly. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Interop between the two module systems" names before you rename the next hundred files.',
   solution:
-    "CJS packages may need `esModuleInterop` or `import = require` depending on export style. Runtime shape can be `module` or `module.default` — normalize once at the boundary. When bundlers and `tsc` disagree, check the emitted JavaScript; that is the ground truth for Node.",
+    "Normalize default-vs-namespace interop. pad returns string, not number. CJS packages may need `esModuleInterop` or import = require depending on export style. Runtime shape can be module or module.default — normalize once at the boundary. Check emitted JS when bundlers and `tsc` disagree about interop. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `const legacy = require("legacy-lib");
 legacy.pad("x", 3);

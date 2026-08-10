@@ -14,9 +14,9 @@ export const lesson: Lesson = {
   ],
   keywords: ["@types", "DefinitelyTyped", "types field", "bundled types"],
   problem:
-    "`import express from 'express'` fails type-checking until `@types/express` is installed — or until the package ships its own types. Runtime works; the editor has no API surface. That gap trains people to silence `TS2307` instead of fixing the dependency boundary.",
+    'Runtime works; the editor has no API surface. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Getting types for your dependencies" names before you rename the next hundred files.',
   solution:
-    "Prefer packages that ship a `types` / `exports` types condition. When needed, install `@types/foo` as a devDependency matching foo's major. `TS2307` until types exist is the correct refusal — bundled declarations or DefinitelyTyped, not a cast to `any`.",
+    "`TS2307` until types exist — bundled or @types. Install @types/foo as a devDependency matching the major of foo when needed. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `const leftPad = require("left-pad");
 leftPad("x", 3);

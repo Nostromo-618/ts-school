@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "express",
   ],
   problem:
-    "Attaching a user object to Express's Request is a five-line change that half of all Node codebases get subtly wrong. JS monkey-patches freely; TypeScript needs an augmentation.",
+    "JS monkey-patches freely; TypeScript needs an augmentation. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise.",
   solution:
-    "Merged optional user still needs a narrowing before .id. pkg. Match the dependency’s module name exactly; path mapping typos silently create a new ambient module. Prefer documenting required app-owned fields as required only when middleware always sets them.",
+    "Merged optional user still needs a narrowing before .id. Match the dependency’s module name exactly; path mapping typos silently create a new ambient module. Prefer documenting required app-owned fields as required only when middleware always sets them. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// JS: just hang properties on req — no types to update.
 function auth(req, _res, next) {

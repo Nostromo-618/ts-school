@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "inference-and-widening"],
   keywords: ["inference", "type argument", "explicit", "candidate", "widening"],
   problem:
-    "The inferred T is string when you needed \"GET\" | \"POST\", and nothing in the error mentions inference at all. Tuple contents forget their types. TypeScript infers type arguments from call-site values.",
+    "Tuple contents forget their types. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Inferred [number, string]. Second element is not number. TypeScript infers type arguments from call-site values. Multiple parameters can carry different type args. Hover in the editor to confirm inference before annotating.",
+    "Inferred [number, string]. Second element is not number. TypeScript infers type arguments from call-site values. Multiple parameters can carry different type args. Hover in the editor to confirm inference before annotating. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `function pair(a, b) { return [a, b]; }
 const p = pair(1, 'x');

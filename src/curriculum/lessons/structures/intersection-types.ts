@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["extending-interfaces", "type-aliases-intro"],
   keywords: ["intersection", "and", "mixin", "never", "composition"],
   problem:
-    "Intersecting two types with a conflicting property gives a type with a `never` property, and the error appears at the use site. Assuming both id and role exist.",
+    "Assuming both id and role exist. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Intersection requires both sides. Missing role fails. A & B has properties of both. Conflicting properties can collapse to `never`. Prefer interfaces with extends for object merges you own.",
+    "Intersection requires both sides. Missing role fails. A & B has properties of both. Conflicting properties can collapse to `never`. Prefer interfaces with extends for object merges you own. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function save(user) { return user.id + user.role; }
 `,

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["primitive-types", "const-assertions"],
   keywords: ["unique symbol", "symbol", "nominal", "identity", "declare const"],
   problem:
-    "Structural typing has no notion of identity, so two types meant to be incompatible are interchangeable unless something breaks the tie. Runtime symbols are unique; TypeScript can reflect that in types.",
+    "Runtime symbols are unique; TypeScript can reflect that in types. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "unique symbol brands are nominally distinct. Only `unique symbol` (or `readonly` unique symbol properties) creates a truly nominal singleton type for a symbol. `declare` const x: unique symbol is the usual pattern for brand keys. Ordinary symbol types are just symbol — interchangeable and useless for branding.",
+    "unique symbol brands are nominally distinct. Only `unique symbol` (or `readonly` unique symbol properties) creates a truly nominal singleton type for a symbol. `declare` const x: unique symbol is the usual pattern for brand keys. Ordinary symbol types are just symbol — interchangeable and useless for branding. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// JS: Symbol() creates unique runtime keys — but types do not exist.
 const a = Symbol("a");

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["mapped-types-intro", "template-literal-types-intro"],
   keywords: ["key remapping", "as clause", "mapped type", "rename", "filter"],
   problem:
-    "Generating a getter interface from a model interface means renaming every key, and a mapped type could not do that at all until remapping arrived. Manual getter maps fall out of sync when fields change.",
+    "Manual getter maps fall out of sync when fields change. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "as renames keys; mapping to `never` drops them. Key remapping uses `as NewKey` after `in`; `as never` filters a key out of the result. Template literal types pair naturally with remapping for getX / setX / onX patterns. `Capitalize` and other intrinsic string helpers are part of how library APIs mint names.",
+    "as renames keys; mapping to `never` drops them. Key remapping uses `as NewKey` after `in`; `as never` filters a key out of the result. Template literal types pair naturally with remapping for getX / setX / onX patterns. `Capitalize` and other intrinsic string helpers are part of how library APIs mint names. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// JS: rename by hand, drift forever.
 const user = { id: 1, name: "Ada" };

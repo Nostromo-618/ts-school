@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 19,
   summary:
-    "Two interfaces with the same name become one. The feature behind global augmentation, and the reason a stray declaration can change a type you never touched.",
+    "Two interfaces with the same name become one. The feature behind global augmentation, and the reason a stray declaration can change a type you `never` touched.",
   prerequisites: ["interface-vs-type-alias", "type-space-vs-value-space"],
   keywords: [
     "declaration merging",
@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "An interface you did not write gained a property because a dependency declared one with the same name. Redeclarations silently fight each other. Interfaces merge; type aliases do not.",
+    "Redeclarations silently fight each other. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Merged interface requires both fields. Interfaces merge; type aliases do not. Merging is useful for augmentation — dangerous for app models. Prefer one declaration unless you are extending a library.",
+    "Merged interface requires both fields. Interfaces merge; type aliases do not. Merging is useful for augmentation — dangerous for app models. Prefer one declaration unless you are extending a library. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `// two interfaces with same name in JS just overwrite
 `,

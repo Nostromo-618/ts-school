@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["classes-intro", "interfaces-intro"],
   keywords: ["implements", "extends", "inheritance", "structural", "contract"],
   problem:
-    "Developers arriving from nominal languages reach for implements to make a class assignable, which it never needed. extends used for everything. Extends inherits implementation; implements only checks shape.",
+    "extends used for everything. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "implements checks the shape; bark returns string. extends inherits implementation; implements only checks shape. A class can implement multiple interfaces. Failing implements is a compile error on the class body.",
+    "implements checks the shape; bark returns string. extends inherits implementation; implements only checks shape. A class can implement multiple interfaces. Failing implements is a compile error on the class body. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `class Dog extends Animal {}
 `,

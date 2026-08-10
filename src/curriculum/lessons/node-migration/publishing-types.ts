@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "public api",
   ],
   problem:
-    "A package's types are only correct in the configuration its author used, and consumers find out at install time. Without verified `.d.ts`, downstream teams guess the API — or abandon your types entirely.",
+    'Without verified .d.ts, consumers guess the API. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Publishing a typed package" names before you rename the next hundred files.',
   solution:
-    "Emit declaration files and verify them with `@arethetypeswrong` / publint. Prefer explicit return types on exports so `.d.ts` does not leak private names. Align `package.json` `exports` types conditions with the JavaScript entrypoints you actually ship. Public returns should be explicit; optional `Map` values are `| undefined`.",
+    "Public returns should be explicit; optional Map values are | `undefined`. Emit declaration files and verify them with @arethetypeswrong / publint. Prefer explicit return types on exports so .d.ts does not reference `private` names. Align `package.json` exports types conditions with the JS entrypoints you ship. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// JS packages ship .js — types are optional afterthoughts.
 // "types" in package.json may point at missing or wrong files.

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-parameters-and-returns", "null-and-undefined"],
   keywords: ["optional parameter", "default parameter", "?", "undefined"],
   problem:
-    "Callers skip an argument; callees read it as a real value and crash on .toUpperCase(). Missing args become `undefined` with no warning. Optional parameters are T | `undefined` and must follow required ones.",
+    'Calling `greet()` with no arguments quietly builds `"hello UNDEFINED` — `name` was `undefined`, and `toUpperCase` only fails when someone finally passes nothing in production. Optional parameters without types look like convenience; they are actually a missing contract about what may be omitted.',
   solution:
-    "name is required; omitting it is a type error. Optional parameters are T | `undefined` and must follow required ones. guest. Prefer defaults when you have a sensible fallback; prefer ? when absence is meaningful.",
+    'Make required inputs required in the type: `greet(name: string, excited?: boolean)` rejects a bare `greet()` at compile time. Put optional parameters after required ones; `name?: string` means `string | undefined`, while `name = "guest"` supplies a runtime default and still types the parameter as `string` for callers who omit it. Prefer a default when you have a real fallback; prefer `?` when absence itself is meaningful and must be handled.',
   js: {
     code: `function greet(name, excited) {
   const base = "hello " + name.toUpperCase();

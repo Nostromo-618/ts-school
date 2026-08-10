@@ -22,9 +22,9 @@ export const lesson: Lesson = {
     "reduction",
   ],
   problem:
-    "Type X is not assignable to type Y is the most common error in TypeScript, and almost nobody can state the rule it is enforcing. Dynamic assignment has no structural subtype check.",
+    "Dynamic assignment has no structural subtype check. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "`unknown` cannot flow into string without narrowing. Assignability is structural: members of the target must be present (with compatible types) on the source. `any` is assignable to and from almost everything — it punches through the lattice. `unknown` is the safe top; `never` is the bottom; unions/intersections reduce before the check.",
+    "`unknown` cannot flow into string without narrowing. Assignability is structural: members of the target must be present (with compatible types) on the source. `any` is assignable to and from almost everything — it punches through the lattice. `unknown` is the safe top; `never` is the bottom; unions/intersections reduce before the check. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `// JS: assignability is “did it run?” — anything goes.
 let x = 1;

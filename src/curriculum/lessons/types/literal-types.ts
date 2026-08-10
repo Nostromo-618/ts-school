@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["union-types"],
   keywords: ["literal", "string literal", "magic string", "const"],
   problem:
-    "A typo'd method name — \"POSt\" — is a perfectly good string, so it fails at runtime against a route table rather than at the keystroke. Typos in method verbs are invisible without a closed set.",
+    'A typo like `"POSt"` is just another string in JavaScript — the handler falls through to "unsupported" or, worse, a default branch that does the wrong thing. Magic method verbs without a closed set are invisible until a client sends the wrong casing.',
   solution:
-    "Only the literals in Method are assignable. GET. Unions of literals give you exhaustive-friendly APIs without enums. const assertions and annotated bindings prevent widening back to string.",
+    'Type the parameter as a union of string literals (`"GET" | "POST"`) so only those values are assignable. The TypeScript pane rejects `"POSt"` immediately. Prefer literal unions for closed vocabularies; add `as const` or an annotated binding when you need to stop widening back to `string`. Exhaustiveness becomes possible once the set is finite.',
   js: {
     code: `function handle(method, path) {
   if (method === "GET") return "read " + path;

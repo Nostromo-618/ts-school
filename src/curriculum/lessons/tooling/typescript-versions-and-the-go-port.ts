@@ -19,9 +19,9 @@ export const lesson: Lesson = {
     "migration",
   ],
   problem:
-    "TypeScript 7 is a native binary with no JavaScript createProgram API yet, so tools that embed the compiler need a dual-install strategy. No JS API means no in-browser `tsc` from the native port.",
+    'No JS API means no in-browser `tsc` from the native port. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "TypeScript 6, 7, and the Go port" as a CI gate, not a personal preference.',
   solution:
-    "This site uses typescript@7 for tooling CLI and typescript-strada@6 for build-time diagnostics. TypeScript 7 is the primary package here (native CLI); Strada 6 stays as typescript-strada for createProgram. Microsoft publishes the Strada API line as `@typescript/typescript6`; this site aliases it `typescript-strada` for build-time diagnostics. Lesson diagnostics are generated at build time — the browser never ships a compiler. Plan editor/CI native speedups separately from tools that still need the JS Compiler API.",
+    "This site uses typescript@7 for tooling CLI and typescript-strada@6 for build-time diagnostics. TypeScript 7 is the primary package here (native CLI); Strada 6 stays as typescript-strada for createProgram. Microsoft publishes the Strada API line as `@typescript/typescript6`; this site aliases it `typescript-strada` for build-time diagnostics. Lesson diagnostics are generated at build time — the browser `never` ships a compiler. Apply the same refusal at the next boundary you own.",
   js: {
     code: `// Native compilers are CLIs — not importable JS libraries.
 // Embedding tsc in a browser worker needs a JS API that TS 7 does not ship.

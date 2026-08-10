@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["any-and-implicit-any"],
   keywords: ["strict", "strictNullChecks", "noImplicitAny", "flags", "config"],
   problem:
-    "A project on non-`strict` settings trains the team that `null` is fine until it is not. Turning on `strict` later feels like a thousand new bugs — they were already there, just invisible.",
+    "Optional values and missing arguments are everyday Node bugs. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Enable `strict` (and keep it) so nullishness, implicit `any`, and related checks stay on. Migrate folder by folder if you must, but do not leave a permanent non-strict island as 'done.' The checker is only as honest as the flags you give it.",
+    "`strictNullChecks` turns 'maybe missing' into a compile error. `strict` enables a bundle: `strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, and more. For a brownfield Node app, turn flags on one at a time — start with `noImplicitAny` and `strictNullChecks`. A codebase that compiles only with `strict: false` is barely typed; prefer fixing errors over disabling the flag. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function label(user) {
   // user might be missing; .name still "works" until it doesn't.
@@ -53,7 +53,8 @@ label(undefined);
   quiz: [
     {
       id: "q1",
-      prompt: "Which `strict` flag rejects `undefined` where a User is required?",
+      prompt:
+        "Which `strict` flag rejects `undefined` where a User is required?",
       choices: [
         { id: "a", text: "`noUnusedLocals`" },
         { id: "b", text: "`strictNullChecks`" },

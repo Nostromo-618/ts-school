@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "resolution",
   ],
   problem:
-    "A package with an `exports` map and a stale top-level `types` field can resolve fine for the author and to `any` for everyone else. Consumers trust the published entrypoints; if types and runtime diverge, their editor lies while your CI stays green.",
+    'exports with a runtime path only. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "exports, types, and how consumers find them" names before you rename the next hundred files.',
   solution:
-    "Put a `types` condition in `exports` so TypeScript resolves declarations reliably. Dual packages need both `import` and `require` entry points. Prefer `exports.types` over legacy `typesVersions` when you can. Author the types condition on purpose — optional types are not a number, and missing ones become `any` for consumers.",
+    "Author a types condition. Optional types is not a number. Put a types condition in exports so TypeScript resolves declarations reliably. Dual packages need both import and require entry points. Prefer exports.types over legacy typesVersions when you can. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `const exportsMap = { ".": "./dist/index.js" };
 `,

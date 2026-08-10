@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["schema-validation-libraries", "declaration-files-intro"],
   keywords: ["openapi", "protobuf", "graphql", "codegen", "contract", "drift"],
   problem:
-    "Generated types describe the contract as it was when the generator last ran, which is not necessarily the contract the server is serving. No contract artifact means no mechanical sync.",
+    "No contract artifact means no mechanical sync. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "Generated DTO types still need a parse step — casts lie. Codegen removes transcription bugs; it does not prove the server still matches. CI should regenerate and fail on drift, or validate responses at runtime. Prefer generating both types and validators from one schema when possible.",
+    "Generated DTO types still need a parse step — casts lie. Codegen removes transcription bugs; it does not prove the server still matches. CI should regenerate and fail on drift, or validate responses at runtime. Prefer generating both types and validators from one schema when possible. Apply the same refusal at the next boundary you own.",
   js: {
     code: `// JS: hand-written clients drift from the server silently.
 async function getUser(id) {

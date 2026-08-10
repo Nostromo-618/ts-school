@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "framework",
   ],
   problem:
-    "Two decorator designs exist in the wild, they are not compatible, and the `tsconfig` flag that picks between them is easy to inherit by accident. Decorators are ordinary functions; typing context.kind matters in TS.",
+    "Decorators are ordinary functions; typing context.kind matters in TS. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise.",
   solution:
-    "Decorator wrappers must preserve the method’s return type. experimentalDecorators enables the old TypeScript design; new code should prefer the standard model when the toolchain supports it. Context objects discriminate on kind: class, method, getter, setter, field, accessor. Do not mix legacy and standard decorators in one project — pick one emit story.",
+    "Decorator wrappers must preserve the method’s return type. experimentalDecorators enables the old TypeScript design; new code should prefer the standard model when the toolchain supports it. Context objects discriminate on kind: class, method, getter, setter, field, accessor. Do not mix legacy and standard decorators in one project — pick one emit story. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// JS stage-3 decorators wrap definitions — frameworks differ on details.
 function logged(value, context) {

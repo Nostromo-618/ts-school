@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generics-intro"],
   keywords: ["extends", "constraint", "bounded", "keyof", "generic"],
   problem:
-    "An unconstrained type parameter can be anything, so the function body can do nothing with it. Reading .length on anything. Extends constrains what T can be. Keep that refusal in the editor — not in a later incident review.",
+    "Reading .length on anything. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Constraint requires length. number does not qualify. extends constrains what T can be. Constraints unlock property access inside the function. Prefer precise constraints over `any`.",
+    "Constraint requires length. number does not qualify. extends constrains what T can be. Constraints unlock property access inside the function. Prefer precise constraints over `any`. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `function len(x) { return x.length; }
 len(1);

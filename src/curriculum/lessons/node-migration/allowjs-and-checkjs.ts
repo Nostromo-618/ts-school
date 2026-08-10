@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["adding-typescript-to-an-existing-project"],
   keywords: ["allowJs", "checkJs", "JSDoc", "@ts-check"],
   problem:
-    "New `.ts` files sit next to untyped `.js`, and the old bugs quietly re-enter through the door you left open. Without `checkJs`, JavaScript neighbors are invisible to the checker — so the migration feels unfinished even after you 'added TypeScript.' JSDoc can be a lightweight contract while files wait to be renamed.",
+    'With `checkJs`, JSDoc becomes a lightweight contract. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "allowJs and checkJs" names before you rename the next hundred files.',
   solution:
-    "`allowJs` pulls `.js` into the project; `checkJs` type-checks them. A file-level `// @ts-check` enables checking even when `checkJs` is not global. `@param` / `@returns` JSDoc unlocks a surprising amount of safety without a rename yet. Aim for the same diagnostic you would want in `.ts` — then rename when the shape is stable.",
+    "Same error you want `checkJs` to surface in `.js` files. `allowJs` includes `.js` in the project; `checkJs` type-checks them. // @ts-check at the top of a file enables checking even without `checkJs` globally. JSDoc @param/@returns is enough to unlock many migrations without a rename yet. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `// @ts-check
 /** @param {number} n */

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 15,
   summary:
-    "An un-awaited promise is a lost rejection and, since Node 15, a crashed process. How the checker and the linter find them, and what `void` is for.",
+    "An un-awaited promise is a lost rejection — and on modern Node, a crashed process. Know what `void` is for.",
   prerequisites: ["void-returning-callbacks", "async-await-typing"],
   keywords: [
     "floating promise",
@@ -16,9 +16,9 @@ export const lesson: Lesson = {
     "unhandled rejection",
   ],
   problem:
-    "Forgetting one await turns an error path into an unhandled rejection that takes the whole process down. Forgotten await is a process-level hazard in modern Node.",
+    "A background `write()` is kicked off without `await` or `.catch`. When the disk fills, the rejection becomes unhandled and — since Node 15's default — can take the whole process down. The failure mode is not a type error TypeScript reports by itself; it is an availability incident caused by a floating promise nobody owned.",
   solution:
-    "`Promise<void>` is not a string — and floating calls need discipline. TypeScript itself does not error on floating promises; @typescript-eslint/no-floating-promises does. `void` promise is the intentional escape hatch those rules recognize. Prefer await in async functions; only `void` when the rejection is handled elsewhere.",
+    "Prefer `await` inside `async` functions so rejections stay on a path you handle. TypeScript will not always error on floating promises; `@typescript-eslint/no-floating-promises` will. Use the `void` operator only as the intentional escape hatch those rules recognize when something else handles the rejection. The TypeScript pane also reminds you that `Promise<void>` is not assignable to `string` — fire-and-forget is about ownership, not about pretending a promise is a value.",
   js: {
     code: `// JS: fire-and-forget is easy — and rejects crash Node.
 async function write(path, data) {
@@ -27,7 +27,7 @@ async function write(path, data) {
 write("/tmp/x", "hi"); // floating — rejection may be unhandled
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "Forgotten await is a process-level hazard in modern Node.",
+    caption: "A forgotten `await` is a process-level hazard on modern Node.",
   },
   ts: {
     code: `async function write(_path: string, _data: string): Promise<void> {
@@ -48,7 +48,7 @@ const wrong: string = p;
 `,
     highlights: [{ start: 15, end: 15 }],
     caption:
-      "`Promise<void>` is not a string — and floating calls need discipline.",
+      "`Promise<void>` is not a string — and floating calls need an owner.",
     expectedDiagnostics: [
       {
         code: 2322,

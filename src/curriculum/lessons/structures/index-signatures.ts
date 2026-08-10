@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "type-aliases-intro"],
   keywords: ["index signature", "Record", "dictionary", "open shape", "key"],
   problem:
-    "An index signature says every key exists, so a typo'd lookup type-checks and returns `undefined`. Open string key bag with mixed values. Index signatures describe open-ended key sets.",
+    "Open string key bag with mixed values. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Index signature number forbids string values. Index signatures describe open-ended key sets. They weaken specific known keys — use carefully. Prefer `Record<K,V>` or maps for many dynamic keys.",
+    "Index signature number forbids string values. Index signatures describe open-ended key sets. They weaken specific known keys — use carefully. Prefer `Record<K,V>` or maps for many dynamic keys. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `const bag = {};
 bag[key] = value;

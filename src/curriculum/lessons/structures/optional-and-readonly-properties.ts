@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "null-and-undefined"],
   keywords: ["optional", "readonly", "?", "mutation"],
   problem:
-    "A config object gets mutated mid-request; the next handler sees a different port than the one that was validated. Mutation changes meaning for every other reference to cfg.",
+    "Mutation changes meaning for every other reference to cfg. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise.",
   solution:
-    "`readonly` blocks assignment through that property. optional (host?) means the property may be missing; read it as T | `undefined`. `readonly` is a type-level constraint — runtime code can still mutate if it cheats. Combine them: `readonly` id: string for identity fields that never change.",
+    "`readonly` blocks assignment through that property. optional (host?) means the property may be missing; read it as T | `undefined`. `readonly` is a type-level constraint — runtime code can still mutate if it cheats. Combine them: `readonly` id: string for identity fields that `never` change. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function bind(config) {
   config.port = Number(config.port);

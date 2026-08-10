@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["classes-intro", "readonly-and-immutability"],
   keywords: ["getter", "setter", "accessor", "computed property", "readonly"],
   problem:
-    "A setter that accepts a string and a getter that returns a Date is a useful API and an awkward one to type. Computed key access without relating key to value. Computed keys work with literal types and `keyof`.",
+    "Computed key access without relating key to value. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "`typeof` key ties the read to string. Not number. Computed keys work with literal types and `keyof`. Getters/setters can enforce invariants at the boundary. Prefer methods when side effects are involved.",
+    "`typeof` key ties the read to string. Computed keys work with literal types and `keyof`. Getters/setters can enforce invariants at the boundary. Prefer methods when side effects are involved. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `const key = 'id';
 obj[key] = 1;

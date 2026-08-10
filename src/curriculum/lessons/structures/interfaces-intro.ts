@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["object-type-literals"],
   keywords: ["interface", "implements", "object shape"],
   problem:
-    "Two modules invent slightly different field names for the same record; nothing forces them to agree. id vs userId — `undefined` in the database key. Interfaces describe object shapes and can be extended later.",
+    "id vs userId — `undefined` in the database key. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "The interface is the shared contract. Interfaces describe object shapes and can be extended later. They are open to declaration merging — useful for ambient libs, surprising in app code. Use interfaces for object contracts you expect to grow; prefer type for unions and mapped work.",
+    "The interface is the shared contract. Interfaces describe object shapes and can be extended later. They are open to declaration merging — useful for ambient libs, surprising in app code. Use interfaces for object contracts you expect to grow; prefer type for unions and mapped work. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function saveUser(user) {
   return user.userId + ":" + user.email;

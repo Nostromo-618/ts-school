@@ -16,9 +16,9 @@ export const lesson: Lesson = {
     "unknown",
   ],
   problem:
-    "Adding a type parameter to a published type is a breaking change unless it has a default. Box with no default element type. Default type parameters kick in when inference cannot.",
+    "Box with no default element type. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Default T=string when unargued. a.value is string, not number. Default type parameters kick in when inference cannot. Useful for option bags and empty collections. Document defaults — callers may not notice them.",
+    "Default T=string when unargued. a.value is string, not number. Default type parameters kick in when inference cannot. Useful for option bags and empty collections. Document defaults — callers may not notice them. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function box(value) { return { value }; }
 `,

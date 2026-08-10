@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["null-and-undefined"],
   keywords: ["optional chaining", "nullish coalescing", "?.", "??"],
   problem:
-    "|| treats 0 and the empty string as missing, so a default quietly overrides a legitimate value. Missing profile throws; empty email is replaced by ||. ?. short-circuits to `undefined` when the receiver is nullish.",
+    "Missing profile throws; empty email is replaced by ||. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "Optional properties are `undefined` until you chain with ?. ?. short-circuits to `undefined` when the receiver is nullish. nobody@example.com. When the types name the contract, a quiet ship becomes a red squiggle at the call site instead.",
+    "Optional properties are `undefined` until you chain with ?. short-circuits to `undefined` when the receiver is nullish, and nobody@example.com. Keep both in view when you change the API.",
   js: {
     code: `function email(user) {
   return user.profile.email || "nobody@example.com";

@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "route",
   ],
   problem:
-    "Event names built by string concatenation at runtime are opaque to the checker, so a listener for a name nobody emits is silent. `String` concatenation for event names.",
+    "`String` concatenation for event names. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "Template literal unions forbid `unknown` actions. Template literal types compose string unions. Great for event names, CSS, and routes. Keep the unions small enough to read.",
+    "Template literal unions forbid `unknown` actions. Template literal types compose string unions. Great for event names, CSS, and routes. Keep the unions small enough to read. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `function eventName(entity, action) {
   return entity + ":" + action;

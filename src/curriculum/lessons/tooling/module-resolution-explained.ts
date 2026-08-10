@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "resolution",
   ],
   problem:
-    "Cannot find module for a package that is definitely installed is nearly always a resolution-mode mismatch, not a missing dependency. Extensionless requires everywhere.",
+    'Extensionless requires everywhere. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "How an import is resolved" as a CI gate, not a personal preference.',
   solution:
-    "Illustrative API: nodenext wants ./util.js — extensionless fails the SpecFor check. `moduleResolution` bundler vs nodenext change legal specifiers. Match resolution to your runtime (Node vs bundler). Do not mix modes across packages carelessly.",
+    "Illustrative API: nodenext wants ./util.js — extensionless fails the SpecFor check. `moduleResolution` bundler vs nodenext change legal specifiers. Match resolution to your runtime (Node vs bundler). Do not mix modes across packages carelessly. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `require('./util');
 `,

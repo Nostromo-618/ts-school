@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["schema-validation-libraries", "node-builtin-modules"],
   keywords: ["process.env", "config", "environment", "validation", "12 factor"],
   problem:
-    "`process.env.FOO` is `string | undefined`, but code treats it as a definite string — or worse, calls `Number` on it and ships `NaN`. Env typing is the first boundary most services get wrong.",
+    'Passing `process.env`.PORT straight into listen. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "process.env is not a config object" names before you rename the next hundred files.',
   solution:
-    "Read env once into a validated config object. Narrow or default each variable; fail fast on missing required keys. Do not sprinkle `process.env` reads through the app. Types describe the config you validated — they do not load `.env` for you.",
+    "Require and parse. Env values are string | `undefined`, not number. Env values are string | `undefined` until you parse them. Build a typed config object at startup. Treat empty string as missing. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `const port = process.env.PORT;
 listen(port);

@@ -14,9 +14,9 @@ export const lesson: Lesson = {
   ],
   keywords: ["compiler", "binder", "checker", "program", "AST", "compiler api"],
   problem:
-    "People confuse 'it bundled' with 'it type-checked.' Transpile-only pipelines can emit JS from code that would fail `tsc`. The failure mode is a green deploy of red types.",
+    "Transpile-only pipelines skip the checker TypeScript spends time in. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Know what your toolchain runs: full `tsc`, `vue-tsc`, or transpile-only. Keep a CI typecheck gate that uses the same options as local. Emit and check can be separate processes — both need to be intentional.",
+    "Checker diagnostics exist without emit — generator/CI mode uses `noEmit`. `Program` owns `SourceFile`s; `TypeChecker` answers type questions after bind. Errors can originate in parse, bind, or check — the code number hints which family. Emit is optional: `noEmit` / transpile-only tools skip or replace the checker. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `// JS tooling often "compiles" by parsing+emitting only (esbuild/swc).
 // That pipeline has no checker stage — types are deleted, not proven.

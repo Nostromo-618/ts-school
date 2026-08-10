@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["primitive-types", "structural-typing"],
   keywords: ["object type", "properties", "optional", "nested"],
   problem:
-    "Every Node handler passes objects around, and without a shape written down the only documentation is the last person who read the code. Snake_case vs camelCase — `undefined` expiresAt math.",
+    "Snake_case vs camelCase — `undefined` expiresAt math. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "The object type names the fields callers must provide. Write the shape once at the boundary; let inference carry it inward. Optional properties use ?: — absent is not the same as present-but-`undefined` unless you configure `exactOptionalPropertyTypes`. Nested objects are just properties whose types are other object types.",
+    "The object type names the fields callers must provide. Write the shape once at the boundary; let inference carry it inward. Optional properties use ?: — absent is not the same as present-but-`undefined` unless you configure `exactOptionalPropertyTypes`. Nested objects are just properties whose types are other object types. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function createSession(input) {
   return {

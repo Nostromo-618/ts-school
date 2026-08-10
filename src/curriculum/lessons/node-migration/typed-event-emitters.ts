@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["template-literal-types-intro", "typing-http-servers"],
   keywords: ["EventEmitter", "events", "typed events", "on", "emit", "generic"],
   problem:
-    "Event emitters accept any string event name and any payload, so typos and wrong shapes compile until a listener mishandles a message at runtime. Untyped `on` / `emit` pairs are a protocol with no checker.",
+    'Emitting a partial payload while listeners assume email exists. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Typed event emitters" names before you rename the next hundred files.',
   solution:
-    "Map event names to payload types (a typed `EventMap`) so `emit` and `on` agree. Prefer discriminated payloads over optional grab-bags. The TypeScript pane should refuse a wrong event name or payload the way a schema would — before the process listens forever for the misspelled event.",
+    "Typed emit requires a full User — missing email is an error. Map event names to payload types so emit/on stay in sync. Wrap EventEmitter or use a typed emitter helper. Remove listeners with `AbortSignal` to avoid leaks. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `emitter.on("user", (u) => {
   send(u.email);

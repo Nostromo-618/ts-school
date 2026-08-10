@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["literal-types", "narrowing-with-typeof"],
   keywords: ["equality", "switch", "discriminant", "===", "null"],
   problem:
-    "Comparing against a literal proves something about the value, and JavaScript throws that proof away at the closing brace. Tagged shapes work only if every caller sets kind correctly.",
+    "Tagged shapes work only if every caller sets kind correctly. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "Equality on kind discriminates the union. circle. switch (shape.kind) does the same, often more readably for many variants. x == `null` narrows out both `null` and `undefined` in one check.",
+    "Equality on kind discriminates the union. switch (shape.kind) does the same, often more readably for many variants. x == `null` narrows out both `null` and `undefined` in one check. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `function area(shape) {
   if (shape.kind === "circle") return Math.PI * shape.radius ** 2;

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["discriminated-unions"],
   keywords: ["in operator", "narrowing", "property presence", "duck typing"],
   problem:
-    "Third-party union types rarely come with a discriminant, so branching on them needs a different proof. Runtime key check without types. `in` narrows unions when members have distinct keys.",
+    "Runtime key check without types. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "`in` narrows the true branch to Dog; the else is Cat, so bark() errors. `in` narrows unions when members have distinct keys. It still follows the prototype chain — pair with untrusted-object lessons. Prefer discriminated unions when you control the data model.",
+    "`in` narrows the true branch to Dog; the else is Cat, so bark() errors. `in` narrows unions when members have distinct keys. It still follows the prototype chain — pair with untrusted-object lessons. Prefer discriminated unions when you control the data model. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `function label(pet) {
   if ("bark" in pet) return pet.bark();

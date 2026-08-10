@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["package-json-exports-and-types"],
   keywords: ["dual package", "conditional exports", "cjs", "esm", "instanceof"],
   problem:
-    "Two copies of the same class mean `instanceof` fails between them, and TypeScript may treat the types as unrelated even when the source looks identical. Duplicate module instances break identity checks — a classic dual-package hazard when CJS and ESM graphs both load 'the same' library.",
+    'Duplicate module instances break identity checks. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "The dual-package hazard" names before you rename the next hundred files.',
   solution:
-    "Branded or duplicated copies are not interchangeable. Prefer a single module format for libraries when you can; dual publishing needs careful `exports`. Do not trust `instanceof` or singletons across duplicated copies. `@arethetypeswrong` and Node's dual-package docs spell out the hazard conditions — verify before you publish.",
+    "Branded copies are not interchangeable — like dual package instances. Prefer a single module format for libraries when possible; dual publishing needs careful exports. `instanceof` and singletons are unsafe across duplicated copies. @arethetypeswrong and Node’s dual-package docs describe the hazard conditions. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `// JS dual packages: two evaluations of the same class file.
 // instanceof across CJS/ESM copies returns false for "the same" class.

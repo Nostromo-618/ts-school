@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "typeof import",
   ],
   problem:
-    "A module mock whose signature has drifted from the real module passes every test and fails in production. Mocked module with untyped factory. Type the mocked module surface explicitly.",
+    "Mocked module with untyped factory. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Generic mockModule preserves connect's `Promise<void>`. Type the mocked module surface explicitly. Factory return values must satisfy that surface. Prefer dependency injection when mocks get heavy.",
+    "Generic mockModule preserves connect's `Promise<`void`>`. Type the mocked module surface explicitly. Factory return values must satisfy that surface. Prefer dependency injection when mocks get heavy. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `jest.mock('./db');
 `,
@@ -37,7 +37,7 @@ const p: Promise<void> = db.connect();
 const bad: number = db.connect();
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "Generic mockModule preserves connect's `Promise<void>`.",
+    caption: "Generic mockModule preserves connect's `Promise<`void`>`.",
     expectedDiagnostics: [
       {
         code: 2322,

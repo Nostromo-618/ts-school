@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["type-space-vs-value-space", "const-assertions"],
   keywords: ["typeof", "type query", "value to type", "inference", "config"],
   problem:
-    "The config object and the Config interface are maintained separately, and they diverge on the first hurried commit. Config object with no derived type. `typeof` value queries the type of a value.",
+    "Config object with no derived type. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "`typeof` + `as const` derives literal port type. `typeof` value queries the type of a value. Use it to keep config objects as the source of truth. Combine with `as const` for literal unions.",
+    "`typeof` + `as const` derives literal port type. `typeof` value queries the type of a value. Use it to keep config objects as the source of truth. Combine with `as const` for literal unions. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `const defaults = { host: 'localhost', port: 3000 };
 `,

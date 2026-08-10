@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["adding-typescript-to-an-existing-project", "tsc-cli"],
   keywords: ["tsx", "ts-node", "emit", "production", "node"],
   problem:
-    "Production runs `ts-node` (or similar) on every request; startup cost and trust in an on-the-fly compiler become the outage. Runtime should execute trusted emit, not an ad-hoc transform under load.",
+    'Runtime should execute trusted emit, not an ad-hoc transform. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Actually running the thing" names before you rename the next hundred files.',
   solution:
-    "In production: compile with `tsc` (or a bundler) and run the JavaScript output. Locally, `tsx` / `node --import tsx` are fine for DX — keep them out of prod images. Match `module` settings (`nodenext` / `bundler`) to how you actually launch Node. Catch entry mistakes before any runner ships them.",
+    "Catch entry mistakes before `any` runner ships them. Production: compile with `tsc` (or a bundler) and run the JS output. Local: tsx / node --import tsx are fine for DX; keep them out of prod images. Match module settings (nodenext/bundler) to how you actually launch Node. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `// Prod still needs plain JS (or a compiled artifact).
 function main() {
@@ -33,7 +33,7 @@ main();
 const status: number = main();
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Catch entry mistakes before any runner ships them.",
+    caption: "Catch entry mistakes before `any` runner ships them.",
     expectedDiagnostics: [{ code: 2322, line: 6, messageIncludes: "string" }],
   },
   insight: [

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro"],
   keywords: ["class", "constructor", "implements", "parameter properties"],
   problem:
-    "Factory functions return ad-hoc objects; nothing ensures two factories build the same fields. mail vs email — the classic factory typo. Public/private/protected in the constructor parameter list `declare` and assign fields.",
+    "mail vs email — the classic factory typo. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Parameter properties create typed instance fields. public/private/protected in the constructor parameter list `declare` and assign fields. implements Interface checks the instance shape; it does not change emit. Prefer plain objects + functions unless you need identity, `instanceof`, or inheritance.",
+    "Parameter properties create typed instance fields. public/`private`/`protected` in the constructor parameter list `declare` and assign fields. implements Interface checks the instance shape; it does not change emit. Prefer plain objects + functions unless you need identity, `instanceof`, or inheritance. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `function makeUser(id, email) {
   return { id, mail: email };

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-your-test-files", "assertion-functions"],
   keywords: ["assertion", "narrowing", "toBeDefined", "non-null", "expect"],
   problem:
-    "Every line after a truthiness assertion still sees the nullable type, so tests fill up with bangs. Jest expects do not narrow TypeScript types. Runtime expects do not narrow TS types unless you wrap them.",
+    "Jest expects do not narrow TypeScript types. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "Assertion functions narrow after expectDefined. id is string. Runtime expects do not narrow TS types unless you wrap them. `asserts` x is T bridges test `asserts` into control flow. Alternatively assign after a guard.",
+    "Assertion functions narrow after expectDefined. id is string. Runtime expects do not narrow TS types unless you wrap them. `asserts` x is T bridges test `asserts` into control flow. Alternatively assign after a guard. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `expect(user).toBeDefined();
 expect(user.id).toBe('1');

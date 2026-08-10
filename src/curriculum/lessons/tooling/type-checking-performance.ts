@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "profiling",
   ],
   problem:
-    "Compile times grow gradually until the editor is unusable, and by then nobody knows which change caused it. Checker cost is invisible until the editor lags. Start with `tsc` --diagnostics / --extendedDiagnostics for counts and timings.",
+    'Checker cost is invisible until the editor lags. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "When the checker gets slow" as a CI gate, not a personal preference.',
   solution:
-    "Heavy slowdowns call for generateTrace, not vibes. Start with `tsc` --diagnostics / --extendedDiagnostics for counts and timings. generateTrace + @typescript/analyze-trace finds hot files and types. Fix shared package types and giant unions before buying bigger CI machines.",
+    "Heavy slowdowns call for generateTrace, not vibes. Start with `tsc` --diagnostics / --extendedDiagnostics for counts and timings. generateTrace + @typescript/analyze-trace finds hot files and types. Fix shared package types and giant unions before buying bigger CI machines. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// JS build slowness is usually transform/bundle — profile with different tools.
 // TypeScript slowness is often checker instantiation, not emit.

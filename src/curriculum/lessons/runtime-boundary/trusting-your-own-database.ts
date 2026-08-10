@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generated-types-from-contracts", "typing-request-handlers"],
   keywords: ["database", "sql", "rows", "prisma", "kysely", "nullable"],
   problem:
-    "A migration made a column nullable and every read site still believes it cannot be `null`. Nullable columns are runtime `null` with no warning in JS. Treat query results like untrusted input: types should match the live schema, including nulls.",
+    "Nullable columns are runtime `null` with no warning in JS. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "string | `null` must be narrowed before string methods. Treat query results like untrusted input: types should match the live schema, including nulls. Regenerate row types in CI when migrations land. ORM client types help only if they track schema; raw SQL needs your own row types.",
+    "string | `null` must be narrowed before string methods. Treat query results like untrusted input: types should match the live schema, including nulls. Regenerate row types in CI when migrations land. ORM client types help only if they track schema; raw SQL needs your own row types. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `// JS: drivers return plain objects — nulls surprise you in production.
 function getUser(row) {

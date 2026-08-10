@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["exhaustiveness-checking"],
   keywords: ["void", "never", "bottom type", "return type", "throw"],
   problem:
-    "A function typed `void` can still return something, and a function that always throws is not typed `never` unless you say so. Throw vs log look the same without return types.",
+    "Throw vs log look the same without return types. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "log returns `void` — not a string. `never` means the function does not return normally. `void` means it returns no useful value — callers should not read it. Use `never` for exhaustive checks and fail-fast helpers.",
+    "log returns `void` — not a string. `never` means the function does not return normally. `void` means it returns no useful value — callers should not read it. Use `never` for exhaustive checks and fail-fast helpers. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `function fail(msg) {
   throw new Error(msg);

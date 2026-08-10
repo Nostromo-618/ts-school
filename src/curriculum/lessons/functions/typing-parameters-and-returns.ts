@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference", "primitive-types"],
   keywords: ["parameters", "return type", "function", "void"],
   problem:
-    "A helper that sometimes returns a string and sometimes returns nothing becomes a landmine for every caller. A declared string return forbids the bare return. Parameter types are the contract callers must satisfy.",
+    "A declared string return forbids the bare return. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "A declared string return forbids the bare return. Parameter types are the contract callers must satisfy. Annotate returns on public functions; let inference handle simple internals. `void` means 'ignore the return'; `undefined` as a value is a different idea.",
+    "A declared string return forbids the bare return. Parameter types are the contract callers must satisfy. Annotate returns on public functions; let inference handle simple internals. `void` means 'ignore the return'; `undefined` as a value is a different idea. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `function formatCents(cents) {
   if (cents < 0) return;

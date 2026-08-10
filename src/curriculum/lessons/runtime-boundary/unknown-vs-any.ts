@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["any-and-implicit-any"],
   keywords: ["unknown", "any", "top type", "narrowing"],
   problem:
-    "Typing inbound JSON as `any` lets every property access compile — including ones that will throw. No check that value is a string. `any` is contagious; `unknown` forces a decision at each use site.",
+    "No check that value is a string. Types erase at runtime, so a boundary annotation without a check is a claim, not a proof. Parse or validate before you trust fields — especially for JSON, HTTP, and env. Validate before field access — annotations are not runtime checks.",
   solution:
-    "`unknown` forbids property access until you narrow. `any` is contagious; `unknown` forces a decision at each use site. Narrow `unknown` with `typeof`, `Array.isArray`, or custom predicates. Library boundaries should accept `unknown` (or generics), not any.",
+    "`unknown` forbids property access until you narrow. `any` is contagious; `unknown` forces a decision at each use site. Narrow `unknown` with `typeof`, `Array.isArray`, or custom predicates. Library boundaries should accept `unknown` (or generics), not any. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function upper(value) {
   return value.toUpperCase();

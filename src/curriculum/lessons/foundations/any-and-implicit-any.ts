@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["any", "implicit any", "noImplicitAny", "escape hatch", "unsound"],
   problem:
-    "One `any` at the edge of a module silently disables checking for everything that touches it. Implicit `any` from missing annotations does the same with less honesty — the hole has no name.",
+    "No types means no argument about whether userId is a string. This is the everyday mistake that makes TypeScript feel optional until a rename or a `null` slips through. Learn the refusal here; every later track assumes you trust it. Trust the squiggle; it is cheaper than the incident.",
   solution:
-    "Turn on `noImplicitAny` and treat explicit `any` as a tracked exception. Prefer `unknown` at boundaries you have not validated yet. When a library forces `any`, wrap it — do not let it spread through your domain types.",
+    "`TS7006`: parameter 'body' implicitly has an `any` type. Explicit `any` opts out of checking for that value and everything derived from it. `noImplicitAny` (on under `strict`) forces you to notice untyped parameters instead of inventing `any` for you. Prefer `unknown` at boundaries, then narrow — `any` is an escape hatch, not a default. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `function handle(body) {
   // Trust the client: body.userId is "whatever".

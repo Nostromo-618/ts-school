@@ -18,9 +18,9 @@ export const lesson: Lesson = {
     "encoding",
   ],
   problem:
-    "Child-process output is a `Buffer` or a string depending on options, and code that always calls `.toString()` on 'the result' breaks when encoding changes. Encoding and chunk types are easy to leave implicit.",
+    'Shelling out with concatenated user input. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "Child processes, Buffers, and binary data" names before you rename the next hundred files.',
   solution:
-    "Type stdout/stderr according to the `encoding` you passed. Prefer `Buffer` when you mean bytes; decode explicitly at the boundary. Narrow exit codes and error objects instead of assuming every failure is an `Error` with `.message`. Make the option → return-type relationship visible in the types.",
+    "Prefer execFile with an args array. Without encoding, the result is not a string. Use execFile/spawn with an args array to avoid shell injection. encoding utf8 selects the string overload. Bound timeout and maxBuffer for untrusted workloads. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `const { stdout } = execSync("ls " + userInput);
 parse(stdout);

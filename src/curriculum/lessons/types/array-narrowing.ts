@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "noUncheckedIndexedAccess",
   ],
   problem:
-    "arr[0] is typed T even on an empty array, so the safest-looking line in the file is the one that throws. Assuming items[0] exists. Indexing may yield `undefined` — narrow before using methods.",
+    "Assuming items[0] exists. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "first returns string | `undefined`. Indexing may yield `undefined` — narrow before using methods. `noUncheckedIndexedAccess` makes this the default; model it even without the flag. Empty arrays are the classic production crash.",
+    "first returns string | `undefined`. Indexing may yield `undefined` — narrow before using methods. `noUncheckedIndexedAccess` makes this the default; model it even without the flag. Empty arrays are the classic production crash. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function first(items) {
   return items[0].toUpperCase();

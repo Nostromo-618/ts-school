@@ -11,16 +11,16 @@ export const lesson: Lesson = {
   prerequisites: ["unknown-vs-any", "where-types-end"],
   keywords: ["JSON.parse", "any", "unknown", "parse"],
   problem:
-    "const data = `JSON.parse`(text) silently becomes `any`, undoing strictness for the rest of the function. Missing fields crash later; parse never checked them. Treat `JSON.parse` as returning `unknown` even when the lib says `any`.",
+    "`JSON.parse` returns `any` in the default libs, so `data.missing.toFixed(2)` type-checks and still crashes at runtime. Missing fields were never checked — the annotation pretended the JSON already matched your hopes. Validate before field access — annotations are not runtime checks.",
   solution:
-    "No TypeScript error here — that's the point: `any` accepts everything — including missing. Treat `JSON.parse` as returning `unknown` even when the lib says `any`. Write a helper: function parseJson(text: string): `unknown` { return `JSON.parse`(text); }. Then validate with predicates or a schema library before use.",
+    "Treat parse results as `unknown` even when the lib says `any`: wrap `JSON.parse` in a helper that returns `unknown`, then validate with predicates or a schema library before reading fields. The TypeScript pane shows the danger of `any` — silence is not safety. Parse, don't annotate.",
   js: {
     code: `const data = JSON.parse('{"n":1}');
 data.n.toFixed(2);
 data.missing.toFixed(2);
 `,
     highlights: [{ start: 3, end: 3 }],
-    caption: "Missing fields crash later; parse never checked them.",
+    caption: "Missing fields crash later; parse `never` checked them.",
   },
   ts: {
     code: `// Default lib typing: JSON.parse → any (escape hatch).

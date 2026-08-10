@@ -21,9 +21,9 @@ export const lesson: Lesson = {
     "pipeline",
   ],
   problem:
-    "The build is fast because it `never` type-checked anything, and the only thing that did was the editor on one developer's machine. Transpile-only ≠ typechecked.",
+    'Transpile-only ≠ typechecked. Turning the flag on is painful exactly once; leaving it off means every new file reintroduces the same class of bug. Treat "Who is actually checking your types?" as a CI gate, not a personal preference.',
   solution:
-    "Dev transpile pipelines often omit typecheck — CI must not. Separate “emit JS” from “prove types” — both are required, different tools. Run `tsc` --`noEmit` (or vue-`tsc`) in CI even when Vite/esbuild build the artifacts. `isolatedModules`/`verbatimModuleSyntax` keep transpile-only tools honest about syntax.",
+    "Dev transpile pipelines often omit typecheck — CI must not. Separate “emit JS” from “prove types” — both are required, different tools. Run `tsc` --`noEmit` (or vue-`tsc`) in CI even when Vite/esbuild build the artifacts. `isolatedModules`/`verbatimModuleSyntax` keep transpile-only tools honest about syntax. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `// Fast bundlers strip TypeScript-looking syntax without proving types.
 // A broken call still ships if nothing runs tsc.
@@ -76,7 +76,8 @@ void ok;
         { id: "d", text: "Only for .d.ts" },
       ],
       answerId: "b",
-      explanation: "Bundlers optimize for emit speed; `tsc` remains the checker.",
+      explanation:
+        "Bundlers optimize for emit speed; `tsc` remains the checker.",
     },
   ],
   exercise: {

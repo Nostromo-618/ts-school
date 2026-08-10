@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "type parameter",
   ],
   problem:
-    "A cache typed with `any` is a cache that returns `any`, and every read site loses its type. Box erases the wrapped type. Generic classes keep element types on the instance.",
+    "Box erases the wrapped type. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Box<number>.value is number, not string. Generic classes keep element types on the instance. Interfaces can be generic the same way. Infer T from the constructor argument when possible.",
+    "Box<number>.value is number, not string. Generic classes keep element types on the instance. Interfaces can be generic the same way. Infer T from the constructor argument when possible. Prefer the smallest honest type that still rejects the bad input.",
   js: {
     code: `class Box { constructor(value) { this.value = value; } }
 `,

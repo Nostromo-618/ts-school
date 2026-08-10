@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "factory",
   ],
   problem:
-    "A factory that takes a class and returns instances of it cannot be typed with a plain function type. new on an `unknown` constructor. New (...) => T describes constructible values.",
+    "new on an `unknown` constructor. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "Ctor signature requires string. number fails. new (...) => T describes constructible values. (...) => T describes callables — do not confuse them. Factories that accept classes need construct signatures.",
+    "Ctor signature requires string. number fails. new (.) => T describes constructible values. (.) => T describes callables — do not confuse them. Factories that accept classes need construct signatures. Apply the same refusal at the next boundary you own.",
   js: {
     code: `function make(C, arg) { return new C(arg); }
 `,

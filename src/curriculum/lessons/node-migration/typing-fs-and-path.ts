@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["node-builtin-modules", "function-overloads"],
   keywords: ["fs", "fs/promises", "path", "Buffer", "encoding", "overload"],
   problem:
-    "Filesystem helpers take 'a path' as `any` stringly data and blow up when callers pass a `URL`, a buffer, or a relative path from the wrong cwd. Path and fs mistakes are runtime `TypeError`s with no edit-time story.",
+    'readFileSync without encoding — binary treated like text later. Migration does not change Node\'s runtime — it surfaces the unions and module edges you already had to handle. Fix the seam "fs and path" names before you rename the next hundred files.',
   solution:
-    "Prefer `fs/promises` with explicit encodings. Use `path` helpers instead of string concatenation. Type your own wrappers with `PathLike` (or a branded path type) when you need stricter contracts than the defaults. Wrong path types should fail in the editor, not in production I/O.",
+    "Overloads distinguish string vs binary. Bytes are not a string. Pass utf8 when you want string; otherwise you get binary data. Normalize user paths before joining with trusted roots. fs/promises follows the same string-vs-buffer split. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `const data = fs.readFileSync(userPath);
 handle(data.toString());

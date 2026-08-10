@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typing-mocks-and-stubs", "utility-types-tour"],
   keywords: ["Partial", "DeepPartial", "mock", "cast", "recursive"],
   problem:
-    "Mocking a client with thirty methods to test one of them means writing twenty-nine you will never call. `Partial` mock passed where full API required. Type partial mocks with `Pick`/`Partial` of the real interface.",
+    "`Partial` mock passed where full API required. A test that compiles while asserting the wrong contract is worse than no test: it freezes the bug in CI. Type the fixture and the expectation so the checker helps the assertion. Type the assertion so a wrong expectation fails compilation.",
   solution:
-    "`Pick<Api,'get'>` is not Api — missing post. Type partial mocks with `Pick`/`Partial` of the real interface. Do not cast partials to the full type. Keep tests honest about which methods are used.",
+    "`Pick<Api,'get'>` is not Api — missing post. Type partial mocks with `Pick`/`Partial` of the real interface. Do not cast partials to the full type. Keep tests honest about which methods are used. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `const api = { get: jest.fn(), post: jest.fn() };
 `,

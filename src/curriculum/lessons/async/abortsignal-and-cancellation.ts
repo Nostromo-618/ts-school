@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 12,
   summary:
-    "Threading a signal through an async call chain, typing the abort reason, and why cancellation is a parameter rather than a return value.",
+    "Thread an `AbortSignal` through async work so cancellation is a parameter — not a hope — and type the abort reason carefully.",
   prerequisites: ["async-await-typing", "typing-parameters-and-returns"],
   keywords: [
     "AbortSignal",
@@ -17,14 +17,15 @@ export const lesson: Lesson = {
     "signal",
   ],
   problem:
-    "A request that the caller no longer wants keeps running, and there is no type-level pressure to accept a signal. No cancellation plumbing. Pass `AbortSignal` into APIs that support it.",
+    "A user navigates away (or a timeout fires) and the in-flight `fetch` keeps running, updating state for a view that no longer exists. The API accepted no signal, so there was no type-level pressure to plumb cancellation. Wasted work is the mild outcome; writing to unmounted UI or racing the next request is the sharp one.",
   solution:
-    "Thread `AbortSignal` through. load returns string, not number. Pass `AbortSignal` into APIs that support it. AbortError should be handled distinctly from other failures. Cancel on timeout and on navigation away.",
+    "Accept an `AbortSignal` (from `AbortController`) and pass it into APIs that support it — `fetch`, timers you build, your own helpers. Treat abort as a distinct failure (`AbortError`) from domain errors so retries and logging stay sane. Cancel on timeout and on navigation away. The TypeScript pane shows `load` returning `string` once the signal is part of the signature — cancellation is input, not a second return channel.",
   js: {
     code: `await fetch(url);
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "No cancellation plumbing.",
+    caption:
+      "No cancellation plumbing — the request outlives the caller's interest.",
   },
   ts: {
     code: `// Ambient stand-ins — DOM AbortSignal is not in the es2022 lib set.
@@ -49,7 +50,8 @@ export async function load(
 const bad: number = await load("/", new AbortController().signal);
 `,
     highlights: [{ start: 22, end: 22 }],
-    caption: "Thread `AbortSignal` through. load returns string, not number.",
+    caption:
+      "Thread `AbortSignal` through; `load` still returns `string`, not a number.",
     expectedDiagnostics: [
       {
         code: 2322,

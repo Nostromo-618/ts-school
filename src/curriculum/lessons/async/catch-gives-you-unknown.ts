@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 5,
   summary:
-    "JavaScript lets you throw anything, so a caught value is `unknown` under useUnknownInCatchVariables. What to do with it before assuming it is an Error.",
+    "JavaScript lets you throw anything, so under `useUnknownInCatchVariables` a caught value is `unknown` until you narrow it.",
   prerequisites: ["unknown-vs-any", "async-await-typing"],
   keywords: [
     "catch",
@@ -17,14 +17,14 @@ export const lesson: Lesson = {
     "throw",
   ],
   problem:
-    "err.message on a caught value crashes with a different error whenever something threw a string. Assuming catch binding is Error. Catch bindings are `unknown` in modern TS configs.",
+    "A catch block reads `e.message` as if every throw were an `Error`. Something upstream threw a string (or a plain object), and the handler crashes with a second TypeError while trying to log the first failure. The original bug is gone; now you are debugging the logger. Assuming the catch binding is always `Error` is the fragile pattern.",
   solution:
-    "Under useUnknownInCatchVariables / `strict`, e is `unknown` — no .message. catch bindings are `unknown` in modern TS configs. Narrow with `instanceof` Error before reading message. Never type catch as `any` to silence this.",
+    "With `useUnknownInCatchVariables` (part of modern `strict` setups), `e` is `unknown` — the TypeScript pane blocks `.message` until you prove the shape. Narrow with `instanceof Error` (or a type guard) before reading fields; otherwise stringify deliberately. Do not silence this with `catch (e: any)` — that restores the crash. Treat catch as an untrusted boundary the same way you treat `JSON.parse`.",
   js: {
     code: `try { await run(); } catch (e) { log(e.message); }
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "Assuming catch binding is Error.",
+    caption: "Reading `.message` assumes every throw is an `Error`.",
   },
   ts: {
     code: `declare function run(): Promise<void>;
@@ -40,7 +40,7 @@ export async function main(): Promise<void> {
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "Under useUnknownInCatchVariables / `strict`, e is `unknown` — no .message.",
+      "Under `useUnknownInCatchVariables`, `e` is `unknown` — no `.message` yet.",
     expectedDiagnostics: [
       {
         code: 18046,

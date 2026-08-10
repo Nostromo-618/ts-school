@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["object-type-literals"],
   keywords: ["union", "|", "narrowing", "nullable"],
   problem:
-    "A function that returns a user or `null` is documented in a comment, and every caller decides for itself whether to check. `null` is a valid return; calling .name is not.",
+    "`null` is a valid return; calling .name is not. The type system is supposed to make that state unrepresentable — if it does not, callers invent ad-hoc checks and still miss a branch. Model the domain so the illegal mix cannot be constructed. Prefer a model where the illegal state cannot be written down.",
   solution:
-    "You must narrow User | `null` before reading name. A union is a value that could be any of the members — only common operations are allowed until you narrow. User | `null` is the honest return type for 'maybe found'. Narrow with equality checks, `typeof`, or predicates — do not assert the danger away.",
+    "You must narrow User | `null` before reading name. A union is a value that could be `any` of the members — only common operations are allowed until you narrow. User | `null` is the honest return type for 'maybe found'. Narrow with equality checks, `typeof`, or predicates — do not assert the danger away. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `function findUser(id) {
   if (id === "missing") return null;

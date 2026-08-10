@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["unique-symbol", "intersection-types"],
   keywords: ["branded type", "nominal", "opaque", "UserId", "unique symbol"],
   problem:
-    "Every id in the system is a string, so passing an order id where a user id was expected is a type-correct data breach. Structural string identity cannot tell user from order.",
+    "Structural string identity cannot tell user from order. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "Brands make swapped ids a type error. Branding is an intersection with a unique phantom property — erased at runtime, nominal at compile time. Only trusted constructors (or assertions) should mint brands; a bare `as UserId` anywhere reopens the hole. unique symbol brands are stronger than string-literal brand keys that can collide across packages.",
+    "Brands make swapped ids a type error. Branding is an intersection with a unique phantom property — erased at runtime, nominal at compile time. Only trusted constructors (or assertions) should mint brands; a bare `as UserId` anywhere reopens the hole. unique symbol brands are stronger than string-literal brand keys that can collide across packages. Make the impossible state unrepresentable, then move on.",
   js: {
     code: `// JS: ids are strings — mix them freely.
 function refund(orderId, userId) {

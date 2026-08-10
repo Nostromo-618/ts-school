@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["type-aliases-intro", "conditional-types-intro"],
   keywords: ["recursive type", "json", "tree", "self reference", "lazy"],
   problem:
-    "JSON has no fixed shape, so the honest type for it is recursive and most codebases substitute `any` instead. Without a recursive type, nested JSON is unchecked hope.",
+    "Without a recursive type, nested JSON is unchecked hope. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "A recursive alias names the real JSON grammar. Type aliases may refer to themselves; interfaces may too via property types. The checker expands recursion lazily — it does not unfold infinitely at definition time. Prefer Json over `any` at boundaries; pair with a runtime parse that enforces the same grammar.",
+    "A recursive alias names the real JSON grammar. Type aliases may refer to themselves; interfaces may too via property types. The checker expands recursion lazily — it does not unfold infinitely at definition time. Prefer Json over `any` at boundaries; pair with a runtime parse that enforces the same grammar. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `// JS: JSON is "whatever" — any nested object or array.
 function readConfig(raw) {

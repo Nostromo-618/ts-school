@@ -17,9 +17,9 @@ export const lesson: Lesson = {
     "assignability",
   ],
   problem:
-    "Passing { timeout: 100 } errors on a typo'd key, and hoisting it to a variable makes the error disappear without fixing anything. Extra fields slide through. Excess property checks apply to fresh object literals.",
+    "Extra fields slide through. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Fresh literals get excess property checks; variables can widen past them. Excess property checks apply to fresh object literals. Assigning through a variable bypasses them — beware. Use `satisfies` or exact types when extras must be rejected.",
+    "Fresh literals get excess property checks; variables can widen past them. Excess property checks apply to fresh object literals. Assigning through a variable bypasses them — beware. Use `satisfies` or exact types when extras must be rejected. Do not silence the diagnostic without restoring the shape.",
   js: {
     code: `paint({ colour: 'red', gloss: true });
 `,

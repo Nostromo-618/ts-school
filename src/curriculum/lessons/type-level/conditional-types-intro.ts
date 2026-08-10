@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["generic-constraints", "utility-types-tour"],
   keywords: ["conditional type", "extends", "branch", "ternary", "generic"],
   problem:
-    "A function whose return type depends on an argument's type needs either three overloads or one conditional type. Runtime `typeof` checks only. T extends U ? X : Y branches in the type system.",
+    "Runtime `typeof` checks only. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "Conditional type yields false for number — true is not assignable. T extends U ? X : Y branches in the type system. They power many library utilities. Distribute over naked type parameters — learn that next.",
+    "Conditional type yields false for number — true is not assignable. T extends U ? X : Y branches in the type system. They power many library utilities. Distribute over naked type parameters — learn that next. The dual panes are the lesson: left fails, right refuses.",
   js: {
     code: `function unwrap(x) { return x; }
 `,

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["declaration-merging", "esm-imports-and-exports"],
   keywords: ["namespace", "module", "legacy", "declare", "DefinitelyTyped"],
   problem:
-    "Half of DefinitelyTyped predates ES modules, so consuming it means understanding a module system you would never choose. Iife/global namespaces in old scripts. Namespaces are legacy — use ES modules for new code.",
+    "Iife/global namespaces in old scripts. Object and class APIs leak through optional fields, mutable shared state, or signatures that do not match how instances are actually used. Tighten the shape so consumers cannot rely on properties you `never` meant to promise. Consumers will depend on whatever the type allows, including accidents.",
   solution:
-    "Prefer ES modules; namespaces still type. greet returns string. Namespaces are legacy — use ES modules for new code. They still appear in older DefinitelyTyped patterns. Migrate outward-in: leave namespace wrappers until the end.",
+    "Prefer ES modules; namespaces still type. greet returns string. Namespaces are legacy — use ES modules for new code. They still appear in older DefinitelyTyped patterns. Migrate outward-in: leave namespace wrappers until the end. Public APIs first; loosen only where you can name the tradeoff.",
   js: {
     code: `var App = App || {};
 App.util = {};

@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["typeof-type-queries", "const-assertions"],
   keywords: ["satisfies", "validation", "inference", "literals", "config"],
   problem:
-    "Annotating a config as a wide `Record` loses the literal keys you wanted for autocomplete. Palette validated only by convention. `satisfies` checks against a type without widening to it.",
+    "Palette validated only by convention. A type-level transform that widens or distributes incorrectly will type-check while describing the wrong value. Read the conditional or mapped type the way you would read a function — inputs, outputs, and failure cases. Hover the resulting type; if it widened, the transform is wrong.",
   solution:
-    "`satisfies` checks the value while preserving literals. danger is not number. Preserves literal inference for keys/values. Prefer it over as when you want both check and inference.",
+    "`satisfies` checks the value while preserving literals. danger is not number. `satisfies` checks against a type without widening to it. Preserves literal inference for keys/values. Prefer it over as when you want both check and inference. Let inference work locally; annotate what crosses modules.",
   js: {
     code: `const palette = { primary: "#0af", danger: "red" };
 `,

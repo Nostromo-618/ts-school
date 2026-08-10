@@ -11,9 +11,9 @@ export const lesson: Lesson = {
   prerequisites: ["function-type-expressions"],
   keywords: ["this", "noImplicitThis", "receiver", "bind", "arrow function"],
   problem:
-    "A method pulled off an object and passed as a callback loses its receiver, and JavaScript reports it as `undefined` is not a function. Relying on dynamic this without binding.",
+    "Relying on dynamic this without binding. Shared helpers amplify the hole: wrong arguments, erased returns, or forgotten type relationships spread to every caller. Callers copy the signature they see — if it lies, the lie spreads.",
   solution:
-    "this: Entity requires a proper receiver. Bare call errors. The this parameter is erased and only types the receiver. Methods on objects usually get this from the containing type. Prefer arrows or explicit args when this is confusing.",
+    "this: Entity requires a proper receiver. Bare call errors. The this parameter is erased and only types the receiver. Methods on objects usually get this from the containing type. Prefer arrows or explicit args when this is confusing. Keep escapes rare — and comment the lie when you need one.",
   js: {
     code: `function label() { return this.id; }
 label(); // boom
