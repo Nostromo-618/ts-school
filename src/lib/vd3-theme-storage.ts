@@ -6,23 +6,27 @@
  * adds a configurable prefix, this module remaps those keys to `ts-school-`
  * by wrapping `Storage.prototype` get/set/remove for `localStorage` only.
  *
+ * Remapping rule (prefix, not a fixed key list):
+ *   any key starting with `vanduo-` ↔ `ts-school-` + remainder
+ *   e.g. `vanduo-foo` ↔ `ts-school-foo`
+ *
  * Call `installVd3ThemeStoragePrefix()` once on the client **before**
  * `useThemePreference()` hydrates (see `main.ts` and Vitest setup). Migration
- * copies any existing `vanduo-*` theme values to `ts-school-*` and deletes the
+ * copies any existing `vanduo-*` values to `ts-school-*` and deletes the
  * legacy keys so this site stops writing `vanduo-*`.
  *
- * Survives vd3 upgrades that keep calling `vanduo-*` key names: the wrapper
- * stays in app code. If vd3 later adds an official prefix option, prefer that
- * and retire this shim.
+ * Survives vd3 upgrades that keep calling `vanduo-*` key names (including
+ * new keys): the wrapper stays in app code. If vd3 later adds an official
+ * prefix option, prefer that and retire this shim.
  */
 
 export const VD3_LEGACY_STORAGE_PREFIX = "vanduo-" as const;
 export const VD3_SITE_STORAGE_PREFIX = "ts-school-" as const;
 
 /**
- * Suffixes of the six keys vd3 persists today (`useTheme` STORAGE_KEYS).
- * Remap is suffix-scoped so unrelated future `vanduo-*` keys (if any) are
- * untouched; extend this list if vd3 adds theme storage keys.
+ * Known suffixes vd3 persists today (`useTheme` STORAGE_KEYS). Kept for
+ * Profile inventory / export labels; remapping itself is prefix-based and
+ * does not depend on this list.
  */
 export const VD3_THEME_KEY_SUFFIXES = [
   "theme-preference",
@@ -53,13 +57,34 @@ export const LEGACY_VD3_THEME_KEYS = [
   "vanduo-font-preference",
 ] as const;
 
-const LEGACY_THEME_KEY_SET: ReadonlySet<string> = new Set(LEGACY_VD3_THEME_KEYS);
+/**
+ * App keys that share the `ts-school-` prefix with remapped vd3 prefs.
+ * Theme clear must leave these alone (see `SCHOOL_STORAGE_KEYS` in
+ * `data-hygiene.ts`).
+ */
+export const VD3_SITE_PREFIX_PROTECTED_KEYS = [
+  "ts-school-progress",
+  "ts-school-notes",
+  "ts-school-notes-pinned",
+  "ts-school-notes-pin-side",
+  "ts-school-toc-accepted",
+  "ts-school-ai-risk-accepted",
+  "ts-school-ai-chat-pinned",
+] as const;
 
+const SITE_PREFIX_PROTECTED_SET: ReadonlySet<string> = new Set(
+  VD3_SITE_PREFIX_PROTECTED_KEYS,
+);
+
+/** True when `key` is a vd3-style legacy key (`vanduo-…`). */
 export function isVd3LegacyThemeKey(key: string): boolean {
-  return LEGACY_THEME_KEY_SET.has(key);
+  return key.startsWith(VD3_LEGACY_STORAGE_PREFIX);
 }
 
-/** Map a vd3 legacy key to the site key; other keys pass through. */
+/**
+ * Map a vd3 legacy key to the site key.
+ * Rule: `vanduo-` + rest → `ts-school-` + rest; other keys pass through.
+ */
 export function remapVd3ThemeStorageKey(key: string): string {
   if (!isVd3LegacyThemeKey(key)) return key;
   return `${VD3_SITE_STORAGE_PREFIX}${key.slice(VD3_LEGACY_STORAGE_PREFIX.length)}`;
@@ -68,21 +93,34 @@ export function remapVd3ThemeStorageKey(key: string): string {
 type StorageGetItem = (this: Storage, key: string) => string | null;
 type StorageSetItem = (this: Storage, key: string, value: string) => void;
 type StorageRemoveItem = (this: Storage, key: string) => void;
+type StorageKey = (this: Storage, index: number) => string | null;
 
 interface RawLocalStorageFns {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
+  keys: () => string[];
 }
 
 let rawLocalStorage: RawLocalStorageFns | null = null;
 let installed = false;
+
+function listStorageKeys(storage: Storage, keyFn: StorageKey): string[] {
+  const out: string[] = [];
+  const len = storage.length;
+  for (let i = 0; i < len; i += 1) {
+    const key = keyFn.call(storage, i);
+    if (key) out.push(key);
+  }
+  return out;
+}
 
 function bindRawLocalStorage(
   storage: Storage,
   getItem: StorageGetItem,
   setItem: StorageSetItem,
   removeItem: StorageRemoveItem,
+  keyFn: StorageKey,
 ): RawLocalStorageFns {
   return {
     getItem: (key) => getItem.call(storage, key),
@@ -92,18 +130,25 @@ function bindRawLocalStorage(
     removeItem: (key) => {
       removeItem.call(storage, key);
     },
+    keys: () => listStorageKeys(storage, keyFn),
   };
 }
 
 /**
- * One-shot migrate: copy `vanduo-*` theme values → `ts-school-*` when the
+ * One-shot migrate: copy every `vanduo-*` value → `ts-school-*` when the
  * site key is absent, then remove the legacy keys.
  */
 export function migrateVd3ThemeStorageKeys(
   raw: RawLocalStorageFns | null = rawLocalStorage,
 ): void {
   if (!raw) return;
-  for (const legacyKey of LEGACY_VD3_THEME_KEYS) {
+  let legacyKeys: string[];
+  try {
+    legacyKeys = raw.keys().filter(isVd3LegacyThemeKey);
+  } catch {
+    return;
+  }
+  for (const legacyKey of legacyKeys) {
     let legacyValue: string | null;
     try {
       legacyValue = raw.getItem(legacyKey);
@@ -123,7 +168,10 @@ export function migrateVd3ThemeStorageKeys(
   }
 }
 
-/** Remove site + leftover legacy vd3 theme keys (bypasses the remap wrapper). */
+/**
+ * Remove remapped theme keys + any leftover `vanduo-*` (bypasses the remap
+ * wrapper). Leaves school-owned `ts-school-*` keys untouched.
+ */
 export function clearVd3ThemeStorageKeys(
   raw: RawLocalStorageFns | null = rawLocalStorage,
 ): void {
@@ -138,8 +186,33 @@ export function clearVd3ThemeStorageKeys(
       /* ignore */
     }
   };
+
+  let keys: string[] = [];
+  try {
+    if (raw) {
+      keys = raw.keys();
+    } else if (typeof window !== "undefined") {
+      keys = listStorageKeys(window.localStorage, Storage.prototype.key);
+    }
+  } catch {
+    keys = [];
+  }
+
+  // Always clear the known inventory keys even if enumeration fails.
   for (const key of VD3_THEME_KEYS) remove(key);
-  for (const key of LEGACY_VD3_THEME_KEYS) remove(key);
+
+  for (const key of keys) {
+    if (isVd3LegacyThemeKey(key)) {
+      remove(key);
+      continue;
+    }
+    if (
+      key.startsWith(VD3_SITE_STORAGE_PREFIX) &&
+      !SITE_PREFIX_PROTECTED_SET.has(key)
+    ) {
+      remove(key);
+    }
+  }
 }
 
 /**
@@ -155,12 +228,14 @@ export function installVd3ThemeStoragePrefix(): void {
   const nativeGetItem = proto.getItem;
   const nativeSetItem = proto.setItem;
   const nativeRemoveItem = proto.removeItem;
+  const nativeKey = proto.key;
 
   rawLocalStorage = bindRawLocalStorage(
     window.localStorage,
     nativeGetItem,
     nativeSetItem,
     nativeRemoveItem,
+    nativeKey,
   );
 
   migrateVd3ThemeStorageKeys(rawLocalStorage);
