@@ -18,6 +18,11 @@ test.describe("AI risk gate", () => {
     await page.getByTestId("ai-risk-accept").click();
     await expect(page.getByTestId("ai-risk-gate")).toHaveCount(0);
     await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
+    // First successful open after accept auto-pins when preference is unset.
+    await expect(page.getByTestId("ts-ai-sidebar")).toHaveAttribute(
+      "data-pinned",
+      "true",
+    );
   });
 
   test("stale AI risk version forces re-consent", async ({ page }) => {

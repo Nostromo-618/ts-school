@@ -89,9 +89,8 @@ test.describe("navbar mid-width layout", () => {
     );
     await page.setViewportSize({ width: 1100, height: 800 });
     await page.goto("/");
-    // Pinning AI docks the pane and shrinks the fixed navbar.
+    // First Ask open auto-pins and docks the pane (shrinks the fixed navbar).
     await page.getByTestId("ts-open-ai-chat").click();
-    await page.getByTestId("ts-ai-pin").click();
     await expect(page.locator(".ts-app-shell.is-ai-chat-pinned")).toBeVisible();
 
     const track = page.getByTestId("ts-navbar-links-track");

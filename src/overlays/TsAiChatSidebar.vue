@@ -422,6 +422,7 @@ onBeforeUnmount(() => {
         variant="ghost"
         size="sm"
         aria-label="Close assistant"
+        data-testid="ts-ai-close"
         @click="emit('close')"
       >
         Close
