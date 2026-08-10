@@ -170,6 +170,8 @@ export default [
     ignores: [
       'dist/**',
       'node_modules/**',
+      // CI clones Labs engines here for the file: dependency; never lint it.
+      '.ci-labs/**',
       'playwright-report/**',
       'test-results/**',
       'coverage/**',
