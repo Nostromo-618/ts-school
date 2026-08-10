@@ -122,6 +122,7 @@ const emit = defineEmits<{
 
 .ts-diagnostics-message {
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
   font-size: 0.875rem;
   min-width: 0;
 }

@@ -76,9 +76,17 @@
 .vd-doc-search-results,
 .vd-doc-search-shortcut,
 .vd-doc-search-footer kbd,
-.vd-code-editor,
 .vd-code-editor-copy {
   border-width: var(--vd-border-width);
+}
+
+/*
+ * Code editor keeps the package's 1px border: its absolute highlight/input
+ * layers and gutter hairline are measured against that width. Forcing 2px
+ * here shrinks the content box and fights the gutter rule.
+ */
+.vd-code-editor {
+  border-width: 1px;
 }
 
 /* App/lesson chrome that draws a full outline box (not hairline dividers). */
@@ -97,10 +105,14 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  /* Document is the lesson scroll root — do not trap overflow on the shell. */
+  overflow-x: clip;
+  overflow-y: auto;
 }
 
 #main-content {
   min-height: 100vh;
+  overflow: visible;
 }
 
 /* Keyboard-only escape hatch past the (forthcoming) navbar and sidebar.
@@ -392,9 +404,29 @@ body {
 /* Dual-pane lesson geometry — layout only; editors are styled by vd3-cbun. */
 .ts-dual-pane-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--vd-space-fib-13, 1.3125rem);
-  align-items: start;
+  /* Stretch so the shorter JS column does not leave a dead white void beside
+     diagnostics (reads as a mid-page clip when the fold cuts the TS pane). */
+  align-items: stretch;
+  min-width: 0;
+}
+
+.ts-dual-pane,
+.ts-dual-pane-grid > .ts-pane {
+  min-width: 0;
+}
+
+/*
+ * Package textarea uses overflow:auto. That creates a scrollport which can
+ * swallow wheel/trackpad scrolling even when content fits vertically — the
+ * lesson then feels stuck with the diagnostic clipped at the viewport fold.
+ * Keep horizontal pan for long pre lines; let vertical gestures scroll the page.
+ */
+.ts-dual-pane .vd-code-editor-input,
+.ts-exercise .vd-code-editor-input {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .ts-pane-header {
@@ -874,6 +906,12 @@ body {
   padding-bottom: var(--vd-space-fib-34, 3.4375rem);
 }
 
+/* Flex/grid children default to min-width:auto and can refuse to shrink, which
+   clips dual-pane + diagnostics when DevTools narrows the viewport. */
+.ts-lesson-frame .vd-row > [class*="vd-col-"] {
+  min-width: 0;
+}
+
 .ts-sidebar {
   display: flex;
   flex-direction: column;
@@ -935,6 +973,9 @@ body {
    its own overflow, so a 30-lesson tier never pushes the footer down. */
 @media (width >= 992px) {
   .ts-sidebar {
+    /* Flex stretch would make the sticky box as tall as the lesson column,
+       leaving no sticky range and fighting document scroll. */
+    align-self: start;
     position: sticky;
     top: calc(var(--vd-navbar-height, 3.4375rem) + 1rem);
     max-height: calc(100vh - var(--vd-navbar-height, 3.4375rem) - 2rem);
@@ -947,6 +988,7 @@ body {
   .ts-sidebar-nav {
     display: block;
     overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }
 
