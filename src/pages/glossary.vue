@@ -56,17 +56,6 @@ const lessonsFor = (ids: readonly string[]) =>
     </header>
 
     <div class="ts-filter-bar">
-      <label class="ts-filter-search">
-        <span class="vd-visually-hidden">Search the glossary</span>
-        <VdIcon name="magnifying-glass" size="sm" />
-        <VdInput
-          v-model="query"
-          type="search"
-          placeholder="Search terms and definitions…"
-          autocomplete="off"
-        />
-      </label>
-
       <div role="group" aria-label="Filter by tier">
         <button
           v-for="option in filters"
@@ -80,6 +69,17 @@ const lessonsFor = (ids: readonly string[]) =>
           {{ option.label }}
         </button>
       </div>
+
+      <label class="ts-filter-search">
+        <span class="vd-visually-hidden">Search the glossary</span>
+        <VdIcon name="magnifying-glass" size="sm" />
+        <VdInput
+          v-model="query"
+          type="search"
+          placeholder="Search terms and definitions…"
+          autocomplete="off"
+        />
+      </label>
     </div>
 
     <p class="vd-text-muted vd-text-sm" role="status">

@@ -96,17 +96,28 @@ body {
   gap: var(--vd-space-fib-3, 0.3125rem);
 }
 
+/* Full-width row under tier chips so long placeholders never clip. */
 .ts-filter-search {
   display: flex;
-  flex: 1 1 24rem;
-  min-width: min(100%, 20rem);
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 100%;
   max-width: 100%;
   align-items: center;
   gap: var(--vd-space-fib-3, 0.3125rem);
 }
 
+/* VdInput wraps <input class="vd-input"> in .vd-form-group > .vd-input-group;
+   stretch those wrappers — sizing only .vd-input leaves the default ~20ch input. */
+.ts-filter-search .vd-form-group,
+.ts-filter-search .vd-input-group {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
 .ts-filter-search .vd-input {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
   width: 100%;
 }
