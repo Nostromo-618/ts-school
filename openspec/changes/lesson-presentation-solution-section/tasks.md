@@ -50,7 +50,7 @@
 ## 9. Archive readiness
 
 - [x] 9.1 Confirm every lesson has substantive `problem` + `solution` and LessonPage order matches specs
-- [ ] 9.2 Final local commit for leftover fixes (no push); note residual gaps in tasks if any
+- [x] 9.2 Final local commit for leftover fixes (no push); note residual gaps in tasks if any (`216adb5`)
 
 ### Residual gaps (polish, not blockers)
 
