@@ -44,8 +44,8 @@ import {
       <a href="/LICENSE" rel="noopener">MIT</a>
       ·
       <a href="/THIRD-PARTY-NOTICES.md" rel="noopener">Third-party notices</a>
-      . Opening the Ask assistant requires a separate AI risk acceptance (local
-      model, hallucinations, and edit Confirm).
+      . Ask assistant risks (local model, hallucinations, edit Accept) are part
+      of these same terms — there is no second gate.
     </p>
   </section>
 </template>

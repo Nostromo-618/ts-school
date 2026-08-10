@@ -94,11 +94,9 @@ async function scoreLive(scorers) {
     scorers;
   const { chromium } = await import("@playwright/test");
   // Avoid dynamic TS import of disclaimer (can hang under strip-types).
-  // Keep in sync with src/content/disclaimer.ts + src/content/ai-disclaimer.ts.
+  // Keep in sync with src/content/disclaimer.ts TOC_VERSION / TOC_STORAGE_KEY.
   const TOC_STORAGE_KEY = "ts-school-toc-accepted";
-  const TOC_VERSION = "2";
-  const AI_RISK_STORAGE_KEY = "ts-school-ai-risk-accepted";
-  const AI_RISK_VERSION = "1";
+  const TOC_VERSION = "3";
 
   const base = (process.env.SCHOOL_COMPARE_BASE_URL || "http://localhost:5173").replace(
     /\/$/,
@@ -138,25 +136,19 @@ async function scoreLive(scorers) {
 
       const page = await browser.newPage();
       page.setDefaultTimeout(15 * 60 * 1000);
-      // Seed both gates so Ask opens: site ToC + AI risk acceptance.
+      // Seed site ToC so Ask opens without the disclaimer gate.
       await page.addInitScript(
-        ({ tocKey, tocVersion, aiKey, aiVersion }) => {
+        ({ tocKey, tocVersion }) => {
           const now = new Date().toISOString();
           localStorage.setItem(
             tocKey,
             JSON.stringify({ version: tocVersion, acceptedAt: now }),
-          );
-          localStorage.setItem(
-            aiKey,
-            JSON.stringify({ version: aiVersion, acceptedAt: now }),
           );
           sessionStorage.removeItem("ts-school-toc-declined");
         },
         {
           tocKey: TOC_STORAGE_KEY,
           tocVersion: TOC_VERSION,
-          aiKey: AI_RISK_STORAGE_KEY,
-          aiVersion: AI_RISK_VERSION,
         },
       );
 

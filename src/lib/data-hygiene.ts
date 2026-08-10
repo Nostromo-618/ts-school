@@ -7,7 +7,7 @@
  * disclose that honestly.
  */
 
-import { AI_RISK_STORAGE_KEY, AI_RISK_VERSION } from "@/content/ai-disclaimer";
+import { AI_RISK_STORAGE_KEY } from "@/content/ai-disclaimer";
 import { TOC_STORAGE_KEY, TOC_VERSION } from "@/content/disclaimer";
 import {
   PROGRESS_SCHEMA_VERSION,
@@ -150,7 +150,7 @@ export function buildLocalDataInventory(): LocalDataInventoryItem[] {
       key: AI_RISK_STORAGE_KEY,
       present: safeGetItem(AI_RISK_STORAGE_KEY) !== null,
       group: "school",
-      label: `AI risk acceptance (v${AI_RISK_VERSION})`,
+      label: "Legacy AI risk acceptance",
     },
     {
       key: AI_CHAT_PINNED_KEY,
@@ -365,5 +365,4 @@ export const hygieneSchema = {
   progressVersion: PROGRESS_SCHEMA_VERSION,
   notesVersion: NOTES_SCHEMA_VERSION,
   tocVersion: TOC_VERSION,
-  aiRiskVersion: AI_RISK_VERSION,
 } as const;

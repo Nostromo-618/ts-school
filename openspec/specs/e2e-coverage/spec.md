@@ -126,13 +126,13 @@ Key pages MUST have committed Chromium Desktop screenshot baselines, and
   history
 - **THEN** each capture MUST match the committed baseline snapshot
 
-### Requirement: Critical-path e2e covers AI risk, XSS markdown, and edit Accept/Reject
+### Requirement: Critical-path e2e covers Ask open, XSS markdown, and edit Accept/Reject
 
-Playwright MUST cover: AI risk modal accept/decline/version re-consent; adversarial assistant markdown that does not execute scripts or navigate via `javascript:`; and pending AI edit Accept/Reject (DOM-injected or mocked pending edit is acceptable).
+Playwright MUST cover: opening Ask without a separate AI risk modal once site ToC is accepted; adversarial assistant markdown that does not execute scripts or navigate via `javascript:`; and pending AI edit Accept/Reject (DOM-injected or mocked pending edit is acceptable).
 
-#### Scenario: AI risk decline closes chat
-- **WHEN** a learner opens Ask without AI risk acceptance and declines
-- **THEN** the chat sidebar closes and remains locked
+#### Scenario: Ask opens without AI risk gate
+- **WHEN** a learner who accepted the current site ToC opens Ask
+- **THEN** the chat sidebar opens and no AI risk modal is shown
 
 #### Scenario: Adversarial markdown is inert
 - **WHEN** an assistant bubble is rendered from adversarial markdown containing script tags or `javascript:` links
@@ -140,7 +140,7 @@ Playwright MUST cover: AI risk modal accept/decline/version re-consent; adversar
 
 ### Requirement: Axe smoke includes glossary, about, terms, farewell, and open overlays
 
-Axe serious/critical smoke MUST include `/glossary`, `/about`, `/terms`, `/farewell`, the disclaimer gate while visible, and the AI risk modal while visible (color-contrast may remain disabled with documented vd3 limitation).
+Axe serious/critical smoke MUST include `/glossary`, `/about`, `/terms`, `/farewell`, and the disclaimer gate while visible (color-contrast may remain disabled with documented vd3 limitation).
 
 #### Scenario: Additional routes in axe
 - **WHEN** the a11y e2e suite runs

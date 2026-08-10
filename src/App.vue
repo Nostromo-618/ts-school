@@ -14,9 +14,7 @@ import SchoolFooter from "@/layout/SchoolFooter.vue";
 import SchoolLayout from "@/layout/SchoolLayout.vue";
 import GlobalSearchModal from "@/overlays/GlobalSearchModal.vue";
 import DisclaimerGate from "@/overlays/DisclaimerGate.vue";
-import AiRiskGate from "@/overlays/AiRiskGate.vue";
 import { useDisclaimerConsent } from "@/composables/useDisclaimerConsent";
-import { useAiRiskConsent } from "@/composables/useAiRiskConsent";
 import { useAiChatStore } from "@/stores/aiChat";
 import { useNotesStore } from "@/stores/notes";
 import { useProgressStore } from "@/stores/progress";
@@ -37,13 +35,6 @@ const notes = useNotesStore();
 const aiChat = useAiChatStore();
 const { showGate, showFarewell, accept, decline, refresh } =
   useDisclaimerConsent();
-const {
-  showGate: showAiRiskGate,
-  refresh: refreshAiRisk,
-  requestOpen: requestAiRiskOpen,
-  accept: acceptAiRiskConsent,
-  decline: declineAiRiskConsent,
-} = useAiRiskConsent();
 
 // ── Per-route SEO (baked into the prerendered HTML via @unhead) ──────
 const BRAND_TITLE = "TypeScript School";
@@ -99,25 +90,12 @@ function onAccept(): void {
   accept();
 }
 
-function tryOpenAiChat(): void {
-  if (requestAiRiskOpen()) {
-    aiChat.openChat();
-  }
+function openAiChat(): void {
+  aiChat.openChat();
 }
 
 function openNotes(): void {
   notes.openNotes();
-}
-
-function onAiRiskAccept(): void {
-  acceptAiRiskConsent();
-  aiChat.openChat();
-}
-
-function onAiRiskDecline(): void {
-  declineAiRiskConsent();
-  aiChat.pendingOpenAfterRisk = false;
-  if (aiChat.open) aiChat.closeChat();
 }
 
 onMounted(() => {
@@ -130,15 +108,13 @@ onMounted(() => {
   notes.hydrate();
   aiChat.hydrate();
   refresh();
-  refreshAiRisk();
   if (showFarewell.value) goFarewell();
-  if (aiChat.pendingOpenAfterRisk) tryOpenAiChat();
-  window.addEventListener("ts:open-ai-chat", tryOpenAiChat);
+  window.addEventListener("ts:open-ai-chat", openAiChat);
   window.addEventListener("ts:open-notes", openNotes);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("ts:open-ai-chat", tryOpenAiChat);
+  window.removeEventListener("ts:open-ai-chat", openAiChat);
   window.removeEventListener("ts:open-notes", openNotes);
 });
 
@@ -198,10 +174,5 @@ watch(showFarewell, (declined) => {
     </main>
 
     <DisclaimerGate v-if="showGate" @accept="onAccept" @decline="onDecline" />
-    <AiRiskGate
-      v-if="showAiRiskGate && !showGate"
-      @accept="onAiRiskAccept"
-      @decline="onAiRiskDecline"
-    />
   </div>
 </template>

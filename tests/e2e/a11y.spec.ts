@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, FIXTURE_LESSON, test } from "./fixtures";
+import { expect, FIXTURE_LESSON, TOC_VERSION, test } from "./fixtures";
 
 const routes = [
   { name: "home", path: "/" },
@@ -45,9 +45,9 @@ test.describe("a11y farewell", () => {
   test("farewell has no serious or critical axe violations", async ({
     page,
   }) => {
-    await page.addInitScript(() => {
-      sessionStorage.setItem("ts-school-toc-declined", "2");
-    });
+    await page.addInitScript((version) => {
+      sessionStorage.setItem("ts-school-toc-declined", version);
+    }, TOC_VERSION);
     await page.goto("/farewell");
     await page.waitForLoadState("networkidle");
     await expectNoBlockingAxe(page);
@@ -62,19 +62,6 @@ test.describe("a11y disclaimer gate", () => {
   }) => {
     await page.goto("/");
     await expect(page.getByTestId("disclaimer-gate")).toBeVisible();
-    await expectNoBlockingAxe(page);
-  });
-});
-
-test.describe("a11y AI risk gate", () => {
-  test.use({ skipAiRiskSeed: true });
-
-  test("AI risk gate overlay has no serious or critical axe violations", async ({
-    page,
-  }) => {
-    await page.goto(FIXTURE_LESSON.path);
-    await page.getByTestId("ts-open-ai-chat").click();
-    await expect(page.getByTestId("ai-risk-gate")).toBeVisible();
     await expectNoBlockingAxe(page);
   });
 });

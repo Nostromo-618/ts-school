@@ -5,7 +5,6 @@
 import { computed, onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { VdButton, VdModal, VdProgress } from "@vanduo-oss/vd3";
-import { useAiRiskConsent } from "@/composables/useAiRiskConsent";
 import { useDisclaimerConsent } from "@/composables/useDisclaimerConsent";
 import {
   NON_CLEARABLE_SURFACES,
@@ -27,8 +26,6 @@ const aiChat = useAiChatStore();
 const theme = useThemeStore();
 const { refresh: refreshToc, resetAcceptance: resetToc } =
   useDisclaimerConsent();
-const { refresh: refreshAiRisk, resetAcceptance: resetAiRisk } =
-  useAiRiskConsent();
 
 const inventory = ref<LocalDataInventoryItem[]>([]);
 const clearAllOpen = ref(false);
@@ -83,7 +80,6 @@ async function onConfirmClearAll(): Promise<void> {
     progress.clearProgress();
 
     aiChat.closeChat();
-    aiChat.pendingOpenAfterRisk = false;
     if (typeof window !== "undefined") {
       try {
         window.localStorage.removeItem("ts-school-ai-chat-pinned");
@@ -95,13 +91,11 @@ async function onConfirmClearAll(): Promise<void> {
 
     await clearAllSchoolData();
     resetToc();
-    resetAiRisk();
     refreshToc();
-    refreshAiRisk();
     theme.init();
     refreshInventory();
     statusMessage.value =
-      "Local school data cleared. Terms and AI risk consent will be asked again when needed.";
+      "Local school data cleared. Terms consent will be asked again when needed.";
   } finally {
     clearing.value = false;
     clearAllOpen.value = false;
@@ -255,9 +249,9 @@ async function onConfirmClearAll(): Promise<void> {
       <div class="vd-stack" data-gap="fib-8">
         <p>
           This removes progress, notes, pin preferences, theme preferences this
-          site can write, Terms acceptance, and AI risk acceptance. Opening Ask
-          again will show the AI risk modal. Best-effort model cache deletion
-          runs next — some browser caches may remain.
+          site can write, Terms acceptance, and any legacy AI risk key. Best-effort
+          model cache deletion runs next — some browser caches may remain. You
+          will need to accept the site terms again before continuing.
         </p>
         <div class="vd-cluster" data-gap="fib-8">
           <VdButton

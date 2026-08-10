@@ -11,7 +11,7 @@ describe("aiChat store", () => {
     setActivePinia(createPinia());
   });
 
-  it("hydrates a pinned preference and defers open until risk consent", () => {
+  it("hydrates a pinned preference and reopens the pane", () => {
     localStorage.setItem(AI_CHAT_PINNED_KEY, "1");
     const store = useAiChatStore();
 
@@ -22,12 +22,7 @@ describe("aiChat store", () => {
 
     expect(store.ready).toBe(true);
     expect(store.pinned).toBe(true);
-    expect(store.open).toBe(false);
-    expect(store.pendingOpenAfterRisk).toBe(true);
-
-    store.openChat();
     expect(store.open).toBe(true);
-    expect(store.pendingOpenAfterRisk).toBe(false);
 
     store.hydrate();
     expect(store.pinned).toBe(true);
@@ -53,7 +48,7 @@ describe("aiChat store", () => {
     store.hydrate();
 
     expect(store.pinned).toBe(false);
-    expect(store.pendingOpenAfterRisk).toBe(false);
+    expect(store.open).toBe(false);
 
     store.openChat();
 

@@ -4,10 +4,7 @@ import {
   TOC_STORAGE_KEY,
   TOC_VERSION,
 } from "../../src/content/disclaimer";
-import {
-  AI_RISK_STORAGE_KEY,
-  AI_RISK_VERSION,
-} from "../../src/content/ai-disclaimer";
+import { AI_RISK_STORAGE_KEY } from "../../src/content/ai-disclaimer";
 
 export const FIXTURE_LESSON = {
   id: "first-type-error",
@@ -17,7 +14,7 @@ export const FIXTURE_LESSON = {
 
 export const PROGRESS_STORAGE_KEY = "ts-school-progress";
 export const THEME_STORAGE_KEY = "vanduo-theme-preference";
-export { TOC_STORAGE_KEY, TOC_VERSION, AI_RISK_STORAGE_KEY, AI_RISK_VERSION };
+export { TOC_STORAGE_KEY, TOC_VERSION, AI_RISK_STORAGE_KEY };
 
 export const EXERCISE_SOLUTION = `function addTax(amount: number): number {
   return amount * 1.2;
@@ -29,20 +26,17 @@ addTax(Number("19.99"));
 type TocFixtures = {
   /** When true, do not pre-seed ToC acceptance (disclaimer gate specs). */
   skipTocSeed: boolean;
-  /** When true, do not pre-seed AI risk acceptance (AI risk gate specs). */
-  skipAiRiskSeed: boolean;
 };
 
 /**
- * Default e2e pages seed versioned ToC + AI risk acceptance so existing suites
- * are not blocked. Disclaimer / AI-risk specs opt out via fixture flags.
+ * Default e2e pages seed versioned ToC acceptance so existing suites are not
+ * blocked. Disclaimer specs opt out via `skipTocSeed`.
  */
 export const test = base.extend<TocFixtures>({
   skipTocSeed: [false, { option: true }],
-  skipAiRiskSeed: [false, { option: true }],
-  page: async ({ page, skipTocSeed, skipAiRiskSeed }, use) => {
+  page: async ({ page, skipTocSeed }, use) => {
     await page.addInitScript(
-      ({ tocKey, tocVersion, aiKey, aiVersion, seedToc, seedAi }) => {
+      ({ tocKey, tocVersion, seedToc }) => {
         if (seedToc) {
           localStorage.setItem(
             tocKey,
@@ -53,23 +47,11 @@ export const test = base.extend<TocFixtures>({
           );
           sessionStorage.removeItem("ts-school-toc-declined");
         }
-        if (seedAi) {
-          localStorage.setItem(
-            aiKey,
-            JSON.stringify({
-              version: aiVersion,
-              acceptedAt: new Date().toISOString(),
-            }),
-          );
-        }
       },
       {
         tocKey: TOC_STORAGE_KEY,
         tocVersion: TOC_VERSION,
-        aiKey: AI_RISK_STORAGE_KEY,
-        aiVersion: AI_RISK_VERSION,
         seedToc: !skipTocSeed,
-        seedAi: !skipAiRiskSeed,
       },
     );
     await use(page);

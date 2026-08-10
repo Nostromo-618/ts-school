@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { TOC_STORAGE_KEY, TOC_VERSION } from "@/content/disclaimer";
+import {
+  DISCLAIMER_SECTIONS,
+  TOC_STORAGE_KEY,
+  TOC_VERSION,
+} from "@/content/disclaimer";
 import {
   acceptDisclaimer,
   clearDisclaimerAcceptance,
@@ -13,6 +17,21 @@ import {
   useDisclaimerConsent,
 } from "@/composables/useDisclaimerConsent";
 import { buildRoutes } from "@/router";
+
+describe("disclaimer copy", () => {
+  it("bumps TOC_VERSION and folds Ask risks into site terms", () => {
+    expect(TOC_VERSION).toBe("3");
+    const blob = DISCLAIMER_SECTIONS.map((s) => `${s.heading}\n${s.body}`).join(
+      "\n",
+    );
+    expect(blob).toMatch(/local model|RAM|WebGPU/i);
+    expect(blob).toMatch(/hallucin|invent|wrong/i);
+    expect(blob).toMatch(/Accept or Reject/i);
+    expect(blob).toMatch(/Article 50|AI Act/i);
+    expect(blob).toMatch(/Hugging Face|localStorage/i);
+    expect(blob).not.toMatch(/additional AI risk acceptance/i);
+  });
+});
 
 describe("disclaimer acceptance", () => {
   beforeEach(() => {

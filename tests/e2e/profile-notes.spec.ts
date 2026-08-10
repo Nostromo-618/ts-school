@@ -209,13 +209,14 @@ test.describe("profile and notes", () => {
     expect(await page.evaluate((k) => localStorage.getItem(k), NOTES_STORAGE_KEY)).toBeNull();
     expect(await page.evaluate((k) => localStorage.getItem(k), AI_RISK_STORAGE_KEY)).toBeNull();
 
-    // ToC was also cleared — accept again so Ask can surface AI risk.
+    // ToC was also cleared — accept again so Ask can open.
     const tocGate = page.getByTestId("disclaimer-gate");
     if (await tocGate.isVisible().catch(() => false)) {
       await page.getByTestId("disclaimer-accept").click();
     }
 
     await page.getByTestId("ts-open-ai-chat").click();
-    await expect(page.getByTestId("ai-risk-gate")).toBeVisible();
+    await expect(page.getByTestId("ai-risk-gate")).toHaveCount(0);
+    await expect(page.getByTestId("ts-ai-sidebar")).toBeVisible();
   });
 });

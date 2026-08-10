@@ -37,7 +37,7 @@ The Profile page MUST summarize learner progress from the validated `ts-school-p
 
 ### Requirement: Profile inventories local browser data
 
-Profile MUST list the school-relevant local data present in the browser, including at least: progress (`ts-school-progress`), notes (`ts-school-notes`), ToC acceptance, AI risk acceptance, AI chat pin preference, notes pin preference, and vd3 theme preference keys when present. The inventory MUST state that data is local-only and that some model caches may not be fully enumerable or deletable from page JavaScript.
+Profile MUST list the school-relevant local data present in the browser, including at least: progress (`ts-school-progress`), notes (`ts-school-notes`), ToC acceptance, legacy AI risk acceptance key when present, AI chat pin preference, notes pin preference, and vd3 theme preference keys when present. The inventory MUST state that data is local-only and that some model caches may not be fully enumerable or deletable from page JavaScript.
 
 #### Scenario: Known keys appear when set
 
@@ -47,7 +47,7 @@ Profile MUST list the school-relevant local data present in the browser, includi
 
 ### Requirement: Export all local school data
 
-Profile MUST offer an Export action that downloads a JSON document containing at least: schema/export version, exportedAt timestamp, progress payload (if any), notes payload (if any), and preference snapshots for school keys the product owns (ToC, AI risk, AI pin, notes pin). Theme preference keys MAY be included when readable. Export MUST NOT require a network call.
+Profile MUST offer an Export action that downloads a JSON document containing at least: schema/export version, exportedAt timestamp, progress payload (if any), notes payload (if any), and preference snapshots for school keys the product owns (ToC, legacy AI risk key if present, AI pin, notes pin). Theme preference keys MAY be included when readable. Export MUST NOT require a network call.
 
 #### Scenario: Export downloads JSON
 
@@ -67,7 +67,7 @@ Profile MUST offer a Clear notes action that removes the notes storage payload a
 
 ### Requirement: Clear all data with confirmation
 
-Profile MUST offer Clear all that opens a confirmation modal. On confirm, the system MUST clear: progress, notes, AI chat pin preference, notes pin preference, AI chat open/UI session state, ToC acceptance, AI risk acceptance, and best-effort theme preference keys owned by vd3 that the site can write. The system MUST also attempt best-effort deletion of Cache Storage entries and IndexedDB databases used for on-device LLM / LiteRT model caching when the browser APIs allow it. After clear, Profile MUST refresh the inventory. The UI MUST disclose that Service Worker registrations outside school control, opaque browser disk caches, and OS-level storage may remain.
+Profile MUST offer Clear all that opens a confirmation modal. On confirm, the system MUST clear: progress, notes, AI chat pin preference, notes pin preference, AI chat open/UI session state, ToC acceptance, any legacy AI risk acceptance key, and best-effort theme preference keys owned by vd3 that the site can write. The system MUST also attempt best-effort deletion of Cache Storage entries and IndexedDB databases used for on-device LLM / LiteRT model caching when the browser APIs allow it. After clear, Profile MUST refresh the inventory. The UI MUST disclose that Service Worker registrations outside school control, opaque browser disk caches, and OS-level storage may remain.
 
 #### Scenario: Confirm clears progress and notes
 
@@ -81,11 +81,11 @@ Profile MUST offer Clear all that opens a confirmation modal. On confirm, the sy
 - **WHEN** the learner cancels
 - **THEN** progress remains stored
 
-#### Scenario: Clear all revokes AI risk acceptance
+#### Scenario: Clear all removes legacy AI risk key and site terms
 
-- **GIVEN** AI risk acceptance stored
+- **GIVEN** ToC acceptance and a legacy AI risk key were stored
 - **WHEN** Clear all is confirmed
-- **THEN** AI risk acceptance is removed and opening Ask again requires re-consent
+- **THEN** both keys are removed; after re-accepting site terms, opening Ask does not show a separate AI risk modal
 
 ### Requirement: Lesson AI receives progress for learning-plan advice
 

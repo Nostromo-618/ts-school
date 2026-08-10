@@ -7,7 +7,7 @@
  * Pin preference is three-state in storage:
  * - missing key → never set; first successful `openChat` auto-pins and writes `"1"`
  * - `"0"` → explicitly unpinned; later opens stay unpinned
- * - `"1"` → pinned; hydrate may reopen after AI risk consent
+ * - `"1"` → pinned; hydrate reopens the pane
  */
 
 import { defineStore } from "pinia";
@@ -40,30 +40,34 @@ function writePinned(value: boolean): void {
   }
 }
 
+export type PendingComposerPrompt = {
+  text: string;
+  /** Sidebar auto-sends only when the model is already Ready. */
+  autoSend: boolean;
+};
+
 export const useAiChatStore = defineStore("aiChat", () => {
   const open = ref(false);
   const pinned = ref(false);
   const ready = ref(false);
-  /** True when hydrate wanted the pane open but AI risk consent is still pending. */
-  const pendingOpenAfterRisk = ref(false);
+  /** One-shot composer seed consumed by TsAiChatSidebar when the pane is open. */
+  const pendingComposerText = ref<string | null>(null);
+  const pendingAutoSend = ref(false);
 
   const hydrate = (): void => {
     if (ready.value) return;
     const preference = readPinPreference();
     pinned.value = preference === true;
-    // Do not auto-open until AI risk consent is confirmed by App.
-    if (pinned.value) pendingOpenAfterRisk.value = true;
+    if (pinned.value) open.value = true;
     ready.value = true;
   };
 
   /**
    * Open the pane. On first open with no stored pin preference, auto-pin and
    * persist `"1"`. Explicit `"0"` is respected and not overridden.
-   * Call after AI risk accept (or when consent already granted).
    */
   const openChat = (): void => {
     open.value = true;
-    pendingOpenAfterRisk.value = false;
     if (readPinPreference() === null) {
       setPinned(true);
     }
@@ -88,15 +92,42 @@ export const useAiChatStore = defineStore("aiChat", () => {
     setPinned(!pinned.value);
   };
 
+  /**
+   * Queue text for the Ask composer. Prefer opening the chat after queueing so
+   * a remounted sidebar can pick it up immediately.
+   */
+  const queueComposerPrompt = (
+    text: string,
+    options?: { autoSend?: boolean },
+  ): void => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    pendingComposerText.value = trimmed;
+    pendingAutoSend.value = options?.autoSend === true;
+  };
+
+  /** Take and clear any pending composer seed (sidebar only). */
+  const takePendingComposer = (): PendingComposerPrompt | null => {
+    const text = pendingComposerText.value;
+    if (!text) return null;
+    const autoSend = pendingAutoSend.value;
+    pendingComposerText.value = null;
+    pendingAutoSend.value = false;
+    return { text, autoSend };
+  };
+
   return {
     open,
     pinned,
     ready,
-    pendingOpenAfterRisk,
+    pendingComposerText,
+    pendingAutoSend,
     hydrate,
     openChat,
     closeChat,
     setPinned,
     togglePin,
+    queueComposerPrompt,
+    takePendingComposer,
   };
 });

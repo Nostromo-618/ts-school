@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   AI_RISK_STORAGE_KEY,
-  AI_RISK_VERSION,
 } from "@/content/ai-disclaimer";
 import { TOC_STORAGE_KEY, TOC_VERSION } from "@/content/disclaimer";
 import {
@@ -136,6 +135,6 @@ describe("data hygiene", () => {
     expect(isLikelyModelStorageName("mlc-webllm-cache")).toBe(true);
     expect(isLikelyModelStorageName("gemma-4-cache")).toBe(true);
     expect(isLikelyModelStorageName("user-prefs")).toBe(false);
-    expect(AI_RISK_VERSION).toBeTruthy();
+    expect(AI_RISK_STORAGE_KEY).toBe("ts-school-ai-risk-accepted");
   });
 });
