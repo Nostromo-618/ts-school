@@ -702,14 +702,19 @@ body {
 
 .ts-sidebar-tiers {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
   gap: var(--vd-space-fib-2, 0.1875rem);
 }
 
 .ts-sidebar-tiers > .vd-btn {
-  width: 100%;
-  align-self: stretch;
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  padding-inline: var(--vd-space-fib-3, 0.3125rem);
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .ts-sidebar-filter {
