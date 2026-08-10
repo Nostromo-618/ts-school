@@ -464,6 +464,13 @@ body {
   margin-left: auto;
 }
 
+.ts-navbar-actions-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+}
+
 /* Profile control is a RouterLink that reuses the icon-button chrome. */
 .ts-navbar-actions a.vd-theme-switcher-toggle {
   display: inline-flex;
@@ -473,29 +480,40 @@ body {
   color: inherit;
 }
 
-/* Desktop (≥992): brand + actions stay fixed; text links scroll in the middle
-   instead of vd3's absolute-centred row, which overlaps the icon cluster on
-   mid widths (~992–1200px). */
+/* Desktop (≥992): true 3-zone row — brand | content-sized centre | actions.
+   Equal 1fr side columns optically centre the link track when it fits; when it
+   does not, the centre column shrinks and scrolls (‹ ›) instead of vd3
+   absolute-centring, which overlaps the icon cluster on mid widths. */
 @media (width >= 992px) {
   .vd-navbar > .vd-navbar-container {
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: minmax(min-content, 1fr) minmax(0, auto) minmax(
+      min-content,
+      1fr
+    );
     align-items: center;
+    flex-wrap: unset;
   }
 
   .vd-navbar .vd-navbar-brand {
-    flex: none;
+    flex: unset;
     margin-bottom: 0;
+    justify-self: start;
   }
 
   .vd-navbar .vd-navbar-menu {
-    flex: 1 1 auto;
-    justify-content: flex-start;
+    flex: unset;
+    justify-content: center;
     min-width: 0;
+    max-width: 100%;
     overflow: hidden;
   }
 
   .vd-navbar .ts-navbar-actions {
-    flex: none;
+    flex: unset;
+    margin-left: 0;
+    justify-self: end;
+    justify-content: flex-end;
     position: relative;
     z-index: 2;
   }
@@ -598,8 +616,7 @@ body {
     margin-left: auto;
     padding-top: 0;
     border-top: none;
-    justify-content: flex-end;
-    gap: 0.25rem;
+    display: block;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
@@ -610,11 +627,22 @@ body {
     display: none;
   }
 
+  /* Right-align when the cluster fits; when it overflows, margin collapses and
+     scroll starts from the left so critical icons stay reachable. */
+  .vd-navbar .ts-navbar-actions-inner {
+    margin-left: auto;
+    gap: 0.25rem;
+  }
+
   .vd-navbar .ts-navbar-actions .vd-theme-switcher-toggle,
-  .vd-navbar .ts-navbar-actions .vd-theme-customizer .vd-theme-switcher-toggle {
+  .vd-navbar .ts-navbar-actions .vd-theme-customizer-trigger {
     flex: none;
     width: 2rem;
     height: 2rem;
+    font-size: 1rem;
+  }
+
+  .vd-navbar .ts-navbar-actions .vd-theme-customizer-trigger i {
     font-size: 1rem;
   }
 

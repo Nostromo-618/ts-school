@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * The site navbar: brand, the standalone pages, and three always-visible
- * actions (search, theme customiser, theme switcher).
+ * The site navbar: brand, the standalone pages, and always-visible actions
+ * (notes, Ask, profile, search, theme customiser, theme switcher).
  *
  * Hand-assembled from the package's `vd-navbar-*` classes rather than composing
  * its `VdNavbar` component, and `vd3-docs` does the same thing for the same
@@ -13,9 +13,10 @@
  * is the behaviour we want anyway: search and theme controls should not be
  * behind a hamburger.
  *
- * Above 992px the text links sit in a horizontal scroller between the brand and
- * the action cluster (vd3's default absolute-centres them, which overlaps the
- * icons on mid widths). Chevron buttons appear only when the row overflows.
+ * Above 992px the bar is a 3-zone grid (brand | centre track | actions):
+ * equal 1fr side columns optically centre the text links when they fit. When
+ * the centre track overflows, links scroll horizontally (vd3's absolute centre
+ * overlaps the icons on mid widths). Chevron buttons appear only then.
  * Below the breakpoint the drawer still holds page links only; the top bar is a
  * single row (short brand + scrollable action icons + hamburger) so the burger
  * is never orphaned under a wrapped icon strip.
@@ -140,9 +141,14 @@ onBeforeUnmount(() => {
   >
     <div class="vd-navbar-container">
       <div class="vd-navbar-brand">
-        <RouterLink to="/" class="ts-brand-link" @click="closeMenu">
+        <RouterLink
+          to="/"
+          class="ts-brand-link"
+          aria-label="TypeScript School"
+          @click="closeMenu"
+        >
           <SchoolBrandMark :size="isDesktop ? '2rem' : '1.75rem'" />
-          <span class="ts-brand-text">
+          <span class="ts-brand-text" aria-hidden="true">
             <span class="ts-brand-name">TypeScript</span>
             <span class="ts-brand-word">School</span>
           </span>
@@ -202,44 +208,46 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="vd-navbar-actions ts-navbar-actions">
-        <button
-          type="button"
-          class="vd-theme-switcher-toggle"
-          aria-label="Open study notes"
-          data-testid="ts-open-notes"
-          @click="openNotes"
-        >
-          <i class="ph ph-note" aria-hidden="true"></i>
-        </button>
-        <button
-          type="button"
-          class="vd-theme-switcher-toggle"
-          aria-label="Ask the lesson assistant"
-          data-testid="ts-open-ai-chat"
-          @click="openAsk"
-        >
-          <i class="ph ph-chat-circle" aria-hidden="true"></i>
-        </button>
-        <RouterLink
-          to="/profile"
-          class="vd-theme-switcher-toggle"
-          aria-label="Open profile"
-          data-testid="ts-open-profile"
-          @click="closeMenu"
-        >
-          <i class="ph ph-user" aria-hidden="true"></i>
-        </RouterLink>
-        <button
-          type="button"
-          class="vd-theme-switcher-toggle"
-          aria-label="Search the curriculum"
-          aria-keyshortcuts="Meta+K Control+K"
-          @click="openSearch"
-        >
-          <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-        </button>
-        <VdThemeCustomizer :show-palette="false" />
-        <SchoolThemeSwitcher />
+        <div class="ts-navbar-actions-inner">
+          <button
+            type="button"
+            class="vd-theme-switcher-toggle"
+            aria-label="Open study notes"
+            data-testid="ts-open-notes"
+            @click="openNotes"
+          >
+            <i class="ph ph-note" aria-hidden="true"></i>
+          </button>
+          <button
+            type="button"
+            class="vd-theme-switcher-toggle"
+            aria-label="Ask the lesson assistant"
+            data-testid="ts-open-ai-chat"
+            @click="openAsk"
+          >
+            <i class="ph ph-chat-circle" aria-hidden="true"></i>
+          </button>
+          <RouterLink
+            to="/profile"
+            class="vd-theme-switcher-toggle"
+            aria-label="Open profile"
+            data-testid="ts-open-profile"
+            @click="closeMenu"
+          >
+            <i class="ph ph-user" aria-hidden="true"></i>
+          </RouterLink>
+          <button
+            type="button"
+            class="vd-theme-switcher-toggle"
+            aria-label="Search the curriculum"
+            aria-keyshortcuts="Meta+K Control+K"
+            @click="openSearch"
+          >
+            <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+          </button>
+          <VdThemeCustomizer :show-palette="false" />
+          <SchoolThemeSwitcher />
+        </div>
       </div>
 
       <button
