@@ -2,82 +2,171 @@
 
 A static teaching site for TypeScript. Every lesson is a **pair**: the
 idiomatic-but-fragile JavaScript on the left, the TypeScript that fixes it on
-the right — and the TypeScript pane is live. Edit it and a real `tsc` running
-in a Web Worker answers with real diagnostics. A Vitest suite runs the same
-compiler over every lesson in CI, so a lesson cannot claim "TypeScript catches
-this" unless the compiler actually says so.
+the right. Diagnostics under the TypeScript pane are produced at **build time**
+by the Strada (JS) Compiler API (`typescript-strada@6.0.3`, alias of the
+Microsoft Strada / `@typescript/typescript6` line) and shipped as static data.
+A Vitest suite runs the same checker over every lesson in CI, so a lesson
+cannot claim "TypeScript catches this" unless the compiler actually says so.
 
-Private and local-only: nothing is published, and there is no deploy pipeline.
+Primary `typescript` is **7.0.2** (native CLI). Exercises pass when normalized
+editor text matches the authored solution.
+
+Public static site: clone, install, and run locally, or enable **GitHub Pages**
+(workflow `.github/workflows/pages.yml`) to deploy the `vite-ssg` `dist/` output.
+On-device AI model weights stay local (`.models/` is gitignored) — Pages builds
+do not ship multi-GB LiteRT files.
+
+## License
+
+MIT — see [`LICENSE`](./LICENSE). Third-party and model attributions:
+[`THIRD-PARTY-NOTICES.md`](./THIRD-PARTY-NOTICES.md) (also served at `/LICENSE`
+and `/THIRD-PARTY-NOTICES.md` from `public/`). Keep `public/` copies in sync
+with the repo root when either file changes.
 
 ## Status
 
-Scaffold only. The repository currently holds the toolchain, build, quality
-gates, and a placeholder home page. The docs shell, curriculum model, typecheck
-worker, lesson engine, and content each land as their own OpenSpec change —
-see `openspec/changes/` and `openspec/changes/archive/`.
+Curriculum and shell are in place (Profile, notes, progress, Ask assistant).
+Development is OpenSpec-driven — see `openspec/changes/` and
+`openspec/changes/archive/`.
+
+## GitHub Pages
+
+1. Push to `main` (or run the **pages** workflow manually).
+2. In the GitHub repo: **Settings → Pages → Build and deployment → Source:
+   GitHub Actions**.
+3. Expected URL for a project site:
+   `https://<owner>.github.io/<repo>/`  
+   Example placeholder: `https://<your-org-or-user>.github.io/ts-school/`
+
+Base path: Vite reads `VITE_BASE` (see `vite.config.ts`). The Pages workflow
+sets `VITE_BASE=/<repo>/` for project sites, or `/` when the repo name is
+`<owner>.github.io`. Local `pnpm dev` / `pnpm preview` / Playwright keep the
+default `/`.
+
+**CSP note:** GitHub Pages serves static files and does not easily attach a
+custom `Content-Security-Policy: frame-ancestors 'none'` response header. The
+meta CSP in `index.html` still applies; `frame-ancestors` remains a documented
+limitation on Pages (use a header-capable host if you need that directive).
+
+**Models:** Optional Ask / Gemma chat downloads weights into the visitor’s
+browser (or uses a local `.models/` cache in dev). Do not commit `.models/`.
+
+## Release checklist
+
+Before treating a build as release-ready:
+
+```bash
+mise exec -- pnpm gate:release
+```
+
+That runs lint, stylelint, format check, typecheck, unit tests, production
+build, Playwright Chromium Desktop, and Chromium Mobile responsive smoke.
+Optional: `pnpm test:e2e:full` (Firefox/WebKit) and `pnpm test:e2e:llm`
+(local Gemma + WebGPU).
+
+CI on `main` runs the same static checks plus Chromium Desktop and Mobile
+Playwright after `pnpm build`. Pages deploy is a separate workflow.
 
 ## Stack
 
 Vue 3.5 · Vite 8 · `vite-ssg` 28 (prerenders every route) · vue-router 5 ·
-Pinia 3 · `@unhead/vue`, consuming the published
-[`@vanduo-oss/vd3`](https://www.npmjs.com/package/@vanduo-oss/vd3) 1.2.1 and
+Pinia 4 · `@unhead/vue` 3, consuming the published
+[`@vanduo-oss/vd3`](https://www.npmjs.com/package/@vanduo-oss/vd3) 1.2.2 and
 [`@vanduo-oss/vd3-cbun`](https://www.npmjs.com/package/@vanduo-oss/vd3-cbun)
-1.3.1 design-system packages.
+1.3.1 design-system packages. Search / AI engines come from
+`@vanduo-oss/vdl-engines` (see blocker note below).
 
 ## Getting started
 
 The toolchain is pinned in `mise.toml` (node 24.17.0, pnpm 11.18.0). A bare
-shell may resolve a different node, so run through mise:
+shell may resolve a different node, so run through mise.
+
+**Prerequisite:** clone [vanduo-oss/labs](https://github.com/vanduo-oss/labs)
+as a sibling at `../0_vanduo/labs` (same layout CI uses), until
+`@vanduo-oss/vdl-engines` is published to npm.
 
 ```bash
+# from Documents/GitHub (example)
+git clone https://github.com/<you>/ts-school.git
+git clone https://github.com/vanduo-oss/labs.git 0_vanduo/labs
+
+cd ts-school
 mise trust
 mise exec -- pnpm install
 mise exec -- pnpm dev
 ```
 
-| Script                  | What it does                                     |
-| ----------------------- | ------------------------------------------------ |
-| `pnpm dev`              | Vite dev server                                   |
-| `pnpm build`            | `vite-ssg build` — prerenders every route         |
-| `pnpm preview`          | Serve the built site on port 8787                 |
-| `pnpm lint` / `:fix`    | ESLint over the repo                              |
-| `pnpm stylelint`        | Stylelint over `src/**/*.css`                     |
-| `pnpm format` / `:check`| Prettier over `src`                               |
-| `pnpm typecheck`        | `vue-tsc --noEmit`                                |
-| `pnpm test`             | Vitest unit suites in `tests/unit/`               |
-| `pnpm test:e2e`         | Playwright, Chromium Desktop, from `tests/e2e/`   |
+| Script                     | What it does                                      |
+| -------------------------- | ------------------------------------------------- |
+| `pnpm dev`                 | Vite dev server (diagnostics + search index first)|
+| `pnpm build`               | `vite-ssg build` — prerenders every route         |
+| `pnpm preview`             | Serve the built site on port 8787                 |
+| `pnpm generate:diagnostics`| Rebuild `src/curriculum/generated/diagnostics.ts` |
+| `pnpm generate:search-index`| Rebuild Neptune `public/search/*` embeddings     |
+| `pnpm models:fetch`        | Prefetch Gemma LiteRT into `.models/` (dev cache) |
+| `pnpm models:compare`      | Score E2B/E4B school tutoring fixtures → `data/model-compare/` |
+| `pnpm models:compare:live` | Same against localhost:5173 (needs weights + WebGPU) |
+| `pnpm typecheck`           | `vue-tsc` via Strada wrapper (`--noEmit`)         |
+| `pnpm lint` / `:fix`       | ESLint via Strada wrapper (parser needs TS 6 API) |
+| `pnpm stylelint`           | Stylelint over `src/**/*.css`                     |
+| `pnpm format` / `:check`   | Prettier over `src`                               |
+| `pnpm test`                | Vitest unit suites in `tests/unit/`               |
+| `pnpm test:e2e`            | Playwright, Chromium Desktop, from `tests/e2e/`   |
+| `pnpm test:e2e:mobile`     | Chromium Mobile responsive critical paths         |
+| `pnpm test:e2e:llm`        | Same + gated Gemma chat (needs `.models/` + WebGPU) |
+| `pnpm gate:release`        | Full release readiness gate (see above)           |
 
-## Do not upgrade TypeScript
+## TypeScript dual install
 
-`typescript` is pinned to **exactly `6.0.3`** and must stay there.
+| Package               | Version | Role |
+| --------------------- | ------- | ---- |
+| `typescript`          | 7.0.2   | Native CLI / primary package |
+| `typescript-strada`   | 6.0.3   | Programmatic `createProgram` for diagnostic generation, compiler-truth, and `vue-tsc` |
 
-TypeScript 7.0 is a Go native binary. It ships **no programmatic API** and
-cannot type-check in a browser; Microsoft targets 7.1 for a new API. The
-in-browser checker that makes every lesson live needs the JS (Strada) compiler,
-so 6.0.3 — the last release with it — is the only version that works. One
-install serves `vue-tsc`, the ESLint parser, the Web Worker, and the CI
-compiler-truth suite.
+Microsoft publishes the Strada API compatibility line as
+`@typescript/typescript6`. This repo aliases it `typescript-strada` for the
+same purpose.
 
-Do not add `@typescript/native-preview`, and do not "helpfully" widen the pin
-to a range.
+`vue-tsc` still needs the Strada API (`./lib/tsc` is gone from the native
+package). `pnpm typecheck` runs `scripts/vue-tsc-strada.mjs`, which redirects
+`typescript` imports to `typescript-strada`.
+
+Do not add `@typescript/native-preview` as a second native line without updating
+this table and the generator.
 
 ## Security posture
 
-- `typescript` is imported only inside the worker, never in the main bundle.
-- The compiler host is first-party; lib `.d.ts` files are served same-origin
-  from `public/ts-lib/`, never from a CDN.
-- No `eval`, no `new Function`, no code execution, no runtime network. ESLint
-  enforces this.
+- Neither `typescript` nor `typescript-strada` is imported as a value in
+  browser source; the compiler stays in Node scripts and unit tests.
+- No `eval`, no `new Function`, no learner code execution. ESLint enforces this.
 - Lesson code is plain text rendered into `<textarea>`/`<pre>` — no `v-html`
   anywhere in the lesson pipeline (`vue/no-v-html` is an error).
-- `index.html` carries a strict Content-Security-Policy; `tests/unit/csp.spec.ts`
-  fails if a directive is widened. `style-src` is the single concession —
-  Vue scoped styles and vd3's runtime theming emit inline styles, and a static
-  site has no server to mint a nonce. `frame-ancestors` is deliberately absent:
-  browsers ignore it in a `<meta>` policy, so a server fronting the built files
-  must send `Content-Security-Policy: frame-ancestors 'none'` as a header.
+- `index.html` CSP keeps `script-src` on `'self'` (+ `'wasm-unsafe-eval'` for
+  WebAssembly). Opt-in hybrid search and Gemma chat may fetch model weights
+  (`connect-src` includes Hugging Face / CDN hosts) and use `worker-src`
+  `blob:`; core curriculum browsing does not require those paths.
+  `tests/unit/csp.spec.ts` pins the policy. `style-src` allows `'unsafe-inline'`
+  for Vue scoped styles and vd3 theming. Production deploys MUST also send
+  `Content-Security-Policy: frame-ancestors 'none'` as a **response header**
+  (meta cannot set `frame-ancestors`).
+- Site terms are a mandatory first-visit gate. Opening **Ask** shows an
+  additional versioned **AI risk** modal (local RAM/GPU use, hallucinations,
+  no professional advice, edit Accept required, EU AI Act transparency) before
+  the sidebar is usable.
+- Chat loads `@litert-lm/core` from npm (bundled) — not a CDN `import()`. Prefetch
+  weights with `pnpm models:fetch` (or `--from-labs`); `pnpm dev` / `pnpm preview`
+  serve them at `/models/<id>/` and AiChat prefers that cache before Hugging Face.
+  Assistant bubbles render Labs markdown (`v-html` from escaped markdown only).
+  Run `pnpm test:e2e:llm` locally to exercise Load → starter chat when weights exist.
+- Chat editor tools never silently overwrite panes — Accept/Reject is required.
 - `.npmrc` blocks lifecycle scripts, delays newly published packages, refuses
-  trust downgrades, and pins the registry.
+  trust downgrades, and pins the registry. `@vanduo-oss/*` is excluded from the
+  minimum-release-age gate (and may use `--safe-chain-skip-minimum-package-age`).
+- Local engines package: `@vanduo-oss/vdl-engines` is **not on npm yet**. This
+  repo depends on `file:../0_vanduo/labs` (public
+  [vanduo-oss/labs](https://github.com/vanduo-oss/labs)). CI/Pages clone that
+  repo and symlink it into place. Publishing `@vanduo-oss/vdl-engines` to npm
+  (or switching to a `github:` dependency) removes the sibling-clone requirement.
 
 ## Workflow
 

@@ -1,0 +1,80 @@
+# Deploy TypeScript School to GitHub Pages (vite-ssg → dist/).
+
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      # `@vanduo-oss/vdl-engines` is not on npm yet (file:../0_vanduo/labs).
+      - name: Checkout Labs engines
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: vanduo-oss/labs
+          path: .ci-labs
+
+      - name: Link Labs for file: dependency
+        run: |
+          mkdir -p ../0_vanduo
+          ln -sfn "$GITHUB_WORKSPACE/.ci-labs" ../0_vanduo/labs
+          test -f ../0_vanduo/labs/package.json
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: 11.18.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.17.0
+          cache: pnpm
+
+      - name: Resolve Pages base path
+        id: base
+        run: |
+          # User/org site (owner.github.io) → "/". Project site → "/<repo>/".
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          if [ "${REPO}" = "${OWNER}.github.io" ]; then
+            echo "vite_base=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "vite_base=/${REPO}/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build (vite-ssg)
+        env:
+          VITE_BASE: ${{ steps.base.outputs.vite_base }}
+        run: pnpm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03f # v4.0.5

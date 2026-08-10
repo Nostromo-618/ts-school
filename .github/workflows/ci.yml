@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [main]
 
-# All @vanduo-oss/* dependencies install from npm (the @vanduo-oss/* scope is
-# excluded from the .npmrc minimum-release-age delay), so this is single-repo.
+# All @vanduo-oss/* npm deps install from the registry except vdl-engines
+# (file:../0_vanduo/labs until published). CI clones Labs as that sibling path.
 
 # Least-privilege default token: this workflow only reads the repo.
 permissions:
@@ -16,9 +16,21 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Checkout Labs engines
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: vanduo-oss/labs
+          path: .ci-labs
+
+      - name: Link Labs for file: dependency
+        run: |
+          mkdir -p ../0_vanduo
+          ln -sfn "$GITHUB_WORKSPACE/.ci-labs" ../0_vanduo/labs
+          test -f ../0_vanduo/labs/package.json
 
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
         with:
@@ -40,6 +52,11 @@ jobs:
 
       - run: pnpm run build
 
-      # No deploy job: ts-school is local-only — no GitHub Pages, no CNAME.
-      # The Playwright suites are not run here; they download browsers on every
-      # run and are executed locally with `pnpm run test:e2e`.
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Playwright Chromium Desktop
+        run: pnpm run test:e2e
+
+      - name: Playwright Chromium Mobile (responsive)
+        run: pnpm run test:e2e:mobile
