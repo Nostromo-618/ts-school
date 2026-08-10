@@ -86,10 +86,16 @@ const techGroups: TechGroup[] = [
         ],
       },
       {
-        name: "@vanduo-oss/vdl-engines",
-        href: "https://github.com/vanduo-oss/labs",
+        name: "@vanduo-oss/vdl-ai-chat",
+        href: "https://github.com/vanduo-oss/vdl-ai-chat",
         blurb:
-          "Search and chat engine helpers from vanduo labs (local file dependency until published to npm).",
+          "On-device AiChat engine (local file dependency until published to npm).",
+      },
+      {
+        name: "@vanduo-oss/vdl-hybrid-search",
+        href: "https://github.com/vanduo-oss/vdl-hybrid-search",
+        blurb:
+          "Hybrid fuzzy+semantic search engine (local file dependency until published to npm).",
       },
     ],
   },

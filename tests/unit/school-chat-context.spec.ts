@@ -232,7 +232,7 @@ describe("Labs input guardrails (school-linked engines)", () => {
     const {
       validateLlmInput,
       normalizeJailbreakScanText,
-    } = await import("@vanduo-oss/vdl-engines/guardrails/llm.js");
+    } = await import("@vanduo-oss/vdl-ai-chat/guardrails/llm");
 
     expect(
       validateLlmInput({
@@ -263,7 +263,7 @@ describe("Labs input guardrails (school-linked engines)", () => {
 
 describe("mocked AiChat tool turn", () => {
   it("scripts a generateWithTools reply after tool results", async () => {
-    const { AiChat } = await import("@vanduo-oss/vdl-engines/ai-chat.js");
+    const { AiChat } = await import("@vanduo-oss/vdl-ai-chat");
     setActivePinia(createPinia());
     const chat = new AiChat({
       modelId: "gemma-4-E2B-it-web",

@@ -4,7 +4,7 @@ import { mount, flushPromises } from "@vue/test-utils";
 import { createPinia, setActivePinia } from "pinia";
 import { createMemoryHistory, createRouter } from "vue-router";
 
-vi.mock("@vanduo-oss/vdl-engines/ai-chat.js", () => {
+vi.mock("@vanduo-oss/vdl-ai-chat", () => {
   class AiChat {
     registerTools(): void {}
     setSystemPromptOptions(): void {}

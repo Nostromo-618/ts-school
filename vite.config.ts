@@ -42,7 +42,8 @@ export default defineConfig({
     noExternal: [
       "@vanduo-oss/vd3",
       "@vanduo-oss/vd3-cbun",
-      "@vanduo-oss/vdl-engines",
+      "@vanduo-oss/vdl-ai-chat",
+      "@vanduo-oss/vdl-hybrid-search",
     ],
   },
   optimizeDeps: {

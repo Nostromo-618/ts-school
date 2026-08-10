@@ -1,7 +1,7 @@
 import { ref, computed, watch, shallowRef } from "vue";
 import { defineStore } from "pinia";
 import Fuse from "fuse.js";
-import { NeptuneSearch } from "@vanduo-oss/vdl-engines/neptune-search.js";
+import { HybridSearch } from "@vanduo-oss/vdl-hybrid-search";
 import { nav, type NavSection, type NavTree } from "@/nav";
 
 /**
@@ -353,7 +353,7 @@ export const useSearchStore = defineStore("search", () => {
   const statusMessage = ref("");
   const entries = buildFallbackIndex(nav);
 
-  const engine = shallowRef<NeptuneSearch | null>(null);
+  const engine = shallowRef<HybridSearch | null>(null);
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let searchGen = 0;
 
@@ -376,12 +376,12 @@ export const useSearchStore = defineStore("search", () => {
     statusMessage.value = next.message;
   }
 
-  async function ensureEngine(): Promise<NeptuneSearch> {
+  async function ensureEngine(): Promise<HybridSearch> {
     if (engine.value) return engine.value;
     const base = import.meta.env.BASE_URL.endsWith("/")
       ? import.meta.env.BASE_URL
       : `${import.meta.env.BASE_URL}/`;
-    const search = new NeptuneSearch({
+    const search = new HybridSearch({
       indexUrl: `${base}search/search-index.json`,
       vectorsUrl: `${base}search/vectors.json`,
       maxResults: MAX_RESULTS,

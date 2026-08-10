@@ -6,8 +6,9 @@ on:
   pull_request:
     branches: [main]
 
-# All @vanduo-oss/* npm deps install from the registry except vdl-engines
-# (file:../0_vanduo/labs until published). CI clones Labs as that sibling path.
+# All @vanduo-oss/* npm deps install from the registry except the private
+# vdl-ai-chat / vdl-hybrid-search packages (file:../0_vanduo/... until published).
+# CI clones those repos as sibling paths (org Actions access or a read token).
 
 # Least-privilege default token: this workflow only reads the repo.
 permissions:
@@ -20,17 +21,25 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      - name: Checkout Labs engines
+      - name: Checkout vdl-ai-chat
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          repository: vanduo-oss/labs
-          path: .ci-labs
+          repository: vanduo-oss/vdl-ai-chat
+          path: .ci-vdl-ai-chat
 
-      - name: "Link Labs for file: dependency"
+      - name: Checkout vdl-hybrid-search
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: vanduo-oss/vdl-hybrid-search
+          path: .ci-vdl-hybrid-search
+
+      - name: "Link VDL packages for file: dependencies"
         run: |
           mkdir -p ../0_vanduo
-          ln -sfn "$GITHUB_WORKSPACE/.ci-labs" ../0_vanduo/labs
-          test -f ../0_vanduo/labs/package.json
+          ln -sfn "$GITHUB_WORKSPACE/.ci-vdl-ai-chat" ../0_vanduo/vdl-ai-chat
+          ln -sfn "$GITHUB_WORKSPACE/.ci-vdl-hybrid-search" ../0_vanduo/vdl-hybrid-search
+          test -f ../0_vanduo/vdl-ai-chat/package.json
+          test -f ../0_vanduo/vdl-hybrid-search/package.json
 
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
         with:
@@ -40,6 +49,11 @@ jobs:
         with:
           node-version: 24.17.0
           cache: pnpm
+
+      - name: Build VDL packages (dist is gitignored)
+        run: |
+          (cd ../0_vanduo/vdl-ai-chat && pnpm install && pnpm build)
+          (cd ../0_vanduo/vdl-hybrid-search && pnpm install && pnpm build)
 
       - run: pnpm install --frozen-lockfile
 

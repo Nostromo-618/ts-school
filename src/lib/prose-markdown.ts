@@ -2,7 +2,7 @@
  * Curriculum prose HTML — Labs markdown (escaped). Backticks → <code>.
  * No chat linkify; keep separate from notes sidebar helpers.
  */
-import { labsMarkdownToHtml } from "@vanduo-oss/vdl-engines/labs-md-to-html.js";
+import { labsMarkdownToHtml } from "@vanduo-oss/vdl-ai-chat/markdown";
 
 /** Block HTML (typically wrapped in <p>…</p>). */
 export function renderProseHtml(text: string): string {

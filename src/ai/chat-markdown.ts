@@ -1,7 +1,7 @@
 /**
  * Assistant-bubble HTML: Labs markdown + school route/title linkify.
  */
-import { labsMarkdownToHtml } from "@vanduo-oss/vdl-engines/labs-md-to-html.js";
+import { labsMarkdownToHtml } from "@vanduo-oss/vdl-ai-chat/markdown";
 import { allLessons, lessonRoute } from "@/curriculum";
 import { nav } from "@/nav";
 

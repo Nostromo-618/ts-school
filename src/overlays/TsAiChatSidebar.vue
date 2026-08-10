@@ -39,7 +39,7 @@ import { useLessonEditorStore } from "@/stores/lessonEditor";
 import {
   LLM_BLOCK_MESSAGE,
   LLM_OUTPUT_BLOCK_MESSAGE,
-} from "@vanduo-oss/vdl-engines/guardrails/llm.js";
+} from "@vanduo-oss/vdl-ai-chat/guardrails/llm";
 
 /** Mirrors Labs `MODEL_CACHE_FLAG_PREFIX` — avoid importing ai-chat.js at module top (SSR). */
 const MODEL_CACHE_FLAG_PREFIX = "vdl-ai-chat-model-cached:";
@@ -243,7 +243,7 @@ function applyProgress(data: LoadProgressEvent): void {
 }
 
 async function loadAiModule() {
-  const mod = await import("@vanduo-oss/vdl-engines/ai-chat.js");
+  const mod = await import("@vanduo-oss/vdl-ai-chat");
   toolsUnsupportedError = mod.TOOLS_UNSUPPORTED_ERROR;
   describeLoadProgress = mod.describeLoadProgress;
   const official = (mod.MODEL_OPTIONS || []).filter(

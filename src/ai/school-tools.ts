@@ -1,6 +1,6 @@
 import type { Router } from "vue-router";
-import { NeptuneSearch } from "@vanduo-oss/vdl-engines/neptune-search.js";
-import { validateToolCall } from "@vanduo-oss/vdl-engines/guardrails/tools.js";
+import { HybridSearch } from "@vanduo-oss/vdl-hybrid-search";
+import { validateToolCall } from "@vanduo-oss/vdl-ai-chat/guardrails/tools";
 import Fuse from "fuse.js";
 import {
   TRACKS,
@@ -170,14 +170,14 @@ export const SCHOOL_TOOL_DEFS = [
 
 export type SchoolToolName = (typeof SCHOOL_TOOL_DEFS)[number]["name"];
 
-let sharedSearch: NeptuneSearch | null = null;
+let sharedSearch: HybridSearch | null = null;
 
-async function getSearch(): Promise<NeptuneSearch> {
+async function getSearch(): Promise<HybridSearch> {
   if (sharedSearch) return sharedSearch;
   const base = import.meta.env.BASE_URL.endsWith("/")
     ? import.meta.env.BASE_URL
     : `${import.meta.env.BASE_URL}/`;
-  sharedSearch = new NeptuneSearch({
+  sharedSearch = new HybridSearch({
     indexUrl: `${base}search/search-index.json`,
     vectorsUrl: `${base}search/vectors.json`,
     maxResults: 8,

@@ -2,7 +2,7 @@
  * Notes preview HTML — Labs markdown (escaped) + dangerous-protocol strip.
  * Same CSP bar as assistant chat: no raw HTML via v-html without this pipeline.
  */
-import { labsMarkdownToHtml } from "@vanduo-oss/vdl-engines/labs-md-to-html.js";
+import { labsMarkdownToHtml } from "@vanduo-oss/vdl-ai-chat/markdown";
 
 const DANGEROUS_HREF =
   /\shref\s*=\s*(["'])\s*(?:javascript|vbscript|data)\s*:/gi;

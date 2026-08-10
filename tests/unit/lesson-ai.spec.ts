@@ -2,7 +2,7 @@ import { describe, expect, it, beforeEach } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { useLessonEditorStore } from "@/stores/lessonEditor";
 import { SCHOOL_TOOL_DEFS } from "@/ai/school-tools";
-import { validateToolCall } from "@vanduo-oss/vdl-engines/guardrails/tools.js";
+import { validateToolCall } from "@vanduo-oss/vdl-ai-chat/guardrails/tools";
 
 describe("lessonEditor store", () => {
   beforeEach(() => {
@@ -54,7 +54,7 @@ describe("AiChat load progress descriptors", () => {
       describeLoadProgress,
       inferLoadSource,
       LOAD_FREEZE_HINT,
-    } = await import("@vanduo-oss/vdl-engines/ai-chat.js");
+    } = await import("@vanduo-oss/vdl-ai-chat");
 
     expect(inferLoadSource("/models/gemma-4-E2B-it-web/x.litertlm")).toBe(
       "local",

@@ -5,7 +5,7 @@ import { createPinia, setActivePinia } from "pinia";
 import { createMemoryHistory, createRouter } from "vue-router";
 import { ASK_POLICY_BLOCK_MESSAGE } from "@/ai/ask-policy-block";
 
-vi.mock("@vanduo-oss/vdl-engines/guardrails/llm.js", () => ({
+vi.mock("@vanduo-oss/vdl-ai-chat/guardrails/llm", () => ({
   LLM_BLOCK_MESSAGE: "labs input block",
   LLM_OUTPUT_BLOCK_MESSAGE: "labs output block",
   validateLlmInput: () => ({ allowed: true }),
@@ -14,7 +14,7 @@ vi.mock("@vanduo-oss/vdl-engines/guardrails/llm.js", () => ({
   buildChatSystemPrompt: () => "",
 }));
 
-vi.mock("@vanduo-oss/vdl-engines/ai-chat.js", () => {
+vi.mock("@vanduo-oss/vdl-ai-chat", () => {
   class AiChat {
     registerTools(): void {}
     setSystemPromptOptions(): void {}
