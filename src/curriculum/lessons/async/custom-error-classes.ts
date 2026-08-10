@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "async",
   order: 6,
   summary:
-    "Extending Error, keeping instanceof working across transpilation targets, and adding typed fields without breaking the stack trace.",
+    "Extending Error, keeping `instanceof` working across transpilation targets, and adding typed fields without breaking the stack trace.",
   prerequisites: ["catch-gives-you-unknown", "classes-intro"],
   keywords: ["Error", "extends", "instanceof", "setPrototypeOf", "stack"],
   problem:
-    "Subclassing Error and compiling down to ES5 quietly breaks instanceof, so the catch block that handles your error never runs.",
+    "Subclassing Error and compiling down to ES5 quietly breaks `instanceof`, so the catch block that handles your error never runs.",
   js: {
     code: `throw { code: 404, message: 'missing' };
 `,
@@ -50,7 +50,7 @@ const bad: string = handle(new AppError(404, "missing"));
   },
   insight: [
     "Extend Error and set name for debuggability.",
-    "instanceof works within the same realm.",
+    "`instanceof` works within the same realm.",
     "Include cause when wrapping lower-level failures.",
   ],
 };

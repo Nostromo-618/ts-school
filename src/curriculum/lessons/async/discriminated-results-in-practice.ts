@@ -20,7 +20,7 @@ export const lesson: Lesson = {
 }
 `,
     highlights: [{ start: 1, end: 5 }],
-    caption: "null collapses missing and failure.",
+    caption: "`null` collapses missing and failure.",
   },
   ts: {
     code: `type User = { id: string };
@@ -56,7 +56,7 @@ const u: User = r.user;
   },
   insight: [
     "Model domain outcomes as tagged unions.",
-    "Call sites switch on status instead of null checks.",
+    "Call sites switch on status instead of `null` checks.",
     "Map transport errors separately from not-found.",
   ],
 };

@@ -27,7 +27,7 @@ function main(raw) {
 `,
     highlights: [{ start: 8, end: 10 }],
     caption:
-      "Runtime throw without an asserts signature — types ignore the check.",
+      "Runtime throw without an `asserts` signature — types ignore the check.",
   },
   ts: {
     code: `type User = { id: string };
@@ -77,7 +77,7 @@ export function bad(raw: unknown): string {
   ],
   security: {
     title: "Never assert untrusted input into a privileged type",
-    body: "Assertion functions only change the checker; they do not produce a parsed value. On request bodies, env, or file input, parse and validate into a new object instead of asserting the raw unknown.",
+    body: "Assertion functions only change the checker; they do not produce a parsed value. On request bodies, env, or file input, parse and validate into a new object instead of asserting the raw `unknown`.",
     severity: "critical",
   },
   quiz: [
@@ -86,9 +86,9 @@ export function bad(raw: unknown): string {
       prompt:
         "After `assertUser(raw)` where assertUser is `asserts value is User`, what is raw?",
       choices: [
-        { id: "a", text: "Still unknown." },
+        { id: "a", text: "Still `unknown`." },
         { id: "b", text: "User, if the function returned." },
-        { id: "c", text: "any." },
+        { id: "c", text: "`any`." },
       ],
       answerId: "b",
       explanation:

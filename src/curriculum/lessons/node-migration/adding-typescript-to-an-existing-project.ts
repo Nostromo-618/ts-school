@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 2,
   summary:
-    "Install typescript, add a tsconfig, and keep shipping JS while the checker watches over your shoulder.",
+    "Install typescript, add a `tsconfig`, and keep shipping JS while the checker watches over your shoulder.",
   prerequisites: ["why-migrate-a-node-service", "tsconfig-essentials"],
   keywords: ["adopt", "tsconfig", "incremental", "devDependency"],
   problem:
@@ -38,26 +38,26 @@ if (Number.isNaN(port)) {
 `,
     highlights: [{ start: 7, end: 7 }],
     caption:
-      "No TypeScript error here — that's the point: naming Env still leaves Number(undefined) as a runtime NaN risk.",
+      "No TypeScript error here — that's the point: naming Env still leaves Number(`undefined`) as a runtime NaN risk.",
     expectedDiagnostics: [],
   },
   insight: [
     "Add typescript as a pinned devDependency (this site dual-installs typescript@7 plus typescript-strada@6.0.3 for createProgram).",
-    "Commit a minimal strict tsconfig before mass renames.",
+    "Commit a minimal `strict` `tsconfig` before mass renames.",
     "Keep node running compiled or tsx/ts-node only in trusted local/dev paths.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "Must you rename all files to .ts on day one?",
+      prompt: "Must you rename all files to `.ts` on day one?",
       choices: [
         { id: "a", text: "Yes" },
-        { id: "b", text: "No — allowJs lets you adopt gradually" },
+        { id: "b", text: "No — `allowJs` lets you adopt gradually" },
         { id: "c", text: "Only for tests" },
         { id: "d", text: "Only for ESM" },
       ],
       answerId: "b",
-      explanation: "allowJs/checkJs are the gradual path.",
+      explanation: "`allowJs`/`checkJs` are the gradual path.",
     },
   ],
   exercise: {

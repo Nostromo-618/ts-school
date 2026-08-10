@@ -175,7 +175,7 @@ const wrong: "emit" = generatorStages[0];
         { id: "a", text: "scan" },
         { id: "b", text: "bind" },
         { id: "c", text: "emit" },
-        { id: "d", text: "package.json" },
+        { id: "d", text: "`package.json`" },
       ],
       answerId: "b",
       explanation:

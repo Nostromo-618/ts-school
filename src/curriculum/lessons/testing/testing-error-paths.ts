@@ -7,16 +7,16 @@ export const lesson: Lesson = {
   track: "testing",
   order: 9,
   summary:
-    "Asserting on a typed error or a Result variant, and why catching in a test needs the same unknown handling as production code.",
+    "Asserting on a typed error or a Result variant, and why catching in a test needs the same `unknown` handling as production code.",
   prerequisites: ["result-types", "assertions-and-narrowing-in-tests"],
   keywords: ["error", "Result", "rejects", "throws", "unknown", "catch"],
   problem:
-    "expect(fn).toThrow() passes for the wrong error, and a caught value in a test is unknown just as it is everywhere else.",
+    "expect(fn).toThrow() passes for the wrong error, and a caught value in a test is `unknown` just as it is everywhere else.",
   js: {
     code: `try { await fn(); } catch (e) { expect(e.code).toBe(404); }
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "Reading .code on unknown catch values.",
+    caption: "Reading .code on `unknown` catch values.",
   },
   ts: {
     code: `class HttpError extends Error {
@@ -53,8 +53,8 @@ const bad: string = await test404();
     ],
   },
   insight: [
-    "Error path tests should narrow unknown catches.",
+    "Error path tests should narrow `unknown` catches.",
     "Assert on discriminant fields of custom errors.",
-    "Do not use any to reach .code.",
+    "Do not use `any` to reach .code.",
   ],
 };

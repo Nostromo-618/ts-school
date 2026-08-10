@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 16,
   summary:
-    "Parameters are contravariant, returns are covariant — except for methods, which stayed bivariant on purpose. What that trade actually costs you.",
+    "`Parameters` are contravariant, returns are covariant — except for methods, which stayed bivariant on purpose. What that trade actually costs you.",
   prerequisites: ["void-returning-callbacks", "assignability-rules"],
   keywords: [
     "variance",
@@ -56,7 +56,7 @@ animalHandler({ tag: "animal" });
 `,
     highlights: [{ start: 14, end: 16 }],
     caption:
-      "Assigning a narrower-parameter handler is rejected under strictFunctionTypes.",
+      "Assigning a narrower-parameter handler is rejected under `strictFunctionTypes`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -67,14 +67,14 @@ animalHandler({ tag: "animal" });
   },
   insight: [
     "Return types are covariant: a function returning Dog may stand in for one returning Animal.",
-    "Parameter types are contravariant for function types when strictFunctionTypes is on.",
+    "Parameter types are contravariant for function types when `strictFunctionTypes` is on.",
     "Methods stay bivariant for DOM/framework ergonomics — prefer function-typed properties for safety.",
   ],
   quiz: [
     {
       id: "variance-q1",
       prompt:
-        "With strictFunctionTypes, may Handler<Dog> be assigned to Handler<Animal>?",
+        "With `strictFunctionTypes`, may Handler<Dog> be assigned to Handler<Animal>?",
       choices: [
         { id: "a", text: "Yes — Dog is an Animal" },
         { id: "b", text: "No — the handler might call Dog-only members" },

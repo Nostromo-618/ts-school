@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "structures",
   order: 9,
   summary:
-    "export/import in TypeScript modules, and import type so type-only dependencies stay erasable under isolatedModules.",
+    "export/import in TypeScript modules, and import type so type-only dependencies stay erasable under `isolatedModules`.",
   prerequisites: ["classes-intro", "tsconfig-essentials"],
   keywords: ["esm", "import type", "export", "modules"],
   problem:
-    "A value import of a type-only symbol breaks emit under isolatedModules / verbatimModuleSyntax.",
+    "A value import of a type-only symbol breaks emit under `isolatedModules` / `verbatimModuleSyntax`.",
   js: {
     code: `// CJS leaking into an ESM package — runtime ERR_REQUIRE_ESM.
 const { User } = require("./user");
@@ -34,8 +34,8 @@ export function label(u: User): string {
   },
   insight: [
     "Prefer named ESM exports over default for tree-shaking clarity.",
-    "import type { User } makes the import type-only — erased, safe with isolatedModules.",
-    "Keep runtime values and types distinguished when verbatimModuleSyntax is on.",
+    "import type { User } makes the import type-only — erased, safe with `isolatedModules`.",
+    "Keep runtime values and types distinguished when `verbatimModuleSyntax` is on.",
   ],
   quiz: [
     {

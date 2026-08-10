@@ -40,9 +40,9 @@ const badSpecifier: "./config.js" = "./config";
     ],
   },
   insight: [
-    "Under ESM / nodenext, relative imports need an explicit .js extension (even from .ts sources).",
+    "Under ESM / nodenext, relative imports need an explicit `.js` extension (even from `.ts` sources).",
     "Replace require/module.exports with import/export and node: builtins.",
-    "Derive paths from import.meta.url instead of __dirname.",
+    "Derive paths from `import.meta`.url instead of __dirname.",
   ],
   quiz: [
     {

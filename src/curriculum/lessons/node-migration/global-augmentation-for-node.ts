@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 19,
   summary:
-    "declare global for globalThis, adding a user to Express's Request, and doing it in a .d.ts that does not accidentally become a module.",
+    "`declare` global for globalThis, adding a user to Express's Request, and doing it in a .d.ts that does not accidentally become a module.",
   prerequisites: ["declaration-merging", "typing-http-servers"],
   keywords: [
     "declare global",
@@ -37,7 +37,7 @@ const hit: string | undefined = appCache.get("k");
 const wrong: number = appCache;
 `,
     highlights: [{ start: 10, end: 10 }],
-    caption: "declare global adds appCache. A Map is not a number.",
+    caption: "`declare` global adds appCache. A Map is not a number.",
     expectedDiagnostics: [
       {
         code: 2322,

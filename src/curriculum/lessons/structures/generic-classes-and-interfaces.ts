@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "type parameter",
   ],
   problem:
-    "A cache typed with any is a cache that returns any, and every read site loses its type.",
+    "A cache typed with `any` is a cache that returns `any`, and every read site loses its type.",
   js: {
     code: `class Box { constructor(value) { this.value = value; } }
 `,

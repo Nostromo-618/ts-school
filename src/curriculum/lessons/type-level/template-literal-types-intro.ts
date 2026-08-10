@@ -24,7 +24,7 @@ export const lesson: Lesson = {
 }
 `,
     highlights: [{ start: 1, end: 3 }],
-    caption: "String concatenation for event names.",
+    caption: "`String` concatenation for event names.",
   },
   ts: {
     code: `type Entity = "user" | "order";
@@ -34,7 +34,7 @@ const ok: EventName = "user:created";
 const bad: EventName = "user:deleted";
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "Template literal unions forbid unknown actions.",
+    caption: "Template literal unions forbid `unknown` actions.",
     expectedDiagnostics: [
       {
         code: 2322,

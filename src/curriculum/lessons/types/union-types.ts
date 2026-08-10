@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["object-type-literals"],
   keywords: ["union", "|", "narrowing", "nullable"],
   problem:
-    "A function that returns a user or null is documented in a comment, and every caller decides for itself whether to check.",
+    "A function that returns a user or `null` is documented in a comment, and every caller decides for itself whether to check.",
   js: {
     code: `function findUser(id) {
   if (id === "missing") return null;
@@ -22,7 +22,7 @@ const user = findUser("missing");
 user.name.toUpperCase();
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "null is a valid return; calling .name is not.",
+    caption: "`null` is a valid return; calling .name is not.",
   },
   ts: {
     code: `type User = { id: string; name: string };
@@ -36,22 +36,22 @@ const user = findUser("missing");
 user.name.toUpperCase();
 `,
     highlights: [{ start: 9, end: 9 }],
-    caption: "You must narrow User | null before reading name.",
+    caption: "You must narrow User | `null` before reading name.",
     expectedDiagnostics: [{ code: 18047, line: 9, messageIncludes: "null" }],
   },
   insight: [
     "A union is a value that could be any of the members — only common operations are allowed until you narrow.",
-    "User | null is the honest return type for 'maybe found'.",
-    "Narrow with equality checks, typeof, or predicates — do not assert the danger away.",
+    "User | `null` is the honest return type for 'maybe found'.",
+    "Narrow with equality checks, `typeof`, or predicates — do not assert the danger away.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "Before narrowing, what can you safely do with User | null?",
+      prompt: "Before narrowing, what can you safely do with User | `null`?",
       choices: [
         { id: "a", text: "Read .name" },
-        { id: "b", text: "Compare to null / use optional chaining" },
-        { id: "c", text: "Call any User method" },
+        { id: "b", text: "Compare to `null` / use optional chaining" },
+        { id: "c", text: "Call `any` User method" },
         { id: "d", text: "Index it like an array" },
       ],
       answerId: "b",

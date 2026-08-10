@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 16,
   summary:
-    "get and set with different types, computed property names, and how the checker treats a getter-only property as readonly.",
+    "get and set with different types, computed property names, and how the checker treats a getter-only property as `readonly`.",
   prerequisites: ["classes-intro", "readonly-and-immutability"],
   keywords: ["getter", "setter", "accessor", "computed property", "readonly"],
   problem:
@@ -32,7 +32,7 @@ const id: string = read(u, "id");
 const bad: number = read(u, "id");
 `,
     highlights: [{ start: 10, end: 10 }],
-    caption: "typeof key ties the read to string. Not number.",
+    caption: "`typeof` key ties the read to string. Not number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -42,7 +42,7 @@ const bad: number = read(u, "id");
     ],
   },
   insight: [
-    "Computed keys work with literal types and keyof.",
+    "Computed keys work with literal types and `keyof`.",
     "Getters/setters can enforce invariants at the boundary.",
     "Prefer methods when side effects are involved.",
   ],

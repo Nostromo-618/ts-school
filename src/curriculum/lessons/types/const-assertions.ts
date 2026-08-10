@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 17,
   summary:
-    "A const assertion freezes an object or array into its most specific readonly literal type — the cheapest way to build a lookup table the checker understands.",
+    "A const assertion freezes an object or array into its most specific `readonly` literal type — the cheapest way to build a lookup table the checker understands.",
   prerequisites: ["literal-types", "inference-and-widening"],
   keywords: ["as const", "const assertion", "readonly", "literal", "widening"],
   problem:
@@ -28,7 +28,7 @@ go("/");
 go("/admin");
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "as const routes do not include /admin.",
+    caption: "`as const` routes do not include /admin.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -38,8 +38,8 @@ go("/admin");
     ],
   },
   insight: [
-    "as const freezes literal types and makes tuples readonly.",
-    "Indexed access (typeof routes)[number] builds a union of members.",
+    "`as const` freezes literal types and makes tuples `readonly`.",
+    "Indexed access (`typeof` routes)[number] builds a union of members.",
     "Use it for route tables, event names, and config maps.",
   ],
   quiz: [
@@ -50,14 +50,14 @@ go("/admin");
         { id: "a", text: "It makes the array faster at runtime" },
         {
           id: "b",
-          text: "Readonly tuple of literal element types instead of a widened mutable array",
+          text: "`Readonly` tuple of literal element types instead of a widened mutable array",
         },
         { id: "c", text: "It erases the array from the emit" },
         { id: "d", text: "It converts the array into a Set" },
       ],
       answerId: "b",
       explanation:
-        "A const assertion preserves literal members and marks the tuple readonly, so indexed access can build a precise union.",
+        "A const assertion preserves literal members and marks the tuple `readonly`, so indexed access can build a precise union.",
     },
   ],
 };

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 20,
   summary:
-    "declare namespace is everywhere in older type definitions. How to read it, how to consume it, and why not to write new ones.",
+    "`declare` namespace is everywhere in older type definitions. How to read it, how to consume it, and why not to write new ones.",
   prerequisites: ["declaration-merging", "esm-imports-and-exports"],
   keywords: ["namespace", "module", "legacy", "declare", "DefinitelyTyped"],
   problem:

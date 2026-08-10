@@ -23,7 +23,7 @@ export const lesson: Lesson = {
 acceptAnimal(handler);
 `,
     highlights: [{ start: 1, end: 2 }],
-    caption: "Assuming a Dog handler can accept any Animal.",
+    caption: "Assuming a Dog handler can accept `any` Animal.",
   },
   ts: {
     code: `type Animal = { eat(): void };
@@ -37,7 +37,7 @@ const ok: AnimalHandler = handler;
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "Under strictFunctionTypes, parameter positions are checked contravariantly.",
+      "Under `strictFunctionTypes`, parameter positions are checked contravariantly.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -48,7 +48,7 @@ const ok: AnimalHandler = handler;
   },
   insight: [
     "Function parameters are checked more strictly under this flag.",
-    "A Dog=>void is not an Animal=>void.",
+    "A Dog=>`void` is not an Animal=>`void`.",
     "This prevents barking on plain Animals.",
   ],
 };

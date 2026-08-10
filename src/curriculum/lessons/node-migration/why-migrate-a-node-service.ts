@@ -20,7 +20,7 @@ function handler(req, res) {
 }
 `,
     highlights: [{ start: 3, end: 4 }],
-    caption: "id may be string | string[] | undefined in real Node.",
+    caption: "id may be string | string[] | `undefined` in real Node.",
   },
   ts: {
     code: `type Req = { query: { id?: string | string[] } };
@@ -39,7 +39,7 @@ function handler(req: Req, res: Res): void {
     ],
   },
   insight: [
-    "Migrate incrementally: allowJs, then checkJs, then rename files.",
+    "Migrate incrementally: `allowJs`, then `checkJs`, then rename files.",
     "Runtime behavior stays JavaScript — types do not deploy a new Node.",
     "Start with boundary modules (HTTP, env, DB rows) where bugs cluster.",
   ],
@@ -50,7 +50,7 @@ function handler(req: Req, res: Res): void {
       choices: [
         { id: "a", text: "Rewrite every file overnight" },
         { id: "b", text: "Add TypeScript beside JS and tighten gradually" },
-        { id: "c", text: "Disable all strict flags forever" },
+        { id: "c", text: "Disable all `strict` flags forever" },
         { id: "d", text: "Delete tests" },
       ],
       answerId: "b",
@@ -68,7 +68,7 @@ function handler(req: Req, res: Res): void {
 }
 `,
     assertion: "no-errors",
-    hints: ['typeof id === "string"'],
+    hints: ['`typeof` id === "string"'],
     solution: `type Req = { query: { id?: string | string[] } };
 type Res = { end: (body: string) => void };
 

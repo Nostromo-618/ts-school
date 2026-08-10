@@ -44,7 +44,7 @@ const bad: number = u.id;
   insight: [
     "import type / export type erase at emit.",
     "Mixing type and value from one module is fine with inline type modifiers.",
-    "verbatimModuleSyntax makes mistakes loud.",
+    "`verbatimModuleSyntax` makes mistakes loud.",
   ],
   quiz: [
     {
@@ -61,7 +61,7 @@ const bad: number = u.id;
       ],
       answerId: "b",
       explanation:
-        "Type-only imports are erased. verbatimModuleSyntax makes mixing type/value mistakes loud.",
+        "Type-only imports are erased. `verbatimModuleSyntax` makes mixing type/value mistakes loud.",
     },
   ],
 };

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 10,
   summary:
-    "===, !==, switch, and the double-equals-null idiom all narrow. This is the machinery behind every tagged union you will write later.",
+    "===, !==, switch, and the double-equals-`null` idiom all narrow. This is the machinery behind every tagged union you will write later.",
   prerequisites: ["literal-types", "narrowing-with-typeof"],
   keywords: ["equality", "switch", "discriminant", "===", "null"],
   problem:
@@ -40,7 +40,7 @@ function area(shape: Shape): number {
   insight: [
     'Comparing a discriminant field (kind === "circle") narrows the whole object.',
     "switch (shape.kind) does the same, often more readably for many variants.",
-    "x == null narrows out both null and undefined in one check.",
+    "x == `null` narrows out both `null` and `undefined` in one check.",
   ],
   quiz: [
     {

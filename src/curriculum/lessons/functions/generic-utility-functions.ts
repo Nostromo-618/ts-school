@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 11,
   summary:
-    "pluck, groupBy, keyBy — the small utilities every Node codebase reinvents, typed so they return something more useful than any.",
+    "pluck, groupBy, keyBy — the small utilities every Node codebase reinvents, typed so they return something more useful than `any`.",
   prerequisites: ["generic-constraints", "inferring-type-arguments"],
   keywords: ["utility", "pluck", "groupBy", "keyof", "generic", "lodash"],
   problem:
@@ -36,7 +36,7 @@ const idName = pick(user, ["id", "name"]);
 const age: number = idName.age;
 `,
     highlights: [{ start: 12, end: 12 }],
-    caption: "Pick<T,K> only has selected keys — age is gone.",
+    caption: "`Pick`<T,K> only has selected keys — age is gone.",
     expectedDiagnostics: [
       {
         code: 2339,
@@ -46,8 +46,8 @@ const age: number = idName.age;
     ],
   },
   insight: [
-    "keyof + generics model dictionary utilities safely.",
-    "Return Pick/Omit rather than a loose record.",
+    "`keyof` + generics model dictionary utilities safely.",
+    "Return `Pick`/`Omit` rather than a loose record.",
     "This is how lodash-style helpers become honest.",
   ],
 };

@@ -69,7 +69,7 @@ setMode(widened);
           text: "let commonly widens to string; const keeps the literal type",
         },
         { id: "c", text: "const disables excess property checks" },
-        { id: "d", text: "let always means any" },
+        { id: "d", text: "let always means `any`" },
       ],
       answerId: "b",
       explanation:

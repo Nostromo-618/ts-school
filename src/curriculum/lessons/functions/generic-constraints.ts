@@ -40,6 +40,6 @@ len(1);
   insight: [
     "extends constrains what T can be.",
     "Constraints unlock property access inside the function.",
-    "Prefer precise constraints over any.",
+    "Prefer precise constraints over `any`.",
   ],
 };

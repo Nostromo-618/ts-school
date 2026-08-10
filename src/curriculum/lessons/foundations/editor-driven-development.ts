@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 12,
   summary:
-    "tsserver powers red squiggles, completions, and rename — treat the editor as the same checker CI runs, not a separate opinion.",
+    "`tsserver` powers red squiggles, completions, and rename — treat the editor as the same checker CI runs, not a separate opinion.",
   prerequisites: ["declaration-files-intro"],
   keywords: ["tsserver", "IDE", "completions", "refactor", "language service"],
   problem:
@@ -57,7 +57,7 @@ renameField({ userId: "u_1" });
           id: "a",
           text: "Different TypeScript versions or different `tsconfig` roots",
         },
-        { id: "b", text: "Editors never type-check" },
+        { id: "b", text: "Editors `never` type-check" },
         { id: "c", text: "CI ignores `strict` mode always" },
         { id: "d", text: "JavaScript files cannot be checked" },
       ],

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 2,
   summary:
-    "typeof config in a type annotation asks for the type of a value. The bridge from the values you already have to the types you need.",
+    "`typeof` config in a type annotation asks for the type of a value. The bridge from the values you already have to the types you need.",
   prerequisites: ["type-space-vs-value-space", "const-assertions"],
   keywords: ["typeof", "type query", "value to type", "inference", "config"],
   problem:
@@ -26,7 +26,7 @@ const p: Port = 3000;
 const bad: Port = "3000";
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "typeof + as const derives literal port type.",
+    caption: "`typeof` + `as const` derives literal port type.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -36,8 +36,8 @@ const bad: Port = "3000";
     ],
   },
   insight: [
-    "typeof value queries the type of a value.",
+    "`typeof` value queries the type of a value.",
     "Use it to keep config objects as the source of truth.",
-    "Combine with as const for literal unions.",
+    "Combine with `as const` for literal unions.",
   ],
 };

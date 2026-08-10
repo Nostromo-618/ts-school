@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "types",
   order: 15,
   summary:
-    "instanceof narrows to a class, and does it by prototype chain — which is why it fails across realms and after transpiled subclassing.",
+    "`instanceof` narrows to a class, and does it by prototype chain — which is why it fails across realms and after transpiled subclassing.",
   prerequisites: ["narrowing-with-typeof"],
   keywords: ["instanceof", "prototype", "class", "narrowing", "realm"],
   problem:
-    "instanceof Error is the standard way to inspect a caught value, and it silently stops working across a worker or vm boundary.",
+    "`instanceof` Error is the standard way to inspect a caught value, and it silently stops working across a worker or vm boundary.",
   js: {
     code: `function message(err) {
   if (err instanceof Error) return err.message;
@@ -51,9 +51,9 @@ const n: number = message(new Error("x"));
     ],
   },
   insight: [
-    "instanceof narrows class instances across catch/unknown boundaries.",
+    "`instanceof` narrows class instances across catch/`unknown` boundaries.",
     "Custom error classes carry fields the base Error does not.",
-    "Cross-realm instanceof can fail — prefer brand checks for libraries.",
+    "Cross-realm `instanceof` can fail — prefer brand checks for libraries.",
   ],
   quiz: [
     {
@@ -61,17 +61,17 @@ const n: number = message(new Error("x"));
       prompt:
         "What is `instanceof` especially useful for in TypeScript catch blocks?",
       choices: [
-        { id: "a", text: "Making catch return never" },
+        { id: "a", text: "Making catch return `never`" },
         {
           id: "b",
-          text: "Narrowing unknown/Error-like values to a concrete class with fields",
+          text: "Narrowing `unknown`/Error-like values to a concrete class with fields",
         },
         { id: "c", text: "Erasing the error at emit" },
         { id: "d", text: "Converting errors into strings automatically" },
       ],
       answerId: "b",
       explanation:
-        "Custom error classes carry fields; instanceof (with realm caveats) narrows so you can read those fields safely.",
+        "Custom error classes carry fields; `instanceof` (with realm caveats) narrows so you can read those fields safely.",
     },
   ],
 };

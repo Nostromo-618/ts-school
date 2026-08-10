@@ -20,7 +20,7 @@ export const lesson: Lesson = {
 createUser(JSON.parse('{"id":"1","admin":"true"}'));
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: 'String "true" is not boolean true — authz bug.',
+    caption: '`String` "true" is not boolean true — authz bug.',
   },
   ts: {
     code: `type CreateUser = { id: string; admin: boolean };
@@ -41,11 +41,11 @@ createUser(body);
   insight: [
     "Everything that crosses IO (HTTP, disk, env, queues) starts as untrusted.",
     "Types inside your process are only as true as the validations at the edge.",
-    "Treat as Model and any as 'I stopped checking' — prefer unknown + parse.",
+    "Treat as Model and `any` as 'I stopped checking' — prefer `unknown` + parse.",
   ],
   security: {
     title: "Typed handlers are not validated handlers",
-    body: "Attackers send JSON that satisfies your hopes, not your types. Never authorize from fields that were only asserted.",
+    body: "Attackers send JSON that `satisfies` your hopes, not your types. Never authorize from fields that were only asserted.",
     severity: "critical",
   },
   quiz: [
@@ -63,7 +63,7 @@ createUser(body);
     },
   ],
   exercise: {
-    prompt: "Accept unknown and narrow before createUser.",
+    prompt: "Accept `unknown` and narrow before createUser.",
     starter: `type CreateUser = { id: string; admin: boolean };
 
 function createUser(body: CreateUser): CreateUser {

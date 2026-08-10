@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 10,
   summary:
-    "fetch gives you any, your API client gives you confidence, and neither gives you a guarantee. Where the parse belongs in a request pipeline.",
+    "fetch gives you `any`, your API client gives you confidence, and neither gives you a guarantee. Where the parse belongs in a request pipeline.",
   prerequisites: ["schema-validation-libraries", "async-await-typing"],
   keywords: [
     "fetch",
@@ -18,7 +18,7 @@ export const lesson: Lesson = {
     "boundary",
   ],
   problem:
-    "An upstream service renames a field and your typed client keeps compiling, all the way to the undefined that reaches the user.",
+    "An upstream service renames a field and your typed client keeps compiling, all the way to the `undefined` that reaches the user.",
   js: {
     code: `async function getUser(id) {
   const res = await fetch("/api/users/" + id);
@@ -86,7 +86,7 @@ const n: number = (maybe as UserDto).name;
   },
   insight: [
     "Wire types (DTO) are untrusted even when 'our' service produced them — deploys drift.",
-    "Put parseUserDto (or schema.parse) immediately after JSON.parse / res.json().",
+    "Put parseUserDto (or schema.parse) immediately after `JSON.parse` / res.json().",
     "`as UserDto` on a response compiles forever and fails at the worst time.",
   ],
   security: {

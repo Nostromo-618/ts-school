@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 3,
   summary:
-    "User['id'], Routes[keyof Routes], and array element types via T[number] — reading a type out of another type.",
+    "User['id'], Routes[`keyof` Routes], and array element types via T[number] — reading a type out of another type.",
   prerequisites: ["keyof-operator"],
   keywords: [
     "indexed access",

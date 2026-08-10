@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["unknown-vs-any", "narrowing-with-typeof"],
   keywords: ["type guard", "is", "predicate", "narrowing", "unknown"],
   problem:
-    "After `typeof x === 'string'` you know it is a string; after a custom `isUser(x)` check JavaScript still treats x as unknown unless you tell TypeScript.",
+    "After `typeof x === 'string'` you know it is a string; after a custom `isUser(x)` check JavaScript still treats x as `unknown` unless you tell TypeScript.",
   js: {
     code: `function isUser(value) {
   return (
@@ -80,7 +80,7 @@ const oops: string = (untrusted as User).missing;
   ],
   security: {
     title: "Type predicates are claims your runtime must honour",
-    body: "A guard that returns true for incomplete objects lets attackers reach code paths that assume full User fields. Keep checks complete, and never implement `value is T` with a bare `return true`.",
+    body: "A guard that returns true for incomplete objects lets attackers reach code paths that assume full User fields. Keep checks complete, and `never` implement `value is T` with a bare `return true`.",
     severity: "critical",
   },
   quiz: [
@@ -94,7 +94,7 @@ const oops: string = (untrusted as User).missing;
           id: "b",
           text: "When the function returns true, x is narrowed to Foo in that scope.",
         },
-        { id: "c", text: "It erases unknown from the whole file." },
+        { id: "c", text: "It erases `unknown` from the whole file." },
       ],
       answerId: "b",
       explanation:
@@ -116,7 +116,7 @@ export function rootOf(value: unknown): number | undefined {
 }
 `,
     assertion: "no-errors",
-    hints: ["Check typeof === 'number', Number.isFinite, and value > 0."],
+    hints: ["Check `typeof` === 'number', Number.isFinite, and value > 0."],
     solution: `function isPositiveNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value) && value > 0;
 }

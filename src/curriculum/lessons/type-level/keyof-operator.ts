@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["interfaces-intro", "union-types"],
   keywords: ["keyof", "keys", "union", "operator", "type query"],
   problem:
-    "A helper that takes a property name accepts any string, so a renamed field breaks at runtime instead of at build time.",
+    "A helper that takes a property name accepts `any` string, so a renamed field breaks at runtime instead of at build time.",
   js: {
     code: `function get(obj, key) { return obj[key]; }
 `,
@@ -28,7 +28,7 @@ const id: string = get(u, "id");
 const bad = get(u, "nope");
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "keyof User forbids unknown keys.",
+    caption: "`keyof` User forbids `unknown` keys.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -38,8 +38,8 @@ const bad = get(u, "nope");
     ],
   },
   insight: [
-    "keyof T is the union of keys of T.",
+    "`keyof` T is the union of keys of T.",
     "Pair with T[K] for safe property access.",
-    "keyof any is string | number | symbol — avoid any.",
+    "`keyof` `any` is string | number | symbol — avoid `any`.",
   ],
 };

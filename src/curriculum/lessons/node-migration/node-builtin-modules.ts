@@ -45,7 +45,7 @@ export const text = readFileSync(42, "utf8");
           text: "It clearly targets the Node builtin, not an npm package named fs",
         },
         { id: "c", text: "TypeScript requires it" },
-        { id: "d", text: "It disables strict mode" },
+        { id: "d", text: "It disables `strict` mode" },
       ],
       answerId: "b",
       explanation: "The node: scheme disambiguates builtins.",
@@ -59,7 +59,7 @@ export const text = readFileSync(42, "utf8");
 `,
     assertion: "no-errors",
     hints: [
-      "Remove import; declare function readFileSync(path: string, enc: string): string",
+      "Remove import; `declare` function readFileSync(path: string, enc: string): string",
     ],
     solution: `declare function readFileSync(path: string, encoding: string): string;
 

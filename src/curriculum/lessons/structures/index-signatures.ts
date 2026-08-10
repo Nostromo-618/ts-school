@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "structures",
   order: 10,
   summary:
-    "[key: string]: T describes an open bag. What it buys, what it costs, and why Record and a mapped type are usually the better tool.",
+    "[key: string]: T describes an open bag. What it buys, what it costs, and why `Record` and a mapped type are usually the better tool.",
   prerequisites: ["interfaces-intro", "type-aliases-intro"],
   keywords: ["index signature", "Record", "dictionary", "open shape", "key"],
   problem:
-    "An index signature says every key exists, so a typo'd lookup type-checks and returns undefined.",
+    "An index signature says every key exists, so a typo'd lookup type-checks and returns `undefined`.",
   js: {
     code: `const bag = {};
 bag[key] = value;
@@ -38,6 +38,6 @@ bag["label"] = "x";
   insight: [
     "Index signatures describe open-ended key sets.",
     "They weaken specific known keys — use carefully.",
-    "Prefer Record<K,V> or maps for many dynamic keys.",
+    "Prefer `Record`<K,V> or maps for many dynamic keys.",
   ],
 };

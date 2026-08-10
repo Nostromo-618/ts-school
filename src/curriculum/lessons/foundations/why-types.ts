@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "refactoring",
   ],
   problem:
-    "JavaScript happily reads a property that does not exist and gives you undefined, so the failure surfaces three functions away from the mistake.",
+    "JavaScript happily reads a property that does not exist and gives you `undefined`, so the failure surfaces three functions away from the mistake.",
   js: {
     code: `// Downstream renamed total → totalCents; callers still send total.
 function charge(order) {
@@ -53,7 +53,7 @@ charge(payload);
     ],
   },
   insight: [
-    "The bug is not 'division by undefined' — it is a shape mismatch at the boundary between two modules.",
+    "The bug is not 'division by `undefined`' — it is a shape mismatch at the boundary between two modules.",
     "A type checker moves that failure from production (or a distant unit test) to the edit you just made.",
     "You adopt TypeScript for the class of bug you already ship, not for academic purity.",
   ],
@@ -64,13 +64,13 @@ charge(payload);
         "In the JavaScript version, what does charge return when totalCents is missing?",
       choices: [
         { id: "a", text: "It throws immediately" },
-        { id: "b", text: "NaN (undefined / 100)" },
+        { id: "b", text: "NaN (`undefined` / 100)" },
         { id: "c", text: "0" },
-        { id: "d", text: "null" },
+        { id: "d", text: "`null`" },
       ],
       answerId: "b",
       explanation:
-        "Reading a missing property yields undefined; dividing it produces NaN, which often slips into money math without throwing.",
+        "Reading a missing property yields `undefined`; dividing it produces NaN, which often slips into money math without throwing.",
     },
   ],
   exercise: {

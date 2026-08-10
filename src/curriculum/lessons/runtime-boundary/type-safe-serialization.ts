@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 18,
   summary:
-    "Date, Map, Set, BigInt, and undefined do not survive JSON. Typing what comes back so it matches what is actually there.",
+    "Date, Map, Set, BigInt, and `undefined` do not survive JSON. Typing what comes back so it matches what is actually there.",
   prerequisites: ["generated-types-from-contracts", "utility-types-tour"],
   keywords: ["serialization", "JSON", "Date", "round trip", "Jsonify"],
   problem:
@@ -48,18 +48,18 @@ const bad: WireEvent = { at: new Date(), name: "x" };
   },
   insight: [
     "Model wire types separately from domain types when JSON is involved.",
-    "undefined keys disappear; Date becomes string; Map/Set become objects/arrays or fail.",
+    "`undefined` keys disappear; Date becomes string; Map/Set become objects/arrays or fail.",
     "Revivers and custom serializers must stay in sync with Jsonify-like types.",
   ],
   quiz: [
     {
       id: "jsonify-q",
-      prompt: "After JSON.stringify/parse, what is a Date field?",
+      prompt: "After `JSON.stringify`/parse, what is a Date field?",
       choices: [
         { id: "a", text: "Still a Date instance" },
         { id: "b", text: "A string (ISO)" },
         { id: "c", text: "A number timestamp always" },
-        { id: "d", text: "null" },
+        { id: "d", text: "`null`" },
       ],
       answerId: "b",
       explanation: "JSON has no Date type; stringify uses toJSON → string.",

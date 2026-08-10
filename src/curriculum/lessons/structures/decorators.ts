@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "framework",
   ],
   problem:
-    "Two decorator designs exist in the wild, they are not compatible, and the tsconfig flag that picks between them is easy to inherit by accident.",
+    "Two decorator designs exist in the wild, they are not compatible, and the `tsconfig` flag that picks between them is easy to inherit by accident.",
   js: {
     code: `// JS stage-3 decorators wrap definitions — frameworks differ on details.
 function logged(value, context) {

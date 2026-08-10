@@ -40,9 +40,9 @@ pointLabel(["10", "20"]);
     ],
   },
   insight: [
-    "number[] is a list of numbers of unknown length; [number, number] is a pair.",
+    "number[] is a list of numbers of `unknown` length; [number, number] is a pair.",
     "After destructuring a tuple, each binding keeps its element type.",
-    "Prefer readonly [number, number] when the pair should not be mutated or pushed to.",
+    "Prefer `readonly` [number, number] when the pair should not be mutated or pushed to.",
   ],
   quiz: [
     {
@@ -52,7 +52,7 @@ pointLabel(["10", "20"]);
       choices: [
         { id: "a", text: "Exactly two elements with those types in order" },
         { id: "b", text: "Runtime immutability" },
-        { id: "c", text: "That JSON.parse will succeed" },
+        { id: "c", text: "That `JSON.parse` will succeed" },
         { id: "d", text: "No holes in the array" },
       ],
       answerId: "a",

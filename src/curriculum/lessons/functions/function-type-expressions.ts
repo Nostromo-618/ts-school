@@ -48,7 +48,7 @@ keep([1, 2, 3], (n) => String(n));
         { id: "a", text: "A value that is always boolean" },
         { id: "b", text: "A function from T to boolean" },
         { id: "c", text: "An array of booleans" },
-        { id: "d", text: "A Promise<boolean>" },
+        { id: "d", text: "A `Promise`<boolean>" },
       ],
       answerId: "b",
       explanation: "It is a call signature type.",

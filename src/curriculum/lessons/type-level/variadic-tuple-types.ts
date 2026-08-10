@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 17,
   summary:
-    "[...T, U] and spreads in tuple positions — how typed compose, curry, and Promise.all keep every element's type in order.",
+    "[...T, U] and spreads in tuple positions — how typed compose, curry, and `Promise.all` keep every element's type in order.",
   prerequisites: ["rest-parameters", "infer-keyword"],
   keywords: ["variadic tuple", "spread", "tuple", "compose", "Promise.all"],
   problem:
@@ -60,8 +60,8 @@ const bad: GreetWithExclaim = (name: string, loud: string) =>
   },
   insight: [
     "Variadic tuple types let you spread one tuple type into another: [...A, ...B].",
-    "They power typed Promise.all, middleware, and curry without any[].",
-    "infer P on a rest parameter yields a tuple type you can manipulate.",
+    "They power typed `Promise.all`, middleware, and curry without any[].",
+    "`infer` P on a rest parameter yields a tuple type you can manipulate.",
   ],
   quiz: [
     {
@@ -71,7 +71,7 @@ const bad: GreetWithExclaim = (name: string, loud: string) =>
         { id: "a", text: "(string | number | boolean)[]" },
         { id: "b", text: "[string, number, boolean]" },
         { id: "c", text: "[string[], number[], boolean]" },
-        { id: "d", text: "never" },
+        { id: "d", text: "`never`" },
       ],
       answerId: "b",
       explanation:
@@ -80,13 +80,13 @@ const bad: GreetWithExclaim = (name: string, loud: string) =>
   ],
   exercise: {
     prompt:
-      "Implement Cons<H, T extends unknown[]> = [H, ...T]. Show a value of Cons<string, [number]>.",
+      "Implement Cons<H, T extends `unknown`[]> = [H, ...T]. Show a value of Cons<string, [number]>.",
     starter: `type Cons<H, T extends unknown[]> = unknown; // TODO
 
 const c: Cons<string, [number]> = ["a", 1];
 `,
     assertion: "no-errors",
-    hints: ["type Cons<H, T extends unknown[]> = [H, ...T]"],
+    hints: ["type Cons<H, T extends `unknown`[]> = [H, ...T]"],
     solution: `type Cons<H, T extends unknown[]> = [H, ...T];
 
 const c: Cons<string, [number]> = ["a", 1];

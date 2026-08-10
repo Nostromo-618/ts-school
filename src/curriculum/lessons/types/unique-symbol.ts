@@ -44,8 +44,8 @@ const y: TaggedB = x;
     ],
   },
   insight: [
-    "Only `unique symbol` (or readonly unique symbol properties) creates a truly nominal singleton type for a symbol.",
-    "declare const x: unique symbol is the usual pattern for brand keys.",
+    "Only `unique symbol` (or `readonly` unique symbol properties) creates a truly nominal singleton type for a symbol.",
+    "`declare` const x: unique symbol is the usual pattern for brand keys.",
     "Ordinary symbol types are just symbol — interchangeable and useless for branding.",
   ],
   quiz: [
@@ -69,13 +69,13 @@ const y: TaggedB = x;
   ],
   exercise: {
     prompt:
-      "Declare const Brand: unique symbol and type Branded = { readonly [Brand]: true }. Create a value.",
+      "Declare const Brand: unique symbol and type Branded = { `readonly` [Brand]: true }. Create a value.",
     starter: `const Brand = Symbol("brand");
 type Branded = { readonly [Brand]: true };
 `,
     assertion: "no-errors",
     hints: [
-      "Use declare const Brand: unique symbol; then a value with [Brand]: true.",
+      "Use `declare` const Brand: unique symbol; then a value with [Brand]: true.",
     ],
     solution: `declare const Brand: unique symbol;
 type Branded = { readonly [Brand]: true };

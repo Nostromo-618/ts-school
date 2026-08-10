@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 17,
   summary:
-    "Method parameter bivariance, array covariance, assertions, and any. Each hole is a deliberate trade for usability — knowing which is which is the point.",
+    "Method parameter bivariance, array covariance, assertions, and `any`. Each hole is a deliberate trade for usability — knowing which is which is the point.",
   prerequisites: ["structural-typing", "type-space-vs-value-space"],
   keywords: ["soundness", "bivariance", "covariance", "assertion", "trade-off"],
   problem:
@@ -48,12 +48,12 @@ const y: string = x;
   },
   insight: [
     "Soundness holes are documented trade-offs, not bugs — treat them as places needing human review.",
-    "Prefer readonly T[] / ReadonlyArray when covariance would hurt.",
-    "any and assertions are explicit unsoundness; keep them at boundaries with comments.",
+    "Prefer `readonly` T[] / ReadonlyArray when covariance would hurt.",
+    "`any` and assertions are explicit unsoundness; keep them at boundaries with comments.",
   ],
   security: {
     title: "Unchecked casts at trust boundaries",
-    body: "as unknown as T is a complete bypass. At security boundaries, prefer parsers that return branded types over assertions that invent safety.",
+    body: "as `unknown` as T is a complete bypass. At security boundaries, prefer parsers that return branded types over assertions that invent safety.",
     severity: "caution",
   },
   quiz: [
@@ -71,12 +71,12 @@ const y: string = x;
       ],
       answerId: "b",
       explanation:
-        "Full contravariance on methods was too breaking for existing patterns; function types got the strict rule instead.",
+        "Full contravariance on methods was too breaking for existing patterns; function types got the `strict` rule instead.",
     },
   ],
   exercise: {
     prompt:
-      "Type a readonly animal list as ReadonlyArray<Animal> and show a Dog array assignable to it without push.",
+      "Type a `readonly` animal list as ReadonlyArray<Animal> and show a Dog array assignable to it without push.",
     starter: `type Animal = { tag: "animal" };
 type Dog = Animal & { bark(): void };
 const dogs: Dog[] = [{ tag: "animal", bark() {} }];

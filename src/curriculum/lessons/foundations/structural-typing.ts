@@ -49,7 +49,7 @@ printUser({ id: "2", name: "Bob", role: "admin" }); // excess-property check
   },
   insight: [
     "Compatibility is structural: if the required fields exist with compatible types, the name of the type rarely matters.",
-    "Object literals passed directly are checked for unknown properties — a footgun-prevention feature, not a second type system.",
+    "Object literals passed directly are checked for `unknown` properties — a footgun-prevention feature, not a second type system.",
     "Assign the literal to a variable first if you intentionally need extra fields (or use a wider type).",
   ],
   security: {
@@ -63,13 +63,13 @@ printUser({ id: "2", name: "Bob", role: "admin" }); // excess-property check
       prompt:
         "Why does printUser(admin) succeed while the inline object fails?",
       choices: [
-        { id: "a", text: "Variables are never type-checked" },
+        { id: "a", text: "Variables are `never` type-checked" },
         {
           id: "b",
           text: "Fresh literals get excess-property checks; variables are compared structurally",
         },
         { id: "c", text: "role is a reserved word" },
-        { id: "d", text: "admin is typed as any" },
+        { id: "d", text: "admin is typed as `any`" },
       ],
       answerId: "b",
       explanation:

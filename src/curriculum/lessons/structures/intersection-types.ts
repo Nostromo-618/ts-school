@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "structures",
   order: 12,
   summary:
-    "A & B is everything from both. How it composes mixins and props, and how it produces never when the two disagree.",
+    "A & B is everything from both. How it composes mixins and props, and how it produces `never` when the two disagree.",
   prerequisites: ["extending-interfaces", "type-aliases-intro"],
   keywords: ["intersection", "and", "mixin", "never", "composition"],
   problem:
-    "Intersecting two types with a conflicting property gives a type with a never property, and the error appears at the use site.",
+    "Intersecting two types with a conflicting property gives a type with a `never` property, and the error appears at the use site.",
   js: {
     code: `function save(user) { return user.id + user.role; }
 `,
@@ -41,7 +41,7 @@ save({ id: "1" });
   },
   insight: [
     "A & B has properties of both.",
-    "Conflicting properties can collapse to never.",
+    "Conflicting properties can collapse to `never`.",
     "Prefer interfaces with extends for object merges you own.",
   ],
 };

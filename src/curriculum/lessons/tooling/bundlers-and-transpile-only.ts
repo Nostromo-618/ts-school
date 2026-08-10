@@ -21,7 +21,7 @@ export const lesson: Lesson = {
     "pipeline",
   ],
   problem:
-    "The build is fast because it never type-checked anything, and the only thing that did was the editor on one developer's machine.",
+    "The build is fast because it `never` type-checked anything, and the only thing that did was the editor on one developer's machine.",
   js: {
     code: `// Fast bundlers strip TypeScript-looking syntax without proving types.
 // A broken call still ships if nothing runs tsc.
@@ -55,12 +55,12 @@ void ok;
   },
   insight: [
     "Separate “emit JS” from “prove types” — both are required, different tools.",
-    "Run tsc --noEmit (or vue-tsc) in CI even when Vite/esbuild build the artifacts.",
-    "isolatedModules/verbatimModuleSyntax keep transpile-only tools honest about syntax.",
+    "Run `tsc` --`noEmit` (or vue-`tsc`) in CI even when Vite/esbuild build the artifacts.",
+    "`isolatedModules`/`verbatimModuleSyntax` keep transpile-only tools honest about syntax.",
   ],
   security: {
     title: "Transpile-only ships unchecked trust bugs",
-    body: "If CI only runs a bundler, type errors on auth and validation never block a release. Always gate deploys with a real typecheck step — editor-only checking is not a control.",
+    body: "If CI only runs a bundler, type errors on auth and validation `never` block a release. Always gate deploys with a real typecheck step — editor-only checking is not a control.",
     severity: "critical",
   },
   quiz: [
@@ -74,7 +74,7 @@ void ok;
         { id: "d", text: "Only for .d.ts" },
       ],
       answerId: "b",
-      explanation: "Bundlers optimize for emit speed; tsc remains the checker.",
+      explanation: "Bundlers optimize for emit speed; `tsc` remains the checker.",
     },
   ],
   exercise: {

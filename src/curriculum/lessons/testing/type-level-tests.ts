@@ -66,19 +66,19 @@ type _fail = Expect<Equal<ReturnType<typeof add>, string>>;
       ],
       answerId: "b",
       explanation:
-        "Equal resolves to false, which does not extend true — TS2344.",
+        "Equal resolves to false, which does not extend true — `TS2344`.",
     },
   ],
   exercise: {
     prompt:
-      "Assert ReturnType of identity<T>(x: T): T is number when called as identity(1) via typeof on a const.",
+      "Assert `ReturnType` of identity<T>(x: T): T is number when called as identity(1) via `typeof` on a const.",
     starter: `function identity<T>(x: T): T {
   return x;
 }
 const n = identity(1);
 `,
     assertion: "no-errors",
-    hints: ["type Expect + Equal on typeof n"],
+    hints: ["type Expect + Equal on `typeof` n"],
     solution: `type Equal<A, B> =
   (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
     ? true

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 10,
   summary:
-    "Distinguishes an absent property from one explicitly set to undefined. Correct, occasionally infuriating, and worth understanding before you enable it.",
+    "Distinguishes an absent property from one explicitly set to `undefined`. Correct, occasionally infuriating, and worth understanding before you enable it.",
   prerequisites: ["optional-and-readonly-properties", "the-strictness-ladder"],
   keywords: [
     "exactOptionalPropertyTypes",
@@ -17,12 +17,12 @@ export const lesson: Lesson = {
     "patch",
   ],
   problem:
-    "A PATCH body where a field is missing means leave it alone, and where it is null means clear it — and one type covers both.",
+    "A PATCH body where a field is missing means leave it alone, and where it is `null` means clear it — and one type covers both.",
   js: {
     code: `const opts = { timeout: undefined };
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "undefined written into optional fields casually.",
+    caption: "`undefined` written into optional fields casually.",
   },
   ts: {
     code: `// Model exact optional: optional prop cannot be explicitly undefined
@@ -35,7 +35,7 @@ start(loose);
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "Options.timeout?: number is not number | undefined for fresh calls under exactOptionalPropertyTypes — modeled here as a mismatch.",
+      "Options.timeout?: number is not number | `undefined` for fresh calls under `exactOptionalPropertyTypes` — modeled here as a mismatch.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -45,8 +45,8 @@ start(loose);
     ],
   },
   insight: [
-    "exactOptionalPropertyTypes distinguishes missing from undefined.",
-    "Useful for APIs where undefined means something different.",
-    "Enable carefully — it is not part of strict.",
+    "`exactOptionalPropertyTypes` distinguishes missing from `undefined`.",
+    "Useful for APIs where `undefined` means something different.",
+    "Enable carefully — it is not part of `strict`.",
   ],
 };

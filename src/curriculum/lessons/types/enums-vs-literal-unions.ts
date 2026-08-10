@@ -22,7 +22,7 @@ function canDelete(role) {
 canDelete("Admin"); // wrong string — silent false
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "Object maps still accept any string at the call site.",
+    caption: "Object maps still accept `any` string at the call site.",
   },
   ts: {
     code: `enum Role {
@@ -43,8 +43,8 @@ canDelete("admin");
   },
   insight: [
     "Numeric enums are bidirectional and surprisingly assignable from number — a frequent footgun.",
-    "String enums require the enum member; bare strings are rejected (as shown).",
-    "For most Node apps, a union of string literals (or as const objects) is simpler and erases cleanly.",
+    "`String` enums require the enum member; bare strings are rejected (as shown).",
+    "For most Node apps, a union of string literals (or `as const` objects) is simpler and erases cleanly.",
   ],
   quiz: [
     {
@@ -57,7 +57,7 @@ canDelete("admin");
           text: "They emit runtime code and have surprising assignability",
         },
         { id: "c", text: "They only work in browsers" },
-        { id: "d", text: "tsc cannot check them" },
+        { id: "d", text: "`tsc` cannot check them" },
       ],
       answerId: "b",
       explanation:

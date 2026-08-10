@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 13,
   summary:
-    "process.exit, a function that always throws, and assertNever — how never lets control-flow analysis see past a call.",
+    "`process.exit`, a function that always throws, and assertNever — how `never` lets control-flow analysis see past a call.",
   prerequisites: ["void-and-never", "custom-error-classes"],
   keywords: [
     "never",
@@ -47,7 +47,7 @@ function withVoid(x: string | null): string {
 `,
     highlights: [{ start: 18, end: 18 }],
     caption:
-      "never makes abort() an exit for CFA; a void throw helper leaves x possibly null.",
+      "`never` makes abort() an exit for CFA; a `void` throw helper leaves x possibly `null`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -57,8 +57,8 @@ function withVoid(x: string | null): string {
     ],
   },
   insight: [
-    "never helps control-flow analysis after abort/throw.",
-    "Mark process.exit wrappers as never.",
-    "Do not use never for functions that sometimes return.",
+    "`never` helps control-flow analysis after abort/throw.",
+    "Mark `process.exit` wrappers as `never`.",
+    "Do not use `never` for functions that sometimes return.",
   ],
 };

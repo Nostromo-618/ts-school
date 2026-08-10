@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 13,
   summary:
-    "req.body, req.params, and req.query are typed as whatever the framework felt like — usually any or string. Making a handler honest without fighting the framework.",
+    "req.body, req.params, and req.query are typed as whatever the framework felt like — usually `any` or string. Making a handler honest without fighting the framework.",
   prerequisites: ["parse-dont-validate", "typing-http-servers"],
   keywords: [
     "express",
@@ -18,7 +18,7 @@ export const lesson: Lesson = {
     "validation",
   ],
   problem:
-    "Express types req.body as any, so the most attacker-controlled value in the process is the least checked one.",
+    "Express types req.body as `any`, so the most attacker-controlled value in the process is the least checked one.",
   js: {
     code: `function createUser(req, res) {
   const { email, role } = req.body;
@@ -90,7 +90,7 @@ const asNumber: number = role;
     ],
   },
   insight: [
-    "Type the framework request body as unknown (or leave it untyped) and parse in the handler or a middleware.",
+    "Type the framework request body as `unknown` (or leave it untyped) and parse in the handler or a middleware.",
     'Allowlisting role literals at parse time stops privilege escalation via "admin" in JSON.',
     "Generics on Express handlers are only as honest as the middleware that populated them.",
   ],
@@ -101,7 +101,7 @@ const asNumber: number = role;
   },
   exercise: {
     prompt:
-      "Write parseIdParam(input: unknown): ParseResult<string> that accepts non-empty strings.",
+      "Write parseIdParam(input: `unknown`): ParseResult<string> that accepts non-empty strings.",
     starter: `type ParseResult<T> =
   | { ok: true; value: T }
   | { ok: false; error: string };

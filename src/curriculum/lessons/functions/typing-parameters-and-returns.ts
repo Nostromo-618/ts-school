@@ -21,7 +21,7 @@ export const lesson: Lesson = {
 const label = "Total: $" + formatCents(499);
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: 'Implicit undefined concatenates into "Total: $undefined".',
+    caption: 'Implicit `undefined` concatenates into "Total: $undefined".',
   },
   ts: {
     code: `function formatCents(cents: number): string {
@@ -38,7 +38,7 @@ const label = "Total: $" + formatCents(499);
   insight: [
     "Parameter types are the contract callers must satisfy.",
     "Annotate returns on public functions; let inference handle simple internals.",
-    "void means 'ignore the return'; undefined as a value is a different idea.",
+    "`void` means 'ignore the return'; `undefined` as a value is a different idea.",
   ],
   quiz: [
     {

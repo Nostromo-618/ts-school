@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["annotations-vs-inference"],
   keywords: ["widening", "literal types", "const", "let", "fresh literals"],
   problem:
-    'A status that started as "ready" silently becomes any string, so typos like "redy" compile until something else breaks.',
+    'A status that started as "ready" silently becomes `any` string, so typos like "redy" compile until something else breaks.',
   js: {
     code: `function setStatus(status) {
   return status;
@@ -47,7 +47,7 @@ setStatus(status);
   },
   insight: [
     'const status = "ready" infers the literal type "ready"; let status = "ready" usually widens to string.',
-    "Use a type annotation (let status: Status) or as const when the set of values matters.",
+    "Use a type annotation (let status: Status) or `as const` when the set of values matters.",
     "Widening is why stringly-typed enums feel fine in JS and then fail under TypeScript.",
   ],
   quiz: [
@@ -58,7 +58,7 @@ setStatus(status);
         { id: "a", text: '"ready"' },
         { id: "b", text: "string" },
         { id: "c", text: "Status" },
-        { id: "d", text: "any" },
+        { id: "d", text: "`any`" },
       ],
       answerId: "b",
       explanation:

@@ -31,12 +31,12 @@ function email(user: User): string {
 }
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "Optional properties are undefined until you chain with ?.",
+    caption: "Optional properties are `undefined` until you chain with ?.",
     expectedDiagnostics: [{ code: 18048, line: 5, messageIncludes: "profile" }],
   },
   insight: [
-    "?. short-circuits to undefined when the receiver is nullish.",
-    '?? defaults only for null and undefined — keep 0 and "".',
+    "?. short-circuits to `undefined` when the receiver is nullish.",
+    '?? defaults only for `null` and `undefined` — keep 0 and "".',
     'Combine them: user.profile?.email ?? "nobody@example.com".',
   ],
   quiz: [
@@ -46,7 +46,7 @@ function email(user: User): string {
       choices: [
         { id: "a", text: "3000" },
         { id: "b", text: "0" },
-        { id: "c", text: "undefined" },
+        { id: "c", text: "`undefined`" },
         { id: "d", text: "NaN" },
       ],
       answerId: "b",

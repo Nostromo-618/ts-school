@@ -61,9 +61,9 @@ const worse: string = ratchet.maxErrors;
     ],
   },
   insight: [
-    "Ship value continuously: strict islands expand; legacy shrinks.",
-    "CI ratchets (error count / any count) beat a binary pass/fail on a half-migrated tree.",
-    "Codemods + allowJs get files into the graph; types follow folder by folder.",
+    "Ship value continuously: `strict` islands expand; legacy shrinks.",
+    "CI ratchets (error count / `any` count) beat a binary pass/fail on a half-migrated tree.",
+    "Codemods + `allowJs` get files into the graph; types follow folder by folder.",
   ],
   quiz: [
     {
@@ -72,7 +72,7 @@ const worse: string = ratchet.maxErrors;
       choices: [
         { id: "a", text: "A tool that deletes all anys overnight" },
         { id: "b", text: "A CI rule that forbids the error count from rising" },
-        { id: "c", text: "A tsconfig that disables checking" },
+        { id: "c", text: "A `tsconfig` that disables checking" },
         { id: "d", text: "A bundler plugin" },
       ],
       answerId: "b",

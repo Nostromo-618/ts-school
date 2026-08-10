@@ -22,7 +22,7 @@ export const lesson: Lesson = {
     code: `function make(C, arg) { return new C(arg); }
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "new on an unknown constructor.",
+    caption: "new on an `unknown` constructor.",
   },
   ts: {
     code: `type Ctor<T> = new (name: string) => T;

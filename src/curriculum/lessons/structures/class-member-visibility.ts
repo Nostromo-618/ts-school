@@ -48,7 +48,7 @@ s.token;
   ],
   security: {
     title: "Compile-time private is not secrecy",
-    body: "Do not store credentials in private fields expecting runtime isolation in shipped JS. Prefer #private, env vars outside objects you log, and never serialize secrets.",
+    body: "Do not store credentials in private fields expecting runtime isolation in shipped JS. Prefer #private, env vars outside objects you log, and `never` serialize secrets.",
     severity: "caution",
   },
   quiz: [

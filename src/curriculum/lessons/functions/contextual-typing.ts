@@ -38,9 +38,9 @@ ids.map((id) => id.toFixed(0));
       id: "q1",
       prompt: "In [1,2].map((n) => ...), what is n's type?",
       choices: [
-        { id: "a", text: "any" },
+        { id: "a", text: "`any`" },
         { id: "b", text: "number" },
-        { id: "c", text: "unknown" },
+        { id: "c", text: "`unknown`" },
         { id: "d", text: "string" },
       ],
       answerId: "b",

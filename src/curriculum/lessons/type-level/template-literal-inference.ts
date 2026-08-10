@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 16,
   summary:
-    "infer inside a template literal type turns a string into structure: route parameters, query keys, and typed string builders.",
+    "`infer` inside a template literal type turns a string into structure: route parameters, query keys, and typed string builders.",
   prerequisites: ["template-literal-types-intro", "infer-keyword"],
   keywords: ["template literal", "infer", "parse", "route params", "string"],
   problem:
@@ -42,7 +42,7 @@ const need: Params = "userId";
       { start: 1, end: 6 },
       { start: 11, end: 11 },
     ],
-    caption: "infer walks the template; wrong param names are not assignable.",
+    caption: "`infer` walks the template; wrong param names are not assignable.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -52,7 +52,7 @@ const need: Params = "userId";
     ],
   },
   insight: [
-    "Template literal types + infer are a parser: match a prefix, bind a piece, recurse on the rest.",
+    "Template literal types + `infer` are a parser: match a prefix, bind a piece, recurse on the rest.",
     "Keep grammars small — string parsers explode compile time quickly.",
     "Frameworks use this for typed routes; prefer codegen when the string language gets rich.",
   ],
@@ -60,7 +60,7 @@ const need: Params = "userId";
     {
       id: "tpl-infer",
       prompt:
-        'What does `S extends \\`${string}:${infer P}\\`` bind in P for "/users/:id"?',
+        'What does `S extends \\`${string}:${`infer` P}\\`` bind in P for "/users/:id"?',
       choices: [
         { id: "a", text: '"/users"' },
         { id: "b", text: '"id"' },
@@ -69,7 +69,7 @@ const need: Params = "userId";
       ],
       answerId: "b",
       explanation:
-        'The pattern consumes up through the colon; infer P takes the trailing segment "id".',
+        'The pattern consumes up through the colon; `infer` P takes the trailing segment "id".',
     },
   ],
   exercise: {

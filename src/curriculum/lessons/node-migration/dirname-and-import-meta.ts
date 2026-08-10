@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 10,
   summary:
-    "import.meta.url, import.meta.dirname, and fileURLToPath — replacing the CommonJS path globals without breaking either module system.",
+    "`import.meta`.url, `import.meta`.dirname, and fileURLToPath — replacing the CommonJS path globals without breaking either module system.",
   prerequisites: ["commonjs-to-esm"],
   keywords: ["__dirname", "import.meta", "fileURLToPath", "path", "esm"],
   problem:
@@ -31,7 +31,7 @@ const broken: string = __dirname;
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "ESM uses a helper from import.meta.url. __dirname typed as undefined is not a string.",
+      "ESM uses a helper from `import.meta`.url. __dirname typed as `undefined` is not a string.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -41,7 +41,7 @@ const broken: string = __dirname;
     ],
   },
   insight: [
-    "In ESM, build directory paths from import.meta.url via fileURLToPath.",
+    "In ESM, build directory paths from `import.meta`.url via fileURLToPath.",
     "__dirname and __filename are CJS-only bindings.",
     "Keep a small helper so every file does not re-implement the URL dance.",
   ],

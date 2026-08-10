@@ -28,13 +28,13 @@ leftPad("x", 3);
 export const padded = leftPad("x", 3);
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "TS2307 until types exist — bundled or @types.",
+    caption: "`TS2307` until types exist — bundled or @types.",
     expectedDiagnostics: [{ code: 2307, line: 1, messageIncludes: "left-pad" }],
   },
   insight: [
-    'Check package.json "types" / "exports".types before reaching for @types.',
+    'Check `package.json` "types" / "exports".types before reaching for @types.',
     "Install @types/foo as a devDependency matching the major of foo when needed.",
-    'If nothing exists, write a minimal declare module "foo" locally and upstream later.',
+    'If nothing exists, write a minimal `declare` module "foo" locally and upstream later.',
   ],
   quiz: [
     {

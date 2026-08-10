@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 6,
   summary:
-    "Emit with tsc, or run with a loader/tsx in development — know what belongs in production versus local loops.",
+    "Emit with `tsc`, or run with a loader/tsx in development — know what belongs in production versus local loops.",
   prerequisites: ["adding-typescript-to-an-existing-project", "tsc-cli"],
   keywords: ["tsx", "ts-node", "emit", "production", "node"],
   problem:
@@ -35,7 +35,7 @@ const status: number = main();
     expectedDiagnostics: [{ code: 2322, line: 6, messageIncludes: "string" }],
   },
   insight: [
-    "Production: compile with tsc (or a bundler) and run the JS output.",
+    "Production: compile with `tsc` (or a bundler) and run the JS output.",
     "Local: tsx / node --import tsx are fine for DX; keep them out of prod images.",
     "Match module settings (nodenext/bundler) to how you actually launch Node.",
   ],

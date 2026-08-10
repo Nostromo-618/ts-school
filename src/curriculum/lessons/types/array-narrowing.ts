@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 16,
   summary:
-    "Array.isArray, .find returning T | undefined, and why .filter(Boolean) does not remove null from the type unless you help it.",
+    "`Array.isArray`, .find returning T | `undefined`, and why .filter(Boolean) does not remove `null` from the type unless you help it.",
   prerequisites: ["arrays-and-tuples", "truthiness-narrowing"],
   keywords: [
     "Array.isArray",
@@ -36,7 +36,7 @@ export const lesson: Lesson = {
 const boom: string = first([]);
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "first returns string | undefined.",
+    caption: "first returns string | `undefined`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -46,8 +46,8 @@ const boom: string = first([]);
     ],
   },
   insight: [
-    "Indexing may yield undefined — narrow before using methods.",
-    "noUncheckedIndexedAccess makes this the default; model it even without the flag.",
+    "Indexing may yield `undefined` — narrow before using methods.",
+    "`noUncheckedIndexedAccess` makes this the default; model it even without the flag.",
     "Empty arrays are the classic production crash.",
   ],
 };

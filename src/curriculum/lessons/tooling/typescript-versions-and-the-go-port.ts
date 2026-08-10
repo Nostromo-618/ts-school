@@ -25,7 +25,7 @@ export const lesson: Lesson = {
 // Embedding tsc in a browser worker needs a JS API that TS 7 does not ship.
 `,
     highlights: [{ start: 1, end: 2 }],
-    caption: "No JS API means no in-browser tsc from the native port.",
+    caption: "No JS API means no in-browser `tsc` from the native port.",
   },
   ts: {
     code: `type CompilerKind = "strada-js" | "native-go";

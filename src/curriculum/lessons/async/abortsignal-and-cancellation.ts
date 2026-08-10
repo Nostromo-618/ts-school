@@ -47,7 +47,7 @@ export async function load(
 const bad: number = await load("/", new AbortController().signal);
 `,
     highlights: [{ start: 22, end: 22 }],
-    caption: "Thread AbortSignal through. load returns string, not number.",
+    caption: "Thread `AbortSignal` through. load returns string, not number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -57,7 +57,7 @@ const bad: number = await load("/", new AbortController().signal);
     ],
   },
   insight: [
-    "Pass AbortSignal into APIs that support it.",
+    "Pass `AbortSignal` into APIs that support it.",
     "AbortError should be handled distinctly from other failures.",
     "Cancel on timeout and on navigation away.",
   ],

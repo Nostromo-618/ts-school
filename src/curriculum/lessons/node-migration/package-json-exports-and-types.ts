@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "resolution",
   ],
   problem:
-    "A package with an exports map and a stale top-level types field resolves fine for the author and to any for everyone else.",
+    "A package with an exports map and a stale top-level types field resolves fine for the author and to `any` for everyone else.",
   js: {
     code: `const exportsMap = { ".": "./dist/index.js" };
 `,

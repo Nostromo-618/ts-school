@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "types",
   order: 19,
   summary:
-    "void means the return value is not to be used; never means there is no return value at all. Two very different kinds of nothing.",
+    "`void` means the return value is not to be used; `never` means there is no return value at all. Two very different kinds of nothing.",
   prerequisites: ["exhaustiveness-checking"],
   keywords: ["void", "never", "bottom type", "return type", "throw"],
   problem:
-    "A function typed void can still return something, and a function that always throws is not typed never unless you say so.",
+    "A function typed `void` can still return something, and a function that always throws is not typed `never` unless you say so.",
   js: {
     code: `function fail(msg) {
   throw new Error(msg);
@@ -43,7 +43,7 @@ function demo(x: string | number): string {
 const v: string = log("x");
 `,
     highlights: [{ start: 18, end: 18 }],
-    caption: "log returns void — not a string.",
+    caption: "log returns `void` — not a string.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -53,9 +53,9 @@ const v: string = log("x");
     ],
   },
   insight: [
-    "never means the function does not return normally.",
-    "void means it returns no useful value — callers should not read it.",
-    "Use never for exhaustive checks and fail-fast helpers.",
+    "`never` means the function does not return normally.",
+    "`void` means it returns no useful value — callers should not read it.",
+    "Use `never` for exhaustive checks and fail-fast helpers.",
   ],
   quiz: [
     {
@@ -65,14 +65,14 @@ const v: string = log("x");
         { id: "a", text: "They are identical aliases" },
         {
           id: "b",
-          text: "void means no useful value; never means the function does not return normally",
+          text: "`void` means no useful value; `never` means the function does not return normally",
         },
         { id: "c", text: "never is only for async" },
-        { id: "d", text: "void means the process exits" },
+        { id: "d", text: "`void` means the process exits" },
       ],
       answerId: "b",
       explanation:
-        "Callers must not read void results. never is for throw/infinite loops and exhaustiveness helpers.",
+        "Callers must not read `void` results. `never` is for throw/infinite loops and exhaustiveness helpers.",
     },
   ],
 };

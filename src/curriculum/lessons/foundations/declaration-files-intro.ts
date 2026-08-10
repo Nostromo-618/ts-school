@@ -27,7 +27,7 @@ import slugify from "slugify";
 export const path = slugify("Hello World", { lower: true });
 `,
     highlights: [{ start: 2, end: 2 }],
-    caption: "TS2307 until the package ships types or you add @types/slugify.",
+    caption: "`TS2307` until the package ships types or you add @types/slugify.",
     expectedDiagnostics: [
       {
         code: 2307,
@@ -39,7 +39,7 @@ export const path = slugify("Hello World", { lower: true });
   insight: [
     ".d.ts files are TypeScript's description of existing JavaScript — they emit nothing.",
     "Prefer packages with bundled types; otherwise install @types/name from DefinitelyTyped.",
-    "You can declare a minimal ambient module locally when upstream types are missing.",
+    "You can `declare` a minimal ambient module locally when upstream types are missing.",
   ],
   quiz: [
     {
@@ -68,7 +68,7 @@ export const path = slugify("Hello World");
 `,
     assertion: "no-errors",
     hints: [
-      "Remove the import; declare function slugify(input: string): string;",
+      "Remove the import; `declare` function slugify(input: string): string;",
     ],
     solution: `declare function slugify(
   input: string,

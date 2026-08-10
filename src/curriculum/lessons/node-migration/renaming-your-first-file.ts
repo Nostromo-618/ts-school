@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 7,
   summary:
-    "Move one .js module to .ts, fix the new errors, update imports/extensions, and leave the rest of the tree alone.",
+    "Move one `.js` module to `.ts`, fix the new errors, update imports/extensions, and leave the rest of the tree alone.",
   prerequisites: ["allowjs-and-checkjs", "running-typescript-in-node"],
   keywords: ["rename", ".ts", "incremental", "imports"],
   problem:
@@ -42,7 +42,7 @@ export function age(user: User): number {
       id: "q1",
       prompt: "Why rename one file at a time?",
       choices: [
-        { id: "a", text: "TypeScript only allows one .ts file" },
+        { id: "a", text: "TypeScript only allows one `.ts` file" },
         {
           id: "b",
           text: "Errors stay reviewable and the service keeps shipping",

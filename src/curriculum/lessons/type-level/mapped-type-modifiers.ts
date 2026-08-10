@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 12,
   summary:
-    "+? and -? , +readonly and -readonly. Adding optionality is easy; removing it is the trick behind Required and every Mutable helper.",
+    "+? and -? , +`readonly` and -`readonly`. Adding optionality is easy; removing it is the trick behind `Required` and every Mutable helper.",
   prerequisites: ["mapped-types-intro", "optional-and-readonly-properties"],
   keywords: [
     "mapped type",
@@ -18,7 +18,7 @@ export const lesson: Lesson = {
     "optional",
   ],
   problem:
-    "Making every field required again after Partial has been applied is not expressible without modifier removal.",
+    "Making every field required again after `Partial` has been applied is not expressible without modifier removal.",
   js: {
     code: `// JS: "required again" means runtime checks scattered everywhere.
 function requireConfig(partial) {
@@ -29,7 +29,7 @@ function requireConfig(partial) {
 `,
     highlights: [{ start: 2, end: 5 }],
     caption:
-      "Re-requiring fields is a pile of null checks with no shared type.",
+      "Re-requiring fields is a pile of `null` checks with no shared type.",
   },
   ts: {
     code: `type Partialish<T> = { [K in keyof T]?: T[K] };
@@ -47,7 +47,7 @@ const ready: Ready = { host: "localhost" };
       { start: 2, end: 2 },
       { start: 9, end: 10 },
     ],
-    caption: "-? strips optionality; -readonly strips readonly.",
+    caption: "-? strips optionality; -`readonly` strips `readonly`.",
     expectedDiagnostics: [
       {
         code: 2741,
@@ -57,9 +57,9 @@ const ready: Ready = { host: "localhost" };
     ],
   },
   insight: [
-    "Prefix modifiers with + or -; + is the default when you write ? or readonly alone.",
-    "Required<T> is homomorphic mapped type with -?; Partial uses +?.",
-    "Homomorphic mapped types (K in keyof T) preserve property modifiers you do not touch — until you explicitly add or remove them.",
+    "Prefix modifiers with + or -; + is the default when you write ? or `readonly` alone.",
+    "`Required`<T> is homomorphic mapped type with -?; `Partial` uses +?.",
+    "Homomorphic mapped types (K in `keyof` T) preserve property modifiers you do not touch — until you explicitly add or remove them.",
   ],
   quiz: [
     {
@@ -69,7 +69,7 @@ const ready: Ready = { host: "localhost" };
         { id: "a", text: "Make each property optional" },
         { id: "b", text: "Remove optionality from each property" },
         { id: "c", text: "Remove the property entirely" },
-        { id: "d", text: "Make each property readonly" },
+        { id: "d", text: "Make each property `readonly`" },
       ],
       answerId: "b",
       explanation:
@@ -78,7 +78,7 @@ const ready: Ready = { host: "localhost" };
   ],
   exercise: {
     prompt:
-      "Implement MutableProps<T> that removes readonly from every property. The assignment of a readonly Config to MutableProps should then allow mutation typing-wise (no error on the object literal assignment shown).",
+      "Implement MutableProps<T> that removes `readonly` from every property. The assignment of a `readonly` Config to MutableProps should then allow mutation typing-wise (no error on the object literal assignment shown).",
     starter: `type MutableProps<T> = T; // TODO
 
 type Config = { readonly host: string };
@@ -86,7 +86,7 @@ const c: MutableProps<Config> = { host: "x" };
 c.host = "y";
 `,
     assertion: "no-errors",
-    hints: ["Use -readonly in a mapped type over keyof T."],
+    hints: ["Use -`readonly` in a mapped type over `keyof` T."],
     solution: `type MutableProps<T> = { -readonly [K in keyof T]: T[K] };
 
 type Config = { readonly host: string };

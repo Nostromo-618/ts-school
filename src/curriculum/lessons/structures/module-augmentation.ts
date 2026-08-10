@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 24,
   summary:
-    "declare module to add to a dependency's types, declare global for the runtime globals — done in a way that survives an upgrade.",
+    "`declare` module to add to a dependency's types, `declare` global for the runtime globals — done in a way that survives an upgrade.",
   prerequisites: ["declaration-merging", "namespaces-and-legacy-code"],
   keywords: [
     "module augmentation",
@@ -74,14 +74,14 @@ handle(req);
         { id: "a", text: "Inside node_modules/express" },
         {
           id: "b",
-          text: "In an app .d.ts that declare module 'express-serve-static-core' (or the correct target)",
+          text: "In an app .d.ts that `declare` module 'express-serve-static-core' (or the correct target)",
         },
-        { id: "c", text: "In tsconfig paths only" },
+        { id: "c", text: "In `tsconfig` paths only" },
         { id: "d", text: "It is impossible" },
       ],
       answerId: "b",
       explanation:
-        "You merge into the package’s interface via declare module in your own declaration file.",
+        "You merge into the package’s interface via `declare` module in your own declaration file.",
     },
   ],
   exercise: {

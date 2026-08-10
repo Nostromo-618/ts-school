@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 19,
   summary:
-    "Query results are any in most drivers. Schema-derived row types, nullable columns, and why the database is a boundary like any other.",
+    "Query results are `any` in most drivers. Schema-derived row types, nullable columns, and why the database is a boundary like any other.",
   prerequisites: ["generated-types-from-contracts", "typing-request-handlers"],
   keywords: ["database", "sql", "rows", "prisma", "kysely", "nullable"],
   problem:
-    "A migration made a column nullable and every read site still believes it cannot be null.",
+    "A migration made a column nullable and every read site still believes it cannot be `null`.",
   js: {
     code: `// JS: drivers return plain objects — nulls surprise you in production.
 function getUser(row) {
@@ -19,7 +19,7 @@ function getUser(row) {
 }
 `,
     highlights: [{ start: 2, end: 4 }],
-    caption: "Nullable columns are runtime null with no warning in JS.",
+    caption: "Nullable columns are runtime `null` with no warning in JS.",
   },
   ts: {
     code: `// Schema-derived row — email became nullable in a migration.
@@ -37,7 +37,7 @@ function emailDomainSafe(row: UserRow): string {
 void emailDomainSafe;
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "string | null must be narrowed before string methods.",
+    caption: "string | `null` must be narrowed before string methods.",
     expectedDiagnostics: [
       {
         code: 18047,
@@ -62,10 +62,10 @@ void emailDomainSafe;
       prompt:
         "After a column becomes nullable, what should happen to TypeScript?",
       choices: [
-        { id: "a", text: "Nothing — null is fine as string" },
-        { id: "b", text: "Row types and call sites must account for null" },
-        { id: "c", text: "Disable strictNullChecks" },
-        { id: "d", text: "Cast every row as any" },
+        { id: "a", text: "Nothing — `null` is fine as string" },
+        { id: "b", text: "Row types and call sites must account for `null`" },
+        { id: "c", text: "Disable `strictNullChecks`" },
+        { id: "d", text: "Cast every row as `any`" },
       ],
       answerId: "b",
       explanation:
@@ -74,7 +74,7 @@ void emailDomainSafe;
   ],
   exercise: {
     prompt:
-      'Type Row = { name: string | null } and write label(row) returning name or "anonymous".',
+      'Type Row = { name: string | `null` } and write label(row) returning name or "anonymous".',
     starter: `type Row = { name: string | null };
 function label(row: Row): string {
   return row.name;

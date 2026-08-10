@@ -22,7 +22,7 @@ const raw = JSON.parse('{"id":"1"}');
 sendWelcome(raw);
 `,
     highlights: [{ start: 6, end: 7 }],
-    caption: "JSON.parse returns whatever the wire sent — no shape check.",
+    caption: "`JSON.parse` returns whatever the wire sent — no shape check.",
   },
   ts: {
     code: `type User = { id: string; email: string };

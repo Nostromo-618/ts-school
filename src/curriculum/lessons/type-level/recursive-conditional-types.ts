@@ -33,7 +33,7 @@ function deepFreeze(obj) {
 }
 `,
     highlights: [{ start: 2, end: 7 }],
-    caption: "Runtime deep-freeze cannot make nested fields readonly in types.",
+    caption: "Runtime deep-freeze cannot make nested fields `readonly` in types.",
   },
   ts: {
     code: `type DeepReadonly<T> = {
@@ -63,20 +63,20 @@ cfg.db.host = "y";
   },
   insight: [
     "Recursive conditionals are powerful and expensive — each instantiation costs checker work.",
-    "TypeScript caps instantiation depth; pathological recursion yields TS2589.",
-    "Prefer depth limits, leaf special-cases (Date, Map), and simpler Partial when “deep” is not worth it.",
+    "TypeScript caps instantiation depth; pathological recursion yields `TS2589`.",
+    "Prefer depth limits, leaf special-cases (Date, Map), and simpler `Partial` when “deep” is not worth it.",
   ],
   quiz: [
     {
       id: "rec-depth",
       prompt: "What typically causes “Type instantiation is excessively deep”?",
       choices: [
-        { id: "a", text: "Using any" },
+        { id: "a", text: "Using `any`" },
         {
           id: "b",
           text: "A recursive type that expands without a decreasing measure",
         },
-        { id: "c", text: "Missing strictNullChecks" },
+        { id: "c", text: "Missing `strictNullChecks`" },
         { id: "d", text: "Too many imports" },
       ],
       answerId: "b",
@@ -94,7 +94,7 @@ const x: DeepPartial<C> = { a: {} };
 `,
     assertion: "no-errors",
     hints: [
-      "Map keys to DeepPartial<T[K]> | undefined with ?.",
+      "Map keys to DeepPartial<T[K]> | `undefined` with ?.",
       "Stop recursion on non-objects if you like; object recursion is enough here.",
     ],
     solution: `type DeepPartial<T> = {

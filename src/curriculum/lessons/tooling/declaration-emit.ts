@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "portability",
   ],
   problem:
-    "A type that compiles fine cannot be written into a declaration file, and the error names a file you have never opened.",
+    "A type that compiles fine cannot be written into a declaration file, and the error names a file you have `never` opened.",
   js: {
     code: `// JS has no declaration emit — consumers read the source or nothing.
 export function make() {
@@ -55,7 +55,7 @@ const x: string = makePublic();
     ],
   },
   insight: [
-    "declaration: true writes .d.ts; declarationMap helps editors jump to source.",
+    "declaration: true writes .d.ts; `declarationMap` helps editors jump to source.",
     "isolatedDeclarations requires enough annotations for emit without typechecking inference.",
     "Export the types you return — do not leak private aliases into public signatures.",
   ],

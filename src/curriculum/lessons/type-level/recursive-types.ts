@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["type-aliases-intro", "conditional-types-intro"],
   keywords: ["recursive type", "json", "tree", "self reference", "lazy"],
   problem:
-    "JSON has no fixed shape, so the honest type for it is recursive and most codebases substitute any instead.",
+    "JSON has no fixed shape, so the honest type for it is recursive and most codebases substitute `any` instead.",
   js: {
     code: `// JS: JSON is "whatever" — any nested object or array.
 function readConfig(raw) {
@@ -54,7 +54,7 @@ const bad: Json = { db: { host: () => "nope" } };
   insight: [
     "Type aliases may refer to themselves; interfaces may too via property types.",
     "The checker expands recursion lazily — it does not unfold infinitely at definition time.",
-    "Prefer Json over any at boundaries; pair with a runtime parse that enforces the same grammar.",
+    "Prefer Json over `any` at boundaries; pair with a runtime parse that enforces the same grammar.",
   ],
   quiz: [
     {

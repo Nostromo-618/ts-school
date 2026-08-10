@@ -40,7 +40,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Ambient declaration",
     tier: "beginner",
     definition:
-      "A declaration that describes something which exists at runtime without defining it, written with the declare keyword. How TypeScript learns about globals and untyped packages.",
+      "A declaration that describes something which exists at runtime without defining it, written with the `declare` keyword. How TypeScript learns about globals and untyped packages.",
     aliases: ["declare"],
     related: ["declaration-files-intro", "shimming-untyped-dependencies"],
   },
@@ -49,7 +49,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "any",
     tier: "beginner",
     definition:
-      "The type that disables checking for every value derived from it. Assignable to and from everything, which is why one any at a module boundary silently spreads.",
+      "The type that disables checking for every value derived from it. Assignable to and from everything, which is why one `any` at a module boundary silently spreads.",
     related: ["any-and-implicit-any", "unknown-vs-any"],
   },
   {
@@ -57,7 +57,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Assertion function",
     tier: "intermediate",
     definition:
-      "A function declared with an asserts return type that narrows its argument by throwing when the check fails, rather than returning a boolean.",
+      "A function declared with an `asserts` return type that narrows its argument by throwing when the check fails, rather than returning a boolean.",
     aliases: ["asserts"],
     related: ["assertion-functions"],
   },
@@ -75,7 +75,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "async / await",
     tier: "beginner",
     definition:
-      "Syntax that makes a function return a Promise and unwraps one at await. An async function's return type is always Promise<T>, even when you write a bare T.",
+      "Syntax that makes a function return a Promise and unwraps one at await. An async function's return type is always `Promise`<T>, even when you write a bare T.",
     aliases: ["async", "await"],
     related: ["async-await-typing", "promise-types"],
   },
@@ -105,7 +105,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Bottom type",
     tier: "advanced",
     definition:
-      "never — the type with no values. Assignable to everything and inhabited by nothing, which is what makes it useful for exhaustiveness checks.",
+      "`never` — the type with no values. Assignable to everything and inhabited by nothing, which is what makes it useful for exhaustiveness checks.",
     aliases: ["never"],
     related: ["void-and-never", "exhaustiveness-checking"],
   },
@@ -123,7 +123,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "checkJs",
     tier: "beginner",
     definition:
-      "The compiler option that type-checks .js files as well as .ts files, using inference and JSDoc. The cheapest way to get value from TypeScript before renaming anything.",
+      "The compiler option that type-checks `.js` files as well as `.ts` files, using inference and JSDoc. The cheapest way to get value from TypeScript before renaming anything.",
     aliases: ["allowJs", "@ts-check"],
     related: ["allowjs-and-checkjs", "typing-javascript-with-jsdoc"],
   },
@@ -140,7 +140,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "const assertion",
     tier: "intermediate",
     definition:
-      "Writing as const to stop a literal from widening, producing the most specific readonly type the value can have.",
+      "Writing `as const` to stop a literal from widening, producing the most specific `readonly` type the value can have.",
     aliases: ["as const"],
     related: ["const-assertions", "inference-and-widening"],
   },
@@ -149,7 +149,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "const type parameter",
     tier: "advanced",
     definition:
-      "A type parameter declared <const T>, which infers as though the caller had written as const at the argument. Lets a library preserve literal types without asking users to.",
+      "A type parameter declared <const T>, which infers as though the caller had written `as const` at the argument. Lets a library preserve literal types without asking users to.",
     related: ["const-type-parameters"],
   },
   {
@@ -273,7 +273,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Erasable syntax",
     tier: "intermediate",
     definition:
-      "TypeScript syntax that can be removed without changing behaviour. The erasableSyntaxOnly option rejects the rest, which is what native type stripping requires.",
+      "TypeScript syntax that can be removed without changing behaviour. The `erasableSyntaxOnly` option rejects the rest, which is what native type stripping requires.",
     aliases: ["erasableSyntaxOnly", "type stripping"],
     related: [
       "erasable-syntax-and-type-stripping",
@@ -285,7 +285,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Excess property check",
     tier: "intermediate",
     definition:
-      "The extra check applied to a fresh object literal, rejecting properties the target type does not declare. It does not apply once the literal is in a variable.",
+      "The extra check applied to a fresh object literal, rejecting properties the target type does not `declare`. It does not apply once the literal is in a variable.",
     aliases: ["freshness"],
     related: ["excess-property-checks", "type-widening-and-freshness"],
   },
@@ -294,7 +294,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Exhaustiveness check",
     tier: "intermediate",
     definition:
-      "Assigning a narrowed value to never in an unreachable branch, so adding a union member turns every unhandled site into a compile error.",
+      "Assigning a narrowed value to `never` in an unreachable branch, so adding a union member turns every unhandled site into a compile error.",
     aliases: ["assertNever"],
     related: ["exhaustiveness-checking", "discriminated-unions"],
   },
@@ -303,7 +303,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "exports map",
     tier: "intermediate",
     definition:
-      "The package.json field that declares a package's public entry points per condition — import, require, types — and hides everything else.",
+      "The `package.json` field that declares a package's public entry points per condition — import, require, types — and hides everything else.",
     aliases: ["conditional exports", "subpath exports"],
     related: ["package-json-exports-and-types", "module-resolution-explained"],
   },
@@ -312,7 +312,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Floating promise",
     tier: "advanced",
     definition:
-      "A promise that is never awaited or given a rejection handler. Since Node 15 an unhandled rejection terminates the process by default.",
+      "A promise that is `never` awaited or given a rejection handler. Since Node 15 an unhandled rejection terminates the process by default.",
     related: ["floating-promises-and-void"],
   },
   {
@@ -328,7 +328,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Index signature",
     tier: "intermediate",
     definition:
-      "[key: string]: T, declaring that any key of that type maps to T. Convenient, and the reason a typo'd lookup type-checks.",
+      "[key: string]: T, declaring that `any` key of that type maps to T. Convenient, and the reason a typo'd lookup type-checks.",
     related: ["index-signatures", "nouncheckedindexedaccess"],
   },
   {
@@ -369,7 +369,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Intersection type",
     tier: "intermediate",
     definition:
-      "A & B — a type with everything from both. Conflicting properties are reduced to never rather than rejected outright.",
+      "A & B — a type with everything from both. Conflicting properties are reduced to `never` rather than rejected outright.",
     related: ["intersection-types"],
   },
   {
@@ -413,7 +413,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Mapped type",
     tier: "intermediate",
     definition:
-      "{ [K in keyof T]: … }, transforming every property of a type. Partial, Readonly, and Record are all defined this way.",
+      "{ [K in `keyof` T]: … }, transforming every property of a type. `Partial`, `Readonly`, and `Record` are all defined this way.",
     related: ["mapped-types-intro", "mapped-type-modifiers"],
   },
   {
@@ -429,7 +429,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Module augmentation",
     tier: "advanced",
     definition:
-      "Using declare module to add declarations to another package's types, or declare global to add to the runtime globals.",
+      "Using `declare` module to add declarations to another package's types, or `declare` global to add to the runtime globals.",
     aliases: ["declare global"],
     related: ["module-augmentation", "global-augmentation-for-node"],
   },
@@ -454,7 +454,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Narrowing",
     tier: "beginner",
     definition:
-      "Reducing a value's type within a branch because a check proved something about it. typeof, instanceof, in, equality, and type predicates all narrow.",
+      "Reducing a value's type within a branch because a check proved something about it. `typeof`, `instanceof`, in, equality, and type predicates all narrow.",
     related: ["narrowing-with-typeof", "control-flow-analysis"],
   },
   {
@@ -478,7 +478,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Non-null assertion",
     tier: "beginner",
     definition:
-      "The postfix ! that removes null and undefined from a type without checking anything. A claim by the author, not a proof.",
+      "The postfix ! that removes `null` and `undefined` from a type without checking anything. A claim by the author, not a proof.",
     aliases: ["bang operator"],
     related: ["non-null-assertion", "type-assertions-are-claims"],
   },
@@ -487,7 +487,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "noUncheckedIndexedAccess",
     tier: "intermediate",
     definition:
-      "The option that adds undefined to the result of indexing an array or a record, which is what actually happens at runtime.",
+      "The option that adds `undefined` to the result of indexing an array or a record, which is what actually happens at runtime.",
     related: ["nouncheckedindexedaccess", "array-narrowing"],
   },
   {
@@ -495,7 +495,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Optional property",
     tier: "beginner",
     definition:
-      "A property declared with ?, which may be omitted and whose type includes undefined. exactOptionalPropertyTypes separates those two meanings.",
+      "A property declared with ?, which may be omitted and whose type includes `undefined`. `exactOptionalPropertyTypes` separates those two meanings.",
     related: ["optional-and-readonly-properties", "exactoptionalpropertytypes"],
   },
   {
@@ -527,7 +527,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Project reference",
     tier: "advanced",
     definition:
-      "A tsconfig pointing at another buildable project, letting a monorepo compile in dependency order and share build state.",
+      "A `tsconfig` pointing at another buildable project, letting a monorepo compile in dependency order and share build state.",
     aliases: ["composite"],
     related: ["project-references", "incremental-builds"],
   },
@@ -536,7 +536,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Promise<T>",
     tier: "beginner",
     definition:
-      "A value that will settle to T (or reject). The type parameter is what await and .then receive — Promise<User> is not interchangeable with Promise<any>.",
+      "A value that will settle to T (or reject). The type parameter is what await and .then receive — `Promise`<User> is not interchangeable with `Promise`<`any`>.",
     aliases: ["Promise", "thenable"],
     related: [
       "promise-types",
@@ -550,7 +550,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Promise combinators",
     tier: "intermediate",
     definition:
-      "Helpers such as Promise.all, allSettled, race, and any that combine multiple promises. Their TypeScript typings preserve tuple element types when you pass a fixed tuple of promises.",
+      "Helpers such as `Promise.all`, allSettled, race, and `any` that combine multiple promises. Their TypeScript typings preserve tuple element types when you pass a fixed tuple of promises.",
     aliases: ["Promise.all", "allSettled"],
     related: [
       "promise-combinators",
@@ -613,7 +613,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "strict",
     tier: "beginner",
     definition:
-      "The umbrella option enabling roughly eight individual checks, of which strictNullChecks and noImplicitAny carry most of the value.",
+      "The umbrella option enabling roughly eight individual checks, of which `strictNullChecks` and `noImplicitAny` carry most of the value.",
     related: ["strict-mode", "the-strictness-ladder"],
   },
   {
@@ -621,7 +621,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "strictNullChecks",
     tier: "intermediate",
     definition:
-      "The option that stops null and undefined from being members of every type, making the most common Node runtime crash visible at build time.",
+      "The option that stops `null` and `undefined` from being members of every type, making the most common Node runtime crash visible at build time.",
     related: ["strictnullchecks", "null-and-undefined"],
   },
   {
@@ -646,7 +646,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Top type",
     tier: "beginner",
     definition:
-      "A type everything is assignable to. TypeScript has two — unknown, which is safe, and any, which is not.",
+      "A type everything is assignable to. TypeScript has two — `unknown`, which is safe, and `any`, which is not.",
     related: ["unknown-vs-any"],
   },
   {
@@ -680,7 +680,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Tuple",
     tier: "beginner",
     definition:
-      "An array type with a fixed length and a type per position, such as [string, number]. What Promise.all and destructuring both rely on.",
+      "An array type with a fixed length and a type per position, such as [string, number]. What `Promise.all` and destructuring both rely on.",
     related: ["arrays-and-tuples", "variadic-tuple-types"],
   },
   {
@@ -688,7 +688,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Type alias",
     tier: "beginner",
     definition:
-      "A name for any type at all, declared with type. Unlike an interface it can name unions, tuples, functions, and primitives.",
+      "A name for `any` type at all, declared with type. Unlike an interface it can name unions, tuples, functions, and primitives.",
     related: ["type-aliases-intro", "interface-vs-type-alias"],
   },
   {
@@ -771,7 +771,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "Utility type",
     tier: "intermediate",
     definition:
-      "One of the standard generic types the compiler ships — Partial, Pick, Omit, Record, ReturnType and the rest — all built from mapped and conditional types.",
+      "One of the standard generic types the compiler ships — `Partial`, `Pick`, `Omit`, `Record`, `ReturnType` and the rest — all built from mapped and conditional types.",
     related: ["utility-types-tour", "function-utility-types"],
   },
   {
@@ -795,7 +795,7 @@ export const GLOSSARY: readonly GlossaryTerm[] = [
     term: "void",
     tier: "intermediate",
     definition:
-      "The return type meaning the value must not be relied on. Distinct from undefined, and deliberately loose so any function can be used where one is expected.",
+      "The return type meaning the value must not be relied on. Distinct from `undefined`, and deliberately loose so `any` function can be used where one is expected.",
     related: ["void-and-never", "void-returning-callbacks"],
   },
   {

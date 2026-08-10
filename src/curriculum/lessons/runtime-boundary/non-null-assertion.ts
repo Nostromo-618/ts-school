@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 5,
   summary:
-    "value! tells TypeScript a value is not null or undefined — another claim that can lie at runtime.",
+    "value! tells TypeScript a value is not `null` or `undefined` — another claim that can lie at runtime.",
   prerequisites: ["null-and-undefined", "type-assertions-are-claims"],
   keywords: ["non-null assertion", "!", "definite assignment"],
   problem:
@@ -18,7 +18,7 @@ users.set("1", { name: "Ada" });
 users.get("missing").name;
 `,
     highlights: [{ start: 3, end: 3 }],
-    caption: "Map.get returns undefined when absent.",
+    caption: "Map.get returns `undefined` when absent.",
   },
   ts: {
     code: `type User = { name: string };
@@ -30,7 +30,7 @@ users.get("missing")!.name;
 `,
     highlights: [{ start: 6, end: 6 }],
     caption:
-      "No TypeScript error here — that's the point: ! removes | undefined from the type, not from reality. Prefer an explicit check.",
+      "No TypeScript error here — that's the point: ! removes | `undefined` from the type, not from reality. Prefer an explicit check.",
     expectedDiagnostics: [],
   },
   insight: [
@@ -48,9 +48,9 @@ users.get("missing")!.name;
       id: "q1",
       prompt: "What does expr! change at runtime?",
       choices: [
-        { id: "a", text: "Throws if null" },
+        { id: "a", text: "Throws if `null`" },
         { id: "b", text: "Nothing — it is erased" },
-        { id: "c", text: "Converts null to undefined" },
+        { id: "c", text: "Converts `null` to `undefined`" },
         { id: "d", text: "Freezes the object" },
       ],
       answerId: "b",

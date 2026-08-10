@@ -33,7 +33,7 @@ const ok: Ok = true;
 const bad: Ok = false;
 `,
     highlights: [{ start: 12, end: 12 }],
-    caption: "Type-level Equal asserts inference. false is not true.",
+    caption: "Type-level Equal `asserts` inference. false is not true.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -45,6 +45,6 @@ const bad: Ok = false;
   insight: [
     "Test generics at the type level as well as runtime.",
     "Helpers like Expect/Equal catch inference regressions.",
-    "Keep type tests in .ts files checked by tsc.",
+    "Keep type tests in `.ts` files checked by `tsc`.",
   ],
 };

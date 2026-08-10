@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 13,
   summary:
-    "The same identifier can name a value, a type, or both. Which declarations create which, and how typeof and keyof cross between the two worlds.",
+    "The same identifier can name a value, a type, or both. Which declarations create which, and how `typeof` and `keyof` cross between the two worlds.",
   prerequisites: ["structural-typing", "types-are-erased"],
   keywords: [
     "type space",
@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "namespace",
   ],
   problem:
-    "Cannot find name X — used as a value — appears when you reference a type where a value was needed, and the message never says which space it looked in.",
+    "Cannot find name X — used as a value — appears when you reference a type where a value was needed, and the message `never` says which space it looked in.",
   js: {
     code: `const User = { id: 1 };
 `,
@@ -43,7 +43,7 @@ const bad: number = u.id;
   },
   insight: [
     "type/interface live in type space; const/function in value space.",
-    "typeof bridges value to type.",
+    "`typeof` bridges value to type.",
     "Confusion here causes 'used as a value' errors.",
   ],
 };

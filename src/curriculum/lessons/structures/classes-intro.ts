@@ -39,9 +39,9 @@ u.mail.toLowerCase();
     expectedDiagnostics: [{ code: 2551, line: 9, messageIncludes: "mail" }],
   },
   insight: [
-    "public/private/protected in the constructor parameter list declare and assign fields.",
+    "public/private/protected in the constructor parameter list `declare` and assign fields.",
     "implements Interface checks the instance shape; it does not change emit.",
-    "Prefer plain objects + functions unless you need identity, instanceof, or inheritance.",
+    "Prefer plain objects + functions unless you need identity, `instanceof`, or inheritance.",
   ],
   quiz: [
     {

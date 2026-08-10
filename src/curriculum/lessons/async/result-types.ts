@@ -16,7 +16,7 @@ export const lesson: Lesson = {
     code: `function parse(x) { try { return JSON.parse(x); } catch { return null; } }
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "null means both empty and failure.",
+    caption: "`null` means both empty and failure.",
   },
   ts: {
     code: `type Result<T, E = string> =

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 10,
   summary:
-    "T = unknown gives a generic a sensible zero value, which is how a library stays usable without every call site spelling out its types.",
+    "T = `unknown` gives a generic a sensible zero value, which is how a library stays usable without every call site spelling out its types.",
   prerequisites: ["generic-constraints"],
   keywords: [
     "default type parameter",

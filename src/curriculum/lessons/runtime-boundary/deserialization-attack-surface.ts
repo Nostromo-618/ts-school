@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 16,
   summary:
-    "Prototype pollution, JSON.parse revivers, structuredClone, and merge helpers — the places where parsing untrusted data changes your program rather than describing it.",
+    "Prototype pollution, `JSON.parse` revivers, `structuredClone`, and merge helpers — the places where parsing untrusted data changes your program rather than describing it.",
   prerequisites: ["narrowing-untrusted-objects"],
   keywords: [
     "prototype pollution",
@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "security",
   ],
   problem:
-    "A deep-merge helper applied to a request body can rewrite Object.prototype for the whole process.",
+    "A deep-merge helper applied to a request body can rewrite `Object.prototype` for the whole process.",
   js: {
     code: `// JS: recursive merge trusts keys like __proto__.
 function merge(target, source) {
@@ -29,7 +29,7 @@ function merge(target, source) {
 merge({}, JSON.parse('{"__proto__":{"polluted":true}}'));
 `,
     highlights: [{ start: 2, end: 8 }],
-    caption: "Merging untrusted keys can pollute Object.prototype.",
+    caption: "Merging untrusted keys can pollute `Object.prototype`.",
   },
   ts: {
     code: `type Json = string | number | boolean | null | Json[] | { [k: string]: Json };
@@ -60,7 +60,7 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
 `,
     highlights: [{ start: 24, end: 24 }],
     caption:
-      "Allowlists + skipped proto keys; name is still string | undefined.",
+      "Allowlists + skipped proto keys; name is still string | `undefined`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -76,7 +76,7 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
   ],
   security: {
     title: "Prototype pollution",
-    body: "Recursive assignment of attacker-controlled keys can alter Object.prototype and bypass authorization checks that look like ordinary property reads. Treat merge/reviver paths as critical.",
+    body: "Recursive assignment of attacker-controlled keys can alter `Object.prototype` and bypass authorization checks that look like ordinary property reads. Treat merge/reviver paths as critical.",
     severity: "critical",
   },
   quiz: [
@@ -89,7 +89,7 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
           id: "b",
           text: "Allowlist known keys and ignore prototype-sensitive names",
         },
-        { id: "c", text: "JSON.parse and cast to any" },
+        { id: "c", text: "`JSON.parse` and cast to `any`" },
         { id: "d", text: "Use eval" },
       ],
       answerId: "b",
@@ -99,13 +99,13 @@ if (typeof raw === "object" && raw && !Array.isArray(raw)) {
   ],
   exercise: {
     prompt:
-      "Write function isPlainObject(x: unknown): x is Record<string, unknown> using typeof and prototype checks.",
+      "Write function isPlainObject(x: `unknown`): x is `Record`<string, `unknown`> using `typeof` and prototype checks.",
     starter: `function isPlainObject(x: unknown): x is Record<string, unknown> {
   return false;
 }
 `,
     assertion: "no-errors",
-    hints: ['typeof x === "object" && x !== null && !Array.isArray(x)'],
+    hints: ['`typeof` x === "object" && x !== `null` && !`Array.isArray`(x)'],
     solution: `function isPlainObject(x: unknown): x is Record<string, unknown> {
   return typeof x === "object" && x !== null && !Array.isArray(x);
 }

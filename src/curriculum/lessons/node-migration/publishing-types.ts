@@ -45,7 +45,7 @@ const n: number = u;
 `,
     highlights: [{ start: 15, end: 15 }],
     caption:
-      "Public returns should be explicit; optional Map values are | undefined.",
+      "Public returns should be explicit; optional Map values are | `undefined`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -57,7 +57,7 @@ const n: number = u;
   insight: [
     "Emit declaration files and verify them with arethetypeswrong / publint.",
     "Prefer explicit return types on exports so .d.ts does not reference private names.",
-    "Align package.json exports types conditions with the JS entrypoints you ship.",
+    "Align `package.json` exports types conditions with the JS entrypoints you ship.",
   ],
   security: {
     title: "Declaration soundness is an API contract",

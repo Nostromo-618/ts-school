@@ -46,7 +46,7 @@ sum(1, 2, "3");
         { id: "a", text: "number" },
         { id: "b", text: "number[]" },
         { id: "c", text: "arguments" },
-        { id: "d", text: "unknown" },
+        { id: "d", text: "`unknown`" },
       ],
       answerId: "b",
       explanation: "Rest parameters are arrays of the element type.",

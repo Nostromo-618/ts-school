@@ -60,7 +60,7 @@ void ok;
         { id: "a", text: "number" },
         { id: "b", text: "string" },
         { id: "c", text: "string | number" },
-        { id: "d", text: "never" },
+        { id: "d", text: "`never`" },
       ],
       answerId: "c",
       explanation:

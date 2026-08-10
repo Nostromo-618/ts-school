@@ -21,7 +21,7 @@ const user = { firstname: "Ada", lastName: "Lovelace" };
 fullName(user);
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "A casing typo becomes 'undefined Lovelace' at runtime.",
+    caption: "A casing typo becomes '`undefined` Lovelace' at runtime.",
   },
   ts: {
     code: `type User = { firstName: string; lastName: string };
@@ -34,7 +34,7 @@ const user = { firstname: "Ada", lastName: "Lovelace" };
 fullName(user);
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "TS2345 spells out the missing property — firstName vs firstname.",
+    caption: "`TS2345` spells out the missing property — firstName vs firstname.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -53,12 +53,12 @@ fullName(user);
       id: "q1",
       prompt: "Best first step when reading a long assignability error?",
       choices: [
-        { id: "a", text: "Add as any to silence it" },
+        { id: "a", text: "Add as `any` to silence it" },
         {
           id: "b",
           text: "Find the expected vs actual types and the flagged expression",
         },
-        { id: "c", text: "Delete the tsconfig" },
+        { id: "c", text: "Delete the `tsconfig`" },
         { id: "d", text: "Upgrade TypeScript immediately" },
       ],
       answerId: "b",

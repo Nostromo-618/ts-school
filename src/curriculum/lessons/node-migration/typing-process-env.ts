@@ -7,17 +7,17 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 12,
   summary:
-    "Every variable is string | undefined. Parsing environment into a validated config object once, at startup, instead of reading it forty times.",
+    "Every variable is string | `undefined`. Parsing environment into a validated config object once, at startup, instead of reading it forty times.",
   prerequisites: ["schema-validation-libraries", "node-builtin-modules"],
   keywords: ["process.env", "config", "environment", "validation", "12 factor"],
   problem:
-    'A missing environment variable becomes undefined, then "undefined" in a URL, and the failure surfaces as a 404 from an upstream service.',
+    'A missing environment variable becomes `undefined`, then "`undefined`" in a URL, and the failure surfaces as a 404 from an upstream service.',
   js: {
     code: `const port = process.env.PORT;
 listen(port);
 `,
     highlights: [{ start: 1, end: 2 }],
-    caption: "Passing process.env.PORT straight into listen.",
+    caption: "Passing `process.env`.PORT straight into listen.",
   },
   ts: {
     code: `declare const process: { env: Record<string, string | undefined> };
@@ -43,7 +43,7 @@ const bad: number = process.env.PORT;
 `,
     highlights: [{ start: 20, end: 20 }],
     caption:
-      "Require and parse. Env values are string | undefined, not number.",
+      "Require and parse. Env values are string | `undefined`, not number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -53,7 +53,7 @@ const bad: number = process.env.PORT;
     ],
   },
   insight: [
-    "Env values are string | undefined until you parse them.",
+    "Env values are string | `undefined` until you parse them.",
     "Build a typed config object at startup.",
     "Treat empty string as missing.",
   ],

@@ -18,7 +18,7 @@ export const lesson: Lesson = {
     "backpressure",
   ],
   problem:
-    "Streams predate generics in Node's types, so object-mode chunks are typed as any unless you say otherwise.",
+    "Streams predate generics in Node's types, so object-mode chunks are typed as `any` unless you say otherwise.",
   js: {
     code: `readable.on("data", (chunk) => {
   sink.write(chunk.toUpperCase());

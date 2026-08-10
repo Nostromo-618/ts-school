@@ -32,7 +32,7 @@ function handle(body) {
 handle({ userId: 42 });
 `,
     highlights: [{ start: 2, end: 2 }],
-    caption: "TS7006: parameter 'body' implicitly has an `any` type.",
+    caption: "`TS7006`: parameter 'body' implicitly has an `any` type.",
     expectedDiagnostics: [
       {
         code: 7006,

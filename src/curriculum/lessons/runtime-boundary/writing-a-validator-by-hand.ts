@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 8,
   summary:
-    "Building an honest object validator from unknown up: property presence, primitive checks, arrays, and the error messages that make it usable.",
+    "Building an honest object validator from `unknown` up: property presence, primitive checks, arrays, and the error messages that make it usable.",
   prerequisites: ["assertion-functions", "array-narrowing"],
   keywords: [
     "validator",
@@ -86,7 +86,7 @@ const bad: number = leaked.id;
   insight: [
     "Validate every field you will read; skip nothing because 'the client is ours'.",
     "Return `{ ok, value } | { ok, error }` (or throw) so failure cannot be ignored as silently as a boolean.",
-    "Build the output object from checked primitives — do not return the original unknown reference.",
+    "Build the output object from checked primitives — do not return the original `unknown` reference.",
   ],
   security: {
     title: "Validators must fail closed",
@@ -95,7 +95,7 @@ const bad: number = leaked.id;
   },
   exercise: {
     prompt:
-      "Complete `parsePort` so it accepts unknown and returns a ParseResult<number> for integers 1–65535.",
+      "Complete `parsePort` so it accepts `unknown` and returns a ParseResult<number> for integers 1–65535.",
     starter: `type ParseResult<T> =
   | { ok: true; value: T }
   | { ok: false; error: string };

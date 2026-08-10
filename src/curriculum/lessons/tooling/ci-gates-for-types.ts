@@ -44,7 +44,7 @@ void ok;
     ],
   },
   insight: [
-    "Put tsc --noEmit early in CI; cache .tsbuildinfo when using incremental/project references.",
+    "Put `tsc` --`noEmit` early in CI; cache .tsbuildinfo when using incremental/project references.",
     "Ratchets encode a budget; tighten maxErrors over time.",
     "Do not let suppressions grow unbounded — count @ts-expect-error too.",
   ],

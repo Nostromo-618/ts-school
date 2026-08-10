@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "emit",
   ],
   problem:
-    "Renaming a base-class method leaves the subclass with a method that overrides nothing and is never called.",
+    "Renaming a base-class method leaves the subclass with a method that overrides nothing and is `never` called.",
   js: {
     code: `class Dog extends Animal { speak() { return 'woof'; } }
 `,

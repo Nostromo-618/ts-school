@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "functions",
   order: 7,
   summary:
-    "A type parameter is a hole the caller fills. The difference between a function that takes any and one that takes T is the difference between forgetting and remembering.",
+    "A type parameter is a hole the caller fills. The difference between a function that takes `any` and one that takes T is the difference between forgetting and remembering.",
   prerequisites: ["typing-parameters-and-returns", "union-types"],
   keywords: ["generic", "type parameter", "identity", "reuse", "inference"],
   problem:
-    "A helper typed with any hands back any, so one utility function erases types across the entire codebase that uses it.",
+    "A helper typed with `any` hands back `any`, so one utility function erases types across the entire codebase that uses it.",
   js: {
     code: `function identity(x) { return x; }
 const n = identity(1);
@@ -47,16 +47,16 @@ const bad: number = identity("a");
     {
       id: "q1",
       prompt:
-        "What does identity<T>(x: T): T preserve that identity(x: any): any loses?",
+        "What does identity<T>(x: T): T preserve that identity(x: `any`): `any` loses?",
       choices: [
         { id: "a", text: "The caller's concrete type through the call" },
-        { id: "b", text: "Runtime typeof checks" },
+        { id: "b", text: "Runtime `typeof` checks" },
         { id: "c", text: "Promise wrapping" },
         { id: "d", text: "Private field access" },
       ],
       answerId: "a",
       explanation:
-        "T links the argument type to the return type; any forgets both.",
+        "T links the argument type to the return type; `any` forgets both.",
     },
   ],
 };

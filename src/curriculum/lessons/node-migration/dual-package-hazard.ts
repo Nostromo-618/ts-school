@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["package-json-exports-and-types"],
   keywords: ["dual package", "conditional exports", "cjs", "esm", "instanceof"],
   problem:
-    "Two copies of the same class means instanceof fails between them, and the types compare as unrelated.",
+    "Two copies of the same class means `instanceof` fails between them, and the types compare as unrelated.",
   js: {
     code: `// JS dual packages: two evaluations of the same class file.
 // instanceof across CJS/ESM copies returns false for "the same" class.
@@ -46,12 +46,12 @@ acceptA(fromB);
   },
   insight: [
     "Prefer a single module format for libraries when possible; dual publishing needs careful exports.",
-    "instanceof and singletons are unsafe across duplicated copies.",
+    "`instanceof` and singletons are unsafe across duplicated copies.",
     "arethetypeswrong and Node’s dual-package docs describe the hazard conditions.",
   ],
   security: {
     title: "Identity checks across copies",
-    body: "Security checks that use instanceof Error/Token across package boundaries can fail open or closed incorrectly when two copies exist. Prefer duck-typing with brands or shared symbols from one package.",
+    body: "Security checks that use `instanceof` Error/Token across package boundaries can fail open or closed incorrectly when two copies exist. Prefer duck-typing with brands or shared symbols from one package.",
     severity: "caution",
   },
   quiz: [
@@ -59,9 +59,9 @@ acceptA(fromB);
       id: "dual-q",
       prompt: "Classic dual-package runtime symptom?",
       choices: [
-        { id: "a", text: "tsc runs faster" },
-        { id: "b", text: "instanceof fails between CJS and ESM copies" },
-        { id: "c", text: "JSON.parse throws" },
+        { id: "a", text: "`tsc` runs faster" },
+        { id: "b", text: "`instanceof` fails between CJS and ESM copies" },
+        { id: "c", text: "`JSON.parse` throws" },
         { id: "d", text: "pnpm cannot install" },
       ],
       answerId: "b",

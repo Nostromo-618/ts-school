@@ -66,7 +66,7 @@ const n = collapsed(1);
         { id: "a", text: "A compile error" },
         { id: "b", text: "An instantiation expression: (x: string) => string" },
         { id: "c", text: 'The string "identity"' },
-        { id: "d", text: "A Promise<string>" },
+        { id: "d", text: "A `Promise`<string>" },
       ],
       answerId: "b",
       explanation:

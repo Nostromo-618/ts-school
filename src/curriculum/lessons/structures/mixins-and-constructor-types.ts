@@ -54,7 +54,7 @@ const wrong: string = e.createdAt;
 void created;
 `,
     highlights: [{ start: 16, end: 16 }],
-    caption: "Mixin constructors use any[] rest; instance fields compose.",
+    caption: "Mixin constructors use `any`[] rest; instance fields compose.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -64,7 +64,7 @@ void created;
     ],
   },
   insight: [
-    "Mixin constructors need `new (...args: any[]) => T` — never[] trips TS2545.",
+    "Mixin constructors need `new (...args: any[]) => T` — `never`[] trips `TS2545`.",
     "The returned class expression intersects the base instance type with new fields.",
     "Prefer composition (has-a) when mixin lattices get hard to follow.",
   ],

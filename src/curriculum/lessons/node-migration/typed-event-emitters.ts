@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["template-literal-types-intro", "typing-http-servers"],
   keywords: ["EventEmitter", "events", "typed events", "on", "emit", "generic"],
   problem:
-    "emitter.on('conected', handler) compiles, runs, and never fires, because event names are just strings.",
+    "emitter.on('conected', handler) compiles, runs, and `never` fires, because event names are just strings.",
   js: {
     code: `emitter.on("user", (u) => {
   send(u.email);
@@ -48,6 +48,6 @@ emitter.emit("user", { id: "1" });
   insight: [
     "Map event names to payload types so emit/on stay in sync.",
     "Wrap EventEmitter or use a typed emitter helper.",
-    "Remove listeners with AbortSignal to avoid leaks.",
+    "Remove listeners with `AbortSignal` to avoid leaks.",
   ],
 };

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 15,
   summary:
-    "constructor(private readonly db: Db) declares and assigns in one place — and emits real JavaScript, so it cannot be type-stripped.",
+    "constructor(private `readonly` db: Db) declares and assigns in one place — and emits real JavaScript, so it cannot be type-stripped.",
   prerequisites: [
     "class-member-visibility",
     "erasable-syntax-and-type-stripping",
@@ -38,7 +38,7 @@ const n: string = u.name;
 const bad: number = u.name;
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Parameter properties declare and assign. name is string.",
+    caption: "Parameter properties `declare` and assign. name is string.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -48,8 +48,8 @@ const bad: number = u.name;
     ],
   },
   insight: [
-    "readonly/public/private on ctor params create fields.",
+    "`readonly`/public/private on ctor params create fields.",
     "Keep them for simple data holders; prefer explicit fields when logic grows.",
-    "erasableSyntaxOnly may restrict some parameter property forms.",
+    "`erasableSyntaxOnly` may restrict some parameter property forms.",
   ],
 };

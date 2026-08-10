@@ -35,7 +35,7 @@ const p: Promise<void> = db.connect();
 const bad: number = db.connect();
 `,
     highlights: [{ start: 8, end: 8 }],
-    caption: "Generic mockModule preserves connect's Promise<void>.",
+    caption: "Generic mockModule preserves connect's `Promise`<`void`>.",
     expectedDiagnostics: [
       {
         code: 2322,

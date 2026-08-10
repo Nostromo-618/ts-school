@@ -20,7 +20,7 @@ export const lesson: Lesson = {
     "MessagePort",
   ],
   problem:
-    "postMessage accepts any, so the protocol between two threads in the same repository is documented nowhere.",
+    "postMessage accepts `any`, so the protocol between two threads in the same repository is documented nowhere.",
   js: {
     code: `// JS workers: postMessage anything — functions silently drop.
 parentPort.postMessage({ type: "result", fn: () => 1 });
@@ -59,7 +59,7 @@ void onMessage;
   insight: [
     "Define request/response unions shared by both threads — same as a network protocol.",
     "Structured clone supports many built-ins but not functions or DOM nodes in Node workers the same way.",
-    "Validate unknown messages at the edge; do not trust postMessage peers blindly.",
+    "Validate `unknown` messages at the edge; do not trust postMessage peers blindly.",
   ],
   security: {
     title: "Workers are a trust boundary",

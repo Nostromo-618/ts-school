@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 3,
   summary:
-    "Node-style (err, value) callbacks become Promise<T> with explicit error rejection — type both sides of the bridge.",
+    "Node-style (err, value) callbacks become `Promise`<T> with explicit error rejection — type both sides of the bridge.",
   prerequisites: ["async-await-typing", "function-type-expressions"],
   keywords: ["callback", "promisify", "errback", "Node"],
   problem:
@@ -53,7 +53,7 @@ readConfig((err, value) => {
     expectedDiagnostics: [{ code: 18048, line: 19, messageIncludes: "value" }],
   },
   insight: [
-    "Model err-first callbacks as (err: Error | null, value?: T) => void.",
+    "Model err-first callbacks as (err: Error | `null`, value?: T) => `void`.",
     "Promisify by rejecting on err and resolving only when value is present.",
     "Prefer native promise APIs (fs/promises) over hand-rolled wrappers when available.",
   ],
@@ -65,7 +65,7 @@ readConfig((err, value) => {
         { id: "a", text: "Use value immediately" },
         { id: "b", text: "Check err (and value) before use" },
         { id: "c", text: "Ignore err if value looks fine" },
-        { id: "d", text: "Cast value as any" },
+        { id: "d", text: "Cast value as `any`" },
       ],
       answerId: "b",
       explanation: "err and value are a discriminated pair by convention.",

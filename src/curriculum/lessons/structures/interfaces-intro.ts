@@ -20,7 +20,7 @@ export const lesson: Lesson = {
 saveUser({ id: "1", email: "a@b.co" });
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "id vs userId — undefined in the database key.",
+    caption: "id vs userId — `undefined` in the database key.",
   },
   ts: {
     code: `interface User {
@@ -50,7 +50,7 @@ saveUser({ id: "1", email: "a@b.co" });
       choices: [
         { id: "a", text: "Yes, as a constructor" },
         { id: "b", text: "No — it is erased" },
-        { id: "c", text: "Only under strict mode" },
+        { id: "c", text: "Only under `strict` mode" },
         { id: "d", text: "Only if you use implements" },
       ],
       answerId: "b",

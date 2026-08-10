@@ -87,14 +87,14 @@ const k: Keys = "a.b.x";
   ],
   exercise: {
     prompt:
-      "Replace a deep recursive Keys helper usage with a simple keyof for a flat config type. Export type FlatKeys = keyof Config.",
+      "Replace a deep recursive Keys helper usage with a simple `keyof` for a flat config type. Export type FlatKeys = `keyof` Config.",
     starter: `type Config = { host: string; port: number };
 type FlatKeys = string; // TODO: keyof Config
 
 const k: FlatKeys = "nope";
 `,
     assertion: "no-errors",
-    hints: ["type FlatKeys = keyof Config; use a valid key in the const."],
+    hints: ["type FlatKeys = `keyof` Config; use a valid key in the const."],
     solution: `type Config = { host: string; port: number };
 type FlatKeys = keyof Config;
 

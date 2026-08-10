@@ -18,7 +18,7 @@ export const lesson: Lesson = {
     "generic",
   ],
   problem:
-    "A retry helper typed with (...args: any[]) => any turns every wrapped function into an untyped one.",
+    "A retry helper typed with (...args: `any`[]) => `any` turns every wrapped function into an untyped one.",
   js: {
     code: `// JS: wrap and hope.
 function withRetry(fn) {
@@ -66,35 +66,35 @@ const bad: number = user.id;
     ],
   },
   insight: [
-    "Capture parameters as a tuple type A extends unknown[] and the Promise result as R.",
-    "Avoid any in wrapper signatures — that is how types leak out of a whole call graph.",
+    "Capture parameters as a tuple type A extends `unknown`[] and the Promise result as R.",
+    "Avoid `any` in wrapper signatures — that is how types leak out of a whole call graph.",
     "The same pattern types withTimeout / withSpan / withLogging.",
   ],
   quiz: [
     {
       id: "wrap-q",
-      prompt: "Why use A extends unknown[] instead of any[] for wrapper args?",
+      prompt: "Why use A extends `unknown`[] instead of `any`[] for wrapper args?",
       choices: [
-        { id: "a", text: "any[] is a syntax error" },
+        { id: "a", text: "`any`[] is a syntax error" },
         { id: "b", text: "Tuple inference preserves each parameter’s type" },
-        { id: "c", text: "unknown[] is shorter" },
-        { id: "d", text: "Promise requires unknown[]" },
+        { id: "c", text: "`unknown`[] is shorter" },
+        { id: "d", text: "Promise requires `unknown`[]" },
       ],
       answerId: "b",
       explanation:
-        "A generic tuple type keeps positional types; any[] collapses them.",
+        "A generic tuple type keeps positional types; `any`[] collapses them.",
     },
   ],
   exercise: {
     prompt:
-      "Write withLog that wraps (...args: A) => Promise<R> and returns the same signature, calling fn once.",
+      "Write withLog that wraps (...args: A) => `Promise`<R> and returns the same signature, calling fn once.",
     starter: `function withLog(fn: Function) {
   return fn;
 }
 `,
     assertion: "no-errors",
     hints: [
-      "Generic A extends unknown[], R; return async (...args: A) => fn(...args).",
+      "Generic A extends `unknown`[], R; return async (...args: A) => fn(...args).",
     ],
     solution: `function withLog<A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,

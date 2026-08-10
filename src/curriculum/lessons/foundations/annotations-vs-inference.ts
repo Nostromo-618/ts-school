@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 4,
   summary:
-    "When to write the type yourself and when to let TypeScript infer it — and the quiet ways inference can widen further than you meant.",
+    "When to write the type yourself and when to let TypeScript `infer` it — and the quiet ways inference can widen further than you meant.",
   prerequisites: ["types-are-erased"],
   keywords: ["inference", "annotation", "let", "const", "explicit types"],
   problem:
@@ -54,7 +54,7 @@ listen("3000");
   insight: [
     "Prefer inference for locals whose initializer already states the type clearly.",
     "Annotate function parameters, public returns, and values that cross module boundaries.",
-    "When inference produces a union you did not want, fix the initializer or add an annotation — do not silence with any.",
+    "When inference produces a union you did not want, fix the initializer or add an annotation — do not silence with `any`.",
   ],
   quiz: [
     {
@@ -85,7 +85,7 @@ function listen(envPort: string | undefined) {
 listen("3000");
 `,
     assertion: "no-errors",
-    hints: ["envPort === undefined ? 3000 : Number(envPort)"],
+    hints: ["envPort === `undefined` ? 3000 : Number(envPort)"],
     solution: `function createServer(port: number) {
   return { listen: () => port };
 }

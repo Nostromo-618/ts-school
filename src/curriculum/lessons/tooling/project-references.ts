@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 17,
   summary:
-    "Splitting a repository into buildable units, tsc --build, and the difference between referencing a project and importing its source.",
+    "Splitting a repository into buildable units, `tsc` --build, and the difference between referencing a project and importing its source.",
   prerequisites: ["incremental-builds", "package-json-exports-and-types"],
   keywords: [
     "project references",
@@ -63,7 +63,7 @@ void root;
       prompt: "What does composite enable?",
       choices: [
         { id: "a", text: "Skipping typecheck forever" },
-        { id: "b", text: "Project references / tsc --build participation" },
+        { id: "b", text: "Project references / `tsc` --build participation" },
         { id: "c", text: "Only prettier" },
         { id: "d", text: "DOM libs" },
       ],

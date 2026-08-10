@@ -60,7 +60,7 @@ send("not-parsed@example.com");
       { start: 22, end: 22 },
     ],
     caption:
-      "Parsing returns Email | null. Passing a plain string to send is a type error.",
+      "Parsing returns Email | `null`. Passing a plain string to send is a type error.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -90,7 +90,7 @@ send("not-parsed@example.com");
           id: "b",
           text: "Call sites that need Email must go through the parse path.",
         },
-        { id: "c", text: "It avoids using unknown." },
+        { id: "c", text: "It avoids using `unknown`." },
       ],
       answerId: "b",
       explanation:

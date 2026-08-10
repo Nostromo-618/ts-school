@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["tsc-cli", "module-resolution-explained"],
   keywords: ["incremental", "tsbuildinfo", "composite", "cache", "build"],
   problem:
-    "A stale tsbuildinfo makes tsc report success on code it did not check, which is worse than being slow.",
+    "A stale tsbuildinfo makes `tsc` report success on code it did not check, which is worse than being slow.",
   js: {
     code: `// tsc runs cold every CI job
 `,

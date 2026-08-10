@@ -22,7 +22,7 @@ read(10);
 read("file.txt", "utf8");
 `,
     highlights: [{ start: 2, end: 5 }],
-    caption: "JS overloads are comments; any call shape is allowed.",
+    caption: "JS overloads are comments; `any` call shape is allowed.",
   },
   ts: {
     code: `function read(fd: number): Uint8Array;
@@ -74,7 +74,7 @@ const c: string = read(3);
   ],
   exercise: {
     prompt:
-      "Declare overloads for len(s: string): number and len(arr: unknown[]): number with a shared implementation.",
+      "Declare overloads for len(s: string): number and len(arr: `unknown`[]): number with a shared implementation.",
     starter: `function len(x: string | unknown[]): number {
   return x.length;
 }

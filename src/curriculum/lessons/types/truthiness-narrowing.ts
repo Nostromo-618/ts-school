@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 9,
   summary:
-    "if (value) removes null, undefined, 0, NaN, and the empty string from a type. That is usually more than you meant.",
+    "if (value) removes `null`, `undefined`, 0, NaN, and the empty string from a type. That is usually more than you meant.",
   prerequisites: ["narrowing-with-typeof", "null-and-undefined"],
   keywords: ["truthiness", "falsy", "narrowing", "if"],
   problem:
@@ -37,26 +37,26 @@ export const shown = label(0);
 `,
     highlights: [{ start: 3, end: 5 }],
     caption:
-      "No TypeScript error here — that's the point: truthiness treats 0 as empty. Prefer != null when 0 is meaningful.",
+      "No TypeScript error here — that's the point: truthiness treats 0 as empty. Prefer != `null` when 0 is meaningful.",
     expectedDiagnostics: [],
   },
   insight: [
     "Truthiness narrowing removes all falsy values, not just nullish ones.",
-    'For numbers and strings that may be 0 or "", check == null or === undefined explicitly.',
+    'For numbers and strings that may be 0 or "", check == `null` or === `undefined` explicitly.',
     "if (value) is fine for objects and nullable references when empty is not a value you care about.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "Which check keeps 0 but rejects undefined?",
+      prompt: "Which check keeps 0 but rejects `undefined`?",
       choices: [
         { id: "a", text: "if (count)" },
-        { id: "b", text: "if (count != null)" },
+        { id: "b", text: "if (count != `null`)" },
         { id: "c", text: "if (count === true)" },
         { id: "d", text: "if (!!count)" },
       ],
       answerId: "b",
-      explanation: "!= null rejects only null and undefined.",
+      explanation: "!= `null` rejects only `null` and `undefined`.",
     },
   ],
   exercise: {
@@ -71,7 +71,7 @@ export const shown = label(0);
 export const shown = label(0);
 `,
     assertion: "no-errors",
-    hints: ["if (count != null)"],
+    hints: ["if (count != `null`)"],
     solution: `function label(count: number | undefined): string {
   if (count != null) {
     return "count=" + count.toFixed(0);

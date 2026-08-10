@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 5,
   summary:
-    "JavaScript lets you throw anything, so a caught value is unknown under useUnknownInCatchVariables. What to do with it before assuming it is an Error.",
+    "JavaScript lets you throw anything, so a caught value is `unknown` under useUnknownInCatchVariables. What to do with it before assuming it is an Error.",
   prerequisites: ["unknown-vs-any", "async-await-typing"],
   keywords: [
     "catch",
@@ -38,7 +38,7 @@ export async function main(): Promise<void> {
 `,
     highlights: [{ start: 8, end: 8 }],
     caption:
-      "Under useUnknownInCatchVariables / strict, e is unknown — no .message.",
+      "Under useUnknownInCatchVariables / `strict`, e is `unknown` — no .message.",
     expectedDiagnostics: [
       {
         code: 18046,
@@ -48,9 +48,9 @@ export async function main(): Promise<void> {
     ],
   },
   insight: [
-    "catch bindings are unknown in modern TS configs.",
-    "Narrow with instanceof Error before reading message.",
-    "Never type catch as any to silence this.",
+    "catch bindings are `unknown` in modern TS configs.",
+    "Narrow with `instanceof` Error before reading message.",
+    "Never type catch as `any` to silence this.",
   ],
   security: {
     title: "Error messages can leak internals",
@@ -59,7 +59,7 @@ export async function main(): Promise<void> {
   },
   exercise: {
     prompt:
-      "Narrow e with instanceof Error before reading .message (else String(e)). Match the solution text.",
+      "Narrow e with `instanceof` Error before reading .message (else `String`(e)). Match the solution text.",
     starter: `declare function run(): Promise<void>;
 declare function log(msg: string): void;
 
@@ -72,7 +72,7 @@ export async function main(): Promise<void> {
 }
 `,
     assertion: "no-errors",
-    hints: ["if (e instanceof Error) log(e.message); else log(String(e));"],
+    hints: ["if (e `instanceof` Error) log(e.message); else log(`String`(e));"],
     solution: `declare function run(): Promise<void>;
 declare function log(msg: string): void;
 

@@ -39,7 +39,7 @@ const bad: number = user.id;
   },
   insight: [
     "Runtime expects do not narrow TS types unless you wrap them.",
-    "asserts x is T bridges test asserts into control flow.",
+    "`asserts` x is T bridges test `asserts` into control flow.",
     "Alternatively assign after a guard.",
   ],
   quiz: [
@@ -50,14 +50,14 @@ const bad: number = user.id;
         { id: "a", text: "Yes — the checker understands Jest matchers" },
         {
           id: "b",
-          text: "No — wrap with an asserts function or assign after a guard",
+          text: "No — wrap with an `asserts` function or assign after a guard",
         },
-        { id: "c", text: "Only under strictNullChecks" },
-        { id: "d", text: "Only when user is any" },
+        { id: "c", text: "Only under `strictNullChecks`" },
+        { id: "d", text: "Only when user is `any`" },
       ],
       answerId: "b",
       explanation:
-        "Matcher libraries prove things at runtime; TypeScript needs asserts x is T (or a local guard) to narrow.",
+        "Matcher libraries prove things at runtime; TypeScript needs `asserts` x is T (or a local guard) to narrow.",
     },
   ],
 };

@@ -82,8 +82,8 @@ send(raw);
           id: "b",
           text: "A parser/smart constructor that validates then brands",
         },
-        { id: "c", text: "JSON.parse" },
-        { id: "d", text: "process.env" },
+        { id: "c", text: "`JSON.parse`" },
+        { id: "d", text: "`process.env`" },
       ],
       answerId: "b",
       explanation:
@@ -92,7 +92,7 @@ send(raw);
   ],
   exercise: {
     prompt:
-      'Define UserId brand and parseUserId(s: string): UserId | null requiring s.startsWith("user_").',
+      'Define UserId brand and parseUserId(s: string): UserId | `null` requiring s.startsWith("user_").',
     starter: `type UserId = string;
 function parseUserId(s: string): UserId | null {
   return s as UserId;
@@ -100,7 +100,7 @@ function parseUserId(s: string): UserId | null {
 `,
     assertion: "no-errors",
     hints: [
-      "Use a unique symbol brand; return null when the prefix is missing.",
+      "Use a unique symbol brand; return `null` when the prefix is missing.",
     ],
     solution: `declare const userIdBrand: unique symbol;
 type UserId = string & { readonly [userIdBrand]: void };

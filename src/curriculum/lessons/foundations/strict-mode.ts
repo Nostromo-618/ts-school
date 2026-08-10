@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 9,
   summary:
-    "strict is eight flags in a trench coat. What each one rejects, and why turning them on individually is the practical route for an existing codebase.",
+    "`strict` is eight flags in a trench coat. What each one rejects, and why turning them on individually is the practical route for an existing codebase.",
   prerequisites: ["any-and-implicit-any"],
   keywords: ["strict", "strictNullChecks", "noImplicitAny", "flags", "config"],
   problem:
-    "Without strict, TypeScript agrees that undefined is a perfectly good string, which removes most of the reason to adopt it.",
+    "Without `strict`, TypeScript agrees that `undefined` is a perfectly good string, which removes most of the reason to adopt it.",
   js: {
     code: `function label(user) {
   // user might be missing; .name still "works" until it doesn't.
@@ -51,7 +51,7 @@ label(undefined);
   quiz: [
     {
       id: "q1",
-      prompt: "Which `strict` flag rejects undefined where a User is required?",
+      prompt: "Which `strict` flag rejects `undefined` where a User is required?",
       choices: [
         { id: "a", text: "`noUnusedLocals`" },
         { id: "b", text: "`strictNullChecks`" },
@@ -74,7 +74,7 @@ function label(user: User) {
 label(undefined);
 `,
     assertion: "no-errors",
-    hints: ['user: User | undefined, then user?.name ?? "guest"'],
+    hints: ['user: User | `undefined`, then user?.name ?? "guest"'],
     solution: `type User = { name: string };
 
 function label(user: User | undefined) {

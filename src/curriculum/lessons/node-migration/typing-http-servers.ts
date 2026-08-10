@@ -55,7 +55,7 @@ declare const req: IncomingMessage;
 const path: string = req.url;
 `,
     highlights: [{ start: 26, end: 26 }],
-    caption: "url is optional. Assigning string | undefined to string fails.",
+    caption: "url is optional. Assigning string | `undefined` to string fails.",
     expectedDiagnostics: [
       {
         code: 2322,

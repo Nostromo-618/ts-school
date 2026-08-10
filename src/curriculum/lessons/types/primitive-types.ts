@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 1,
   summary:
-    "string, number, boolean, null, undefined, symbol, bigint — and why String with a capital S is a different type that will bite you.",
+    "string, number, boolean, `null`, `undefined`, symbol, `bigint` — and why `String` with a capital S is a different type that will bite you.",
   prerequisites: ["annotations-vs-inference"],
   keywords: ["string", "number", "boolean", "bigint", "String object"],
   problem:
@@ -31,12 +31,12 @@ addDays(Date.now(), "7");
 addDays(Date.now(), "7");
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: 'number is not String, and it is not the string "7".',
+    caption: 'number is not `String`, and it is not the string "7".',
     expectedDiagnostics: [{ code: 2345, line: 5, messageIncludes: "string" }],
   },
   insight: [
-    "Prefer lowercase primitives: string, number, boolean — not String, Number, Boolean wrappers.",
-    "bigint is a separate type; you cannot mix it with number without an explicit conversion.",
+    "Prefer lowercase primitives: string, number, boolean — not `String`, Number, Boolean wrappers.",
+    "`bigint` is a separate type; you cannot mix it with number without an explicit conversion.",
     "At HTTP boundaries, parse strings into the primitive you mean before calling domain functions.",
   ],
   quiz: [
@@ -45,13 +45,13 @@ addDays(Date.now(), "7");
       prompt: "Which annotation is almost always wrong for text data?",
       choices: [
         { id: "a", text: "string" },
-        { id: "b", text: "String" },
+        { id: "b", text: "`String`" },
         { id: "c", text: '"ok"' },
         { id: "d", text: "`template`" },
       ],
       answerId: "b",
       explanation:
-        "String refers to the object wrapper type; everyday text is string.",
+        "`String` refers to the object wrapper type; everyday text is string.",
     },
   ],
   exercise: {

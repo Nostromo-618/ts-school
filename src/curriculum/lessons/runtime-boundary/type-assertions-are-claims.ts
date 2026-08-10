@@ -39,7 +39,7 @@ load().email.toLowerCase();
   },
   insight: [
     "as Type is a compile-time claim; prefer narrowing that the checker can verify.",
-    "Double assertions (as unknown as T) are a smell — usually a wrong model.",
+    "Double assertions (as `unknown` as T) are a smell — usually a wrong model.",
     "Use assertions for DOM/legacy interop after you have a real reason, not to silence errors.",
   ],
   security: {
@@ -54,7 +54,7 @@ load().email.toLowerCase();
       choices: [
         { id: "a", text: "Yes" },
         { id: "b", text: "No" },
-        { id: "c", text: "Only under strict" },
+        { id: "c", text: "Only under `strict`" },
         { id: "d", text: "Only for interfaces" },
       ],
       answerId: "b",
@@ -62,7 +62,7 @@ load().email.toLowerCase();
     },
   ],
   exercise: {
-    prompt: "Return a real User or throw instead of asserting null.",
+    prompt: "Return a real User or throw instead of asserting `null`.",
     starter: `type User = { email: string };
 
 function load(): User {
@@ -71,7 +71,7 @@ function load(): User {
 }
 `,
     assertion: "no-errors",
-    hints: ['if (!raw || typeof raw !== "object") throw ...; check email'],
+    hints: ['if (!raw || `typeof` raw !== "object") throw ...; check email'],
     solution: `type User = { email: string };
 
 function load(): User {

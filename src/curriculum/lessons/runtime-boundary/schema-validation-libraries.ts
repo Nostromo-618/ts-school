@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 9,
   summary:
-    "Zod, Valibot, ArkType, TypeBox: declare the schema, infer the type from it. The direction of that arrow is what stops the two from drifting.",
+    "Zod, Valibot, ArkType, TypeBox: `declare` the schema, `infer` the type from it. The direction of that arrow is what stops the two from drifting.",
   prerequisites: ["writing-a-validator-by-hand", "typeof-type-queries"],
   keywords: [
     "zod",
@@ -84,7 +84,7 @@ const age: string = user.age;
   insight: [
     "One schema → inferred static type + runtime parse. Invert that and drift returns.",
     "Libraries differ in bundle size and error UX; the architecture (schema as source of truth) is the lesson.",
-    "At trust boundaries, call `.parse` / safeParse — never `as User` on JSON.",
+    "At trust boundaries, call `.parse` / safeParse — `never` `as User` on JSON.",
   ],
   security: {
     title: "Inferred types are only as safe as the parse you run",
@@ -95,7 +95,7 @@ const age: string = user.age;
     {
       id: "svl-1",
       prompt:
-        "Why infer the type from the schema instead of writing both by hand?",
+        "Why `infer` the type from the schema instead of writing both by hand?",
       choices: [
         { id: "a", text: "Inference is required by Node." },
         {

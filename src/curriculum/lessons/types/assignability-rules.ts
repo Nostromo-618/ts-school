@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 24,
   summary:
-    "What the checker actually asks when it asks whether A fits B: top and bottom types, union and intersection reduction, and the special cases for any.",
+    "What the checker actually asks when it asks whether A fits B: top and bottom types, union and intersection reduction, and the special cases for `any`.",
   prerequisites: [
     "control-flow-analysis",
     "void-and-never",
@@ -46,7 +46,7 @@ const n: number = fail();
 void n;
 `,
     highlights: [{ start: 3, end: 3 }],
-    caption: "unknown cannot flow into string without narrowing.",
+    caption: "`unknown` cannot flow into string without narrowing.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -57,32 +57,32 @@ void n;
   },
   insight: [
     "Assignability is structural: members of the target must be present (with compatible types) on the source.",
-    "any is assignable to and from almost everything — it punches through the lattice.",
-    "unknown is the safe top; never is the bottom; unions/intersections reduce before the check.",
+    "`any` is assignable to and from almost everything — it punches through the lattice.",
+    "`unknown` is the safe top; `never` is the bottom; unions/intersections reduce before the check.",
   ],
   quiz: [
     {
       id: "assign-unknown",
-      prompt: "Is unknown assignable to string?",
+      prompt: "Is `unknown` assignable to string?",
       choices: [
         { id: "a", text: "Yes, always" },
         { id: "b", text: "No — you must narrow first" },
-        { id: "c", text: "Only with strictNullChecks off" },
+        { id: "c", text: "Only with `strictNullChecks` off" },
         { id: "d", text: "Only in .d.ts files" },
       ],
       answerId: "b",
       explanation:
-        "unknown requires narrowing (or a deliberate assertion) before use as string.",
+        "`unknown` requires narrowing (or a deliberate assertion) before use as string.",
     },
   ],
   exercise: {
-    prompt: "Accept unknown and return a string by narrowing with typeof.",
+    prompt: "Accept `unknown` and return a string by narrowing with `typeof`.",
     starter: `function asString(x: unknown): string {
   return x as string;
 }
 `,
     assertion: "no-errors",
-    hints: ['if (typeof x === "string") return x; else return "";'],
+    hints: ['if (`typeof` x === "string") return x; else return "";'],
     solution: `function asString(x: unknown): string {
   if (typeof x === "string") return x;
   return "";

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "foundations",
   order: 14,
   summary:
-    "checkJs plus JSDoc annotations gives an existing .js codebase real checking with no build step and no file renames — the cheapest first move in a migration.",
+    "`checkJs` plus JSDoc annotations gives an existing `.js` codebase real checking with no build step and no file renames — the cheapest first move in a migration.",
   prerequisites: ["declaration-files-intro", "annotations-vs-inference"],
   keywords: [
     "jsdoc",
@@ -18,13 +18,13 @@ export const lesson: Lesson = {
     "no build step",
   ],
   problem:
-    "A large Node codebase cannot be renamed to .ts in one commit, and until it is, nothing is checked at all.",
+    "A large Node codebase cannot be renamed to `.ts` in one commit, and until it is, nothing is checked at all.",
   js: {
     code: `/** @param {string} name */
 function greet(name) { return name.toUpperCase(); }
 `,
     highlights: [{ start: 1, end: 2 }],
-    caption: "JSDoc types in a .js file.",
+    caption: "JSDoc types in a `.js` file.",
   },
   ts: {
     code: `// JSDoc in .js under checkJs mirrors these annotations:
@@ -45,8 +45,8 @@ const bad: number = greet("ada");
     ],
   },
   insight: [
-    "JSDoc + checkJs types an existing JS codebase.",
-    "Migration path: JSDoc first, then rename to .ts.",
+    "JSDoc + `checkJs` types an existing JS codebase.",
+    "Migration path: JSDoc first, then rename to `.ts`.",
     "Keep JSDoc honest — it is checked like annotations.",
   ],
 };

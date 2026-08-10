@@ -30,7 +30,7 @@ const u = await db.get("1");
 const bad: number = u;
 `,
     highlights: [{ start: 9, end: 9 }],
-    caption: "Mock must satisfy Db. u is User | undefined, not number.",
+    caption: "Mock must satisfy Db. u is User | `undefined`, not number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -42,11 +42,11 @@ const bad: number = u;
   insight: [
     "Type mocks as the real dependency interface.",
     "async mocks should return Promises.",
-    "Avoid any in test doubles.",
+    "Avoid `any` in test doubles.",
   ],
   exercise: {
     prompt:
-      "Type db as Db and make get return Promise<User | undefined>. Match the solution text.",
+      "Type db as Db and make get return `Promise`<User | `undefined`>. Match the solution text.",
     starter: `type User = { id: string };
 type Db = { get(id: string): Promise<User | undefined> };
 

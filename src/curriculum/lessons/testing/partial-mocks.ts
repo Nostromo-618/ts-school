@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "testing",
   order: 5,
   summary:
-    "Partial<T> for the shallow case, a recursive helper for the deep one, and the single cast at the boundary that you should make deliberately and once.",
+    "`Partial`<T> for the shallow case, a recursive helper for the deep one, and the single cast at the boundary that you should make deliberately and once.",
   prerequisites: ["typing-mocks-and-stubs", "utility-types-tour"],
   keywords: ["Partial", "DeepPartial", "mock", "cast", "recursive"],
   problem:
@@ -16,7 +16,7 @@ export const lesson: Lesson = {
     code: `const api = { get: jest.fn(), post: jest.fn() };
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "Partial mock passed where full API required.",
+    caption: "`Partial` mock passed where full API required.",
   },
   ts: {
     code: `type Api = {
@@ -34,7 +34,7 @@ declare function useAll(client: Api): void;
 useAll(api);
 `,
     highlights: [{ start: 14, end: 14 }],
-    caption: "Pick<Api,'get'> is not Api — missing post.",
+    caption: "`Pick`<Api,'get'> is not Api — missing post.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -44,7 +44,7 @@ useAll(api);
     ],
   },
   insight: [
-    "Type partial mocks with Pick/Partial of the real interface.",
+    "Type partial mocks with `Pick`/`Partial` of the real interface.",
     "Do not cast partials to the full type.",
     "Keep tests honest about which methods are used.",
   ],

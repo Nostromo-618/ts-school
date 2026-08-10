@@ -46,7 +46,7 @@ const bad = resolve("nodenext", "./util");
     ],
   },
   insight: [
-    "moduleResolution bundler vs nodenext change legal specifiers.",
+    "`moduleResolution` bundler vs nodenext change legal specifiers.",
     "Match resolution to your runtime (Node vs bundler).",
     "Do not mix modes across packages carelessly.",
   ],
@@ -71,7 +71,7 @@ const bad = resolve("nodenext", "./util");
         y: 76,
         width: 184,
         height: 120,
-        text: "moduleResolution?",
+        text: "`moduleResolution`?",
         data: {},
       },
       {
@@ -91,7 +91,7 @@ const bad = resolve("nodenext", "./util");
         y: 200,
         width: 180,
         height: 72,
-        text: "nodenext: need .js",
+        text: "nodenext: need `.js`",
         data: {},
       },
     ],

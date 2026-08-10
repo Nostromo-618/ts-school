@@ -79,7 +79,7 @@ refund(userId, orderId);
       choices: [
         { id: "a", text: "Yes — both are strings" },
         { id: "b", text: "No — the brand properties differ" },
-        { id: "c", text: "Only under strictFunctionTypes" },
+        { id: "c", text: "Only under `strictFunctionTypes`" },
         { id: "d", text: "Only if unique symbol is used" },
       ],
       answerId: "b",
@@ -89,7 +89,7 @@ refund(userId, orderId);
   ],
   exercise: {
     prompt:
-      "Define Email as string & { readonly __email: void } and a function send(to: Email). Show a valid call using a cast mint.",
+      "Define Email as string & { `readonly` __email: `void` } and a function send(to: Email). Show a valid call using a cast mint.",
     starter: `type Email = string; // TODO brand
 
 function send(to: Email) {

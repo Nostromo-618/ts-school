@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 9,
   summary:
-    "esModuleInterop, default imports of CommonJS packages, createRequire, and why import x from 'cjs-pkg' sometimes gives you the namespace.",
+    "`esModuleInterop`, default imports of CommonJS packages, createRequire, and why import x from 'cjs-pkg' sometimes gives you the namespace.",
   prerequisites: ["commonjs-to-esm"],
   keywords: [
     "esModuleInterop",
@@ -50,8 +50,8 @@ const bad: number = api.pad("x", 3);
     ],
   },
   insight: [
-    "CJS packages may need esModuleInterop or import = require depending on export style.",
+    "CJS packages may need `esModuleInterop` or import = require depending on export style.",
     "Runtime shape can be module or module.default — normalize once at the boundary.",
-    "Check emitted JS when bundlers and tsc disagree about interop.",
+    "Check emitted JS when bundlers and `tsc` disagree about interop.",
   ],
 };

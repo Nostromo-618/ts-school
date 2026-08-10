@@ -47,7 +47,7 @@ void hint;
     ],
   },
   insight: [
-    "Start with tsc --diagnostics / --extendedDiagnostics for counts and timings.",
+    "Start with `tsc` --diagnostics / --extendedDiagnostics for counts and timings.",
     "generateTrace + @typescript/analyze-trace finds hot files and types.",
     "Fix shared package types and giant unions before buying bigger CI machines.",
   ],
@@ -58,8 +58,8 @@ void hint;
       choices: [
         { id: "a", text: "--pretty" },
         { id: "b", text: "--generateTrace" },
-        { id: "c", text: "--skipLibCheck" },
-        { id: "d", text: "--noEmit" },
+        { id: "c", text: "--`skipLibCheck`" },
+        { id: "d", text: "--`noEmit`" },
       ],
       answerId: "b",
       explanation:

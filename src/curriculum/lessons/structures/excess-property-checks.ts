@@ -47,6 +47,6 @@ paint(opts);
   insight: [
     "Excess property checks apply to fresh object literals.",
     "Assigning through a variable bypasses them — beware.",
-    "Use satisfies or exact types when extras must be rejected.",
+    "Use `satisfies` or exact types when extras must be rejected.",
   ],
 };

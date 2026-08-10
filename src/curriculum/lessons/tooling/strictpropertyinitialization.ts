@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "constructor",
   ],
   problem:
-    "A field initialised in an async init method is undefined for every call that arrives before it, and the type says otherwise.",
+    "A field initialised in an async init method is `undefined` for every call that arrives before it, and the type says otherwise.",
   js: {
     code: `class User { name; constructor() {} }
 `,

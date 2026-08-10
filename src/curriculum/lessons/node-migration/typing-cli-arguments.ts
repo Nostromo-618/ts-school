@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "node-migration",
   order: 13,
   summary:
-    "process.argv, node:util parseArgs, and how a typed options object beats an argument parser that returns a record of any.",
+    "process.argv, node:util parseArgs, and how a typed options object beats an argument parser that returns a record of `any`.",
   prerequisites: ["typing-process-env"],
   keywords: ["argv", "parseArgs", "cli", "commander", "options"],
   problem:
@@ -54,7 +54,7 @@ const asNum: number = raw;
   ],
   security: {
     title: "CLI args are untrusted paths and flags",
-    body: "Validate paths and never pass raw argv into a shell without escaping.",
+    body: "Validate paths and `never` pass raw argv into a shell without escaping.",
     severity: "caution",
   },
 };

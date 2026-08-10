@@ -16,7 +16,7 @@ export const lesson: Lesson = {
     code: `function unwrap(x) { return x; }
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "Runtime typeof checks only.",
+    caption: "Runtime `typeof` checks only.",
   },
   ts: {
     code: `type IsString<T> = T extends string ? true : false;

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "runtime-boundary",
   order: 12,
   summary:
-    "in, Object.hasOwn, and prototype-chain surprises. Why __proto__ and constructor deserve special handling before you touch anything else.",
+    "in, `Object.hasOwn`, and prototype-chain surprises. Why __proto__ and constructor deserve special handling before you touch anything else.",
   prerequisites: ["user-defined-type-guards", "in-operator-narrowing"],
   keywords: [
     "prototype pollution",
@@ -64,7 +64,7 @@ if (badGuard(forged)) {
       { start: 22, end: 22 },
     ],
     caption:
-      "Prefer Object.hasOwn for untrusted keys. The deliberate assign shows a bad `in`-based guard still leaves a string, not a number.",
+      "Prefer `Object.hasOwn` for untrusted keys. The deliberate assign shows a bad `in`-based guard still leaves a string, not a number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -75,12 +75,12 @@ if (badGuard(forged)) {
   },
   insight: [
     "`key in obj` is true for inherited properties — useless as an allowlist for JSON payloads.",
-    "`Object.hasOwn(obj, key)` (or Object.prototype.hasOwnProperty.call) checks own keys only.",
+    "`Object.hasOwn(obj, key)` (or `Object.prototype`.hasOwnProperty.call) checks own keys only.",
     "Reject `__proto__`, `constructor`, and `prototype` keys before merging untrusted objects into config.",
   ],
   security: {
     title: "Prototype pollution rides on careless key checks",
-    body: "Attackers send `__proto__` or nested merge payloads so inherited properties change application behaviour. Never use `in` alone to validate untrusted objects, and never merge raw JSON into Object.prototype-backed maps without key filtering.",
+    body: "Attackers send `__proto__` or nested merge payloads so inherited properties change application behaviour. Never use `in` alone to validate untrusted objects, and `never` merge raw JSON into `Object.prototype`-backed maps without key filtering.",
     severity: "critical",
   },
   quiz: [
@@ -97,7 +97,7 @@ if (badGuard(forged)) {
       ],
       answerId: "b",
       explanation:
-        "Almost every object inherits Object.prototype.toString, so the check never fails for normal objects.",
+        "Almost every object inherits `Object.prototype`.toString, so the check `never` fails for normal objects.",
     },
   ],
 };

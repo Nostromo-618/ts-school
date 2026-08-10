@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 15,
   summary:
-    "An un-awaited promise is a lost rejection and, since Node 15, a crashed process. How the checker and the linter find them, and what void is for.",
+    "An un-awaited promise is a lost rejection and, since Node 15, a crashed process. How the checker and the linter find them, and what `void` is for.",
   prerequisites: ["void-returning-callbacks", "async-await-typing"],
   keywords: [
     "floating promise",
@@ -46,7 +46,7 @@ const wrong: string = p;
 `,
     highlights: [{ start: 15, end: 15 }],
     caption:
-      "Promise<void> is not a string — and floating calls need discipline.",
+      "`Promise`<`void`> is not a string — and floating calls need discipline.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -57,8 +57,8 @@ const wrong: string = p;
   },
   insight: [
     "TypeScript itself does not error on floating promises; @typescript-eslint/no-floating-promises does.",
-    "void promise is the intentional escape hatch those rules recognize.",
-    "Prefer await in async functions; only void when the rejection is handled elsewhere.",
+    "`void` promise is the intentional escape hatch those rules recognize.",
+    "Prefer await in async functions; only `void` when the rejection is handled elsewhere.",
   ],
   security: {
     title: "Unhandled rejections and availability",
@@ -68,24 +68,24 @@ const wrong: string = p;
   quiz: [
     {
       id: "float-q",
-      prompt: "What is the void operator used for with promises?",
+      prompt: "What is the `void` operator used for with promises?",
       choices: [
         { id: "a", text: "Cancel the promise" },
         {
           id: "b",
           text: "Mark intentional ignore for floating-promise lint rules",
         },
-        { id: "c", text: "Convert Promise to void at runtime" },
+        { id: "c", text: "Convert Promise to `void` at runtime" },
         { id: "d", text: "Force await" },
       ],
       answerId: "b",
       explanation:
-        "void promise tells linters you meant to discard the Promise.",
+        "`void` promise tells linters you meant to discard the `Promise`.",
     },
   ],
   exercise: {
     prompt:
-      "Write async function run(): Promise<number> that returns 1, and await it in main.",
+      "Write async function run(): `Promise`<number> that returns 1, and await it in main.",
     starter: `async function run() {
   return 1;
 }

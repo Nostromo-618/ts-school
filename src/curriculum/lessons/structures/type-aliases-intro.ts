@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "structures",
   order: 2,
   summary:
-    "type Name = ... gives any type a reusable name — objects, unions, tuples, and function types alike.",
+    "type Name = ... gives `any` type a reusable name — objects, unions, tuples, and function types alike.",
   prerequisites: ["interfaces-intro", "union-types"],
   keywords: ["type alias", "type", "union alias"],
   problem:
-    "The same User | null union is copy-pasted through ten files until one of them forgets the null.",
+    "The same User | `null` union is copy-pasted through ten files until one of them forgets the `null`.",
   js: {
     code: `function nameOf(user) {
   return user ? user.name : "anonymous";
@@ -38,7 +38,7 @@ nameOf({ name: 42 });
   },
   insight: [
     "type can name unions, intersections, primitives, and tuples — interface cannot.",
-    "Aliases are transparent: UserOrAnon is exactly User | null.",
+    "Aliases are transparent: UserOrAnon is exactly User | `null`.",
     "Prefer one exported alias over repeating the same union inline.",
   ],
   quiz: [
@@ -49,10 +49,10 @@ nameOf({ name: 42 });
         { id: "a", text: "Object properties" },
         { id: "b", text: "A union like string | number" },
         { id: "c", text: "Optional fields" },
-        { id: "d", text: "Readonly fields" },
+        { id: "d", text: "`Readonly` fields" },
       ],
       answerId: "b",
-      explanation: "Interfaces only declare object (or callable) shapes.",
+      explanation: "Interfaces only `declare` object (or callable) shapes.",
     },
   ],
   exercise: {

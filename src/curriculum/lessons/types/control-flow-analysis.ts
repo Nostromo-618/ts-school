@@ -65,7 +65,7 @@ const n: number = label("hi");
   },
   insight: [
     "Each reference gets a type from reaching definitions along the control-flow graph.",
-    "Discriminant checks, typeof, and equality create edges that refine types in true/false successors.",
+    "Discriminant checks, `typeof`, and equality create edges that refine types in true/false successors.",
     "When CFA “fails,” ask what assignment or call could have invalidated the predicate since it was proven.",
   ],
   diagram: {
@@ -89,7 +89,7 @@ const n: number = label("hi");
         y: 88,
         width: 184,
         height: 120,
-        text: 'typeof x === "string"',
+        text: '`typeof` x === "string"',
         data: {},
       },
       {
@@ -172,13 +172,13 @@ const n: number = label("hi");
   ],
   exercise: {
     prompt:
-      'Write narrow(x: unknown): string that returns x if typeof x === "string", else "".',
+      'Write narrow(x: `unknown`): string that returns x if `typeof` x === "string", else "".',
     starter: `function narrow(x: unknown) {
   return "";
 }
 `,
     assertion: "no-errors",
-    hints: ["Use typeof and return x in the string branch."],
+    hints: ["Use `typeof` and return x in the string branch."],
     solution: `function narrow(x: unknown): string {
   if (typeof x === "string") return x;
   return "";

@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["conditional-types-intro", "assignability-rules"],
   keywords: ["Equal", "type assertion", "identity", "Expect", "type test"],
   problem:
-    "Mutual assignability is not equality, so the obvious type-equality check quietly passes for any and never.",
+    "Mutual assignability is not equality, so the obvious type-equality check quietly passes for `any` and `never`.",
   js: {
     code: `// JS: "same shape?" is JSON.stringify or a hand-rolled deepEqual.
 function sameShape(a, b) {
@@ -39,7 +39,7 @@ type _fail = Expect<Equal<any, number>>;
       { start: 1, end: 4 },
       { start: 10, end: 10 },
     ],
-    caption: "The identity trick rejects any/never false friends.",
+    caption: "The identity trick rejects `any`/`never` false friends.",
     expectedDiagnostics: [
       {
         code: 2344,
@@ -49,7 +49,7 @@ type _fail = Expect<Equal<any, number>>;
     ],
   },
   insight: [
-    "A extends B and B extends A is assignability, not equality — any and never break it.",
+    "A extends B and B extends A is assignability, not equality — `any` and `never` break it.",
     "The `<T>() => T extends X ? 1 : 2` trick compares how X behaves under inference.",
     "Use Expect<Equal<A, B>> in type-level tests; treat failures as red builds.",
   ],
@@ -59,17 +59,17 @@ type _fail = Expect<Equal<any, number>>;
       prompt:
         "Why is `any extends number ? (number extends any ? true : false) : false` true?",
       choices: [
-        { id: "a", text: "any is identical to number" },
+        { id: "a", text: "`any` is identical to number" },
         {
           id: "b",
-          text: "any is both a top-ish and bottom-ish participant in extends",
+          text: "`any` is both a top-ish and bottom-ish participant in extends",
         },
-        { id: "c", text: "number is any under strict mode" },
+        { id: "c", text: "number is `any` under `strict` mode" },
         { id: "d", text: "The conditional is invalid" },
       ],
       answerId: "b",
       explanation:
-        "any is assignable to and from almost everything, so mutual extends succeeds without meaning equality.",
+        "`any` is assignable to and from almost everything, so mutual extends succeeds without meaning equality.",
     },
   ],
   exercise: {

@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 13,
   summary:
-    "Assign the narrowed value to never in the default branch and the compiler tells you the day someone adds a variant you did not handle.",
+    "Assign the narrowed value to `never` in the default branch and the compiler tells you the day someone adds a variant you did not handle.",
   prerequisites: ["discriminated-unions"],
   keywords: ["never", "exhaustive", "switch", "assertNever", "default case"],
   problem:
@@ -19,7 +19,7 @@ export const lesson: Lesson = {
 }
 `,
     highlights: [{ start: 1, end: 4 }],
-    caption: "Missing triangle case returns undefined.",
+    caption: "Missing triangle case returns `undefined`.",
   },
   ts: {
     code: `type Shape =
@@ -54,7 +54,7 @@ function area(shape: Shape): number {
   },
   insight: [
     "assertNever(shape) in the default branch forces new variants to be handled.",
-    "Without it, forgetting a case returns undefined silently in JS.",
+    "Without it, forgetting a case returns `undefined` silently in JS.",
     "Prefer switch over if-chains for tagged unions.",
   ],
   quiz: [
@@ -65,14 +65,14 @@ function area(shape: Shape): number {
         { id: "a", text: "It silences all diagnostics in the function" },
         {
           id: "b",
-          text: "If a new union member is unhandled, shape is not never and the call errors",
+          text: "If a new union member is unhandled, shape is not `never` and the call errors",
         },
         { id: "c", text: "It makes the switch run faster" },
-        { id: "d", text: "It converts shape into unknown" },
+        { id: "d", text: "It converts shape into `unknown`" },
       ],
       answerId: "b",
       explanation:
-        "Exhaustiveness checking uses never: leftover variants refuse to assign to never, so the default becomes a compile-time alarm.",
+        "Exhaustiveness checking uses `never`: leftover variants refuse to assign to `never`, so the default becomes a compile-time alarm.",
     },
   ],
   diagram: {
@@ -106,7 +106,7 @@ function area(shape: Shape): number {
         y: 100,
         width: 180,
         height: 72,
-        text: "default → never",
+        text: "default → `never`",
         data: {},
       },
     ],

@@ -46,7 +46,7 @@ const g: UserGetters = {
       { start: 1, end: 3 },
       { start: 15, end: 18 },
     ],
-    caption: "as renames keys; mapping to never drops them.",
+    caption: "as renames keys; mapping to `never` drops them.",
     expectedDiagnostics: [
       {
         code: 2741,
@@ -58,21 +58,21 @@ const g: UserGetters = {
   insight: [
     "Key remapping uses `as NewKey` after `in`; `as never` filters a key out of the result.",
     "Template literal types pair naturally with remapping for getX / setX / onX patterns.",
-    "Capitalize and other intrinsic string helpers are part of how library APIs mint names.",
+    "`Capitalize` and other intrinsic string helpers are part of how library APIs mint names.",
   ],
   quiz: [
     {
       id: "remap-never",
-      prompt: "What happens if a remapped key resolves to never?",
+      prompt: "What happens if a remapped key resolves to `never`?",
       choices: [
         { id: "a", text: "The property becomes optional" },
         { id: "b", text: "The property is omitted from the result type" },
         { id: "c", text: "A compile error is always raised" },
-        { id: "d", text: 'The key becomes the string "never"' },
+        { id: "d", text: 'The key becomes the string "`never`"' },
       ],
       answerId: "b",
       explanation:
-        "Remapping to never is the idiomatic filter: that key contributes no property.",
+        "Remapping to `never` is the idiomatic filter: that key contributes no property.",
     },
   ],
   exercise: {
@@ -84,7 +84,7 @@ type Out = Prefixed<{ id: number }, "user_">;
 const x: Out = { id: 1 }; // wrong key until Prefixed remaps
 `,
     assertion: "no-errors",
-    hints: ["[K in keyof T as `${P}${string & K}`]"],
+    hints: ["[K in `keyof` T as `${P}${string & K}`]"],
     solution: `type Prefixed<T, P extends string> = {
   [K in keyof T as \`\${P}\${string & K}\`]: T[K];
 };

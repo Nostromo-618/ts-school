@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 5,
   summary:
-    "ReturnType, Parameters, ConstructorParameters, ThisParameterType, Awaited — deriving types from a signature you already have.",
+    "`ReturnType`, `Parameters`, `ConstructorParameters`, `ThisParameterType`, `Awaited` — deriving types from a signature you already have.",
   prerequisites: ["utility-types-tour", "function-type-expressions"],
   keywords: ["ReturnType", "Parameters", "Awaited", "signature", "derive"],
   problem:
@@ -27,7 +27,7 @@ const r: Ret = "x";
 const bad: Arg = "1";
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Parameters<Fn>[0] is number, not string.",
+    caption: "`Parameters`<Fn>[0] is number, not string.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -37,8 +37,8 @@ const bad: Arg = "1";
     ],
   },
   insight: [
-    "Parameters and ReturnType extract call signatures.",
-    "ConstructorParameters / InstanceType do the same for classes.",
+    "`Parameters` and `ReturnType` extract call signatures.",
+    "`ConstructorParameters` / `InstanceType` do the same for classes.",
     "Use them to stay DRY with third-party function types.",
   ],
 };

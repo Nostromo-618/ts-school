@@ -33,22 +33,22 @@ userFixture({ email: 1 });
 `,
     highlights: [{ start: 7, end: 7 }],
     caption:
-      "Partial<User> still requires override values to match field types.",
+      "`Partial`<User> still requires override values to match field types.",
     expectedDiagnostics: [{ code: 2322, line: 7, messageIncludes: "number" }],
   },
   insight: [
     "Type factories as returning the production type, not a looser blob.",
-    "Partial<T> is ideal for overrides — values remain checked.",
-    "satisfies User on literal fixtures also catches missing fields without widening.",
+    "`Partial`<T> is ideal for overrides — values remain checked.",
+    "`satisfies` User on literal fixtures also catches missing fields without widening.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "What does Partial<User> mean for overrides?",
+      prompt: "What does `Partial`<User> mean for overrides?",
       choices: [
         { id: "a", text: "All fields required" },
         { id: "b", text: "All fields optional, but still correctly typed" },
-        { id: "c", text: "Fields become any" },
+        { id: "c", text: "Fields become `any`" },
         { id: "d", text: "User is erased" },
       ],
       answerId: "b",

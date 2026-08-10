@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "functions",
   order: 6,
   summary:
-    "A callback typed to return void accepts a function that returns something. That rule is deliberate, useful, and occasionally a bug factory.",
+    "A callback typed to return `void` accepts a function that returns something. That rule is deliberate, useful, and occasionally a bug factory.",
   prerequisites: ["function-type-expressions", "void-and-never"],
   keywords: ["void", "callback", "return value", "forEach", "assignability"],
   problem:
@@ -36,7 +36,7 @@ const bad: number[] = forEachNumber([1], (n) => n);
 `,
     highlights: [{ start: 13, end: 13 }],
     caption:
-      "void callbacks may return values, but forEachNumber itself returns void.",
+      "`void` callbacks may return values, but forEachNumber itself returns `void`.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -46,7 +46,7 @@ const bad: number[] = forEachNumber([1], (n) => n);
     ],
   },
   insight: [
-    "void in callback positions is special — returned values are ignored.",
+    "`void` in callback positions is special — returned values are ignored.",
     "Do not use forEach when you need a mapped array.",
     "Match callback return types to the combinator's contract.",
   ],

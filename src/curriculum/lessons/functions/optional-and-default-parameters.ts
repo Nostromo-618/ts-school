@@ -21,7 +21,7 @@ export const lesson: Lesson = {
 greet();
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "Missing args become undefined with no warning.",
+    caption: "Missing args become `undefined` with no warning.",
   },
   ts: {
     code: `function greet(name: string, excited?: boolean): string {
@@ -38,19 +38,19 @@ greet();
     ],
   },
   insight: [
-    "Optional parameters are T | undefined and must follow required ones.",
+    "Optional parameters are T | `undefined` and must follow required ones.",
     'Defaults (name = "guest") make the parameter optional for callers and defined inside the body.',
     "Prefer defaults when you have a sensible fallback; prefer ? when absence is meaningful.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: 'Inside greet(name = "guest"), what is typeof name?',
+      prompt: 'Inside greet(name = "guest"), what is `typeof` name?',
       choices: [
-        { id: "a", text: "string | undefined" },
+        { id: "a", text: "string | `undefined`" },
         { id: "b", text: "string" },
-        { id: "c", text: "any" },
-        { id: "d", text: "never" },
+        { id: "c", text: "`any`" },
+        { id: "d", text: "`never`" },
       ],
       answerId: "b",
       explanation: "Defaults apply before the body runs, so name is string.",

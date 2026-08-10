@@ -61,7 +61,7 @@ function handleAll(msg: MsgAll): string {
   insight: [
     "Version discriminants belong on the wire; exhaustiveness forces consumer updates.",
     "Keep old versions in the union until the queue is drained — do not delete early.",
-    "Parse unknown JSON into the versioned union before switching.",
+    "Parse `unknown` JSON into the versioned union before switching.",
   ],
   quiz: [
     {
@@ -87,7 +87,7 @@ function handle(e: Event): string {
 }
 `,
     assertion: "no-errors",
-    hints: ["switch on e.type with default never."],
+    hints: ["switch on e.type with default `never`."],
     solution: `type Event = { type: "ping" } | { type: "pong"; n: number };
 function handle(e: Event): string {
   switch (e.type) {

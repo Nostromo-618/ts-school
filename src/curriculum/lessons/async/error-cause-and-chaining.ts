@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "async",
   order: 7,
   summary:
-    "Wrapping a low-level failure in a domain error without losing it. How cause is typed, and why unknown is the honest type for it.",
+    "Wrapping a low-level failure in a domain error without losing it. How cause is typed, and why `unknown` is the honest type for it.",
   prerequisites: ["custom-error-classes"],
   keywords: ["cause", "error chaining", "wrapping", "context", "unknown"],
   problem:
@@ -16,7 +16,7 @@ export const lesson: Lesson = {
     code: `throw new Error('failed: ' + err);
 `,
     highlights: [{ start: 1, end: 1 }],
-    caption: "String-concatenating nested errors.",
+    caption: "`String`-concatenating nested errors.",
   },
   ts: {
     code: `declare const root: Error;
@@ -25,7 +25,7 @@ const c: unknown = wrapped.cause;
 const bad: string = wrapped.cause;
 `,
     highlights: [{ start: 4, end: 4 }],
-    caption: "Error.cause is unknown — not string.",
+    caption: "Error.cause is `unknown` — not string.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -36,7 +36,7 @@ const bad: string = wrapped.cause;
   },
   insight: [
     "Use the cause option to chain errors without losing the stack.",
-    "cause is unknown — narrow before reading.",
+    "cause is `unknown` — narrow before reading.",
     "Preserve causes across async boundaries.",
   ],
 };

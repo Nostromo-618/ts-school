@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 12,
   summary:
-    "What single-file transpilers cannot know, why import type exists, and how these flags keep tsc and esbuild agreeing.",
+    "What single-file transpilers cannot know, why import type exists, and how these flags keep `tsc` and esbuild agreeing.",
   prerequisites: ["esm-imports-and-exports", "running-typescript-in-node"],
   keywords: [
     "isolatedModules",
@@ -17,7 +17,7 @@ export const lesson: Lesson = {
     "esbuild",
   ],
   problem:
-    "A re-exported type compiles under tsc and produces a runtime import of something that does not exist under esbuild.",
+    "A re-exported type compiles under `tsc` and produces a runtime import of something that does not exist under esbuild.",
   js: {
     code: `export { type User } from './user';
 `,
@@ -42,8 +42,8 @@ import { User as ValueUser } from "./user";
     ],
   },
   insight: [
-    "isolatedModules assumes each file is transpiled alone.",
-    "verbatimModuleSyntax forces type/value import honesty.",
+    "`isolatedModules` assumes each file is transpiled alone.",
+    "`verbatimModuleSyntax` forces type/value import honesty.",
     "Prefer import type for types-only bindings.",
   ],
 };

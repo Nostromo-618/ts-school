@@ -20,7 +20,7 @@ export const lesson: Lesson = {
 audit({ id: "1", name: "Ada" });
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "role is assumed; missing means undefined in the log line.",
+    caption: "role is assumed; missing means `undefined` in the log line.",
   },
   ts: {
     code: `interface User {

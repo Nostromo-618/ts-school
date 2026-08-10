@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "structures",
   order: 4,
   summary:
-    "?: for fields that may be absent, readonly for fields that must not be reassigned — and how each changes assignability.",
+    "?: for fields that may be absent, `readonly` for fields that must not be reassigned — and how each changes assignability.",
   prerequisites: ["interfaces-intro", "null-and-undefined"],
   keywords: ["optional", "readonly", "?", "mutation"],
   problem:
@@ -36,18 +36,18 @@ function bind(config: Config): number {
 }
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "readonly blocks assignment through that property.",
+    caption: "`readonly` blocks assignment through that property.",
     expectedDiagnostics: [{ code: 2540, line: 7, messageIncludes: "port" }],
   },
   insight: [
-    "optional (host?) means the property may be missing; read it as T | undefined.",
-    "readonly is a type-level constraint — runtime code can still mutate if it cheats.",
-    "Combine them: readonly id: string for identity fields that never change.",
+    "optional (host?) means the property may be missing; read it as T | `undefined`.",
+    "`readonly` is a type-level constraint — runtime code can still mutate if it cheats.",
+    "Combine them: `readonly` id: string for identity fields that never change.",
   ],
   quiz: [
     {
       id: "q1",
-      prompt: "What does readonly prevent?",
+      prompt: "What does `readonly` prevent?",
       choices: [
         { id: "a", text: "Reading the property" },
         { id: "b", text: "Assigning to the property through that type" },

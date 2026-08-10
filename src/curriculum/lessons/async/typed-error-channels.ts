@@ -86,12 +86,12 @@ if (!r.ok) {
       ],
       answerId: "b",
       explanation:
-        "E is visible to typechecking; thrown Error is usually unknown in catch.",
+        "E is visible to typechecking; thrown Error is usually `unknown` in catch.",
     },
   ],
   exercise: {
     prompt:
-      "Define Result<T, E> and a function ok(value: T): Result<T, never>.",
+      "Define Result<T, E> and a function ok(value: T): Result<T, `never`>.",
     starter: `type Result<T, E> = unknown;
 `,
     assertion: "no-errors",

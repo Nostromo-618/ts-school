@@ -23,7 +23,7 @@ export const lesson: Lesson = {
 createSession({ userId: "u1", ttlMs: 60_000 });
 `,
     highlights: [{ start: 7, end: 7 }],
-    caption: "Snake_case vs camelCase — undefined expiresAt math.",
+    caption: "Snake_case vs camelCase — `undefined` expiresAt math.",
   },
   ts: {
     code: `type SessionInput = {
@@ -46,7 +46,7 @@ createSession({ userId: "u1", ttlMs: 60_000 });
   },
   insight: [
     "Write the shape once at the boundary; let inference carry it inward.",
-    "Optional properties use ?: — absent is not the same as present-but-undefined unless you configure exactOptionalPropertyTypes.",
+    "Optional properties use ?: — absent is not the same as present-but-`undefined` unless you configure `exactOptionalPropertyTypes`.",
     "Nested objects are just properties whose types are other object types.",
   ],
   quiz: [

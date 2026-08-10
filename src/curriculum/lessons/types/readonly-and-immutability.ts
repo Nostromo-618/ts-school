@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "types",
   order: 18,
   summary:
-    "readonly properties, ReadonlyArray, and the honest limits: it is a compile-time promise about one level, not a frozen object.",
+    "`readonly` properties, ReadonlyArray, and the honest limits: it is a compile-time promise about one level, not a frozen object.",
   prerequisites: ["const-assertions", "arrays-and-tuples"],
   keywords: [
     "readonly",
@@ -36,7 +36,7 @@ const xs: readonly string[] = ["a"];
 xs.push("b");
 `,
     highlights: [{ start: 6, end: 6 }],
-    caption: "push does not exist on readonly string[].",
+    caption: "push does not exist on `readonly` string[].",
     expectedDiagnostics: [
       {
         code: 2339,
@@ -46,9 +46,9 @@ xs.push("b");
     ],
   },
   insight: [
-    "readonly arrays forbid mutating methods like push.",
+    "`readonly` arrays forbid mutating methods like push.",
     "Return a new array instead of mutating shared state.",
-    "Readonly<T> / readonly props document intent at API boundaries.",
+    "`Readonly`<T> / `readonly` props document intent at API boundaries.",
   ],
   quiz: [
     {
@@ -61,12 +61,12 @@ xs.push("b");
           id: "b",
           text: "Mutating methods like push/splice on that reference",
         },
-        { id: "c", text: "JSON.stringify" },
+        { id: "c", text: "`JSON.stringify`" },
         { id: "d", text: "Importing the array from another module" },
       ],
       answerId: "b",
       explanation:
-        "Readonly arrays expose readers but not mutators, pushing you toward returning new arrays instead of shared mutation.",
+        "`Readonly` arrays expose readers but not mutators, pushing you toward returning new arrays instead of shared mutation.",
     },
   ],
 };

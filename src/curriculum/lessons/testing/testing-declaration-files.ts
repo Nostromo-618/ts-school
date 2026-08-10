@@ -29,7 +29,7 @@ const n: string = api();
 `,
     highlights: [{ start: 4, end: 4 }],
     caption:
-      "Tests against the public declare surface catch return-type drift.",
+      "Tests against the public `declare` surface catch return-type drift.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -53,7 +53,7 @@ const n: string = api();
       id: "dts-test",
       prompt: "What should consumer type tests import?",
       choices: [
-        { id: "a", text: "Internal src/**/*.ts always" },
+        { id: "a", text: "Internal src/**/*`.ts` always" },
         {
           id: "b",
           text: "The package’s published entry / emitted declarations",
@@ -68,7 +68,7 @@ const n: string = api();
   ],
   exercise: {
     prompt:
-      "export declare function version(): string and assign the result to a string.",
+      "export `declare` function version(): string and assign the result to a string.",
     starter: `export declare function version(): string;
 `,
     assertion: "no-errors",

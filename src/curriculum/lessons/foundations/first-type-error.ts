@@ -22,7 +22,7 @@ addTax("19.99");
 `,
     highlights: [{ start: 5, end: 5 }],
     caption:
-      "String coercion turns tax math into concatenation or NaN territory.",
+      "`String` coercion turns tax math into concatenation or NaN territory.",
   },
   ts: {
     code: `function addTax(amount: number): number {
@@ -32,7 +32,7 @@ addTax("19.99");
 addTax("19.99");
 `,
     highlights: [{ start: 5, end: 5 }],
-    caption: "TS2345: the argument type must match the parameter.",
+    caption: "`TS2345`: the argument type must match the parameter.",
     expectedDiagnostics: [
       {
         code: 2345,
@@ -49,7 +49,7 @@ addTax("19.99");
   quiz: [
     {
       id: "q1",
-      prompt: "What does TS2345 mean in this lesson?",
+      prompt: "What does `TS2345` mean in this lesson?",
       choices: [
         { id: "a", text: "A module could not be resolved" },
         {

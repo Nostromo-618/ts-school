@@ -7,11 +7,11 @@ export const lesson: Lesson = {
   track: "testing",
   order: 1,
   summary:
-    "Tests are TypeScript too — typed asserts and fixtures catch API drift before the suite becomes a museum of any.",
+    "Tests are TypeScript too — typed `asserts` and fixtures catch API drift before the suite becomes a museum of `any`.",
   prerequisites: ["first-type-error", "annotations-vs-inference"],
   keywords: ["tests", "vitest", "expect", "types in tests"],
   problem:
-    "Test helpers take any and return any, so a renamed production field only fails in production.",
+    "Test helpers take `any` and return `any`, so a renamed production field only fails in production.",
   js: {
     code: `function expectUser(value) {
   if (!value || typeof value.id !== "string") throw new Error("bad");
@@ -46,8 +46,8 @@ expectUser(fixture).id.toUpperCase();
     expectedDiagnostics: [{ code: 2322, line: 15, messageIncludes: "number" }],
   },
   insight: [
-    "Include tests in the same tsconfig (or a project reference) so they typecheck in CI.",
-    "Prefer unknown + narrowing helpers over any in test utils.",
+    "Include tests in the same `tsconfig` (or a project reference) so they typecheck in CI.",
+    "Prefer `unknown` + narrowing helpers over `any` in test utils.",
     "When production types change, failing tests should be type errors first.",
   ],
   quiz: [

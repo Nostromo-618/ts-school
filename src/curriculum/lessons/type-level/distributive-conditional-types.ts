@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "type-level",
   order: 11,
   summary:
-    "A naked type parameter distributes over a union, which is why Exclude works — and why your conditional type sometimes returns a union you did not ask for.",
+    "A naked type parameter distributes over a union, which is why `Exclude` works — and why your conditional type sometimes returns a union you did not ask for.",
   prerequisites: ["infer-keyword", "union-types"],
   keywords: [
     "distributive",
@@ -61,7 +61,7 @@ const oops: Distributed = [1, "a"];
   },
   insight: [
     "Distribution happens when the checked type is a naked type parameter (not wrapped in another type constructor).",
-    "Exclude<T, U> and Extract<T, U> rely on distribution: each union member is tested separately.",
+    "`Exclude`<T, U> and `Extract`<T, U> rely on distribution: each union member is tested separately.",
     "Write [T] extends [U] (or T[] extends …) when you need the union kept together.",
   ],
   quiz: [
@@ -70,13 +70,13 @@ const oops: Distributed = [1, "a"];
       prompt:
         "How do you stop a conditional type from distributing over a union?",
       choices: [
-        { id: "a", text: "Add infer in the extends clause" },
+        { id: "a", text: "Add `infer` in the extends clause" },
         {
           id: "b",
           text: "Wrap the type parameter in a tuple: [T] extends […]",
         },
         { id: "c", text: "Use a mapped type instead" },
-        { id: "d", text: "Enable strictNullChecks" },
+        { id: "d", text: "Enable `strictNullChecks`" },
       ],
       answerId: "b",
       explanation:
@@ -85,13 +85,13 @@ const oops: Distributed = [1, "a"];
   ],
   exercise: {
     prompt:
-      "Implement NonNullableish<T> that removes null and undefined from a union (like NonNullable). The solution must type-check with a string assignment.",
+      "Implement NonNullableish<T> that removes `null` and `undefined` from a union (like `NonNullable`). The solution must type-check with a string assignment.",
     starter: `type NonNullableish<T> = T; // TODO: distribute and exclude null | undefined
 
 const x: NonNullableish<string | null> = null; // should not be allowed once fixed
 `,
     assertion: "no-errors",
-    hints: ["T extends null | undefined ? never : T"],
+    hints: ["T extends `null` | `undefined` ? `never` : T"],
     solution: `type NonNullableish<T> = T extends null | undefined ? never : T;
 
 const x: NonNullableish<string | null> = "ok";

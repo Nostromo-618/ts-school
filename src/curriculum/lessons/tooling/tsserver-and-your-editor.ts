@@ -7,7 +7,7 @@ export const lesson: Lesson = {
   track: "tooling",
   order: 2,
   summary:
-    "The language service is a long-lived tsc — select the workspace TypeScript version so squiggles match CI.",
+    "The language service is a long-lived `tsc` — select the workspace TypeScript version so squiggles match CI.",
   prerequisites: ["editor-driven-development", "tsc-cli"],
   keywords: ["tsserver", "language service", "workspace TypeScript"],
   problem:
@@ -33,8 +33,8 @@ const n: string = pick([1, 2, 3]);
   },
   insight: [
     'In VS Code/Cursor: "TypeScript: Select Workspace Version".',
-    "Restart tsserver after tsconfig changes if diagnostics look stale.",
-    "Huge monorepos may need project references so tsserver stays responsive.",
+    "Restart `tsserver` after `tsconfig` changes if diagnostics look stale.",
+    "Huge monorepos may need project references so `tsserver` stays responsive.",
   ],
   quiz: [
     {

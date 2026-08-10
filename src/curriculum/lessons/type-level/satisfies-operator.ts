@@ -11,7 +11,7 @@ export const lesson: Lesson = {
   prerequisites: ["typeof-type-queries", "const-assertions"],
   keywords: ["satisfies", "validation", "inference", "literals", "config"],
   problem:
-    "Annotating a config as a wide Record loses the literal keys you wanted for autocomplete.",
+    "Annotating a config as a wide `Record` loses the literal keys you wanted for autocomplete.",
   js: {
     code: `const palette = { primary: "#0af", danger: "red" };
 `,
@@ -32,7 +32,7 @@ const bad: number = palette.danger;
 `,
     highlights: [{ start: 11, end: 11 }],
     caption:
-      "satisfies checks the value while preserving literals. danger is not number.",
+      "`satisfies` checks the value while preserving literals. danger is not number.",
     expectedDiagnostics: [
       {
         code: 2322,
@@ -42,7 +42,7 @@ const bad: number = palette.danger;
     ],
   },
   insight: [
-    "satisfies checks against a type without widening to it.",
+    "`satisfies` checks against a type without widening to it.",
     "Preserves literal inference for keys/values.",
     "Prefer it over as when you want both check and inference.",
   ],
@@ -54,12 +54,12 @@ const bad: number = palette.danger;
       choices: [
         { id: "a", text: "A narrower inferred type (literals / keys)" },
         { id: "b", text: "Runtime validation of hex codes" },
-        { id: "c", text: "Automatic as const on every nested value only" },
+        { id: "c", text: "Automatic `as const` on every nested value only" },
         { id: "d", text: "Exemption from excess property checks" },
       ],
       answerId: "a",
       explanation:
-        "satisfies verifies assignability while leaving the expression's inferred type in place.",
+        "`satisfies` verifies assignability while leaving the expression's inferred type in place.",
     },
   ],
 };
