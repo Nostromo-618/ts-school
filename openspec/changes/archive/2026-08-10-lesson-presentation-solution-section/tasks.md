@@ -9,7 +9,7 @@
 - [x] 2.1 Extend `tests/unit/curriculum.spec.ts`: every lesson has non-empty `solution`; `problem` and `solution` meet the ≥160 character richness floor from design.md
 - [x] 2.2 Add a unit test that documents/asserts LessonPage section order (problem → panes → solution → takeaways → prerequisites before pager) — mount or static template contract as fits the repo
 - [x] 2.3 Add Playwright e2e smoke: open an authored lesson and assert a heading matching `/solution/i`
-- [ ] 2.4 Update visual baselines only if composition changes fail existing screenshot tests
+- [x] 2.4 Update visual baselines only if composition changes fail existing screenshot tests
 
 ## 3. Content migration — foundations + types
 
@@ -54,6 +54,6 @@
 
 ### Residual gaps (polish, not blockers)
 
-- Many lessons share a migration-derived structure (problem expands via JS caption + shared closer variants; solution weaves TS caption + insights + varied closers). Showcase `class-member-visibility` is fully hand-written; further per-lesson voice polish is optional follow-up.
-- Visual baseline updates (2.4) deferred until Playwright visual suite is run against the new composition.
-- `scripts/migrate-lesson-presentation.mjs` kept as a one-shot tool; safe to delete after archive if undesired.
+- Corpus-wide hand polish applied (201 lessons): stock migration closers removed; node-migration + foundations fully hand-written; other tracks rebuilt from original problem + captions/insights with Variant A backticks; split-generic/`infer` false-wrap residuals swept.
+- Visual baseline updates (2.4) run in the follow-up commit with Playwright `--update-snapshots`.
+- `scripts/migrate-lesson-presentation.mjs` deleted after polish.

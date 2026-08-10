@@ -164,7 +164,7 @@ E2e MUST assert that editing the editable TypeScript pane leaves the displayed b
 
 ### Requirement: Critical-path e2e covers Profile and notes
 
-Playwright Chromium Desktop MUST cover: navigate to `/profile` via the navbar profile control; progress summary reflects seeded `ts-school-progress`; notes open/edit/persist across reload; notes pin left XOR right at desktop width; export triggers a downloadable JSON containing progress and notes when seeded; clear-all confirm wipes progress and notes; clear-all cancel leaves data. Stubbed AI context unit or e2e smoke MUST assert progress appears in composed chat context or `get_learner_progress` without loading real model weights.
+Playwright Chromium Desktop MUST cover: navigate to `/profile` via the navbar profile control; progress summary reflects seeded `ts-school-progress`; notes open/edit/persist across reload; notes floating window drag position and resize persist across reload at desktop width; notes fold persists across reload; notes open/close from the navbar; export triggers a downloadable JSON containing progress and notes when seeded; clear-all confirm wipes progress and notes (and notes window preference keys when seeded); clear-all cancel leaves data. Stubbed AI context unit or e2e smoke MUST assert progress appears in composed chat context or `get_learner_progress` without loading real model weights. Playwright MUST also cover notes open while Ask AI is open (coexistence) at desktop width, and notes open as a sheet fallback at a mobile viewport width used by the responsive suite.
 
 #### Scenario: Profile via navbar
 
@@ -174,9 +174,21 @@ Playwright Chromium Desktop MUST cover: navigate to `/profile` via the navbar pr
 
 #### Scenario: Notes persist
 
-- **GIVEN** the notes sidebar open
+- **GIVEN** the notes modal open
 - **WHEN** the learner enters text and reloads
 - **THEN** the notes body is restored from `ts-school-notes`
+
+#### Scenario: Notes geometry and fold persist
+
+- **GIVEN** desktop viewport with notes open
+- **WHEN** the learner drags, resizes, and folds notes, then reloads and reopens notes
+- **THEN** position, size, and fold state are restored from school-owned preference keys
+
+#### Scenario: Notes and Ask coexist
+
+- **GIVEN** Ask AI open on desktop
+- **WHEN** the learner opens notes
+- **THEN** both overlays remain available
 
 #### Scenario: Clear all confirm wipes data
 
@@ -186,15 +198,55 @@ Playwright Chromium Desktop MUST cover: navigate to `/profile` via the navbar pr
 
 ### Requirement: Axe and visual coverage include Profile and notes
 
-Axe serious/critical smoke MUST include `/profile` and an open notes sidebar state. Chromium Desktop visual baselines MUST include `/profile` (and MAY include a notes-open shell snapshot if baselines are used for overlays).
+Axe serious/critical smoke MUST include `/profile` and an open notes modal state. Chromium Desktop visual baselines MUST include `/profile` (and MAY include a notes-open shell snapshot if baselines are used for overlays).
 
 #### Scenario: Profile in axe
 
 - **WHEN** the a11y e2e suite runs
 - **THEN** `/profile` is included
 
+#### Scenario: Notes open in axe
+
+- **WHEN** the a11y e2e suite runs with notes open
+- **THEN** axe serious/critical checks include that notes-open state
+
 #### Scenario: Profile visual baseline
 
 - **WHEN** visual e2e runs
 - **THEN** `/profile` has a committed Chromium Desktop baseline assertion
 
+### Requirement: Lesson solution section smoke
+
+An authored lesson page MUST expose a Solution heading so learners can find the
+narrative that explains the TypeScript fix after the dual panes.
+
+#### Scenario: Solution heading appears on a lesson page
+
+- **GIVEN** an authored lesson with a non-empty `solution` field
+- **WHEN** the learner opens that lesson on Chromium Desktop
+- **THEN** the page MUST show a heading whose accessible name matches
+  `/solution/i` (for example "The solution")
+
+### Requirement: Inline code prose smoke
+
+Chromium Desktop e2e MUST open a known lesson whose authored prose contains
+markdown backticks and assert that at least one `<code>` element is visible in
+the lesson prose (not literal backtick characters alone).
+
+#### Scenario: Backticked lesson shows code element
+
+- **GIVEN** a lesson with backticked tokens in insight or caption prose
+- **WHEN** the learner opens that lesson on Chromium Desktop
+- **THEN** a `<code>` element containing the token is visible in the page
+
+### Requirement: Quiz choices expose letter prefixes
+
+Chromium Desktop e2e (or a focused unit mount of the quiz block) MUST assert
+that quiz answer choices are labeled with sequential letters A, B, C, D in
+order.
+
+#### Scenario: First-type-error quiz shows A–D
+
+- **GIVEN** the first-type-error fixture lesson with a multi-choice quiz
+- **WHEN** the quiz block is shown
+- **THEN** choice controls expose the prefixes A, B, C, and D

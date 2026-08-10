@@ -13,8 +13,12 @@ The lesson page MUST present the lesson's JavaScript pane and TypeScript pane
 together. On viewports wide enough for side-by-side layout the panes SHALL
 appear adjacent (JS left, TS right). On narrow viewports the panes SHALL be
 reachable through tabs. The JavaScript pane MUST be read-only. The TypeScript
-pane MUST be editable. Lesson source MUST reach the DOM only as plain text —
-never via `v-html`, `innerHTML`, or equivalent HTML injection.
+pane MUST be editable. Lesson **source** (JS/TS pane and exercise editor
+buffers) MUST reach the DOM only as plain text — never via `v-html`,
+`innerHTML`, or equivalent HTML injection. Authored **prose** fields (summary,
+problem, insights, security body, captions, quiz/exercise copy) MAY render
+through an escaped Labs markdown → HTML pipeline so markdown inline code
+becomes `<code>`; that pipeline MUST escape raw HTML from curriculum strings.
 
 #### Scenario: authored lesson shows both panes
 
@@ -29,6 +33,14 @@ never via `v-html`, `innerHTML`, or equivalent HTML injection.
 - **WHEN** the learner opens a lesson
 - **THEN** JavaScript and TypeScript are available as separate tabs and each
   tab shows the corresponding pane
+
+#### Scenario: prose backticks become code without injecting raw HTML
+
+- **GIVEN** a lesson whose summary or problem contains markdown backticks
+- **WHEN** the learner opens that lesson
+- **THEN** the backticked spans render as `<code>` and raw HTML in the string
+  is escaped, not executed
+
 
 ### Requirement: static diagnostics beneath the TypeScript pane
 
@@ -100,14 +112,57 @@ Placeholder panes MUST NOT require a generated diagnostics map entry.
 - **THEN** title, tier, track, summary, and problem are visible and no live
   typecheck client or Web Worker is started for that pane
 
+### Requirement: solution section after dual panes
+
+After the dual pane, the lesson page MUST render a section headed "The solution"
+(or equivalent accessible heading) whose body is the lesson's `solution` prose
+via ProseHtml. The section MUST appear before takeaways, security, diagram,
+quiz, and exercise.
+
+#### Scenario: solution heading and body render
+
+- **GIVEN** an authored lesson with non-empty `solution`
+- **WHEN** the learner opens that lesson
+- **THEN** a Solution heading is present and the `solution` prose is visible
+  beneath the dual pane and above takeaways
+
+### Requirement: prerequisites at the bottom of the lesson
+
+When a lesson has one or more resolvable prerequisites, the page MUST render
+"Read these first" after the main teaching blocks (problem, dual panes,
+solution, takeaways, optional security/diagram, quiz, exercise, references) and
+before the previous/next pager. Prerequisites MUST NOT appear between problem
+and dual panes.
+
+#### Scenario: prerequisites follow exercise and precede pager
+
+- **GIVEN** a lesson with at least one prerequisite and an exercise
+- **WHEN** the page renders
+- **THEN** "Read these first" appears below the exercise block and above the
+  lesson pager
+
+#### Scenario: prerequisites omitted when empty
+
+- **GIVEN** a lesson with an empty `prerequisites` list
+- **WHEN** the page renders
+- **THEN** no "Read these first" region is shown
+
 ### Requirement: lesson page composition
 
-One lesson route component MUST render every lesson: breadcrumbs, title, tier
-badge, track label, summary, problem, dual pane, insight bullets when present,
-an optional security note when present, an optional flowchart when diagram data
-is present, optional quiz and exercise blocks when authored, a mark-complete
-control, and previous/next navigation. Missing optional fields MUST be omitted
-without error.
+One lesson route component MUST render every lesson in this order: breadcrumbs,
+title, tier badge, track label, summary, problem, dual pane, solution narrative,
+insight bullets when present, an optional security note when present, an
+optional flowchart when diagram data is present, optional quiz and exercise
+blocks when authored, optional references, prerequisites ("Read these first")
+when present, a mark-complete control (placement unchanged relative to exercise
+vs standalone), and previous/next navigation. Missing optional fields MUST be
+omitted without error. Quiz answer choices MUST show sequential letter prefixes
+(**A**, **B**, **C**, **D**, …) matching choice order, visible to sighted
+users and exposed to assistive technology. Choice buttons MUST provide a
+tasteful hover affordance using existing vd design tokens without replacing
+keyboard focus styles. Lesson sidebar nav links (active and hover highlights)
+MUST use the site's global border-radius token so highlight boxes match tier
+buttons and filter controls rather than sharp 90° corners.
 
 #### Scenario: insights and security note render when authored
 
@@ -126,7 +181,27 @@ without error.
 
 - **GIVEN** a lesson with both `quiz` and `exercise`
 - **WHEN** the page renders
-- **THEN** both blocks are shown beneath the dual pane
+- **THEN** both blocks are shown beneath the solution section
+
+#### Scenario: teaching order puts solution before takeaways
+
+- **GIVEN** a lesson with `solution` and non-empty `insight`
+- **WHEN** the page renders
+- **THEN** the Solution section appears after the dual pane and before the
+  Takeaways section
+
+#### Scenario: quiz choices are lettered A B C D
+
+- **GIVEN** a lesson quiz with four choices
+- **WHEN** the quiz block renders
+- **THEN** the choices are labeled A, B, C, and D in order
+
+#### Scenario: sidebar lesson highlights are rounded
+
+- **GIVEN** the lesson sidebar on a lesson route
+- **WHEN** a lesson link is hovered or is the active route
+- **THEN** the highlight background uses the global vd border-radius token
+
 
 ### Requirement: compiler-truth suite over authored lessons
 
