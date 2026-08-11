@@ -15,26 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      - name: Checkout vdl-ai-chat
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          repository: vanduo-oss/vdl-ai-chat
-          path: .ci-vdl-ai-chat
-
-      - name: Checkout vdl-hybrid-search
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          repository: vanduo-oss/vdl-hybrid-search
-          path: .ci-vdl-hybrid-search
-
-      - name: "Link VDL packages for file: dependencies"
-        run: |
-          mkdir -p ../0_vanduo
-          ln -sfn "$GITHUB_WORKSPACE/.ci-vdl-ai-chat" ../0_vanduo/vdl-ai-chat
-          ln -sfn "$GITHUB_WORKSPACE/.ci-vdl-hybrid-search" ../0_vanduo/vdl-hybrid-search
-          test -f ../0_vanduo/vdl-ai-chat/package.json
-          test -f ../0_vanduo/vdl-hybrid-search/package.json
-
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
         with:
           version: 11.18.0
@@ -43,11 +23,6 @@ jobs:
         with:
           node-version: 24.17.0
           cache: pnpm
-
-      - name: Build VDL packages (dist is gitignored)
-        run: |
-          (cd ../0_vanduo/vdl-ai-chat && pnpm install && pnpm build)
-          (cd ../0_vanduo/vdl-hybrid-search && pnpm install && pnpm build)
 
       - run: pnpm install --frozen-lockfile
 

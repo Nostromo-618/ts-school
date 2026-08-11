@@ -1,21 +1,4 @@
-# lesson-ai-assistant Specification
-
-## Purpose
-In-lesson AI assistant powered by the published `@vanduo-oss/vdl-ai-chat`
-package from npm, including guardrails and markdown helpers via its subpath
-exports.
-
-## Requirements
-### Requirement: AiChat package import
-
-The lesson AI assistant MUST load the headless engine from
-`@vanduo-oss/vdl-ai-chat` and MUST import LLM/tool guardrails and markdown
-helpers from that package's subpath exports.
-
-#### Scenario: dynamic import
-- **GIVEN** the AI sidebar loads a model
-- **WHEN** it dynamically imports the engine
-- **THEN** the module specifier is `@vanduo-oss/vdl-ai-chat`
+## ADDED Requirements
 
 ### Requirement: AiChat resolves from the npm registry
 
@@ -29,4 +12,3 @@ specifiers remain `@vanduo-oss/vdl-ai-chat` and its published subpaths.
 - **WHEN** dependencies are installed with the pinned pnpm toolchain
 - **THEN** `@vanduo-oss/vdl-ai-chat` resolves from the configured npm registry
   (not a `file:` directory link)
-

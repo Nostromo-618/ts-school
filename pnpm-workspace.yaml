@@ -7,6 +7,8 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - '@vanduo-oss/vd3@1.2.2'
+  - '@vanduo-oss/vdl-ai-chat@0.1.0'
+  - '@vanduo-oss/vdl-hybrid-search@0.1.1'
 
 # vue-tsc / @vue/language-core / typescript-eslint still need the Strada
 # Compiler API. Primary `typescript` is 7.0.2 (native CLI); force these tools

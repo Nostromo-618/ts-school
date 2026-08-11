@@ -1,7 +1,10 @@
 # semantic-search Specification
 
 ## Purpose
-TBD - created by archiving change dogfood-vdl-packages. Update Purpose after archive.
+Curriculum hybrid search powered by the published
+`@vanduo-oss/vdl-hybrid-search` package from npm, with same-origin ORT WASM
+and host-provided loaders for CSP-safe semantic warmup.
+
 ## Requirements
 ### Requirement: Hybrid curriculum search engine
 
@@ -24,4 +27,17 @@ The site MUST serve Transformers.js ONNX Runtime WASM assets from the same origi
 - **GIVEN** the search store constructs HybridSearch
 - **WHEN** semantic warmup starts
 - **THEN** ORT WASM loads from `${BASE_URL}transformers-wasm/` rather than cdn.jsdelivr.net
+
+### Requirement: HybridSearch resolves from the npm registry
+
+The curriculum search dependency `@vanduo-oss/vdl-hybrid-search` MUST be
+declared as a semver range against the public npm registry (at least `^0.1.1`)
+and MUST NOT be installed via a `file:` path to a sibling clone. The search
+store MUST continue to construct `HybridSearch` from that package.
+
+#### Scenario: lockfile resolves registry package
+- **GIVEN** a clean clone with no sibling VDL repositories
+- **WHEN** dependencies are installed with the pinned pnpm toolchain
+- **THEN** `@vanduo-oss/vdl-hybrid-search` resolves from the configured npm
+  registry (not a `file:` directory link)
 

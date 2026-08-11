@@ -74,28 +74,20 @@ Pinia 4 · `@unhead/vue` 3, consuming the published
 [`@vanduo-oss/vd3`](https://www.npmjs.com/package/@vanduo-oss/vd3) 1.2.2 and
 [`@vanduo-oss/vd3-cbun`](https://www.npmjs.com/package/@vanduo-oss/vd3-cbun)
 1.3.1 design-system packages. Search / AI engines come from
-`@vanduo-oss/vdl-ai-chat` and `@vanduo-oss/vdl-hybrid-search` (see blocker note below).
+[`@vanduo-oss/vdl-ai-chat`](https://www.npmjs.com/package/@vanduo-oss/vdl-ai-chat)
+and
+[`@vanduo-oss/vdl-hybrid-search`](https://www.npmjs.com/package/@vanduo-oss/vdl-hybrid-search)
+on npm.
 
 ## Getting started
 
 The toolchain is pinned in `mise.toml` (node 24.17.0, pnpm 11.18.0). A bare
 shell may resolve a different node, so run through mise.
 
-**Prerequisite:** clone the private VDL packages as siblings at
-`../0_vanduo/vdl-ai-chat` and `../0_vanduo/vdl-hybrid-search` (same layout CI
-uses), until they are published to npm.
-
 ```bash
-# from Documents/GitHub (example)
 git clone https://github.com/<you>/ts-school.git
-git clone https://github.com/vanduo-oss/vdl-ai-chat.git 0_vanduo/vdl-ai-chat
-git clone https://github.com/vanduo-oss/vdl-hybrid-search.git 0_vanduo/vdl-hybrid-search
-
 cd ts-school
 mise trust
-# Build sibling packages once (dist/ is gitignored)
-(cd ../0_vanduo/vdl-ai-chat && pnpm install && pnpm build)
-(cd ../0_vanduo/vdl-hybrid-search && pnpm install && pnpm build)
 mise exec -- pnpm install
 mise exec -- pnpm dev
 ```
@@ -194,11 +186,8 @@ this table and the generator.
 - `.npmrc` blocks lifecycle scripts, delays newly published packages, refuses
   trust downgrades, and pins the registry. `@vanduo-oss/*` is excluded from the
   minimum-release-age gate (and may use `--safe-chain-skip-minimum-package-age`).
-- Local engine packages: `@vanduo-oss/vdl-ai-chat` and
-  `@vanduo-oss/vdl-hybrid-search` are **not on npm yet**. This repo depends on
-  `file:../0_vanduo/vdl-ai-chat` and `file:../0_vanduo/vdl-hybrid-search`.
-  CI/Pages clone those private repos and symlink them into place. Publishing
-  either package to npm removes the sibling-clone requirement for that engine.
+- Engine packages: `@vanduo-oss/vdl-ai-chat` (^0.1.0) and
+  `@vanduo-oss/vdl-hybrid-search` (^0.1.1) install from the npm registry.
 
 ## Workflow
 
