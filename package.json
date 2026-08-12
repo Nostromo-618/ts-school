@@ -24,7 +24,7 @@
     "test:e2e": "playwright test --project='Chromium Desktop'",
     "test:e2e:mobile": "playwright test --project='Chromium Mobile' tests/e2e/responsive.spec.ts",
     "test:e2e:full": "playwright test",
-    "test:e2e:llm": "TS_SCHOOL_LLM_E2E=1 playwright test --project='Chromium Desktop' tests/e2e/ai-chat-markdown.spec.ts",
+    "test:e2e:llm": "TS_SCHOOL_LLM_E2E=1 playwright test --workers=1 --project='Chromium Desktop' tests/e2e/ai-chat-markdown.spec.ts",
     "gate:release": "pnpm run lint && pnpm run stylelint && pnpm run format:check && pnpm run typecheck && pnpm test && pnpm run build && pnpm run test:e2e && pnpm run test:e2e:mobile",
     "models:compare": "node --experimental-strip-types scripts/school-model-compare.mjs --fixtures",
     "models:compare:live": "node --experimental-strip-types scripts/school-model-compare.mjs --live",

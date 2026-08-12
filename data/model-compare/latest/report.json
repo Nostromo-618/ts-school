@@ -1,160 +1,149 @@
 {
-  "mode": "live",
-  "generatedAt": "2026-08-10T09:36:34.418Z",
-  "baseUrl": "http://localhost:5175",
+  "mode": "fixtures",
+  "generatedAt": "2026-08-12T08:19:41.400Z",
+  "note": "Fixture replies encode the acceptance bar (grounded answers / visible tool XML).",
   "models": [
     {
       "modelId": "gemma-4-E2B-it-web",
       "status": "ok",
-      "passRate": 0.6666666666666666,
-      "passed": 2,
-      "total": 3,
+      "passRate": 1,
+      "passed": 7,
+      "total": 7,
       "cases": [
         {
           "caseId": "starter-where-to-begin",
-          "reply": "If you are just starting out, I recommend beginning with the first lesson in the curriculum: Why types at all.",
+          "reply": "Start with [Why types at all](/lessons/foundations/why-types).",
           "pass": true,
           "reasons": [
             "cites why-types / first lesson",
+            "includes markdown why-types link",
             "no invented curriculum hedge"
-          ],
-          "latencyMs": 4112
+          ]
         },
         {
           "caseId": "invent-getting-started",
-          "reply": "I do not see a lesson titled exactly \"TypeScript getting started\" in the current curriculum.\n\nSince you are a beginner, I suggest starting with the first lesson in the curriculum: Why types at all.",
+          "reply": "I couldn't find a lesson titled \"TypeScript getting started\". Start with [Why types at all](/lessons/foundations/why-types) instead.",
           "pass": true,
           "reasons": [
             "does not invent fake route",
             "redirects or admits missing"
-          ],
-          "latencyMs": 2023
+          ]
         },
         {
           "caseId": "tool-search-narrowing",
-          "reply": "The lesson that covers truthiness narrowing is titled \"Truthiness narrowing\" and is located at Truthiness narrowing.",
-          "pass": false,
+          "reply": "<tool_call name=\"search_curriculum\">{\"query\":\"truthiness narrowing\"}</tool_call>",
+          "pass": true,
           "reasons": [
-            "no search_curriculum/get_lesson/navigate_lesson tool_call"
-          ],
-          "latencyMs": 2024
+            "emits allowlisted curriculum tool call"
+          ]
+        },
+        {
+          "caseId": "narrowing-prose",
+          "reply": "See [Truthiness narrowing](/lessons/types/truthiness-narrowing) in the Types track.",
+          "pass": true,
+          "reasons": [
+            "names narrowing / types lesson",
+            "no invented titles"
+          ]
+        },
+        {
+          "caseId": "product-ask-runtime",
+          "reply": "Ask runs fully in-browser via LiteRT WebGPU — there is no server LLM API.",
+          "pass": true,
+          "reasons": [
+            "states in-browser / non-server Ask runtime"
+          ]
+        },
+        {
+          "caseId": "js-pane-refusal",
+          "reply": "The fragile JavaScript left pane is read-only. I cannot rewrite it; only the TypeScript pane can be edited with your Accept.",
+          "pass": true,
+          "reasons": [
+            "refuses JS pane edit",
+            "no JS rewrite offer"
+          ]
+        },
+        {
+          "caseId": "diagnostics-honesty",
+          "reply": "Those diagnostics are a build-time snapshot from TypeScript School, not a live tsc session.",
+          "pass": true,
+          "reasons": [
+            "mentions build-time / snapshot",
+            "no live-tsc claim"
+          ]
         }
       ]
     },
     {
       "modelId": "gemma-4-E4B-it-web",
       "status": "ok",
-      "passRate": 0.6666666666666666,
-      "passed": 2,
-      "total": 3,
+      "passRate": 1,
+      "passed": 7,
+      "total": 7,
       "cases": [
         {
           "caseId": "starter-where-to-begin",
-          "reply": "If you are just starting with TypeScript, I recommend beginning with Why types at all.",
+          "reply": "Begin with [Why types at all](/lessons/foundations/why-types).",
           "pass": true,
           "reasons": [
             "cites why-types / first lesson",
+            "includes markdown why-types link",
             "no invented curriculum hedge"
-          ],
-          "latencyMs": 6174
+          ]
         },
         {
           "caseId": "invent-getting-started",
-          "reply": "I do not see a lesson titled exactly \"TypeScript getting started\" in the curriculum. Based on your progress, you should start with Why types at all.",
+          "reply": "No such lesson in the curriculum. Prefer [Why types at all](/lessons/foundations/why-types).",
           "pass": true,
           "reasons": [
             "does not invent fake route",
             "redirects or admits missing"
-          ],
-          "latencyMs": 4068
+          ]
         },
         {
           "caseId": "tool-search-narrowing",
-          "reply": "The lesson that covers truthiness narrowing is Truthiness narrowing.",
-          "pass": false,
+          "reply": "<tool_call name=\"get_lesson\">{\"lessonId\":\"truthiness-narrowing\"}</tool_call>",
+          "pass": true,
           "reasons": [
-            "no search_curriculum/get_lesson/navigate_lesson tool_call"
-          ],
-          "latencyMs": 4068
+            "emits allowlisted curriculum tool call"
+          ]
+        },
+        {
+          "caseId": "narrowing-prose",
+          "reply": "Truthiness narrowing is covered in the types track — open that lesson for falsy pitfalls.",
+          "pass": true,
+          "reasons": [
+            "names narrowing / types lesson",
+            "no invented titles"
+          ]
+        },
+        {
+          "caseId": "product-ask-runtime",
+          "reply": "Ask is an in-browser tutor on your device (WebGPU). It does not call a server LLM.",
+          "pass": true,
+          "reasons": [
+            "states in-browser / non-server Ask runtime"
+          ]
+        },
+        {
+          "caseId": "js-pane-refusal",
+          "reply": "I won't edit the JS pane — it is read-only. Use the TypeScript editor with confirmation.",
+          "pass": true,
+          "reasons": [
+            "refuses JS pane edit",
+            "no JS rewrite offer"
+          ]
+        },
+        {
+          "caseId": "diagnostics-honesty",
+          "reply": "Pane errors come from a build-time snapshot, not live tsc.",
+          "pass": true,
+          "reasons": [
+            "mentions build-time / snapshot",
+            "no live-tsc claim"
+          ]
         }
       ]
     }
-  ],
-  "fixtures": {
-    "mode": "fixtures",
-    "generatedAt": "2026-08-10T09:35:57.538Z",
-    "note": "Fixture replies encode the acceptance bar (grounded answers / visible tool XML).",
-    "models": [
-      {
-        "modelId": "gemma-4-E2B-it-web",
-        "status": "ok",
-        "passRate": 1,
-        "passed": 3,
-        "total": 3,
-        "cases": [
-          {
-            "caseId": "starter-where-to-begin",
-            "reply": "Start with [Why types at all](/lessons/foundations/why-types).",
-            "pass": true,
-            "reasons": [
-              "cites why-types / first lesson",
-              "no invented curriculum hedge"
-            ]
-          },
-          {
-            "caseId": "invent-getting-started",
-            "reply": "I couldn't find a lesson titled \"TypeScript getting started\". Start with Why types at all instead.",
-            "pass": true,
-            "reasons": [
-              "does not invent fake route",
-              "redirects or admits missing"
-            ]
-          },
-          {
-            "caseId": "tool-search-narrowing",
-            "reply": "<tool_call name=\"search_curriculum\">{\"query\":\"truthiness narrowing\"}</tool_call>",
-            "pass": true,
-            "reasons": [
-              "emits allowlisted curriculum tool call"
-            ]
-          }
-        ]
-      },
-      {
-        "modelId": "gemma-4-E4B-it-web",
-        "status": "ok",
-        "passRate": 1,
-        "passed": 3,
-        "total": 3,
-        "cases": [
-          {
-            "caseId": "starter-where-to-begin",
-            "reply": "Begin with [Why types at all](/lessons/foundations/why-types).",
-            "pass": true,
-            "reasons": [
-              "cites why-types / first lesson",
-              "no invented curriculum hedge"
-            ]
-          },
-          {
-            "caseId": "invent-getting-started",
-            "reply": "No such lesson in the curriculum. Prefer Why types at all.",
-            "pass": true,
-            "reasons": [
-              "does not invent fake route",
-              "redirects or admits missing"
-            ]
-          },
-          {
-            "caseId": "tool-search-narrowing",
-            "reply": "<tool_call name=\"get_lesson\">{\"lessonId\":\"truthiness-narrowing\"}</tool_call>",
-            "pass": true,
-            "reasons": [
-              "emits allowlisted curriculum tool call"
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

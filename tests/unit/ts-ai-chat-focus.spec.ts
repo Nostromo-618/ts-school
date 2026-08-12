@@ -4,6 +4,15 @@ import { mount, flushPromises } from "@vue/test-utils";
 import { createPinia, setActivePinia } from "pinia";
 import { createMemoryHistory, createRouter } from "vue-router";
 
+vi.mock("@vanduo-oss/vdl-ai-chat/guardrails/llm", () => ({
+  LLM_BLOCK_MESSAGE: "labs input block",
+  LLM_OUTPUT_BLOCK_MESSAGE: "labs output block",
+  validateLlmInput: () => ({ allowed: true }),
+  validateLlmOutput: () => ({ allowed: true }),
+  normalizeJailbreakScanText: (t: string) => t,
+  buildChatSystemPrompt: () => "",
+}));
+
 vi.mock("@vanduo-oss/vdl-ai-chat", () => {
   class AiChat {
     registerTools(): void {}
@@ -16,7 +25,10 @@ vi.mock("@vanduo-oss/vdl-ai-chat", () => {
     onProgress(): () => void {
       return () => {};
     }
-    async generate(_text: string, onUpdate?: (partial: string) => void): Promise<string> {
+    async generate(
+      _text: string,
+      onUpdate?: (partial: string) => void,
+    ): Promise<string> {
       onUpdate?.("reply");
       return "reply";
     }
@@ -69,7 +81,8 @@ describe("TsAiChatSidebar composer focus", () => {
         plugins: [router],
         stubs: {
           VdButton: {
-            template: "<button v-bind=\"$attrs\" @click=\"$emit('click')\"><slot /></button>",
+            template:
+              '<button v-bind="$attrs" @click="$emit(\'click\')"><slot /></button>',
           },
           VdIcon: true,
           VdProgress: true,

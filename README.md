@@ -101,7 +101,7 @@ mise exec -- pnpm dev
 | `pnpm generate:search-index`| Rebuild Neptune `public/search/*` embeddings     |
 | `pnpm models:fetch`        | Prefetch Gemma LiteRT into `.models/` (dev cache) |
 | `pnpm models:compare`      | Score E2B/E4B school tutoring fixtures → `data/model-compare/` |
-| `pnpm models:compare:live` | Same against localhost:5173 (needs weights + WebGPU) |
+| `pnpm models:compare:live` | Same against localhost:5173 (needs weights + WebGPU; **fresh browser per model**; E4B may fail in headless — use headed Chrome) |
 | `pnpm typecheck`           | `vue-tsc` via Strada wrapper (`--noEmit`)         |
 | `pnpm lint` / `:fix`       | ESLint via Strada wrapper (parser needs TS 6 API) |
 | `pnpm stylelint`           | Stylelint over `src/**/*.css`                     |
@@ -109,7 +109,7 @@ mise exec -- pnpm dev
 | `pnpm test`                | Vitest unit suites in `tests/unit/`               |
 | `pnpm test:e2e`            | Playwright, Chromium Desktop, from `tests/e2e/`   |
 | `pnpm test:e2e:mobile`     | Chromium Mobile responsive critical paths         |
-| `pnpm test:e2e:llm`        | Same + gated Gemma chat (needs `.models/` + WebGPU) |
+| `pnpm test:e2e:llm`        | Gated Gemma chat with `--workers=1` (needs `.models/` + WebGPU; avoid parallel GPU loaders) |
 | `pnpm gate:release`        | Full release readiness gate (see above)           |
 
 ## Theme localStorage keys

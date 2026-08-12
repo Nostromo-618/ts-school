@@ -4,6 +4,15 @@ import { mount, flushPromises } from "@vue/test-utils";
 import { createPinia, setActivePinia } from "pinia";
 import { createMemoryHistory, createRouter } from "vue-router";
 
+vi.mock("@vanduo-oss/vdl-ai-chat/guardrails/llm", () => ({
+  LLM_BLOCK_MESSAGE: "labs input block",
+  LLM_OUTPUT_BLOCK_MESSAGE: "labs output block",
+  validateLlmInput: () => ({ allowed: true }),
+  validateLlmOutput: () => ({ allowed: true }),
+  normalizeJailbreakScanText: (t: string) => t,
+  buildChatSystemPrompt: () => "",
+}));
+
 vi.mock("@vanduo-oss/vdl-ai-chat", () => {
   class AiChat {
     registerTools(): void {}

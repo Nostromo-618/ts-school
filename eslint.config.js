@@ -185,6 +185,8 @@ export default [
       'public/ts-lib/**',
       // Throwaway local screenshot/debug scripts (not application code).
       '__*.mjs',
+      // Exploratory campaign runners + raw logs (findings artifacts, not app code).
+      'data/ask-explore/**',
     ],
   },
 ];

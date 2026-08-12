@@ -39,6 +39,7 @@ import { useLessonEditorStore } from "@/stores/lessonEditor";
 import {
   LLM_BLOCK_MESSAGE,
   LLM_OUTPUT_BLOCK_MESSAGE,
+  validateLlmInput,
 } from "@vanduo-oss/vdl-ai-chat/guardrails/llm";
 
 /** Mirrors Labs `MODEL_CACHE_FLAG_PREFIX` — avoid importing ai-chat.js at module top (SSR). */
@@ -345,6 +346,18 @@ async function send(): Promise<void> {
   messages.value.push({ role: "assistant", content: "" });
   const idx = messages.value.length - 1;
   const chat = chatRef.value;
+
+  // Fail closed before LiteRT so jailbreaks complete as a visible policy turn
+  // immediately (automation can poll assistant bubble text without hanging).
+  const inputGate = validateLlmInput({ text });
+  if (!inputGate.allowed) {
+    messages.value[idx] = policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE);
+    streaming.value = false;
+    if (loaded.value) statusText.value = "Ready";
+    focusComposer();
+    return;
+  }
+
   try {
     refreshSystemPrompt(chat);
     const execute = createSchoolToolExecutor({
@@ -403,6 +416,7 @@ async function send(): Promise<void> {
     }
   } finally {
     streaming.value = false;
+    if (loaded.value && !loading.value) statusText.value = "Ready";
     focusComposer();
   }
 }
@@ -635,7 +649,7 @@ onBeforeUnmount(() => {
         >
           <span class="ts-ai-policy-block-inner">
             <VdIcon name="shield-warning" aria-hidden="true" />
-            <span>{{ msg.content }}</span>
+            <span data-testid="ts-ai-bubble-text">{{ msg.content }}</span>
           </span>
         </VdAlert>
         <!-- Escaped Labs markdown only (labsMarkdownToHtml); not raw model HTML. -->
