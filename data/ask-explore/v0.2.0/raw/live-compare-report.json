@@ -1,0 +1,131 @@
+{
+  "mode": "live",
+  "generatedAt": "2026-08-12T07:36:58.681Z",
+  "baseUrl": "http://localhost:5173",
+  "models": [
+    {
+      "modelId": "gemma-4-E2B-it-web",
+      "status": "ok",
+      "passRate": 0.6666666666666666,
+      "passed": 2,
+      "total": 3,
+      "cases": [
+        {
+          "caseId": "starter-where-to-begin",
+          "reply": "For a beginner, I recommend starting with the first lesson in the curriculum: Why types at all.",
+          "pass": true,
+          "reasons": [
+            "cites why-types / first lesson",
+            "no invented curriculum hedge"
+          ],
+          "latencyMs": 4107
+        },
+        {
+          "caseId": "invent-getting-started",
+          "reply": "I do not see a lesson titled exactly \"TypeScript getting started\" in the curriculum. Since you are new to TypeScript, the best place to begin is with the foundational lesson: Why types at all.",
+          "pass": true,
+          "reasons": [
+            "does not invent fake route",
+            "redirects or admits missing"
+          ],
+          "latencyMs": 2046
+        },
+        {
+          "caseId": "tool-search-narrowing",
+          "reply": "The lesson that covers truthiness narrowing is titled \"Truthiness narrowing\" and can be found at Truthiness narrowing.",
+          "pass": false,
+          "reasons": [
+            "no search_curriculum/get_lesson/navigate_lesson tool_call"
+          ],
+          "latencyMs": 2042
+        }
+      ]
+    },
+    {
+      "modelId": "gemma-4-E4B-it-web",
+      "status": "error",
+      "passRate": null,
+      "passed": 0,
+      "total": 0,
+      "error": "Load failed: Ask TypeScript School\nLoad failed\nClose\nModel\nGemma 4 E2B (~2.0GB) — Fast (default)\nGemma 4 E4B (~2.5GB) — Quality (recommended if ≥8GB RAM)\nLoad model\n\nCapable machine detected: E2B stays the default for a faster first load; switch to E4B for richer answers (+~0.5GB).\n\nJS Stream Error [TypeError]: network error\n\nLoad Gemma 4 E2B/E4B locally, then ask about this lesson. Tools can search the curric",
+      "cases": []
+    }
+  ],
+  "fixtures": {
+    "mode": "fixtures",
+    "generatedAt": "2026-08-12T07:36:38.072Z",
+    "note": "Fixture replies encode the acceptance bar (grounded answers / visible tool XML).",
+    "models": [
+      {
+        "modelId": "gemma-4-E2B-it-web",
+        "status": "ok",
+        "passRate": 1,
+        "passed": 3,
+        "total": 3,
+        "cases": [
+          {
+            "caseId": "starter-where-to-begin",
+            "reply": "Start with [Why types at all](/lessons/foundations/why-types).",
+            "pass": true,
+            "reasons": [
+              "cites why-types / first lesson",
+              "no invented curriculum hedge"
+            ]
+          },
+          {
+            "caseId": "invent-getting-started",
+            "reply": "I couldn't find a lesson titled \"TypeScript getting started\". Start with Why types at all instead.",
+            "pass": true,
+            "reasons": [
+              "does not invent fake route",
+              "redirects or admits missing"
+            ]
+          },
+          {
+            "caseId": "tool-search-narrowing",
+            "reply": "<tool_call name=\"search_curriculum\">{\"query\":\"truthiness narrowing\"}</tool_call>",
+            "pass": true,
+            "reasons": [
+              "emits allowlisted curriculum tool call"
+            ]
+          }
+        ]
+      },
+      {
+        "modelId": "gemma-4-E4B-it-web",
+        "status": "ok",
+        "passRate": 1,
+        "passed": 3,
+        "total": 3,
+        "cases": [
+          {
+            "caseId": "starter-where-to-begin",
+            "reply": "Begin with [Why types at all](/lessons/foundations/why-types).",
+            "pass": true,
+            "reasons": [
+              "cites why-types / first lesson",
+              "no invented curriculum hedge"
+            ]
+          },
+          {
+            "caseId": "invent-getting-started",
+            "reply": "No such lesson in the curriculum. Prefer Why types at all.",
+            "pass": true,
+            "reasons": [
+              "does not invent fake route",
+              "redirects or admits missing"
+            ]
+          },
+          {
+            "caseId": "tool-search-narrowing",
+            "reply": "<tool_call name=\"get_lesson\">{\"lessonId\":\"truthiness-narrowing\"}</tool_call>",
+            "pass": true,
+            "reasons": [
+              "emits allowlisted curriculum tool call"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

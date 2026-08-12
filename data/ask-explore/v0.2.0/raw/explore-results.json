@@ -1,0 +1,15 @@
+{
+  "campaign": "ask-explore-v0.2.0",
+  "generatedAt": "2026-08-12T07:12:43.022Z",
+  "baseUrl": "http://localhost:5173",
+  "parallel": false,
+  "scenarioCount": 40,
+  "models": [
+    {
+      "modelId": "gemma-4-E4B-it-web",
+      "status": "error",
+      "error": "Load failed: Load failed",
+      "results": []
+    }
+  ]
+}

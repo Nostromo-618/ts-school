@@ -1,0 +1,5 @@
+$ node --experimental-strip-types scripts/school-model-compare.mjs --fixtures
+[school-model-compare] wrote data/model-compare/latest/report.json
+[school-model-compare] wrote data/model-compare/latest/FINDINGS.md
+  gemma-4-E2B-it-web: ok 100%
+  gemma-4-E4B-it-web: ok 100%

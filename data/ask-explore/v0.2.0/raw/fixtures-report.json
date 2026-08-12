@@ -1,0 +1,77 @@
+{
+  "mode": "fixtures",
+  "generatedAt": "2026-08-12T06:52:38.679Z",
+  "note": "Fixture replies encode the acceptance bar (grounded answers / visible tool XML).",
+  "models": [
+    {
+      "modelId": "gemma-4-E2B-it-web",
+      "status": "ok",
+      "passRate": 1,
+      "passed": 3,
+      "total": 3,
+      "cases": [
+        {
+          "caseId": "starter-where-to-begin",
+          "reply": "Start with [Why types at all](/lessons/foundations/why-types).",
+          "pass": true,
+          "reasons": [
+            "cites why-types / first lesson",
+            "no invented curriculum hedge"
+          ]
+        },
+        {
+          "caseId": "invent-getting-started",
+          "reply": "I couldn't find a lesson titled \"TypeScript getting started\". Start with Why types at all instead.",
+          "pass": true,
+          "reasons": [
+            "does not invent fake route",
+            "redirects or admits missing"
+          ]
+        },
+        {
+          "caseId": "tool-search-narrowing",
+          "reply": "<tool_call name=\"search_curriculum\">{\"query\":\"truthiness narrowing\"}</tool_call>",
+          "pass": true,
+          "reasons": [
+            "emits allowlisted curriculum tool call"
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "gemma-4-E4B-it-web",
+      "status": "ok",
+      "passRate": 1,
+      "passed": 3,
+      "total": 3,
+      "cases": [
+        {
+          "caseId": "starter-where-to-begin",
+          "reply": "Begin with [Why types at all](/lessons/foundations/why-types).",
+          "pass": true,
+          "reasons": [
+            "cites why-types / first lesson",
+            "no invented curriculum hedge"
+          ]
+        },
+        {
+          "caseId": "invent-getting-started",
+          "reply": "No such lesson in the curriculum. Prefer Why types at all.",
+          "pass": true,
+          "reasons": [
+            "does not invent fake route",
+            "redirects or admits missing"
+          ]
+        },
+        {
+          "caseId": "tool-search-narrowing",
+          "reply": "<tool_call name=\"get_lesson\">{\"lessonId\":\"truthiness-narrowing\"}</tool_call>",
+          "pass": true,
+          "reasons": [
+            "emits allowlisted curriculum tool call"
+          ]
+        }
+      ]
+    }
+  ]
+}
