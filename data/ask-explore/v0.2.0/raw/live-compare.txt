@@ -1,0 +1,30 @@
+$ node --experimental-strip-types scripts/school-model-compare.mjs --live
+[live] base=http://localhost:5173
+[live] browser=chrome
+[live] model=gemma-4-E2B-it-web
+[live] goto http://localhost:5173/
+[live] webgpu=true
+[live] open Ask + select gemma-4-E2B-it-web
+[live] loading gemma-4-E2B-it-web…
+[live] status="Loading…"
+[live] load result status="Ready"
+[live] case=starter-where-to-begin
+[live] case=starter-where-to-begin streaming=true len=0
+[live] case=starter-where-to-begin PASS 4107ms len=95
+[live] case=invent-getting-started
+[live] case=invent-getting-started streaming=true len=0
+[live] case=invent-getting-started PASS 2046ms len=192
+[live] case=tool-search-narrowing
+[live] case=tool-search-narrowing streaming=true len=0
+[live] case=tool-search-narrowing FAIL 2042ms len=118
+[live] model=gemma-4-E4B-it-web
+[live] goto http://localhost:5173/
+[live] webgpu=true
+[live] open Ask + select gemma-4-E4B-it-web
+[live] loading gemma-4-E4B-it-web…
+[live] status="Loading…"
+[live] load result status="Load failed"
+[school-model-compare] wrote data/model-compare/latest/report.json
+[school-model-compare] wrote data/model-compare/latest/FINDINGS.md
+  gemma-4-E2B-it-web: ok 67%
+  gemma-4-E4B-it-web: error n/a

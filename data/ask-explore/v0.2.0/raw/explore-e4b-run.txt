@@ -1,0 +1,10 @@
+[explore] browser=chrome
+[explore] === model gemma-4-E4B-it-web ===
+[explore] gemma-4-E4B-it-web webgpu=true
+[explore] gemma-4-E4B-it-web ui:ui-model-default-e2b
+[explore] gemma-4-E4B-it-web ui:ui-pin-persist
+[explore] gemma-4-E4B-it-web ui:ui-empty-send
+[explore] gemma-4-E4B-it-web ui:ui-input-disabled-before-load
+[explore] gemma-4-E4B-it-web loading…
+[explore] wrote /Users/misteruser/Documents/GitHub/ts-school/data/ask-explore/v0.2.0/raw/explore-results.json
+[explore] summary gemma-4-E4B-it-web status=error 0/0

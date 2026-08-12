@@ -1,0 +1,69 @@
+$ TS_SCHOOL_LLM_E2E=1 playwright test --project='Chromium Desktop' tests/e2e/ai-chat-markdown.spec.ts
+[WebServer] $ vite preview --port 8787 --host
+
+Running 3 tests using 3 workers
+
+(node:5527) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5526) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [Chromium Desktop] › tests/e2e/ai-chat-markdown.spec.ts:47:3 › AI chat markdown rendering › assistant bubble escapes adversarial markdown (611ms)
+  ✓  2 [Chromium Desktop] › tests/e2e/ai-chat-markdown.spec.ts:12:3 › AI chat markdown rendering › assistant bubble renders markdown and SPA links (685ms)
+  ✘  3 [Chromium Desktop] › tests/e2e/ai-chat-markdown.spec.ts:100:3 › local LLM starter chat › home where-to-start cites why-types (10.0m)
+
+
+  1) [Chromium Desktop] › tests/e2e/ai-chat-markdown.spec.ts:100:3 › local LLM starter chat › home where-to-start cites why-types 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('ts-ai-status')
+    Expected: "Ready"
+    Received: "Load failed"
+    Timeout:  600000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 600000ms
+      - waiting for getByTestId('ts-ai-status')
+        3 × locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading…</span>
+          - unexpected value "Loading…"
+        - locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading 0%</span>
+        - unexpected value "Loading 0%"
+        - locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading 2%</span>
+        - unexpected value "Loading 2%"
+        - locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading 27%</span>
+        - unexpected value "Loading 27%"
+        - locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading 52%</span>
+        - unexpected value "Loading 52%"
+        - locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading 77%</span>
+        - unexpected value "Loading 77%"
+        - locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Loading 100%</span>
+        - unexpected value "Loading 100%"
+        1191 × locator resolved to <span data-v-0f211c7a="" data-testid="ts-ai-status" class="vd-text-muted vd-text-sm">Load failed</span>
+             - unexpected value "Load failed"
+
+
+      110 |     await page.getByTestId("ts-ai-load").click();
+      111 |
+    > 112 |     await expect(page.getByTestId("ts-ai-status")).toHaveText("Ready", {
+          |                                                    ^
+      113 |       timeout: 10 * 60 * 1000,
+      114 |     });
+      115 |     await expect(page.getByTestId("ts-ai-input")).toBeEnabled();
+        at /Users/misteruser/Documents/GitHub/ts-school/tests/e2e/ai-chat-markdown.spec.ts:112:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-markdown-local-LLM-314cd-re-to-start-cites-why-types-Chromium-Desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-markdown-local-LLM-314cd-re-to-start-cites-why-types-Chromium-Desktop/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-markdown-local-LLM-314cd-re-to-start-cites-why-types-Chromium-Desktop/error-context.md
+
+  1 failed
+    [Chromium Desktop] › tests/e2e/ai-chat-markdown.spec.ts:100:3 › local LLM starter chat › home where-to-start cites why-types 
+  2 passed (10.1m)
+[ELIFECYCLE] Command failed with exit code 1.
