@@ -10,7 +10,7 @@
  */
 
 /** Bump when disclaimer clauses change in a way that needs re-consent. */
-export const TOC_VERSION = "4";
+export const TOC_VERSION = "5";
 
 /** localStorage key for versioned acceptance JSON. */
 export const TOC_STORAGE_KEY = "ts-school-toc-accepted";
@@ -61,7 +61,7 @@ export const DISCLAIMER_SECTIONS: DisclaimerSection[] = [
   },
   {
     heading: "Privacy & local storage",
-    body: "Progress, theme preference, notes, and terms acceptance stay in this browser’s localStorage. Chat messages stay in this tab’s memory and are not uploaded to a TypeScript School server. There is no account or cloud sync. Opt-in model or embedding fetches may contact Hugging Face / CDN hosts allowed by the site CSP. Clearing site data, switching browsers or devices, or using private/incognito mode can erase everything.",
+    body: "Progress, theme preference, notes, Ask chat history, and terms acceptance stay in this browser’s localStorage. Chat transcripts are not uploaded to a TypeScript School server. There is no account or cloud sync. You can clear chat history from the Ask sidebar or Profile, or remove everything with Clear all. Opt-in model or embedding fetches may contact Hugging Face / CDN hosts allowed by the site CSP. Clearing site data, switching browsers or devices, or using private/incognito mode can erase everything.",
   },
   {
     heading: "License vs disclaimer",

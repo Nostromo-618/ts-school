@@ -29,7 +29,7 @@ function describeAssertion(assertion: ExerciseAssertion): string {
 export function formatExerciseAiHelpPrompt(input: ExerciseAiHelpInput): string {
   const { lessonId, lessonTitle, exercise, currentCode } = input;
   const sections: string[] = [
-    "Help me with this TypeScript School exercise. Explain what is wrong with my current code and how to fix it. Do not dump the full solution unless I ask.",
+    "Help me with this TypeScript School exercise. Give a Socratic hint for the next small step only — name the mismatch or concept to check, not a full corrected file. Do not paste the complete solution unless I explicitly ask for it.",
     "",
     "## Lesson",
     `- id: ${lessonId}`,

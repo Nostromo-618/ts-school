@@ -61,7 +61,7 @@ test.describe("AI chat markdown rendering", () => {
       md.setAttribute("data-testid", "ts-ai-bubble-md");
       // Mimic escaped pipeline output (what renderAssistantHtml produces).
       md.innerHTML =
-        "&lt;script&gt;alert(1)&lt;/script&gt;<p>Safe <a href=\"/curriculum\">curriculum</a></p>";
+        '&lt;script&gt;alert(1)&lt;/script&gt;<p>Safe <a href="/curriculum">curriculum</a></p>';
       bubble.appendChild(md);
       list.appendChild(bubble);
     });
@@ -70,7 +70,9 @@ test.describe("AI chat markdown rendering", () => {
       page.getByTestId("ts-ai-bubble-md").locator("script"),
     ).toHaveCount(0);
     await expect(
-      page.getByTestId("ts-ai-bubble-md").locator('a[href="javascript:alert(1)"]'),
+      page
+        .getByTestId("ts-ai-bubble-md")
+        .locator('a[href="javascript:alert(1)"]'),
     ).toHaveCount(0);
     await expect(page).toHaveURL(/\/$/);
   });
@@ -97,8 +99,16 @@ test.describe("local LLM starter chat", () => {
     "Requires .models/gemma-4-E2B-it-web (pnpm models:fetch)",
   );
 
-  test("home where-to-start cites why-types", async ({ page, browserName }) => {
-    test.skip(browserName !== "chromium", "WebGPU LiteRT is Chromium-only here");
+  test("home where-to-start cites why-types", async ({
+    page,
+    browserName,
+  }, testInfo) => {
+    test.skip(
+      browserName !== "chromium",
+      "WebGPU LiteRT is Chromium-only here",
+    );
+    // Avoid contending with other Chromium workers for WebGPU / model memory.
+    testInfo.setTimeout(15 * 60 * 1000);
 
     await page.goto("/");
     const hasGpu = await page.evaluate(
@@ -109,9 +119,20 @@ test.describe("local LLM starter chat", () => {
     await page.getByTestId("ts-open-ai-chat").click();
     await page.getByTestId("ts-ai-load").click();
 
-    await expect(page.getByTestId("ts-ai-status")).toHaveText("Ready", {
-      timeout: 10 * 60 * 1000,
-    });
+    const status = page.getByTestId("ts-ai-status");
+    const loadDeadline = Date.now() + 12 * 60 * 1000;
+    let last = "";
+    while (Date.now() < loadDeadline) {
+      last = (await status.textContent()) || "";
+      if (last === "Ready" || last === "Load failed") break;
+      await page.waitForTimeout(2000);
+    }
+    if (last !== "Ready") {
+      const sidebar = await page.getByTestId("ts-ai-sidebar").innerText();
+      throw new Error(
+        `Ask model failed to reach Ready (status=${JSON.stringify(last)}). Sidebar:\n${sidebar.slice(0, 800)}`,
+      );
+    }
     await expect(page.getByTestId("ts-ai-input")).toBeEnabled();
     await expect(page.getByTestId("ts-ai-input")).toBeFocused();
 

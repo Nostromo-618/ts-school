@@ -20,7 +20,7 @@ import { buildRoutes } from "@/router";
 
 describe("disclaimer copy", () => {
   it("bumps TOC_VERSION and folds Ask risks into site terms", () => {
-    expect(TOC_VERSION).toBe("4");
+    expect(TOC_VERSION).toBe("5");
     const blob = DISCLAIMER_SECTIONS.map((s) => `${s.heading}\n${s.body}`).join(
       "\n",
     );
@@ -29,6 +29,7 @@ describe("disclaimer copy", () => {
     expect(blob).toMatch(/Accept or Reject/i);
     expect(blob).toMatch(/Article 50|AI Act/i);
     expect(blob).toMatch(/Hugging Face|localStorage/i);
+    expect(blob).toMatch(/chat history/i);
     expect(blob).not.toMatch(/additional AI risk acceptance/i);
   });
 });

@@ -1,6 +1,6 @@
 # School model compare — findings
 
-Generated: 2026-08-10T09:36:34.418Z
+Generated: 2026-08-12T08:19:41.400Z
 
 ## Labs `vdl-model-eval` (live WebGPU)
 
@@ -21,47 +21,37 @@ Cases: starter route → `why-types`, invent-lesson trap, curriculum tool XML in
 
 ### Fixtures
 
-Fixture replies encode the acceptance bar (100% when grounded / tool XML is present in the scored string).
+Fixture replies encode the acceptance bar (grounded answers / visible tool XML).
 
 ### gemma-4-E2B-it-web
 - Status: ok
-- Pass rate: 100% (3/3)
-  - PASS `starter-where-to-begin` — cites why-types / first lesson; no invented curriculum hedge
+- Pass rate: 100% (7/7)
+  - PASS `starter-where-to-begin` — cites why-types / first lesson; includes markdown why-types link; no invented curriculum hedge
   - PASS `invent-getting-started` — does not invent fake route; redirects or admits missing
   - PASS `tool-search-narrowing` — emits allowlisted curriculum tool call
+  - PASS `narrowing-prose` — names narrowing / types lesson; no invented titles
+  - PASS `product-ask-runtime` — states in-browser / non-server Ask runtime
+  - PASS `js-pane-refusal` — refuses JS pane edit; no JS rewrite offer
+  - PASS `diagnostics-honesty` — mentions build-time / snapshot; no live-tsc claim
 
 ### gemma-4-E4B-it-web
 - Status: ok
-- Pass rate: 100% (3/3)
-  - PASS `starter-where-to-begin` — cites why-types / first lesson; no invented curriculum hedge
+- Pass rate: 100% (7/7)
+  - PASS `starter-where-to-begin` — cites why-types / first lesson; includes markdown why-types link; no invented curriculum hedge
   - PASS `invent-getting-started` — does not invent fake route; redirects or admits missing
   - PASS `tool-search-narrowing` — emits allowlisted curriculum tool call
+  - PASS `narrowing-prose` — names narrowing / types lesson; no invented titles
+  - PASS `product-ask-runtime` — states in-browser / non-server Ask runtime
+  - PASS `js-pane-refusal` — refuses JS pane edit; no JS rewrite offer
+  - PASS `diagnostics-honesty` — mentions build-time / snapshot; no live-tsc claim
 
-### Live (`pnpm models:compare:live`)
+### Live
 
-Base URL: `http://localhost:5175` (stable `vite preview`; Chrome channel — bundled Playwright headless_shell loads weights but stalls on decode).
-
-Both models loaded from local `.models/` over WebGPU and answered the tutoring cases.
-
-### gemma-4-E2B-it-web
-- Status: ok
-- Pass rate: 67% (2/3)
-  - PASS `starter-where-to-begin` (4112ms) — cites why-types / first lesson; no invented curriculum hedge
-  - PASS `invent-getting-started` (2023ms) — does not invent fake route; redirects or admits missing
-  - FAIL `tool-search-narrowing` (2024ms) — no search_curriculum/get_lesson/navigate_lesson tool_call
-
-### gemma-4-E4B-it-web
-- Status: ok
-- Pass rate: 67% (2/3)
-  - PASS `starter-where-to-begin` (6174ms) — cites why-types / first lesson; no invented curriculum hedge
-  - PASS `invent-getting-started` (4068ms) — does not invent fake route; redirects or admits missing
-  - FAIL `tool-search-narrowing` (4068ms) — no search_curriculum/get_lesson/navigate_lesson tool_call
-
-Note: the live tool case scores the **visible final assistant text**. After `generateWithTools`, tool XML is usually consumed inside the loop, so a correct prose answer (both models named “Truthiness narrowing”) still fails the fixture-style `tool_call` scorer. This is **not** an E4B tutoring win over E2B on the school suite (parity at 2/3).
+Not run in this report. Use `pnpm models:compare:live` against `http://localhost:5173` once weights are in `.models/` (requires WebGPU).
 
 ## Recommendation
 
-**Keep E2B as the Load default** (faster first download, OpenSpec requirement, validated school starter path). Live school suite shows **parity**, not an E4B win.
+**Keep E2B as the Load default** (faster first download, OpenSpec requirement, validated school starter path).
 
 **Recommend E4B as Quality** in the picker for capable machines (≥8GB RAM / `navigator.deviceMemory` ≥ 8): Labs eval shows better instruction adherence at +~0.5GB. Do **not** auto-flip the default until school live compare shows a durable win and OpenSpec is updated deliberately.
 

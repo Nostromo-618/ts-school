@@ -34,11 +34,13 @@ import {
   schoolModelOptionLabel,
   schoolModelRecommendHint,
 } from "@/ai/school-model-picker";
+import { readAiChatHistory, writeAiChatHistory } from "@/lib/ai-chat-history";
 import { useAiChatStore } from "@/stores/aiChat";
 import { useLessonEditorStore } from "@/stores/lessonEditor";
 import {
   LLM_BLOCK_MESSAGE,
   LLM_OUTPUT_BLOCK_MESSAGE,
+  validateLlmInput,
 } from "@vanduo-oss/vdl-ai-chat/guardrails/llm";
 
 /** Mirrors Labs `MODEL_CACHE_FLAG_PREFIX` — avoid importing ai-chat.js at module top (SSR). */
@@ -77,7 +79,7 @@ const route = useRoute();
 const router = useRouter();
 const editor = useLessonEditorStore();
 const aiChat = useAiChatStore();
-const { pendingComposerText } = storeToRefs(aiChat);
+const { pendingComposerText, historyRevision } = storeToRefs(aiChat);
 
 const lessonId = computed(() => {
   const id = route.params.lessonId;
@@ -95,7 +97,9 @@ const freezeHint = ref("");
 const loadSource = ref<"cache" | "local" | "network" | "unknown" | "">("");
 const errorText = ref("");
 const inputText = ref("");
-const messages = ref<AskChatMessage[]>([]);
+const messages = ref<AskChatMessage[]>(
+  typeof window !== "undefined" ? readAiChatHistory() : [],
+);
 const messagesEl = ref<HTMLElement | null>(null);
 const composerEl = ref<HTMLTextAreaElement | null>(null);
 const gemmaModels = ref<Array<{ id: string; label: string }>>([
@@ -318,7 +322,6 @@ async function loadModel(): Promise<void> {
     loaded.value = true;
     statusText.value = "Ready";
     clearProgressUi();
-    messages.value = [];
   } catch (err) {
     errorText.value = err instanceof Error ? err.message : String(err);
     statusText.value = "Load failed";
@@ -345,6 +348,18 @@ async function send(): Promise<void> {
   messages.value.push({ role: "assistant", content: "" });
   const idx = messages.value.length - 1;
   const chat = chatRef.value;
+
+  // Fail closed before LiteRT so jailbreaks complete as a visible policy turn
+  // immediately (automation can poll assistant bubble text without hanging).
+  const inputGate = validateLlmInput({ text });
+  if (!inputGate.allowed) {
+    messages.value[idx] = policyAssistantMessage(ASK_POLICY_BLOCK_MESSAGE);
+    streaming.value = false;
+    if (loaded.value) statusText.value = "Ready";
+    focusComposer();
+    return;
+  }
+
   try {
     refreshSystemPrompt(chat);
     const execute = createSchoolToolExecutor({
@@ -403,8 +418,17 @@ async function send(): Promise<void> {
     }
   } finally {
     streaming.value = false;
+    if (loaded.value && !loading.value) statusText.value = "Ready";
+    writeAiChatHistory(messages.value);
     focusComposer();
   }
+}
+
+function clearChat(): void {
+  if (streaming.value) return;
+  messages.value = [];
+  aiChat.clearChatHistory();
+  focusComposer();
 }
 
 function onComposerKey(event: KeyboardEvent): void {
@@ -462,6 +486,10 @@ watch(pendingComposerText, (text) => {
   applyPendingComposer();
 });
 
+watch(historyRevision, () => {
+  messages.value = [];
+});
+
 onBeforeUnmount(() => {
   if (progressUnsub) {
     progressUnsub();
@@ -499,6 +527,17 @@ onBeforeUnmount(() => {
         @click="emit('toggle-pin')"
       >
         <VdIcon name="push-pin" :filled="isPinned" aria-hidden="true" />
+      </VdButton>
+      <VdButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear chat history"
+        data-testid="ts-ai-clear-chat"
+        :disabled="streaming || messages.length === 0"
+        @click="clearChat"
+      >
+        <VdIcon name="trash" aria-hidden="true" />
+        Clear
       </VdButton>
       <VdButton
         variant="ghost"
@@ -579,31 +618,6 @@ onBeforeUnmount(() => {
     </p>
 
     <div
-      v-if="editor.hasPendingEdit"
-      class="ts-ai-pending-edit"
-      data-testid="ts-ai-pending-edit"
-    >
-      <strong>Proposed editor change</strong>
-      <p class="vd-text-sm vd-text-muted">
-        The assistant queued an edit. Accept to apply it to the
-        {{ editor.pendingExerciseEdit ? "exercise" : "TypeScript" }} pane.
-      </p>
-      <div class="vd-cluster" data-gap="fib-5">
-        <VdButton size="sm" data-testid="ts-ai-accept-edit" @click="acceptEdit">
-          Accept
-        </VdButton>
-        <VdButton
-          size="sm"
-          variant="ghost"
-          data-testid="ts-ai-reject-edit"
-          @click="rejectEdit"
-        >
-          Reject
-        </VdButton>
-      </div>
-    </div>
-
-    <div
       ref="messagesEl"
       class="ts-ai-messages"
       data-testid="ts-ai-messages"
@@ -635,7 +649,7 @@ onBeforeUnmount(() => {
         >
           <span class="ts-ai-policy-block-inner">
             <VdIcon name="shield-warning" aria-hidden="true" />
-            <span>{{ msg.content }}</span>
+            <span data-testid="ts-ai-bubble-text">{{ msg.content }}</span>
           </span>
         </VdAlert>
         <!-- Escaped Labs markdown only (labsMarkdownToHtml); not raw model HTML. -->
@@ -650,6 +664,34 @@ onBeforeUnmount(() => {
     </div>
 
     <footer class="ts-ai-sidebar-footer">
+      <div
+        v-if="editor.hasPendingEdit"
+        class="ts-ai-pending-edit"
+        data-testid="ts-ai-pending-edit"
+      >
+        <strong>Proposed editor change</strong>
+        <p class="vd-text-sm vd-text-muted">
+          The assistant queued an edit. Accept to apply it to the
+          {{ editor.pendingExerciseEdit ? "exercise" : "TypeScript" }} pane.
+        </p>
+        <div class="vd-cluster" data-gap="fib-5">
+          <VdButton
+            size="sm"
+            data-testid="ts-ai-accept-edit"
+            @click="acceptEdit"
+          >
+            Accept
+          </VdButton>
+          <VdButton
+            size="sm"
+            variant="ghost"
+            data-testid="ts-ai-reject-edit"
+            @click="rejectEdit"
+          >
+            Reject
+          </VdButton>
+        </div>
+      </div>
       <textarea
         ref="composerEl"
         v-model="inputText"

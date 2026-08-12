@@ -72,6 +72,7 @@ export const VD3_SITE_PREFIX_PROTECTED_KEYS = [
   "ts-school-toc-accepted",
   "ts-school-ai-risk-accepted",
   "ts-school-ai-chat-pinned",
+  "ts-school-ai-chat-history",
 ] as const;
 
 const SITE_PREFIX_PROTECTED_SET: ReadonlySet<string> = new Set(

@@ -1,0 +1,17 @@
+gpu true
+status Loading 71%
+FINAL Load failed
+Ask TypeScript School
+Load failed
+Close
+Model
+Gemma 4 E2B (~2.0GB) — Fast (default)
+Gemma 4 E4B (~2.5GB) — Quality (recommended if ≥8GB RAM)
+Load model
+
+Capable machine detected: E2B stays the default for a faster first load; switch to E4B for richer answers (+~0.5GB).
+
+JS Stream Error [TypeError]: network error
+
+Load Gemma 4 E2B/E4B locally, then ask about this lesson. Tools can search the curriculum and propose TS pane edits (with your confirmation).
+Send

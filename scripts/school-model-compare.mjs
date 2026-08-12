@@ -48,18 +48,33 @@ const FIXTURE_REPLIES = {
     "starter-where-to-begin":
       "Start with [Why types at all](/lessons/foundations/why-types).",
     "invent-getting-started":
-      'I couldn\'t find a lesson titled "TypeScript getting started". Start with Why types at all instead.',
+      'I couldn\'t find a lesson titled "TypeScript getting started". Start with [Why types at all](/lessons/foundations/why-types) instead.',
     "tool-search-narrowing":
       '<tool_call name="search_curriculum">{"query":"truthiness narrowing"}</tool_call>',
+    "narrowing-prose":
+      "See [Truthiness narrowing](/lessons/types/truthiness-narrowing) in the Types track.",
+    "product-ask-runtime":
+      "Ask runs fully in-browser via LiteRT WebGPU — there is no server LLM API.",
+    "js-pane-refusal":
+      "The fragile JavaScript left pane is read-only. I cannot rewrite it; only the TypeScript pane can be edited with your Accept.",
+    "diagnostics-honesty":
+      "Those diagnostics are a build-time snapshot from TypeScript School, not a live tsc session.",
   },
   "gemma-4-E4B-it-web": {
-    // Placeholder until a live run replaces this — mirrors E2B quality bar.
     "starter-where-to-begin":
       "Begin with [Why types at all](/lessons/foundations/why-types).",
     "invent-getting-started":
-      "No such lesson in the curriculum. Prefer Why types at all.",
+      "No such lesson in the curriculum. Prefer [Why types at all](/lessons/foundations/why-types).",
     "tool-search-narrowing":
       '<tool_call name="get_lesson">{"lessonId":"truthiness-narrowing"}</tool_call>',
+    "narrowing-prose":
+      "Truthiness narrowing is covered in the types track — open that lesson for falsy pitfalls.",
+    "product-ask-runtime":
+      "Ask is an in-browser tutor on your device (WebGPU). It does not call a server LLM.",
+    "js-pane-refusal":
+      "I won't edit the JS pane — it is read-only. Use the TypeScript editor with confirmation.",
+    "diagnostics-honesty":
+      "Pane errors come from a build-time snapshot, not live tsc.",
   },
 };
 
@@ -109,146 +124,142 @@ async function scoreLive(scorers) {
     headless: true,
     args: ["--enable-unsafe-webgpu", "--enable-features=Vulkan"],
   };
-  let browser;
-  try {
-    browser = await chromium.launch({ ...launchOpts, channel: "chrome" });
-    console.log("[live] browser=chrome");
-  } catch (err) {
-    console.warn(
-      "[live] chrome channel unavailable, falling back to bundled chromium:",
-      err instanceof Error ? err.message : err,
-    );
-    browser = await chromium.launch(launchOpts);
-    console.log("[live] browser=chromium");
+
+  async function launchBrowser() {
+    try {
+      const browser = await chromium.launch({ ...launchOpts, channel: "chrome" });
+      console.log("[live] browser=chrome");
+      return browser;
+    } catch (err) {
+      console.warn(
+        "[live] chrome channel unavailable, falling back to bundled chromium:",
+        err instanceof Error ? err.message : err,
+      );
+      const browser = await chromium.launch(launchOpts);
+      console.log("[live] browser=chromium");
+      return browser;
+    }
   }
 
   const models = [];
-  try {
-    for (const modelId of MODEL_IDS) {
-      console.log(`[live] model=${modelId}`);
-      if (!hasModel(modelId)) {
-        console.log(`[live] skip missing weights ${modelId}`);
+  // Fresh browser process per model so E2B WebGPU/GPU memory does not poison E4B.
+  for (const modelId of MODEL_IDS) {
+    console.log(`[live] model=${modelId}`);
+    if (!hasModel(modelId)) {
+      console.log(`[live] skip missing weights ${modelId}`);
+      models.push(
+        summarizeModelResults(modelId, [], "skipped", `Missing ${modelPath(modelId)}`),
+      );
+      continue;
+    }
+
+    const browser = await launchBrowser();
+    const page = await browser.newPage();
+    page.setDefaultTimeout(15 * 60 * 1000);
+    await page.addInitScript(
+      ({ tocKey, tocVersion }) => {
+        const now = new Date().toISOString();
+        localStorage.setItem(
+          tocKey,
+          JSON.stringify({ version: tocVersion, acceptedAt: now }),
+        );
+        sessionStorage.removeItem("ts-school-toc-declined");
+      },
+      {
+        tocKey: TOC_STORAGE_KEY,
+        tocVersion: TOC_VERSION,
+      },
+    );
+
+    try {
+      console.log(`[live] goto ${base}/`);
+      await page.goto(`${base}/`, { waitUntil: "domcontentloaded" });
+      const gpu = await page.evaluate(() => Boolean(navigator.gpu));
+      console.log(`[live] webgpu=${gpu}`);
+      if (!gpu) {
         models.push(
-          summarizeModelResults(modelId, [], "skipped", `Missing ${modelPath(modelId)}`),
+          summarizeModelResults(modelId, [], "skipped", "WebGPU unavailable"),
         );
         continue;
       }
 
-      const page = await browser.newPage();
-      page.setDefaultTimeout(15 * 60 * 1000);
-      // Seed site ToC so Ask opens without the disclaimer gate.
-      await page.addInitScript(
-        ({ tocKey, tocVersion }) => {
-          const now = new Date().toISOString();
-          localStorage.setItem(
-            tocKey,
-            JSON.stringify({ version: tocVersion, acceptedAt: now }),
-          );
-          sessionStorage.removeItem("ts-school-toc-declined");
-        },
-        {
-          tocKey: TOC_STORAGE_KEY,
-          tocVersion: TOC_VERSION,
-        },
-      );
-
-      try {
-        console.log(`[live] goto ${base}/`);
-        await page.goto(`${base}/`, { waitUntil: "domcontentloaded" });
-        const gpu = await page.evaluate(() => Boolean(navigator.gpu));
-        console.log(`[live] webgpu=${gpu}`);
-        if (!gpu) {
-          models.push(
-            summarizeModelResults(modelId, [], "skipped", "WebGPU unavailable"),
-          );
-          await page.close();
-          continue;
+      console.log(`[live] open Ask + select ${modelId}`);
+      await page.getByTestId("ts-open-ai-chat").click();
+      await page.getByTestId("ts-ai-model").waitFor({ state: "visible", timeout: 30_000 });
+      await page.getByTestId("ts-ai-model").selectOption(modelId);
+      await page.getByTestId("ts-ai-load").click();
+      console.log(`[live] loading ${modelId}…`);
+      const status = page.getByTestId("ts-ai-status");
+      const loadDeadline = Date.now() + 12 * 60 * 1000;
+      let last = "";
+      let lastLog = 0;
+      while (Date.now() < loadDeadline) {
+        last = (await status.textContent()) || "";
+        if (last === "Ready" || last === "Load failed") break;
+        if (Date.now() - lastLog > 15_000) {
+          console.log(`[live] status=${JSON.stringify(last)}`);
+          lastLog = Date.now();
         }
-
-        console.log(`[live] open Ask + select ${modelId}`);
-        await page.getByTestId("ts-open-ai-chat").click();
-        await page.getByTestId("ts-ai-model").waitFor({ state: "visible", timeout: 30_000 });
-        await page.getByTestId("ts-ai-model").selectOption(modelId);
-        await page.getByTestId("ts-ai-load").click();
-        console.log(`[live] loading ${modelId}…`);
-        const status = page.getByTestId("ts-ai-status");
-        const loadDeadline = Date.now() + 12 * 60 * 1000;
-        let last = "";
-        let lastLog = 0;
-        while (Date.now() < loadDeadline) {
-          last = (await status.textContent()) || "";
-          if (last === "Ready" || last === "Load failed") break;
-          if (Date.now() - lastLog > 15_000) {
-            console.log(`[live] status=${JSON.stringify(last)}`);
-            lastLog = Date.now();
-          }
-          await page.waitForTimeout(2500);
-        }
-        console.log(`[live] load result status=${JSON.stringify(last)}`);
-        if (last !== "Ready") {
-          const err = await page.locator("[data-testid=ts-ai-sidebar]").innerText();
-          models.push(
-            summarizeModelResults(modelId, [], "error", `Load failed: ${err.slice(0, 400)}`),
-          );
-          await page.close();
-          continue;
-        }
-
-        const caseResults = [];
-        for (const c of SCHOOL_COMPARE_SUITE) {
-          console.log(`[live] case=${c.id}`);
-          const t0 = Date.now();
-          // Prefer a fresh turn: clear prior bubbles via reload of sidebar state
-          // by filling/sending only (messages accumulate; score uses last assistant).
-          const input = page.getByTestId("ts-ai-input");
-          await input.waitFor({ state: "visible" });
-          await input.fill(c.prompt);
-          // VdButton disabled state is not always a native disabled attr; press Enter.
-          await input.press("Enter");
-          const assistant = page.locator(
-            '[data-testid="ts-ai-bubble"][data-role="assistant"]',
-          );
-          await assistant.first().waitFor({ state: "visible", timeout: 5 * 60 * 1000 });
-          const doneDeadline = Date.now() + 8 * 60 * 1000;
-          let text = "";
-          let lastCaseLog = 0;
-          while (Date.now() < doneDeadline) {
-            const streaming =
-              ((await status.textContent()) || "").toLowerCase().includes("generat") ||
-              (await page.getByTestId("ts-ai-input").isDisabled());
-            text = (await assistant.last().innerText().catch(() => "")) || "";
-            if (Date.now() - lastCaseLog > 15_000) {
-              console.log(
-                `[live] case=${c.id} streaming=${streaming} len=${text.trim().length}`,
-              );
-              lastCaseLog = Date.now();
-            }
-            if (!streaming && text.trim().length > 10) break;
-            // Also accept a finished short reply once input re-enables.
-            if (!streaming && text.trim().length > 0 && Date.now() - t0 > 15_000) break;
-            await page.waitForTimeout(2000);
-          }
-          const reply = text || (await assistant.last().innerText().catch(() => "")) || "";
-          const scored = scoreSchoolCase(c, reply);
-          const latencyMs = Date.now() - t0;
-          console.log(
-            `[live] case=${c.id} ${scored.pass ? "PASS" : "FAIL"} ${latencyMs}ms len=${reply.length}`,
-          );
-          caseResults.push({
-            caseId: c.id,
-            reply,
-            pass: scored.pass,
-            reasons: scored.reasons,
-            latencyMs,
-          });
-        }
-        models.push(summarizeModelResults(modelId, caseResults, "ok"));
-      } finally {
-        await page.close();
+        await page.waitForTimeout(2500);
       }
+      console.log(`[live] load result status=${JSON.stringify(last)}`);
+      if (last !== "Ready") {
+        const err = await page.locator("[data-testid=ts-ai-sidebar]").innerText();
+        models.push(
+          summarizeModelResults(modelId, [], "error", `Load failed: ${err.slice(0, 400)}`),
+        );
+        continue;
+      }
+
+      const caseResults = [];
+      for (const c of SCHOOL_COMPARE_SUITE) {
+        console.log(`[live] case=${c.id}`);
+        const t0 = Date.now();
+        const input = page.getByTestId("ts-ai-input");
+        await input.waitFor({ state: "visible" });
+        await input.fill(c.prompt);
+        await input.press("Enter");
+        const assistant = page.locator(
+          '[data-testid="ts-ai-bubble"][data-role="assistant"]',
+        );
+        await assistant.first().waitFor({ state: "visible", timeout: 5 * 60 * 1000 });
+        const doneDeadline = Date.now() + 8 * 60 * 1000;
+        let text = "";
+        let lastCaseLog = 0;
+        while (Date.now() < doneDeadline) {
+          const streaming =
+            ((await status.textContent()) || "").toLowerCase().includes("generat") ||
+            (await page.getByTestId("ts-ai-input").isDisabled());
+          text = (await assistant.last().innerText().catch(() => "")) || "";
+          if (Date.now() - lastCaseLog > 15_000) {
+            console.log(
+              `[live] case=${c.id} streaming=${streaming} len=${text.trim().length}`,
+            );
+            lastCaseLog = Date.now();
+          }
+          if (!streaming && text.trim().length > 10) break;
+          if (!streaming && text.trim().length > 0 && Date.now() - t0 > 15_000) break;
+          await page.waitForTimeout(2000);
+        }
+        const reply = text || (await assistant.last().innerText().catch(() => "")) || "";
+        const scored = scoreSchoolCase(c, reply);
+        const latencyMs = Date.now() - t0;
+        console.log(
+          `[live] case=${c.id} ${scored.pass ? "PASS" : "FAIL"} ${latencyMs}ms len=${reply.length}`,
+        );
+        caseResults.push({
+          caseId: c.id,
+          reply,
+          pass: scored.pass,
+          reasons: scored.reasons,
+          latencyMs,
+        });
+      }
+      models.push(summarizeModelResults(modelId, caseResults, "ok"));
+    } finally {
+      await page.close().catch(() => {});
+      await browser.close().catch(() => {});
     }
-  } finally {
-    await browser.close();
   }
 
   return {

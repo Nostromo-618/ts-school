@@ -10,6 +10,7 @@
  * - `"1"` → pinned; hydrate reopens the pane
  */
 
+import { clearAiChatHistory } from "@/lib/ai-chat-history";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -53,6 +54,8 @@ export const useAiChatStore = defineStore("aiChat", () => {
   /** One-shot composer seed consumed by TsAiChatSidebar when the pane is open. */
   const pendingComposerText = ref<string | null>(null);
   const pendingAutoSend = ref(false);
+  /** Bumped when Profile or other callers clear persisted chat history. */
+  const historyRevision = ref(0);
 
   const hydrate = (): void => {
     if (ready.value) return;
@@ -116,12 +119,18 @@ export const useAiChatStore = defineStore("aiChat", () => {
     return { text, autoSend };
   };
 
+  const clearChatHistory = (): void => {
+    clearAiChatHistory();
+    historyRevision.value += 1;
+  };
+
   return {
     open,
     pinned,
     ready,
     pendingComposerText,
     pendingAutoSend,
+    historyRevision,
     hydrate,
     openChat,
     closeChat,
@@ -129,5 +138,6 @@ export const useAiChatStore = defineStore("aiChat", () => {
     togglePin,
     queueComposerPrompt,
     takePendingComposer,
+    clearChatHistory,
   };
 });

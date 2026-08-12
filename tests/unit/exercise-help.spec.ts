@@ -25,6 +25,7 @@ describe("formatExerciseAiHelpPrompt", () => {
     expect(text).toContain("## My current code");
     expect(text).toContain('addTax("nope")');
     expect(text).toContain("typecheck with no errors");
+    expect(text).toMatch(/Socratic hint|next small step/i);
     expect(text).not.toContain("## Revealed solution");
     expect(text).not.toContain('addTax(Number("19.99"))');
   });

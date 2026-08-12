@@ -18,6 +18,7 @@ import {
 import { SCHOOL_AI_MODEL_ID_KEY } from "@/ai/school-model-picker";
 import { NOTES_FOLDED_KEY, NOTES_STORAGE_KEY, NOTES_WINDOW_STORAGE_KEY } from "@/stores/notes";
 import { PROGRESS_STORAGE_KEY } from "@/stores/progress";
+import { AI_CHAT_HISTORY_KEY } from "@/lib/ai-chat-history";
 import { AI_CHAT_PINNED_KEY } from "@/stores/aiChat";
 
 describe("data hygiene", () => {
@@ -26,7 +27,7 @@ describe("data hygiene", () => {
     window.sessionStorage.clear();
   });
 
-  it("builds an export envelope with progress and notes", () => {
+  it("builds an export envelope with progress, notes, and chat history", () => {
     window.localStorage.setItem(
       PROGRESS_STORAGE_KEY,
       JSON.stringify({
@@ -57,12 +58,21 @@ describe("data hygiene", () => {
       JSON.stringify({ version: 1, x: 10, y: 20, width: 300, height: 400 }),
     );
     window.localStorage.setItem(NOTES_FOLDED_KEY, "1");
+    window.localStorage.setItem(
+      AI_CHAT_HISTORY_KEY,
+      JSON.stringify({
+        version: 1,
+        updatedAt: "2026-08-10T14:00:00.000Z",
+        messages: [{ role: "user", content: "exported chat turn" }],
+      }),
+    );
 
     const exported = buildSchoolExport(new Date("2026-08-10T15:00:00.000Z"));
     expect(exported.exportVersion).toBe(1);
     expect(exported.exportedAt).toBe("2026-08-10T15:00:00.000Z");
     expect(exported.progress?.lessons["why-types"]?.status).toBe("complete");
     expect(exported.notes?.body).toBe("my notes");
+    expect(exported.chatHistory?.messages[0]?.content).toBe("exported chat turn");
     expect(exported.preferences[TOC_STORAGE_KEY]).toContain(TOC_VERSION);
     expect(exported.preferences[AI_CHAT_PINNED_KEY]).toBe("1");
     expect(exported.preferences[NOTES_WINDOW_STORAGE_KEY]).toContain('"x":10');
@@ -92,9 +102,23 @@ describe("data hygiene", () => {
     ).toBe(true);
   });
 
+  it("inventories chat history when present", () => {
+    window.localStorage.setItem(
+      AI_CHAT_HISTORY_KEY,
+      JSON.stringify({
+        version: 1,
+        updatedAt: "2026-08-10T12:00:00.000Z",
+        messages: [{ role: "user", content: "hello" }],
+      }),
+    );
+    const items = buildLocalDataInventory();
+    expect(items.find((i) => i.key === AI_CHAT_HISTORY_KEY)?.present).toBe(true);
+  });
+
   it("clearSchoolLocalStorage removes school + theme + model flags", () => {
     window.localStorage.setItem(PROGRESS_STORAGE_KEY, "x");
     window.localStorage.setItem(NOTES_STORAGE_KEY, "x");
+    window.localStorage.setItem(AI_CHAT_HISTORY_KEY, "x");
     window.localStorage.setItem(NOTES_WINDOW_STORAGE_KEY, "x");
     window.localStorage.setItem(NOTES_FOLDED_KEY, "1");
     window.localStorage.setItem("ts-school-notes-pinned", "1");
@@ -108,6 +132,7 @@ describe("data hygiene", () => {
 
     expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull();
     expect(window.localStorage.getItem(NOTES_STORAGE_KEY)).toBeNull();
+    expect(window.localStorage.getItem(AI_CHAT_HISTORY_KEY)).toBeNull();
     expect(window.localStorage.getItem(NOTES_WINDOW_STORAGE_KEY)).toBeNull();
     expect(window.localStorage.getItem(NOTES_FOLDED_KEY)).toBeNull();
     expect(window.localStorage.getItem("ts-school-notes-pinned")).toBeNull();

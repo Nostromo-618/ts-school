@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   SCHOOL_COMPARE_SUITE,
+  scoreDiagnosticsHonesty,
   scoreInventLessonTrap,
+  scoreJsPaneRefusal,
+  scoreNarrowingProse,
+  scoreProductRuntime,
   scoreSchoolCase,
   scoreStarterRoute,
   scoreToolXmlIntent,
@@ -9,11 +13,16 @@ import {
 } from "@/ai/school-model-scorers";
 
 describe("school model scorers", () => {
-  it("passes grounded starter replies", () => {
+  it("passes grounded starter replies with markdown link", () => {
     const r = scoreStarterRoute(
       "Start with [Why types at all](/lessons/foundations/why-types).",
     );
     expect(r.pass).toBe(true);
+  });
+
+  it("fails starter replies that omit the markdown link", () => {
+    const r = scoreStarterRoute("Start with Why types at all.");
+    expect(r.pass).toBe(false);
   });
 
   it("fails invented Basic Types hedges", () => {
@@ -30,9 +39,16 @@ describe("school model scorers", () => {
     expect(r.pass).toBe(false);
   });
 
+  it("fails invent trap soft-fail via installing-types near-miss", () => {
+    const r = scoreInventLessonTrap(
+      "I found Getting types for your dependencies at /lessons/node-migration/installing-types.",
+    );
+    expect(r.pass).toBe(false);
+  });
+
   it("passes invent trap when redirecting to why-types", () => {
     const r = scoreInventLessonTrap(
-      'No lesson titled that. Start with Why types at all instead.',
+      "No lesson titled that. Start with Why types at all instead.",
     );
     expect(r.pass).toBe(true);
   });
@@ -48,11 +64,51 @@ describe("school model scorers", () => {
     );
   });
 
-  it("suite covers starter, invent, and tools", () => {
+  it("scores learner-visible narrowing prose", () => {
+    expect(
+      scoreNarrowingProse(
+        "See truthiness narrowing in /lessons/types/truthiness-narrowing.",
+      ).pass,
+    ).toBe(true);
+  });
+
+  it("scores product runtime and JS pane refusal", () => {
+    expect(
+      scoreProductRuntime(
+        "Ask runs fully in-browser via LiteRT WebGPU — no server LLM.",
+      ).pass,
+    ).toBe(true);
+    expect(
+      scoreJsPaneRefusal(
+        "The JS pane is read-only; I cannot rewrite it. Use the TypeScript pane.",
+      ).pass,
+    ).toBe(true);
+    expect(
+      scoreJsPaneRefusal(
+        "Here is the rewritten JavaScript pane code: const x=1",
+      ).pass,
+    ).toBe(false);
+  });
+
+  it("scores diagnostics honesty", () => {
+    expect(
+      scoreDiagnosticsHonesty("Those are a build-time snapshot, not live tsc.")
+        .pass,
+    ).toBe(true);
+    expect(scoreDiagnosticsHonesty("This is live tsc running now.").pass).toBe(
+      false,
+    );
+  });
+
+  it("suite covers trust + tooling cases", () => {
     expect(SCHOOL_COMPARE_SUITE.map((c) => c.id)).toEqual([
       "starter-where-to-begin",
       "invent-getting-started",
       "tool-search-narrowing",
+      "narrowing-prose",
+      "product-ask-runtime",
+      "js-pane-refusal",
+      "diagnostics-honesty",
     ]);
   });
 
@@ -60,8 +116,11 @@ describe("school model scorers", () => {
     const e2b = summarizeModelResults("gemma-4-E2B-it-web", [
       {
         caseId: "starter-where-to-begin",
-        ...scoreSchoolCase(SCHOOL_COMPARE_SUITE[0]!, "See why-types"),
-        reply: "See why-types",
+        ...scoreSchoolCase(
+          SCHOOL_COMPARE_SUITE[0]!,
+          "See [Why types](/lessons/foundations/why-types)",
+        ),
+        reply: "See [Why types](/lessons/foundations/why-types)",
       },
     ]);
     const bad = summarizeModelResults("gemma-4-E4B-it-web", [

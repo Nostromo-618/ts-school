@@ -1397,11 +1397,36 @@ body {
   background: color-mix(in srgb, var(--vd-bg-primary, #fff) 70%, #000);
 }
 
+/* Sits in the Ask footer just above the composer; soft pulse draws attention. */
 .ts-ai-pending-edit {
-  margin: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  margin: 0;
   padding: var(--vd-space-fib-8, 0.8125rem);
   border: var(--vd-border-width) solid var(--vd-border-color, #e5e7eb);
   border-radius: var(--vd-radius-md, 0.5rem);
+  animation: ts-ai-pending-edit-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes ts-ai-pending-edit-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    border-color: var(--vd-border-color, #e5e7eb);
+  }
+
+  50% {
+    opacity: 0.72;
+    border-color: color-mix(
+      in srgb,
+      var(--vd-color-primary, #845ef7) 40%,
+      var(--vd-border-color, #e5e7eb)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ts-ai-pending-edit {
+    animation: none;
+  }
 }
 
 .ts-ai-load-progress {
