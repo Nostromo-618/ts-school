@@ -134,8 +134,12 @@ On first load, any existing `vanduo-*` theme values are copied to the
 both. If upstream vd3 adds an official storage prefix, prefer that and retire
 the remapper.
 
-Site theme defaults (unchanged): violet primary, stone / charcoal neutrals,
-radius `0.375`, font `lato`.
+Site theme defaults: indigo primary, stone / charcoal neutrals, radius `0.5`,
+font `lato`.
+
+Ask chat transcripts persist in `ts-school-ai-chat-history` (localStorage).
+Profile export includes a `chatHistory` field; Clear chat history and Clear all
+remove it. Terms privacy copy reflects this (TOC v5).
 
 ## TypeScript dual install
 

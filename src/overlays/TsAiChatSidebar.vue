@@ -34,6 +34,7 @@ import {
   schoolModelOptionLabel,
   schoolModelRecommendHint,
 } from "@/ai/school-model-picker";
+import { readAiChatHistory, writeAiChatHistory } from "@/lib/ai-chat-history";
 import { useAiChatStore } from "@/stores/aiChat";
 import { useLessonEditorStore } from "@/stores/lessonEditor";
 import {
@@ -78,7 +79,7 @@ const route = useRoute();
 const router = useRouter();
 const editor = useLessonEditorStore();
 const aiChat = useAiChatStore();
-const { pendingComposerText } = storeToRefs(aiChat);
+const { pendingComposerText, historyRevision } = storeToRefs(aiChat);
 
 const lessonId = computed(() => {
   const id = route.params.lessonId;
@@ -96,7 +97,9 @@ const freezeHint = ref("");
 const loadSource = ref<"cache" | "local" | "network" | "unknown" | "">("");
 const errorText = ref("");
 const inputText = ref("");
-const messages = ref<AskChatMessage[]>([]);
+const messages = ref<AskChatMessage[]>(
+  typeof window !== "undefined" ? readAiChatHistory() : [],
+);
 const messagesEl = ref<HTMLElement | null>(null);
 const composerEl = ref<HTMLTextAreaElement | null>(null);
 const gemmaModels = ref<Array<{ id: string; label: string }>>([
@@ -319,7 +322,6 @@ async function loadModel(): Promise<void> {
     loaded.value = true;
     statusText.value = "Ready";
     clearProgressUi();
-    messages.value = [];
   } catch (err) {
     errorText.value = err instanceof Error ? err.message : String(err);
     statusText.value = "Load failed";
@@ -417,8 +419,16 @@ async function send(): Promise<void> {
   } finally {
     streaming.value = false;
     if (loaded.value && !loading.value) statusText.value = "Ready";
+    writeAiChatHistory(messages.value);
     focusComposer();
   }
+}
+
+function clearChat(): void {
+  if (streaming.value) return;
+  messages.value = [];
+  aiChat.clearChatHistory();
+  focusComposer();
 }
 
 function onComposerKey(event: KeyboardEvent): void {
@@ -476,6 +486,10 @@ watch(pendingComposerText, (text) => {
   applyPendingComposer();
 });
 
+watch(historyRevision, () => {
+  messages.value = [];
+});
+
 onBeforeUnmount(() => {
   if (progressUnsub) {
     progressUnsub();
@@ -513,6 +527,17 @@ onBeforeUnmount(() => {
         @click="emit('toggle-pin')"
       >
         <VdIcon name="push-pin" :filled="isPinned" aria-hidden="true" />
+      </VdButton>
+      <VdButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear chat history"
+        data-testid="ts-ai-clear-chat"
+        :disabled="streaming || messages.length === 0"
+        @click="clearChat"
+      >
+        <VdIcon name="trash" aria-hidden="true" />
+        Clear
       </VdButton>
       <VdButton
         variant="ghost"

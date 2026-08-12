@@ -9,6 +9,7 @@ import AboutPage from "@/pages/about.vue";
 import TermsPage from "@/pages/terms.vue";
 import FarewellPage from "@/pages/farewell.vue";
 import ProfilePage from "@/pages/profile.vue";
+import ChangelogPage from "@/pages/changelog.vue";
 import { allLessons, lessonRoute, trackById } from "@/curriculum";
 
 /**
@@ -146,6 +147,18 @@ export const buildRoutes = (): RouteRecordRaw[] => {
       description:
         "You declined the site terms. Re-read the disclaimer when you are ready to continue.",
       keywords: [],
+    },
+  });
+
+  routes.push({
+    path: "/changelog",
+    name: "changelog",
+    component: ChangelogPage,
+    meta: {
+      title: "Changelog",
+      description:
+        "Release notes for TypeScript School dev-v0.2.0 — Ask persistence, published vdl packages, theme updates, and CI improvements.",
+      keywords: ["changelog", "release notes", "dev-v0.2.0", "updates"],
     },
   });
 

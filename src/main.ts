@@ -49,10 +49,10 @@ export const createApp = ViteSSG(
     // light/global baseline. Dark charcoal is applied by the theme store.
     app.use(VanduoVue, {
       themeDefaults: {
-        PRIMARY_LIGHT: "violet",
-        PRIMARY_DARK: "violet",
+        PRIMARY_LIGHT: "indigo",
+        PRIMARY_DARK: "indigo",
         NEUTRAL: "stone",
-        RADIUS: "0.375",
+        RADIUS: "0.5",
         FONT: "lato",
       },
     });

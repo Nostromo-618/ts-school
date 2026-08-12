@@ -11,6 +11,11 @@ import { AI_RISK_STORAGE_KEY } from "@/content/ai-disclaimer";
 import { TOC_STORAGE_KEY, TOC_VERSION } from "@/content/disclaimer";
 import { SCHOOL_AI_MODEL_ID_KEY } from "@/ai/school-model-picker";
 import {
+  AI_CHAT_HISTORY_KEY,
+  parseAiChatHistory,
+  type AiChatHistoryV1,
+} from "@/lib/ai-chat-history";
+import {
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
   parseProgress,
@@ -64,6 +69,7 @@ export const SCHOOL_STORAGE_KEYS = [
   AI_RISK_STORAGE_KEY,
   AI_CHAT_PINNED_KEY,
   SCHOOL_AI_MODEL_ID_KEY,
+  AI_CHAT_HISTORY_KEY,
 ] as const;
 
 /** Cleared on clear-all even after migration removed them from inventory. */
@@ -76,6 +82,7 @@ export interface SchoolExportV1 {
   exportedAt: string;
   progress: ProgressV1 | null;
   notes: NotesV1 | null;
+  chatHistory: AiChatHistoryV1 | null;
   preferences: Record<string, string | null>;
 }
 
@@ -166,6 +173,12 @@ export function buildLocalDataInventory(): LocalDataInventoryItem[] {
       group: "school",
       label: "AI chat pin preference",
     },
+    {
+      key: AI_CHAT_HISTORY_KEY,
+      present: safeGetItem(AI_CHAT_HISTORY_KEY) !== null,
+      group: "school",
+      label: "Ask chat history",
+    },
   ];
 
   // Legacy pin keys only while still present (migration residue).
@@ -218,6 +231,7 @@ export function buildSchoolExport(
 ): SchoolExportV1 {
   const progressRaw = readJson(PROGRESS_STORAGE_KEY);
   const notesRaw = readJson(NOTES_STORAGE_KEY);
+  const chatHistoryRaw = readJson(AI_CHAT_HISTORY_KEY);
   const preferences: Record<string, string | null> = {};
 
   for (const key of [
@@ -239,6 +253,7 @@ export function buildSchoolExport(
     exportedAt: exportedAt.toISOString(),
     progress: parseProgress(progressRaw) ?? null,
     notes: parseNotes(notesRaw) ?? null,
+    chatHistory: parseAiChatHistory(chatHistoryRaw) ?? null,
     preferences,
   };
 }

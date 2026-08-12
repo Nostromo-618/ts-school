@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
+import { AI_CHAT_HISTORY_KEY, writeAiChatHistory } from "@/lib/ai-chat-history";
 import {
   AI_CHAT_PINNED_KEY,
   useAiChatStore,
@@ -120,5 +121,16 @@ describe("aiChat store", () => {
     const store = useAiChatStore();
     store.queueComposerPrompt("   ");
     expect(store.pendingComposerText).toBeNull();
+  });
+
+  it("clearChatHistory removes storage and bumps historyRevision", () => {
+    writeAiChatHistory([{ role: "user", content: "persisted" }]);
+    const store = useAiChatStore();
+    const before = store.historyRevision;
+
+    store.clearChatHistory();
+
+    expect(localStorage.getItem(AI_CHAT_HISTORY_KEY)).toBeNull();
+    expect(store.historyRevision).toBe(before + 1);
   });
 });

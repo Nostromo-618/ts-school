@@ -1412,6 +1412,7 @@ body {
     opacity: 1;
     border-color: var(--vd-border-color, #e5e7eb);
   }
+
   50% {
     opacity: 0.72;
     border-color: color-mix(

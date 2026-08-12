@@ -7,6 +7,8 @@
  *
  * The "Start here" column is derived: first beginner lesson of the first three
  * tracks, so it follows the curriculum instead of going stale beside it.
+ *
+ * Site links are split across two columns inside "The site" section.
  */
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
@@ -28,8 +30,14 @@ const siteLinks = [
   { label: "Glossary", to: "/glossary" },
   { label: "History", to: "/history" },
   { label: "About", to: "/about" },
+  { label: "Changelog", to: "/changelog" },
   { label: "Terms", to: "/terms" },
 ];
+
+const siteLinkColumns = computed(() => {
+  const midpoint = Math.ceil(siteLinks.length / 2);
+  return [siteLinks.slice(0, midpoint), siteLinks.slice(midpoint)];
+});
 </script>
 
 <template>
@@ -52,17 +60,23 @@ const siteLinks = [
 
       <section class="vd-footer-section">
         <h2 class="vd-footer-heading">The site</h2>
-        <ul class="vd-footer-list">
-          <li
-            v-for="link in siteLinks"
-            :key="link.to"
-            class="vd-footer-list-item"
+        <div class="ts-footer-site-links">
+          <ul
+            v-for="(column, columnIndex) in siteLinkColumns"
+            :key="columnIndex"
+            class="vd-footer-list"
           >
-            <RouterLink :to="link.to" class="vd-footer-link">
-              {{ link.label }}
-            </RouterLink>
-          </li>
-        </ul>
+            <li
+              v-for="link in column"
+              :key="link.to"
+              class="vd-footer-list-item"
+            >
+              <RouterLink :to="link.to" class="vd-footer-link">
+                {{ link.label }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section class="vd-footer-section">
@@ -129,6 +143,12 @@ const siteLinks = [
 .ts-site-footer .vd-footer-heading {
   font-size: var(--vd-font-size-md, 0.9375rem);
   margin-bottom: var(--vd-space-fib-5, 0.5rem);
+}
+
+.ts-site-footer .ts-footer-site-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--vd-space-fib-8, 0.8125rem);
 }
 
 .ts-site-footer .vd-footer-list-item {

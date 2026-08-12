@@ -68,6 +68,12 @@ function onClearNotes(): void {
   statusMessage.value = "Notes cleared. Progress and consents were kept.";
 }
 
+function onClearChatHistory(): void {
+  aiChat.clearChatHistory();
+  refreshInventory();
+  statusMessage.value = "Chat history cleared. Progress and notes were kept.";
+}
+
 async function onConfirmClearAll(): Promise<void> {
   clearing.value = true;
   statusMessage.value = "";
@@ -232,6 +238,13 @@ async function onConfirmClearAll(): Promise<void> {
         </VdButton>
         <VdButton
           variant="danger"
+          data-testid="ts-profile-clear-chat"
+          @click="onClearChatHistory"
+        >
+          Clear chat history
+        </VdButton>
+        <VdButton
+          variant="danger"
           data-testid="ts-profile-clear-all"
           @click="clearAllOpen = true"
         >
@@ -248,11 +261,11 @@ async function onConfirmClearAll(): Promise<void> {
     >
       <div class="vd-stack" data-gap="fib-8">
         <p>
-          This removes progress, notes, notes window preferences, AI pin
-          preference, theme preferences this site can write, Terms acceptance,
-          and any legacy AI risk key. Best-effort model cache deletion runs next
-          — some browser caches may remain. You will need to accept the site
-          terms again before continuing.
+          This removes progress, notes, Ask chat history, notes window
+          preferences, AI pin preference, theme preferences this site can write,
+          Terms acceptance, and any legacy AI risk key. Best-effort model cache
+          deletion runs next — some browser caches may remain. You will need to
+          accept the site terms again before continuing.
         </p>
         <div class="vd-cluster" data-gap="fib-8">
           <VdButton

@@ -9,6 +9,7 @@ import {
 const NOTES_STORAGE_KEY = "ts-school-notes";
 const NOTES_WINDOW_KEY = "ts-school-notes-window";
 const NOTES_FOLDED_KEY = "ts-school-notes-folded";
+const CHAT_HISTORY_KEY = "ts-school-ai-chat-history";
 
 test.describe("profile and notes", () => {
   test("opens profile from the navbar icon", async ({ page }) => {
@@ -241,7 +242,7 @@ test.describe("profile and notes", () => {
     page,
   }) => {
     await page.addInitScript(
-      ({ progressKey, notesKey, aiKey, windowKey, foldedKey }) => {
+      ({ progressKey, notesKey, aiKey, windowKey, foldedKey, chatKey }) => {
         localStorage.setItem(
           progressKey,
           JSON.stringify({
@@ -274,6 +275,14 @@ test.describe("profile and notes", () => {
             acceptedAt: "2026-08-10T12:00:00.000Z",
           }),
         );
+        localStorage.setItem(
+          chatKey,
+          JSON.stringify({
+            version: 1,
+            updatedAt: "2026-08-10T12:00:00.000Z",
+            messages: [{ role: "user", content: "clear-all should wipe me" }],
+          }),
+        );
       },
       {
         progressKey: PROGRESS_STORAGE_KEY,
@@ -281,6 +290,7 @@ test.describe("profile and notes", () => {
         aiKey: AI_RISK_STORAGE_KEY,
         windowKey: NOTES_WINDOW_KEY,
         foldedKey: NOTES_FOLDED_KEY,
+        chatKey: CHAT_HISTORY_KEY,
       },
     );
 
@@ -299,6 +309,7 @@ test.describe("profile and notes", () => {
     expect(await page.evaluate((k) => localStorage.getItem(k), NOTES_WINDOW_KEY)).toBeNull();
     expect(await page.evaluate((k) => localStorage.getItem(k), NOTES_FOLDED_KEY)).toBeNull();
     expect(await page.evaluate((k) => localStorage.getItem(k), AI_RISK_STORAGE_KEY)).toBeNull();
+    expect(await page.evaluate((k) => localStorage.getItem(k), CHAT_HISTORY_KEY)).toBeNull();
 
     // ToC was also cleared — accept again so Ask can open.
     const tocGate = page.getByTestId("disclaimer-gate");
