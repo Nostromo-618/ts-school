@@ -160,6 +160,35 @@ describe("chat markdown + linkify", () => {
     expect(html).toContain('href="/lessons/foundations/why-types"');
     expect(html).toContain("Why types at all");
   });
+
+  it("does not nest anchors inside absolute GitHub Pages hrefs", () => {
+    const html = renderAssistantHtml(
+      "See the [Glossary](https://nostromo-618.github.io/ts-school/glossary).",
+    );
+    expect(html).toContain(
+      'href="https://nostromo-618.github.io/ts-school/glossary"',
+    );
+    expect(html).not.toMatch(/href="[^"]*<a\b/);
+    expect(html.match(/<a\b/gi)?.length).toBe(1);
+  });
+
+  it("does not corrupt absolute URLs that contain /lessons/…", () => {
+    const html = renderAssistantHtml(
+      "Open https://nostromo-618.github.io/ts-school/lessons/foundations/why-types next.",
+    );
+    expect(html).not.toContain("%3Ca");
+    expect(html).not.toMatch(/href="[^"]*<a\b/);
+    expect(html).toContain(
+      "https://nostromo-618.github.io/ts-school/lessons/foundations/why-types",
+    );
+  });
+
+  it("still linkifies relative glossary markdown", () => {
+    const html = renderAssistantHtml("Explore the [Glossary](/glossary).");
+    expect(html).toContain('href="/glossary"');
+    expect(html).toContain("Glossary");
+    expect(html).not.toMatch(/href="[^"]*<a\b/);
+  });
 });
 
 describe("createSchoolToolExecutor", () => {

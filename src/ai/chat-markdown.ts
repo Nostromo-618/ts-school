@@ -39,17 +39,27 @@ function isInternalAppPath(href: string): boolean {
   return STANDALONE_ROUTES.has(bare) || bare === "/";
 }
 
+const BARE_ROUTE_RE =
+  /(^|[^A-Za-z0-9"'>=;])(\/(?:lessons\/[a-z0-9-]+\/[a-z0-9-]+|curriculum|glossary|history|about|terms|profile|farewell)(?:[?#][^\s<"']*)?)/gi;
+
 /**
- * Wrap bare app paths that are not already inside an href="…".
+ * Wrap bare app paths in plain text only — never inside HTML tags/attrs
+ * (absolute GitHub Pages hrefs contain `/glossary`, `/lessons/…`, etc.).
  */
 export function linkifyBareRoutes(html: string): string {
-  return html.replace(
-    /(^|[^"'>=])(\/(?:lessons\/[a-z0-9-]+\/[a-z0-9-]+|curriculum|glossary|history|about|terms|profile|farewell)(?:[?#][^\s<"']*)?)/gi,
-    (full, prefix: string, path: string) => {
-      if (!isInternalAppPath(path)) return full;
-      return `${prefix}<a href="${path}" rel="noopener noreferrer">${path}</a>`;
-    },
-  );
+  return html
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (part.startsWith("<")) return part;
+      return part.replace(
+        BARE_ROUTE_RE,
+        (full, prefix: string, path: string) => {
+          if (!isInternalAppPath(path)) return full;
+          return `${prefix}<a href="${path}" rel="noopener noreferrer">${path}</a>`;
+        },
+      );
+    })
+    .join("");
 }
 
 /**

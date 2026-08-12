@@ -1,6 +1,6 @@
 {
   "name": "ts-school",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "TypeScript School — a static Vue 3 + vite-ssg site whose lessons pair fragile JavaScript with the TypeScript that fixes it, with diagnostics checked at build time against the Strada compiler API",
   "private": true,
   "type": "module",

@@ -687,32 +687,55 @@ body {
   color: var(--vd-text-secondary, var(--vd-text-muted));
 }
 
-/* Stronger frost than vd3 defaults (~0.65 / fully transparent at top). */
+/* Spindrift-style strong frost: 88% opaque + 40px blur (always, not only scrolled). */
 .vd-navbar.vd-navbar-glass {
-  --vd-glass-bg-opacity: 0.9;
-  --vd-glass-blur: 48px;
-  --vd-glass-saturate: 2;
-  --vd-glass-border-alpha: 0.28;
-  --vd-glass-shadow: 0 10px 36px rgb(0 0 0 / 18%);
-}
+  --vd-glass-bg-opacity: 0.88;
+  --vd-glass-blur: 40px;
+  --vd-glass-saturate: 1.6;
+  --vd-glass-border-alpha: 0.55;
+  --vd-glass-shadow: 0 8px 32px rgb(0 0 0 / 10%);
 
-.vd-navbar.vd-navbar-glass:not(.vd-navbar-scrolled) {
-  /* Keep a light frost at the top of the page — not fully transparent. */
   background: color-mix(in srgb, var(--vd-bg-primary, #fff) 88%, transparent);
-  -webkit-backdrop-filter: blur(28px) saturate(1.6);
-  backdrop-filter: blur(28px) saturate(1.6);
   border-bottom-color: color-mix(
     in srgb,
-    var(--vd-border-color, #000) 22%,
+    var(--vd-bg-primary, #fff) 55%,
     transparent
   );
-  box-shadow: 0 1px 0 rgb(0 0 0 / 4%);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 10%);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  backdrop-filter: blur(40px) saturate(1.6);
 }
 
+.vd-navbar.vd-navbar-glass:not(.vd-navbar-scrolled),
 .vd-navbar.vd-navbar-glass.vd-navbar-scrolled {
-  --vd-glass-blur: 80px;
-  --vd-glass-saturate: 2.4;
-  --vd-glass-bg-opacity: 0.92;
+  --vd-glass-bg-opacity: 0.88;
+  --vd-glass-blur: 40px;
+  --vd-glass-saturate: 1.6;
+
+  background: color-mix(in srgb, var(--vd-bg-primary, #fff) 88%, transparent);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 10%);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  backdrop-filter: blur(40px) saturate(1.6);
+}
+
+[data-theme="dark"] .vd-navbar.vd-navbar-glass,
+[data-theme="dark"] .vd-navbar.vd-navbar-glass:not(.vd-navbar-scrolled),
+[data-theme="dark"] .vd-navbar.vd-navbar-glass.vd-navbar-scrolled {
+  --vd-glass-shadow: 0 8px 32px rgb(0 0 0 / 30%);
+
+  background: color-mix(
+    in srgb,
+    var(--vd-bg-primary, #1e1e2d) 88%,
+    transparent
+  );
+  border-bottom-color: rgb(255 255 255 / 12%);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
+}
+
+/* Bold outline icons (Phosphor Bold font; leave fill weight alone). */
+.ph:not(.ph-fill) {
+  font-family:
+    Phosphor-Bold, var(--vd-icon-font, Phosphor), sans-serif !important;
 }
 
 /* Actions stay outside the collapsible menu (a11y); claim space after brand. */
@@ -1097,9 +1120,20 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--vd-bg-elevated, var(--vd-bg-primary, #fff));
-  border-left: 1px solid var(--vd-border-color, #e5e7eb);
-  box-shadow: var(--vd-shadow-lg, 0 10px 30px rgb(0 0 0 / 12%));
+  background: color-mix(
+    in srgb,
+    var(--vd-bg-elevated, var(--vd-bg-primary, #fff)) 88%,
+    transparent
+  );
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  backdrop-filter: blur(40px) saturate(1.6);
+  border-left: 1px solid
+    color-mix(in srgb, var(--vd-border-color, #e5e7eb) 55%, transparent);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 10%);
+}
+
+[data-theme="dark"] .ts-ai-sidebar {
+  box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
 }
 
 .ts-ai-sidebar.is-pinned {
@@ -1308,11 +1342,32 @@ body {
 
 .ts-ai-sidebar-header,
 .ts-ai-sidebar-footer {
-  padding: var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-13, 1.3125rem);
+  padding: var(--vd-space-fib-5, 0.5rem) var(--vd-space-fib-8, 0.8125rem);
   border-bottom: 1px solid var(--vd-border-color, #e5e7eb);
   display: flex;
   align-items: center;
-  gap: var(--vd-space-fib-8, 0.8125rem);
+  gap: var(--vd-space-fib-5, 0.5rem);
+}
+
+.ts-ai-sidebar-titlebar {
+  flex: 0 0 auto;
+}
+
+.ts-ai-sidebar-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+.ts-ai-sidebar-title strong {
+  font-size: var(--vd-font-size-sm, 0.875rem);
+}
+
+.ts-ai-sidebar-modelbar {
+  border-bottom: 0;
 }
 
 .ts-ai-sidebar-footer {
@@ -1320,6 +1375,7 @@ body {
   border-top: 1px solid var(--vd-border-color, #e5e7eb);
   flex-direction: column;
   align-items: stretch;
+  padding: var(--vd-space-fib-8, 0.8125rem);
 }
 
 .ts-ai-messages {
@@ -1340,7 +1396,7 @@ body {
 }
 
 .ts-ai-model-hint {
-  margin: 0 var(--vd-space-fib-13, 1.3125rem) var(--vd-space-fib-8, 0.8125rem);
+  margin: 0 var(--vd-space-fib-8, 0.8125rem) var(--vd-space-fib-5, 0.5rem);
   line-height: 1.35;
 }
 
