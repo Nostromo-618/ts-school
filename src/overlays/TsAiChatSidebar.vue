@@ -510,10 +510,11 @@ onBeforeUnmount(() => {
     :data-pinned="isPinned ? 'true' : 'false'"
     :aria-busy="loading ? 'true' : 'false'"
   >
-    <header class="ts-ai-sidebar-header">
-      <VdIcon name="chat-circle" aria-hidden="true" />
-      <div class="vd-stack" data-gap="fib-3" style="flex: 1">
+    <header class="ts-ai-sidebar-header ts-ai-sidebar-titlebar">
+      <VdIcon name="chat-circle" size="sm" aria-hidden="true" />
+      <div class="ts-ai-sidebar-title" style="flex: 1; min-width: 0">
         <strong>Ask TypeScript School</strong>
+        <span class="vd-text-muted vd-text-sm" aria-hidden="true">·</span>
         <span class="vd-text-muted vd-text-sm" data-testid="ts-ai-status">{{
           statusText
         }}</span>
@@ -537,7 +538,6 @@ onBeforeUnmount(() => {
         @click="clearChat"
       >
         <VdIcon name="trash" aria-hidden="true" />
-        Clear
       </VdButton>
       <VdButton
         variant="ghost"
@@ -546,11 +546,11 @@ onBeforeUnmount(() => {
         data-testid="ts-ai-close"
         @click="emit('close')"
       >
-        Close
+        <VdIcon name="x" aria-hidden="true" />
       </VdButton>
     </header>
 
-    <div class="ts-ai-sidebar-header" style="border-bottom: 0">
+    <div class="ts-ai-sidebar-header ts-ai-sidebar-modelbar">
       <label class="vd-text-sm" for="ts-ai-model">Model</label>
       <select
         id="ts-ai-model"
@@ -576,6 +576,7 @@ onBeforeUnmount(() => {
       </VdButton>
     </div>
     <p
+      v-if="!loaded"
       class="vd-text-sm vd-text-muted ts-ai-model-hint"
       data-testid="ts-ai-model-hint"
     >
