@@ -2,7 +2,7 @@
   "campaign": "ask-explore-v0.2.0",
   "generatedAt": "2026-08-12T07:50:00.000Z",
   "baseUrl": "http://localhost:5173",
-  "note": "Merged index. Full E2B matrix: explore-results-e2b.json. E4B headed transcripts: explore-e4b-manual.json. Headless E4B load failed (see e4b-headless-cold-load.log).",
+  "note": "Merged index. Full E2B matrix: explore-results-e2b.json. E4B headed transcripts: explore-e4b-manual.json. Headless E4B load failed (see e4b-headless-cold-load.txt).",
   "models": [
     {
       "modelId": "gemma-4-E2B-it-web",

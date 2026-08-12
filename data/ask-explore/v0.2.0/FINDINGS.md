@@ -36,9 +36,9 @@ E2B remains a sensible **default**. E4B is a worthwhile **Quality** upgrade on h
 ### S0 — Blocks “E4B must work” for automation / some environments
 | ID | Finding | Evidence |
 |----|---------|----------|
-| F1 | Headless Chrome cannot cold-load E4B | [`raw/e4b-headless-cold-load.log`](raw/e4b-headless-cold-load.log): Loading 71% → `JS Stream Error [TypeError]: network error` |
-| F2 | Live compare E4B Load failed after E2B in same browser | [`raw/live-compare.log`](raw/live-compare.log) |
-| F3 | Parallel dual-model headless explore: E4B never Ready | [`raw/explore-run.log`](raw/explore-run.log) |
+| F1 | Headless Chrome cannot cold-load E4B | [`raw/e4b-headless-cold-load.txt`](raw/e4b-headless-cold-load.txt): Loading 71% → `JS Stream Error [TypeError]: network error` |
+| F2 | Live compare E4B Load failed after E2B in same browser | [`raw/live-compare.txt`](raw/live-compare.txt) |
+| F3 | Parallel dual-model headless explore: E4B never Ready | [`raw/explore-run.txt`](raw/explore-run.txt) |
 
 ### S1 — Learner-visible correctness / trust
 | ID | Finding | Models | Evidence |
@@ -55,7 +55,7 @@ E2B remains a sensible **default**. E4B is a worthwhile **Quality** upgrade on h
 |----|---------|----------|
 | F10 | Client jailbreak policy block works, but no assistant markdown bubble → long waits / empty HTML | E2B jailbreak ~900s in harness; policy UI true |
 | F11 | WebGPU contention: headed E4B Ready lost while headless E2B explore ran | MCP session: composer disabled mid-wave |
-| F12 | `test:e2e:llm` Load failed on preview `:8787` after campaign GPU load (reached 100% then failed) | [`raw/e2e-llm.log`](raw/e2e-llm.log) |
+| F12 | `test:e2e:llm` Load failed on preview `:8787` after campaign GPU load (reached 100% then failed) | [`raw/e2e-llm.txt`](raw/e2e-llm.txt) |
 | F13 | Pin harness false positive: Ask **auto-pins** on first open; pin click toggles off | Existing `tests/e2e/ai-chat.spec.ts`; explore `ui-pin-persist` |
 
 ### S3 — Soft / persona quality

@@ -24,7 +24,7 @@ Snapshot: [`raw/fixtures-report.json`](raw/fixtures-report.json), [`raw/fixtures
 Fixture replies encode the acceptance bar (not live inference).
 
 ## Live compare (`pnpm models:compare:live`)
-Snapshot: [`raw/live-compare.log`](raw/live-compare.log), [`raw/live-compare-report.json`](raw/live-compare-report.json)
+Snapshot: [`raw/live-compare.txt`](raw/live-compare.txt), [`raw/live-compare-report.json`](raw/live-compare-report.json)
 
 | Model | Status | Pass rate | Notes |
 |-------|--------|-----------|-------|
@@ -37,7 +37,7 @@ E2B live case notes (from log):
 - FAIL `tool-search-narrowing` (~2.0s) — visible prose, not tool XML
 
 ## Headless E4B cold load (isolated)
-[`raw/e4b-headless-cold-load.log`](raw/e4b-headless-cold-load.log)
+[`raw/e4b-headless-cold-load.txt`](raw/e4b-headless-cold-load.txt)
 
 - Fresh headless Chrome channel + WebGPU
 - Progress reached **Loading 71%** then **Load failed**
@@ -45,7 +45,7 @@ E2B live case notes (from log):
 - **Headed** Chrome (Playwright MCP) loads the same E4B weights to **Ready** successfully
 
 ## Gated LLM e2e (`pnpm test:e2e:llm`)
-Log: [`raw/e2e-llm.log`](raw/e2e-llm.log)
+Log: [`raw/e2e-llm.txt`](raw/e2e-llm.txt)
 
 | Result | Detail |
 |--------|--------|
@@ -61,8 +61,8 @@ This does **not** prove E2B broken in general (dev `:5173` explore matrix loaded
 | [`raw/explore-results-e2b.json`](raw/explore-results-e2b.json) | Full E2B matrix (40 scenarios) |
 | [`raw/explore-gemma-4-E2B-it-web.json`](raw/explore-gemma-4-E2B-it-web.json) | Per-model dump |
 | [`raw/explore-e4b-manual.json`](raw/explore-e4b-manual.json) | Headed E4B scenario transcripts |
-| [`raw/explore-e2b-rerun.log`](raw/explore-e2b-rerun.log) | E2B console log |
-| [`raw/explore-run.log`](raw/explore-run.log) | First parallel attempt log |
+| [`raw/explore-e2b-rerun.txt`](raw/explore-e2b-rerun.txt) | E2B console log |
+| [`raw/explore-run.txt`](raw/explore-run.txt) | First parallel attempt log |
 
 ## Baseline verdict
 - Fixture harness green for both models.
