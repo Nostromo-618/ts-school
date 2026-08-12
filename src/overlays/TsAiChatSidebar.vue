@@ -593,31 +593,6 @@ onBeforeUnmount(() => {
     </p>
 
     <div
-      v-if="editor.hasPendingEdit"
-      class="ts-ai-pending-edit"
-      data-testid="ts-ai-pending-edit"
-    >
-      <strong>Proposed editor change</strong>
-      <p class="vd-text-sm vd-text-muted">
-        The assistant queued an edit. Accept to apply it to the
-        {{ editor.pendingExerciseEdit ? "exercise" : "TypeScript" }} pane.
-      </p>
-      <div class="vd-cluster" data-gap="fib-5">
-        <VdButton size="sm" data-testid="ts-ai-accept-edit" @click="acceptEdit">
-          Accept
-        </VdButton>
-        <VdButton
-          size="sm"
-          variant="ghost"
-          data-testid="ts-ai-reject-edit"
-          @click="rejectEdit"
-        >
-          Reject
-        </VdButton>
-      </div>
-    </div>
-
-    <div
       ref="messagesEl"
       class="ts-ai-messages"
       data-testid="ts-ai-messages"
@@ -664,6 +639,34 @@ onBeforeUnmount(() => {
     </div>
 
     <footer class="ts-ai-sidebar-footer">
+      <div
+        v-if="editor.hasPendingEdit"
+        class="ts-ai-pending-edit"
+        data-testid="ts-ai-pending-edit"
+      >
+        <strong>Proposed editor change</strong>
+        <p class="vd-text-sm vd-text-muted">
+          The assistant queued an edit. Accept to apply it to the
+          {{ editor.pendingExerciseEdit ? "exercise" : "TypeScript" }} pane.
+        </p>
+        <div class="vd-cluster" data-gap="fib-5">
+          <VdButton
+            size="sm"
+            data-testid="ts-ai-accept-edit"
+            @click="acceptEdit"
+          >
+            Accept
+          </VdButton>
+          <VdButton
+            size="sm"
+            variant="ghost"
+            data-testid="ts-ai-reject-edit"
+            @click="rejectEdit"
+          >
+            Reject
+          </VdButton>
+        </div>
+      </div>
       <textarea
         ref="composerEl"
         v-model="inputText"
